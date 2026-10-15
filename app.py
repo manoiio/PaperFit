@@ -17,6 +17,7 @@ st.set_page_config(page_title='论文有格', page_icon='📄', layout='wide', i
 
 CSS = '''
 <style>
+[id^="scope-"] {scroll-margin-top: 80px;}
 html, body, [class*="css"], .stApp {font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;}
 .block-container {max-width: 1320px; padding-top: 2rem; padding-bottom: 3rem;}
 h1 {color: #173e68; font-size: 2.1rem !important; margin-bottom: 0 !important;}
@@ -146,7 +147,7 @@ def report_view(report, inventory):
         from core.classification import TYPES
         groups={t:[n for n,v in coverage['paragraph_types'].items() if v==t] for t in TYPES}
         st.caption('；'.join(TYPES[t]+'：'+', '.join(groups[t]) for t in groups if groups[t] and t not in ('body','other')))
-        st.caption('表格内格式、页眉页脚及文本框等未纳入；题注只检查字体字号，复杂结构仍需人工复核。')
+        st.caption('表格、封面、目录、引文、注释及题注补充是否参与，见统一范围总览与报告；未启用、未配置及复杂结构仍需人工复核。')
     else:
         st.caption('标题、题注、表格格式、页眉页脚及文本框等未纳入正文规则；复杂对象的显示仍需人工复核。')
     if report['coverage_notes']:
@@ -227,19 +228,29 @@ if model.inventory is None:
 
 st.caption(f'当前文档：{model.display_name} · {len(model.inventory["paragraphs"])} 个顶层段落 · {model.inventory["section_count"]} 节')
 st.caption('当前处理输入：原稿' if model.current_round==0 else f'当前处理输入：第{model.current_round}轮修正版（已明确切换，原稿仍保留）')
+from web.scope_ui import render_scope_overview
+render_scope_overview(model)
 if model.mode!='basic':
     from web.citation_ui import render_citations
+    st.markdown('<span id="scope-citation"></span>',unsafe_allow_html=True)
     render_citations(model)
     from web.note_ui import render_notes
+    st.markdown('<span id="scope-note"></span>',unsafe_allow_html=True)
     render_notes(model)
     from web.toc_ui import render_toc
+    st.markdown('<span id="scope-toc"></span>',unsafe_allow_html=True)
     render_toc(model)
+    st.markdown('<span id="scope-front"></span>',unsafe_allow_html=True)
     render_front(model)
+    st.markdown('<span id="scope-table"></span>',unsafe_allow_html=True)
     render_tables(model)
     from web.caption_ui import render_captions
+    st.markdown('<span id="scope-caption"></span>',unsafe_allow_html=True)
     render_captions(model)
+    st.markdown('<span id="scope-paragraph"></span>',unsafe_allow_html=True)
     render_classification(model,run_check)
 else:
+    st.markdown('<span id="scope-paragraph"></span>',unsafe_allow_html=True)
     with st.container(key='scope'):
         st.subheader('2 确认正文范围')
         st.caption('编号是主文档顶层段落编号，含空段和图片段，不是页码；表格内段落不在此清单中。')

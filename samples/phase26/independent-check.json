@@ -1,0 +1,27 @@
+{
+  "equivalent_manifest": true,
+  "equivalent_findings": true,
+  "equivalent_coverage_notes": true,
+  "output_bytes_identical": true,
+  "original_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+  "output_sha256": "c51c4a8d88165279242f050425ae4ddd3b2577c6affb6f789bdd3a4352257d10",
+  "original_text_and_unselected_parts_preserved": true,
+  "only_expected_run_size_changed_in_main_xml": true,
+  "selected_keys": [
+    "R05:paragraph=8:run=1"
+  ],
+  "summary": {
+    "rule_count": 42,
+    "problem_count": 49,
+    "review_count": 28,
+    "review_findings": 22,
+    "review_notes": 6,
+    "pass_count": 63,
+    "not_applicable_count": 13,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 31
+  },
+  "preflight_seconds": 0.042518458096310496,
+  "old_confirmation_and_check_seconds": 0.06841587496455759,
+  "api_requests": 0
+}

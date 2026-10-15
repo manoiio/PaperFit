@@ -26,7 +26,7 @@ def render_toc(model):
   page=st.number_input('目录清单页',min_value=1,max_value=max(1,(len(rows)+19)//20),value=1,key='toc-list-page-'+str(len(rows))+'-'+model.task_dir.name)
   shown=rows[(page-1)*20:page*20]
   st.caption(f'筛选共{len(rows)}个对象；每页20个，不改变检查范围。')
-  st.dataframe([{'对象':r['id'],'原顶层段号':r['locator'].get('paragraph','—'),'短文本':r['text'],'结构':r['structure'],'建议':ROLES.get(r['candidate'],'无'),'当前草稿':ROLES.get(d['objects'].get(r['id']),'未指定'),'理由':r['reason'],'特殊结构':r['special'] or ''} for r in shown],hide_index=True,width='stretch',height=250)
+  st.dataframe([{'对象':r['id'],'原顶层段号':str(r['locator'].get('paragraph','—')),'短文本':r['text'],'结构':r['structure'],'建议':ROLES.get(r['candidate'],'无'),'当前草稿':ROLES.get(d['objects'].get(r['id']),'未指定'),'理由':r['reason'],'特殊结构':r['special'] or ''} for r in shown],hide_index=True,width='stretch',height=250)
   with st.expander('批量设置目录类型（明确选中的对象）',expanded=True):
    ids=st.multiselect('明确选择目录对象',[r['id'] for r in shown],format_func=lambda k:k+' · '+next(r['text'][:45] for r in inv['objects'] if r['id']==k),key='toc-objects-'+token+'-'+str(page)+'-'+str(candidates_only))
    target=st.selectbox('所选目录对象类型',['none',*ROLES],format_func=lambda x:'移出目录范围' if x=='none' else ROLES[x],key='toc-role-'+token)

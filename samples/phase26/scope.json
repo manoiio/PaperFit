@@ -1,0 +1,65 @@
+{
+  "description": "软件演示综合样本，独立人工定义；不是程序分类结果。编号含空分节段，表格另计。",
+  "roles": {
+    "1": "other",
+    "2": "other",
+    "3": "other",
+    "4": "other",
+    "5": "abstract_cn_title",
+    "6": "abstract_cn_body",
+    "7": "heading1",
+    "8": "body",
+    "9": "body",
+    "10": "table_caption",
+    "11": "appendix_title",
+    "12": "appendix_text",
+    "13": "other",
+    "14": "other",
+    "15": "reference_title",
+    "16": "reference_item",
+    "17": "body",
+    "18": "other",
+    "19": "figure_caption"
+  },
+  "material_exclusions": {
+    "13": "合成程序代码，保留制表符和空白，不套普通文字"
+  },
+  "table_types": {
+    "1": "content"
+  },
+  "cover_objects": {
+    "p:1": "title"
+  },
+  "section_roles": {
+    "1": "mixed",
+    "2": "mixed"
+  },
+  "toc_objects": {
+    "d:3": "title",
+    "d:4": "level1"
+  },
+  "toc_complete": false,
+  "headings_complete": false,
+  "citation_scan": [
+    8,
+    9,
+    17
+  ],
+  "citation_use": {
+    "paragraph": 17,
+    "text": "[1]"
+  },
+  "caption_roles": {
+    "10": "normal",
+    "19": "normal"
+  },
+  "chapter_map": {
+    "7": 1
+  },
+  "associations": {
+    "10": "table:1",
+    "19": "image:p:18"
+  },
+  "notes": "明确选择全部6条普通注释（其中复杂链接/域继续保护）；系统对象不选择",
+  "excluded_toc": "d:20 内容控件自动目录线索留待复核；不据此判断整篇缺项"
+}

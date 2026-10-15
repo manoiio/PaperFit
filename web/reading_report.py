@@ -64,6 +64,7 @@ def portable(bundle,*,display_name='待检查文档.docx',include_excerpts=False
                 row['raw']={k:v for k,v in row['raw'].items() if k not in ('text','caption_text','label')}
         if out['pagination_applied']:
             out['pagination_applied']={k:v for k,v in out['pagination_applied'].items() if k not in ('pairs',)}
+    if bundle.get('scope_summary'):out['scope_summary']=bundle['scope_summary']
     if bundle.get('saved_record'):out['saved_record']=bundle['saved_record']
     return clean(out)
 
@@ -94,6 +95,10 @@ def html_report(data):
     if data.get('citation_summary'):
         c=data['citation_summary'];parts+=['<h2>引文对应与顺序边界</h2>', '<p>'+esc(('R33上标未检查；' if not c['enabled']['superscript'] else '')+c['scope_state']+'；'+c['unreferenced_state']+'；编号对应不证明文献真实或引用准确')+'</p>',table(['首次出现顺序','尚未引用的编号'],[[c['order'],c['unreferenced_numbers']]])]
     parts+=['<h2>建议下一步</h2>','<ul>'+''.join('<li>'+esc(x['title']+'：'+x['reason'])+'</li>' for x in data['next_steps'])+'</ul>']
+    if data.get('scope_summary'):
+        sc=data['scope_summary']
+        parts+=['<h2>本轮实际范围与未检查事项</h2>',table(['区域','参与检查','对象数量','口径','说明'],[[r['name'],'是' if r['participates'] else '未启用/未确认',r['selected'],r['unit'],r['scope']] for r in sc['areas']])]
+        parts+=['<p>'+esc(x)+'</p>' for x in sc['limits']]
     for cat,label in CATEGORIES.items():
         rows=[r for r in data['records'] if r['category']==cat];attention=[r for r in rows if r['status'] not in ('pass','not_applicable')];passed=[r for r in rows if r not in attention]
         def records_table(rs):return table(['记录/对象位置','状态','实际情况','要求或建议','原因/动作','依据'],[[r['title']+' · '+r['position']+(' · '+r['excerpt'] if r.get('excerpt') else ''),STATUS[r['status']],r['actual'],r['expected'],r['reason']+'；'+r['action'],r['basis']] for r in rs])
@@ -118,6 +123,7 @@ def html_report(data):
 
 def markdown_report(data):
     s=data['format_summary'];out=['# 论文有格阅读报告','',data['display_name']+' · 第'+str(data['context']['round'])+'轮',data['conclusion'],f"启用规则{s['rule_count']}；格式问题{s['problem_count']}；格式待复核{s['review_count']}", '宽度：'+json.dumps(data['width_summary'],ensure_ascii=False),'Word：未验收','']
+    if data.get('scope_summary'):out+=['范围状态摘要：'+json.dumps(data['scope_summary'],ensure_ascii=False)]
     if data.get('caption_summary'):out+=['题注编号/结构位置/实际分页：'+json.dumps(data['caption_summary'],ensure_ascii=False)]
     for r in data['records']:out.append('- '+CATEGORIES[r['category']]+' · '+r['record_key']+' · '+r['position']+' · '+STATUS[r['status']]+'：'+r['actual']+' → '+r['expected']+'；'+r['reason'])
     out+=['','本轮修改：'+json.dumps(data['changes'],ensure_ascii=False),'预览/视觉：'+json.dumps({'preview':data['preview'],'visual':data['visual']},ensure_ascii=False)]

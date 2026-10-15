@@ -42,8 +42,9 @@ from .note_session import NoteSession
 from .caption_session import CaptionSession
 from .material_session import MaterialSession
 from .workbench_session import WorkbenchSession
+from .scope_session import ScopeSession
 
-class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, EfficiencySession, AsyncPreviewSession, ProjectSession, AcademicSession, TableSession, FrontSession, TocSession, CitationSession, NoteSession, CaptionSession, MaterialSession, WorkbenchSession):
+class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, EfficiencySession, AsyncPreviewSession, ProjectSession, AcademicSession, TableSession, FrontSession, TocSession, CitationSession, NoteSession, CaptionSession, MaterialSession, WorkbenchSession, ScopeSession):
     def __init__(self, work_root, rules_path=DEFAULT_RULES):
         self.work_root = Path(work_root).resolve()
         self.rules_path = Path(rules_path).resolve()
@@ -420,6 +421,17 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         if self.mode == 'basic':raise DemoError('请切换到正文及标题题注检查')
         from core.classification import validate_classification
         from core.package import Package
+        manifest=self._classification_manifest()
+        validate_classification(Package(self.input_path),manifest)
+        if self.classification_confirmed==manifest:return
+        self.classification_confirmed=manifest
+        self.body=sorted(int(n) for n,t in self.paragraph_types.items() if t=='body')
+        self.confirmed={'input_sha256':self.inventory['input_sha256'],'body_paragraphs':self.body.copy(),'confirmation':'网页分类人工确认'}
+        write_new(self.task_dir/('confirmed-types-'+uuid4().hex+'.json'),(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n').encode())
+        self.error=None
+
+    def _classification_manifest(self):
+        """Build the same manifest for separate and unified confirmation."""
         manifest={'input_sha256':self.inventory['input_sha256'],'paragraph_types':deepcopy(self.paragraph_types),
                   'confirmed':True,'confirmation':'网页用户逐项核对或确认整份分类；待确认项不检查、不修正'}
         if self.material_exclusions:manifest['material_exclusions']=deepcopy(self.material_exclusions)
@@ -435,13 +447,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         if toc_scope is not None:manifest['toc_scope']=toc_scope
         front_scope=self.front_manifest()
         if front_scope is not None:manifest['front_scope']=front_scope
-        validate_classification(Package(self.input_path),manifest)
-        if self.classification_confirmed==manifest:return
-        self.classification_confirmed=manifest
-        self.body=sorted(int(n) for n,t in self.paragraph_types.items() if t=='body')
-        self.confirmed={'input_sha256':self.inventory['input_sha256'],'body_paragraphs':self.body.copy(),'confirmation':'网页分类人工确认'}
-        write_new(self.task_dir/('confirmed-types-'+uuid4().hex+'.json'),(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n').encode())
-        self.error=None
+        return manifest
 
     def backmatter_binding(self):
         from core.backmatter import binding

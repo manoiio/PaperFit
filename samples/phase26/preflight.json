@@ -1,0 +1,248 @@
+{
+  "signature": "fe91e8fec023ac9dc9e311af51c0ddfa8770551a3c8ac912de992696a5c9c663",
+  "areas": [
+    {
+      "area": "paragraph",
+      "name": "段落分类与材料保护",
+      "enabled": true,
+      "configured": true,
+      "detected": 19,
+      "unit": "顶层段落",
+      "selected": 12,
+      "excluded": 1,
+      "pending": 0,
+      "confirmed": false,
+      "declarations": {},
+      "details": {
+        "suggested_ambiguities": 10,
+        "other": 7,
+        "protected_paragraphs": [
+          "13"
+        ]
+      },
+      "blocked": false,
+      "status": "草稿待统一核对"
+    },
+    {
+      "area": "table",
+      "name": "表格用途与辅助配置",
+      "enabled": true,
+      "configured": true,
+      "detected": 1,
+      "selected": 1,
+      "excluded": 0,
+      "pending": 0,
+      "confirmed": false,
+      "unit": "顶层表格",
+      "declarations": {},
+      "details": {
+        "nested": 0,
+        "merged": 0,
+        "unlisted": 0,
+        "layout_options": null
+      },
+      "blocked": false,
+      "status": "草稿待统一核对"
+    },
+    {
+      "area": "front",
+      "name": "封面对象与分节用途",
+      "enabled": true,
+      "configured": true,
+      "detected": 23,
+      "selected": 1,
+      "excluded": 0,
+      "pending": 0,
+      "confirmed": false,
+      "unit": "可定位段落/表格内段落；节另计",
+      "declarations": {},
+      "details": {
+        "sections": 2,
+        "pending_sections": 0,
+        "mixed_sections": 2
+      },
+      "blocked": false,
+      "status": "草稿待统一核对"
+    },
+    {
+      "area": "toc",
+      "name": "目录范围与层级",
+      "enabled": true,
+      "configured": true,
+      "detected": 3,
+      "selected": 2,
+      "excluded": 0,
+      "pending": 1,
+      "confirmed": false,
+      "unit": "目录线索对象（含内容控件）",
+      "declarations": {
+        "complete": false,
+        "headings_complete": false,
+        "covered_levels": [
+          1,
+          2,
+          3
+        ]
+      },
+      "details": {
+        "supported_objects": 20,
+        "unlisted": 0,
+        "automatic": 1
+      },
+      "blocked": false,
+      "status": "草稿待统一核对"
+    },
+    {
+      "area": "citation",
+      "name": "正文引文",
+      "enabled": true,
+      "configured": true,
+      "detected": 1,
+      "selected": 1,
+      "excluded": 0,
+      "pending": 0,
+      "confirmed": false,
+      "unit": "扫描范围内字符区间",
+      "declarations": {
+        "complete": false,
+        "references_complete": false
+      },
+      "details": {
+        "scan_paragraphs": [
+          8,
+          9,
+          17
+        ],
+        "complex": 0
+      },
+      "blocked": false,
+      "status": "草稿待统一核对"
+    },
+    {
+      "area": "note",
+      "name": "脚注与尾注",
+      "enabled": true,
+      "configured": true,
+      "detected": 6,
+      "selected": 6,
+      "excluded": 0,
+      "pending": 0,
+      "confirmed": false,
+      "unit": "普通脚注/尾注（系统对象另计）",
+      "declarations": {},
+      "details": {
+        "system_readonly": 4,
+        "complex": 1,
+        "relationship_issues": 0
+      },
+      "blocked": false,
+      "status": "草稿待统一核对"
+    },
+    {
+      "area": "caption",
+      "name": "题注、章号与关联",
+      "enabled": true,
+      "configured": true,
+      "detected": 2,
+      "selected": 2,
+      "excluded": 0,
+      "pending": 0,
+      "confirmed": false,
+      "unit": "分类中的题注段落",
+      "declarations": {
+        "complete": false,
+        "chapters_complete": false
+      },
+      "details": {
+        "objects": 2,
+        "chapter_map": {
+          "7": 1
+        },
+        "associations": {
+          "10": "table:1",
+          "19": "image:p:18"
+        }
+      },
+      "blocked": false,
+      "status": "草稿待统一核对"
+    }
+  ],
+  "blockers": [],
+  "warnings": [
+    {
+      "area": "front",
+      "code": "structural_limits",
+      "reason": "混合用途节2。这些线索不自动判错；保留原结构保护，具体安全属性及未检查项以实际报告为准。",
+      "entry": "封面对象与分节用途"
+    },
+    {
+      "area": "toc",
+      "code": "partial_scope",
+      "reason": "保留当前部分范围声明；不推断整篇缺项或完整序列。",
+      "entry": "目录范围与层级"
+    },
+    {
+      "area": "toc",
+      "code": "pending_objects",
+      "reason": "1个待核对/未纳入线索，不能算通过；各区域口径见清单。",
+      "entry": "目录范围与层级"
+    },
+    {
+      "area": "toc",
+      "code": "structural_limits",
+      "reason": "自动目录对象1。这些线索不自动判错；保留原结构保护，具体安全属性及未检查项以实际报告为准。",
+      "entry": "目录范围与层级"
+    },
+    {
+      "area": "citation",
+      "code": "partial_scope",
+      "reason": "保留当前部分范围声明；不推断整篇缺项或完整序列。",
+      "entry": "正文引文"
+    },
+    {
+      "area": "note",
+      "code": "structural_limits",
+      "reason": "复杂线索1。这些线索不自动判错；保留原结构保护，具体安全属性及未检查项以实际报告为准。",
+      "entry": "脚注与尾注"
+    },
+    {
+      "area": "caption",
+      "code": "partial_scope",
+      "reason": "保留当前部分范围声明；不推断整篇缺项或完整序列。",
+      "entry": "题注、章号与关联"
+    },
+    {
+      "area": "paragraph",
+      "code": "ambiguous_suggestions",
+      "reason": "10个原建议含歧义线索；请核对完整分类，统一确认不会将歧义自动算通过。",
+      "entry": "段落分类与材料保护"
+    }
+  ],
+  "limits": [
+    "数量按各区域的定位单位分别统计；同一段落可被多个模块引用，不能相加为全文覆盖率。",
+    "未发现候选不证明物理上没有对象；文本框、浮动对象、复杂容器和未知结构仍需复核。",
+    "实际页码、实际同页与Word显示未由范围确认验证；预览与人工视觉核对另行进行。"
+  ],
+  "ready": true,
+  "summary": {
+    "file_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+    "round": 0,
+    "mode": "academic",
+    "rules_name": "华工本科工理类2015演示规则（正文及标题题注）（段落及摘要关键词参考文献）",
+    "rules_version": "1.0.0+extended-demo-1.0.0+sections-demo-1.0",
+    "rules_sha256": "110fbcbd4583fcb72746fac5a717122909ce4733d0247b7e88b925594be20934",
+    "selected_areas": [
+      "paragraph",
+      "table",
+      "front",
+      "toc",
+      "citation",
+      "note",
+      "caption"
+    ],
+    "material_exclusions": [
+      "13"
+    ],
+    "page_scope": "全部实际分节，沿用原页面检查范围，无新增确认"
+  }
+}

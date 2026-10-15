@@ -111,6 +111,7 @@ class EfficiencySession:
                  'scope.json':encoded(self.result.get('output_classification_manifest',self.result['output_body_manifest'])),
                  'rules.json':rule_bytes,
                      'README.txt':('论文有格本轮结果包\n第'+str(self.result['round']['number'])+'轮；输出和规则哈希见报告。\n只代表启用规则及确认范围，分页另行目视核对；Word未验收。\n默认不含原稿、页面图片、日志、API记录或完整论文摘录。\n').encode()}
+            members['scope-summary.json']=encoded(d['scope_summary'])
             if self.mode=='academic':
                 from core.academic_rules import PATH
                 from core.extended import EXTENDED_RULES
