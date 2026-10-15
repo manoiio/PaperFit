@@ -50,8 +50,8 @@ def render_toc(model):
   with st.expander('目录完整配置、字段来源与模板保存/重载'):
    if model.workbench['active']:
     st.caption('规则已在统一工作台确认；此处只核对论文对象，不重复配置相同格式。编辑或导入规则请使用上方工作台。')
-    from .workbench_ui import rows
-    st.dataframe([r for r in rows(model.current_rule_bundle()) if r['模块']==__import__('core.rule_bundle',fromlist=['LABELS']).LABELS['toc']],hide_index=True,width='stretch',height=220)
+    from .workbench_ui import rows as rule_rows
+    st.dataframe([r for r in rule_rows(model.current_rule_bundle()) if r['模块']==__import__('core.rule_bundle',fromlist=['LABELS']).LABELS['toc']],hide_index=True,width='stretch',height=220)
    else:
     cfg=d['template'];st.dataframe([{'对象属性':n,'采用值':str(v) if v is not None else '未启用','来源':cfg['sources'][n]['kind'],'原文依据':cfg['sources'][n]['quote']} for n,v in cfg['values'].items()],hide_index=True,width='stretch')
     n=st.selectbox('编辑目录属性',list(FIELDS),key='toc-field-'+token);prop=FIELDS[n];v=cfg['values'][n]

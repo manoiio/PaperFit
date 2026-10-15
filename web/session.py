@@ -650,7 +650,8 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
             return False
 
     def use_default_rules(self):
-        self.workbench.update(active=None,draft=None,origin="local",generation=self.workbench["generation"]+1)
+        self.diagnostic_store()["adopted_sha256"]=None
+        self.workbench.update(active=None,draft=None,origin="local",historical=True,generation=self.workbench["generation"]+1)
         for attr,module in (("front_draft","front"),("toc_draft","toc"),("note_draft","notes")):
             if getattr(self,attr):
                 from core.rule_bundle import defaults

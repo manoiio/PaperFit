@@ -70,7 +70,7 @@ class SpecDiagnosisTests(unittest.TestCase):
   for m,loc in [('main','TXT:L1'),('front','TXT:L14')]:
    i=deepcopy(d[m]['issues'][0]);i.update(fields=[],location=loc);self.s.repair_diagnostic(m+'.issues.0','issue',i,'核对为与执行字段无关的说明')
   self.assertEqual(self.s.diagnostic_analysis()['status'],'validated');self.s.use_diagnostic_draft(acknowledged=True);self.s.workbench_policy('keep',acknowledged=True);self.s.workbench_edit('front','cover_title__font_size','manual',24);b=self.s.apply_workbench(acknowledged=True);self.assertEqual(b['provenance']['main']['font_size']['kind'],'user_confirmed');scopes(self.s);self.s.set_selection([f['key'] for f in self.s.eligible()]);self.assertTrue(self.s.generate(),self.s.error)
-  self.assertEqual(Path(self.s.result['output']).read_bytes(),(ROOT/'work/phase24/browser-round2.docx').read_bytes())
+  self.assertEqual(Path(self.s.result['output']).read_bytes(),(ROOT/'tests/fixtures/history/phase24/browser-round2.docx').read_bytes())
  def test_unresolved_does_not_become_missing_policy(self):
   d=response();d['main']['fields']['font_size']['value']=True;self.s.receive_diagnostic(rec(d));self.assertIsNone(self.s.workbench['draft'])
   with self.assertRaises(DemoError):self.s.use_diagnostic_draft(acknowledged=True)
@@ -126,3 +126,23 @@ class SpecDiagnosisTests(unittest.TestCase):
   self.s.receive_diagnostic(rec());raw=self.s.diagnostic_download();other=make_session(Path(self.tmp.name)/'imported');other.workbench_text('\n'.join(s['text'] for s in SEGMENTS),SEGMENTS);other.confirm_workbench_excerpt()
   with patch('ai.workbench_spec.parse_diagnosed',side_effect=AssertionError('No API')):other.import_diagnostic(raw)
   self.assertTrue(other.workbench['historical']);self.assertIsNone(other.workbench['active']);self.assertIsNone(other.workbench['draft']);self.assertEqual(other.diagnostic_analysis()['status'],'validated')
+
+ def test_repaired_issue_form_retains_actual_source(self):
+  from streamlit.testing.v1 import AppTest
+  self.s.load_synthetic_diagnostic();issue=json.loads(self.s.diagnostic_store()['current']['content'])['front']['issues'][0];issue.update(fields=[],location='TXT:L14');self.s.repair_diagnostic('front.issues.0','issue',issue,'核对后不规定页脚距，仅记录说明')
+  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();next(x for x in app.selectbox if x.label=='待核对提示').set_value('front.issues.0');app.run();self.assertFalse(app.exception)
+  self.assertEqual(next(x for x in app.selectbox if x.label=='提示来源位置').value,'TXT:L14');self.assertEqual(next(x for x in app.selectbox if x.label=='提示原因').value,'unsupported')
+
+ def test_default_after_adoption_can_save_project(self):
+  self.s.receive_diagnostic(rec());self.s.use_diagnostic_draft(acknowledged=True);self.s.workbench_policy('keep',acknowledged=True);self.s.apply_workbench(acknowledged=True);self.s.use_default_rules();self.s.prepare_project();self.assertTrue(self.s.project_download());self.assertIsNone(self.s.diagnostic_store()['adopted_sha256'])
+ def test_rule_import_moves_old_diagnosis_to_history(self):
+  self.s.receive_diagnostic(rec());before=self.s.rule_bundle_download();self.s.import_rule_bundle(before);self.assertIsNone(self.s.diagnostic_store()['current']);self.assertEqual(len(self.s.diagnostic_store()['history']),1)
+ def test_network_failure_keeps_snapshot_and_reason(self):
+  from urllib.error import HTTPError
+  def fail(*a):raise HTTPError('https://api.deepseek.com',402,'no secret',{},None)
+  r=parse_diagnosed(SEGMENTS,config=Settings('test-key'),transport=fail);self.assertEqual(r['segments'],SEGMENTS);self.assertIsNone(r['content']);self.assertEqual(r['receipt']['request_count'],1);a=sd.diagnose(r);self.assertEqual(a['status'],'rejected');self.assertIn('余额',a['reason'])
+
+ def test_note_bulk_selection_under_active_workbench_uses_inventory(self):
+  from streamlit.testing.v1 import AppTest
+  self.s.receive_diagnostic(rec());self.s.use_diagnostic_draft(acknowledged=True);self.s.workbench_policy('keep',acknowledged=True);self.s.apply_workbench(acknowledged=True);self.s.enable_notes(True)
+  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();next(x for x in app.button if x.label=='选择当前筛选的注释').click();app.run();self.assertFalse(app.exception);self.assertEqual(len(self.s.note_draft['objects']),6);self.assertIsNone(self.s.error)

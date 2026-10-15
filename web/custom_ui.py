@@ -38,7 +38,7 @@ def render_custom(model):
             st.session_state[f'draft-value-{model.draft_generation}-{rule}']=float(model.draft_values[rule])
     def value_changed(rule,key):model.edit_draft(rule,model.draft_modes[rule],st.session_state[key],touched=True)
     def apply():model.apply_draft()
-    historical=Path(__file__).resolve().parents[1]/'work/phase3/final/real-api-record.json'
+    historical=Path(__file__).resolve().parents[1]/'samples/historical-short-spec.json'
     def history():
         if model.load_historical_spec(historical):
             st.session_state['short-spec-text']=model.spec_text

@@ -1,0 +1,280 @@
+{
+  "structure_version": 3,
+  "name": "标题题注课程演示B",
+  "supported_fields": [
+    "paper",
+    "margin_top",
+    "margin_bottom",
+    "margin_left",
+    "margin_right",
+    "font_cn",
+    "font_western",
+    "font_size",
+    "line_spacing",
+    "first_line_indent",
+    "heading1_font_cn",
+    "heading1_font_size",
+    "heading1_alignment",
+    "heading1_line_spacing",
+    "heading2_font_cn",
+    "heading2_font_size",
+    "heading2_alignment",
+    "heading2_line_spacing",
+    "heading3_font_cn",
+    "heading3_font_size",
+    "heading3_alignment",
+    "heading3_line_spacing",
+    "figure_caption_font_cn",
+    "figure_caption_font_size",
+    "table_caption_font_cn",
+    "table_caption_font_size"
+  ],
+  "base_sha256": "1ef3ec0d674ddc3a1e5e5c84510dd7851f9011edf98c7efe92a46161d078ca10",
+  "final_values": {
+    "paper": "A4 portrait",
+    "margin_top": 30,
+    "margin_bottom": 20,
+    "margin_left": 35,
+    "margin_right": 30,
+    "font_cn": "楷体",
+    "font_western": "Arial",
+    "font_size": 14,
+    "line_spacing": 2,
+    "first_line_indent": 1,
+    "heading1_font_cn": "宋体",
+    "heading1_font_size": 20.5,
+    "heading1_alignment": "left",
+    "heading1_line_spacing": 1.25,
+    "heading2_font_cn": "仿宋",
+    "heading2_font_size": 17,
+    "heading2_alignment": "right",
+    "heading2_line_spacing": 1.5,
+    "heading3_font_cn": "楷体",
+    "heading3_font_size": 13.5,
+    "heading3_alignment": "both",
+    "heading3_line_spacing": 2,
+    "figure_caption_font_cn": "宋体",
+    "figure_caption_font_size": 9,
+    "table_caption_font_cn": "黑体",
+    "table_caption_font_size": 12
+  },
+  "field_sources": {
+    "paper": {
+      "kind": "ai_extracted",
+      "quote": "纸张为A4竖向。",
+      "location": "TXT:L2"
+    },
+    "margin_top": {
+      "kind": "ai_extracted",
+      "quote": "上边距3cm。",
+      "location": "TXT:L3"
+    },
+    "margin_bottom": {
+      "kind": "ai_extracted",
+      "quote": "下边距2cm。",
+      "location": "TXT:L4"
+    },
+    "margin_left": {
+      "kind": "ai_extracted",
+      "quote": "左边距3.5cm。",
+      "location": "TXT:L5"
+    },
+    "margin_right": {
+      "kind": "ai_extracted",
+      "quote": "右边距3cm。",
+      "location": "TXT:L6"
+    },
+    "font_cn": {
+      "kind": "ai_extracted",
+      "quote": "正文中文字体为楷体。",
+      "location": "TXT:L7"
+    },
+    "font_western": {
+      "kind": "ai_extracted",
+      "quote": "正文西文字体为Arial。",
+      "location": "TXT:L8"
+    },
+    "font_size": {
+      "kind": "ai_extracted",
+      "quote": "正文普通文字字号为四号。",
+      "location": "TXT:L9"
+    },
+    "line_spacing": {
+      "kind": "ai_extracted",
+      "quote": "正文采用2倍行距。",
+      "location": "TXT:L10"
+    },
+    "first_line_indent": {
+      "kind": "ai_extracted",
+      "quote": "正文首行缩进1字符。",
+      "location": "TXT:L11"
+    },
+    "heading1_font_cn": {
+      "kind": "ai_extracted",
+      "quote": "一级标题中文字体为宋体，字号为20pt，居左，1.25倍行距。",
+      "location": "TXT:L12"
+    },
+    "heading1_font_size": {
+      "kind": "user_confirmed",
+      "quote": "一级标题中文字体为宋体，字号为20pt，居左，1.25倍行距。",
+      "location": "TXT:L12"
+    },
+    "heading1_alignment": {
+      "kind": "ai_extracted",
+      "quote": "一级标题中文字体为宋体，字号为20pt，居左，1.25倍行距。",
+      "location": "TXT:L12"
+    },
+    "heading1_line_spacing": {
+      "kind": "ai_extracted",
+      "quote": "一级标题中文字体为宋体，字号为20pt，居左，1.25倍行距。",
+      "location": "TXT:L12"
+    },
+    "heading2_font_cn": {
+      "kind": "ai_extracted",
+      "quote": "二级标题中文字体为仿宋，字号为17pt，居右，1.5倍行距。",
+      "location": "TXT:L13"
+    },
+    "heading2_font_size": {
+      "kind": "ai_extracted",
+      "quote": "二级标题中文字体为仿宋，字号为17pt，居右，1.5倍行距。",
+      "location": "TXT:L13"
+    },
+    "heading2_alignment": {
+      "kind": "ai_extracted",
+      "quote": "二级标题中文字体为仿宋，字号为17pt，居右，1.5倍行距。",
+      "location": "TXT:L13"
+    },
+    "heading2_line_spacing": {
+      "kind": "ai_extracted",
+      "quote": "二级标题中文字体为仿宋，字号为17pt，居右，1.5倍行距。",
+      "location": "TXT:L13"
+    },
+    "heading3_font_cn": {
+      "kind": "ai_extracted",
+      "quote": "三级标题中文字体为楷体，字号为13.5pt，两端对齐，2倍行距。",
+      "location": "TXT:L14"
+    },
+    "heading3_font_size": {
+      "kind": "ai_extracted",
+      "quote": "三级标题中文字体为楷体，字号为13.5pt，两端对齐，2倍行距。",
+      "location": "TXT:L14"
+    },
+    "heading3_alignment": {
+      "kind": "ai_extracted",
+      "quote": "三级标题中文字体为楷体，字号为13.5pt，两端对齐，2倍行距。",
+      "location": "TXT:L14"
+    },
+    "heading3_line_spacing": {
+      "kind": "ai_extracted",
+      "quote": "三级标题中文字体为楷体，字号为13.5pt，两端对齐，2倍行距。",
+      "location": "TXT:L14"
+    },
+    "figure_caption_font_cn": {
+      "kind": "ai_extracted",
+      "quote": "图题中文字体为宋体，字号为小五号。",
+      "location": "TXT:L15"
+    },
+    "figure_caption_font_size": {
+      "kind": "ai_extracted",
+      "quote": "图题中文字体为宋体，字号为小五号。",
+      "location": "TXT:L15"
+    },
+    "table_caption_font_cn": {
+      "kind": "ai_extracted",
+      "quote": "表题中文字体为黑体，字号为小四号。",
+      "location": "TXT:L16"
+    },
+    "table_caption_font_size": {
+      "kind": "ai_extracted",
+      "quote": "表题中文字体为黑体，字号为小四号。",
+      "location": "TXT:L16"
+    }
+  },
+  "norm_excerpt": [
+    {
+      "location": "TXT:L1",
+      "text": "软件演示规范B，不是学校正式文件。"
+    },
+    {
+      "location": "TXT:L2",
+      "text": "纸张为A4竖向。"
+    },
+    {
+      "location": "TXT:L3",
+      "text": "上边距3cm。"
+    },
+    {
+      "location": "TXT:L4",
+      "text": "下边距2cm。"
+    },
+    {
+      "location": "TXT:L5",
+      "text": "左边距3.5cm。"
+    },
+    {
+      "location": "TXT:L6",
+      "text": "右边距3cm。"
+    },
+    {
+      "location": "TXT:L7",
+      "text": "正文中文字体为楷体。"
+    },
+    {
+      "location": "TXT:L8",
+      "text": "正文西文字体为Arial。"
+    },
+    {
+      "location": "TXT:L9",
+      "text": "正文普通文字字号为四号。"
+    },
+    {
+      "location": "TXT:L10",
+      "text": "正文采用2倍行距。"
+    },
+    {
+      "location": "TXT:L11",
+      "text": "正文首行缩进1字符。"
+    },
+    {
+      "location": "TXT:L12",
+      "text": "一级标题中文字体为宋体，字号为20pt，居左，1.25倍行距。"
+    },
+    {
+      "location": "TXT:L13",
+      "text": "二级标题中文字体为仿宋，字号为17pt，居右，1.5倍行距。"
+    },
+    {
+      "location": "TXT:L14",
+      "text": "三级标题中文字体为楷体，字号为13.5pt，两端对齐，2倍行距。"
+    },
+    {
+      "location": "TXT:L15",
+      "text": "图题中文字体为宋体，字号为小五号。"
+    },
+    {
+      "location": "TXT:L16",
+      "text": "表题中文字体为黑体，字号为小四号。"
+    },
+    {
+      "location": "TXT:L17",
+      "text": "题注编号采用连续编号。"
+    },
+    {
+      "location": "TXT:L18",
+      "text": "请双面打印。"
+    }
+  ],
+  "norm_file_sha256": "ff04d132e81ecafc0b404a3a5314f26ef4cf0e8fe8c9d78ec3d91f35d100cfe7",
+  "extraction": {
+    "kind": "real_api",
+    "model": "deepseek-flash",
+    "timestamp_utc": "2026-10-14T04:37:54.189431+00:00"
+  },
+  "confirmation": {
+    "method": "local_user",
+    "timestamp_utc": "2026-10-14T05:00:10.194707+00:00",
+    "imported": true
+  },
+  "extension_base_sha256": "1dccdfa3c93b951dad721a980e55d3d821354df9ceef5fe48d1482fbe938c96c",
+  "compatibility": null
+}

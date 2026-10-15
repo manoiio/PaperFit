@@ -1,0 +1,82 @@
+{
+  "scope": "各节页面；仅明确确认的主文档顶层正文段落中的普通文字。非当前学校现行标准声明。",
+  "source_file": "00-全员必看/本科毕业设计论文.pdf",
+  "rules": {
+    "R01": {
+      "name": "A4纸张",
+      "expected": {
+        "width_mm": 210,
+        "height_mm": 297
+      },
+      "page": 20,
+      "quote": "编排并打印在标准A4纸上"
+    },
+    "R02": {
+      "name": "页面边距",
+      "expected": {
+        "top_mm": 25,
+        "bottom_mm": 25,
+        "left_mm": 25,
+        "right_mm": 25
+      },
+      "page": 20,
+      "quote": "所有页面的上下左右页面边距为25mm"
+    },
+    "R03": {
+      "name": "正文中文字体",
+      "expected": "宋体",
+      "page": 18,
+      "quote": "正文：小四号，宋体，1.5倍行距"
+    },
+    "R04": {
+      "name": "正文西文字体",
+      "expected": "Times New Roman",
+      "page": 18,
+      "quote": "英文单词：字号、行距与正文相同，字体为Times New Roman",
+      "demo_interpretation": "演示将西文数字一并检查；只支持ASCII和Latin字符，不推断复杂文字字体槽位。"
+    },
+    "R05": {
+      "name": "正文普通文字字号",
+      "unit": "pt",
+      "expected": 14.0,
+      "source": {
+        "kind": "user_confirmed",
+        "label": "用户确认值",
+        "quote": "用户在网页手动确认值，不宣称原文精确支持",
+        "input_text": "正文四号，2倍行距",
+        "file": null,
+        "physical_page": null,
+        "model": null,
+        "parse_kind": null
+      }
+    },
+    "R06": {
+      "name": "正文行距",
+      "unit": "multiple",
+      "expected": 2,
+      "source": {
+        "kind": "ai_extracted",
+        "label": "AI提取后用户确认",
+        "quote": "2倍行距",
+        "input_text": "正文四号，2倍行距",
+        "file": null,
+        "physical_page": null,
+        "model": "deepseek-flash",
+        "parse_kind": "real_api"
+      }
+    },
+    "R07": {
+      "name": "正文首行缩进",
+      "expected": 2,
+      "unit": "CJK characters",
+      "page": 18,
+      "quote": "段首行缩进2个汉字",
+      "demo_interpretation": "firstLineChars=200；可判断等效点值=2×当前统一字号，不固定48pt；冲突属性不算通过。"
+    }
+  },
+  "kind": "user_confirmed_demo",
+  "name": "用户确认的演示规则",
+  "version": "custom-demo-1.0.0",
+  "base_sha256": "1ef3ec0d674ddc3a1e5e5c84510dd7851f9011edf98c7efe92a46161d078ca10",
+  "confirmed": true
+}

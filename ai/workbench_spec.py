@@ -6,7 +6,7 @@ from core.templates import validate_segments
 from core.norms import marked_text
 from core.package import DemoError
 
-def parse_requirements(segments,*,transport=None,config=None,audit=None,diagnostic=False):
+def _request(segments,*,transport=None,config=None,audit=None,diagnostic=False):
  validate_segments(segments)
  from core.norms import verify_namespaces,source_group
  verify_namespaces(segments)
@@ -49,11 +49,16 @@ notes脚注footnote__、尾注endnote__，只font_cn/font_size/line_multiple；�
   if audit:audit({'model':config.model,'timestamp_utc':requested_at,'segments':segments,'input_sha256':__import__('core.package',fromlist=['sha256']).sha256(marked_text(segments).encode()),'request_count':1,'elapsed_seconds':round(time.monotonic()-started,3),'kind':'real_api' if transport is None else 'mock_api',**capture})
 
 
+def parse_requirements(segments,*,transport=None,config=None,audit=None):
+ """Compatibility API: any invalid field/issue still rejects the entire draft."""
+ return _request(segments,transport=transport,config=config,audit=audit,diagnostic=False)
+
+
 def parse_diagnosed(segments,*,transport=None,config=None):
  """One request, protocol gate unchanged; field errors become non-executable diagnostics."""
  from core.spec_diagnostics import make_record
  captured={}
- try:parse_requirements(segments,transport=transport,config=config,audit=lambda r:captured.update(r),diagnostic=True)
+ try:_request(segments,transport=transport,config=config,audit=lambda r:captured.update(r),diagnostic=True)
  except (DemoError,RecursionError):
   if not captured:raise  # Missing local config/preflight never masquerades as a request.
  if not captured:raise DemoError('没有请求回执')

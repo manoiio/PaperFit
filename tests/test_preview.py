@@ -11,11 +11,15 @@ from core.layout import suggest_figure_pairs,apply_figure_layout
 from core.preview import configuration,valid_artifacts,render_preview,_environment
 from web.session import WebSession
 ROOT=Path(__file__).resolve().parents[1]
-B=ROOT/'work/phase5/final/fixed-B-current.docx';CFG=ROOT/'work/phase5/final/template-B-current.json'
+B=ROOT/'tests/fixtures/history/phase5/final/fixed-B-current.docx';CFG=ROOT/'tests/fixtures/history/phase5/final/template-B-current.json'
 M=json.loads(B.with_suffix('.types.json').read_text());CORRECT=ROOT/'samples/extended-correct.docx'
 
 class PreviewAcceptance(unittest.TestCase):
-    def setUp(self):self.tmp=TemporaryDirectory();self.dir=Path(self.tmp.name)
+    def setUp(self):
+        self.tmp=TemporaryDirectory();self.dir=Path(self.tmp.name)
+        from tests.preview_fixture import configuration as fake_configuration
+        for target in (__name__+'.configuration','core.preview.configuration','web.preview_session.configuration'):
+            p=patch(target,side_effect=fake_configuration);p.start();self.addCleanup(p.stop)
     def tearDown(self):self.tmp.cleanup()
     def edit(self,fn):
         pkg=Package(B);fn(pkg);p=self.dir/('test-'+str(len(list(self.dir.glob('*.docx'))))+'.docx');write_new(p,pkg.bytes(True))

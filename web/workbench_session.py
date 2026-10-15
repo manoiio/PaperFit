@@ -228,6 +228,7 @@ class WorkbenchSession(DiagnosticSession):
      if s not in segs:segs.append(s)
    sources=deepcopy(current['provenance']);sources[m]=rb.origins(m,obj)
    obj=rb.build('导入的组合演示要求',mods,segs,obj['template']['extraction'] if m=='main' else current['extraction'],base,sources,current.get('notices'))
+  self.archive_diagnostic()
   w=self.workbench;w.update(text='',segments=[],confirmed_excerpt=None,receipt=None,parse_attempted=False,origin='historical_import',historical=True)
   self.start_workbench_draft();w['draft']['issues']=deepcopy(obj.get('notices',{m:[] for m in rb.MODULES}));w['draft']['baseline']=obj;w['draft']['name']=obj['name'];w['draft']['imported']=True
   w['segments']=deepcopy(obj['excerpt']);w['text']='\n'.join(s['text'] for s in w['segments'])

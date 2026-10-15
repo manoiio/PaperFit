@@ -39,7 +39,7 @@ def fake_parse(segments,kind='B'):
 
 class TemplateAcceptance(unittest.TestCase):
     def setUp(self):
-        self.tmp=TemporaryDirectory(dir=ROOT/'work/phase5');self.dir=Path(self.tmp.name)
+        self.tmp=TemporaryDirectory();self.dir=Path(self.tmp.name)
         self.base=load_rules();self.model=WebSession(self.dir)
     def tearDown(self):self.tmp.cleanup()
     def norm(self,kind='B'):

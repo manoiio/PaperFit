@@ -38,7 +38,7 @@ def fake_parse(text,draft=None):
 
 class CustomRuleAcceptance(unittest.TestCase):
     def setUp(self):
-        self.tmp=TemporaryDirectory(dir=ROOT/'work/phase3',prefix='test-')
+        self.tmp=TemporaryDirectory(prefix='test-')
         self.root=Path(self.tmp.name)
         self.model=WebSession(self.root)
         self.assertTrue(self.model.load(CORRECT.read_bytes(),CORRECT.name,PRESET))

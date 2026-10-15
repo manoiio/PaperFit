@@ -47,7 +47,7 @@ def render_diagnostics(model,guard):
       short=st.selectbox('待修复字段',targets,key='diag-field');m,n=short.split('.');f=a['fields'][short];c=f['candidate'] if isinstance(f['candidate'],dict) else {}
       with st.form('diag-field-form-'+g+'-'+short):
        action=st.radio('字段修复方式',['candidate','manual','disabled'],format_func=lambda x:{'candidate':'修复依据（仍校验全部规范）','manual':'手动指定值（不宣称原文精确支持）','disabled':'明确不检查这个问题字段'}[x])
-       loc=st.selectbox('从真实规范选择来源',[s['location'] for s in r['segments']]);st.caption(next(s['text'] for s in r['segments'] if s['location']==loc))
+       locs=[s['location'] for s in r['segments']];loc=st.selectbox('从真实规范选择来源',locs,index=locs.index(c.get('location')) if c.get('location') in locs else 0);st.caption(next(s['text'] for s in r['segments'] if s['location']==loc))
        quote=st.text_input('连续原句（不能概括或拼接）',value=str(c.get('quote','')))
        val=st.text_input('最终值JSON或字体枚举',value=json.dumps(c.get('value'),ensure_ascii=False))
        unit=st.text_input('单位（不会自动换算）',value=str(c.get('unit',rb.FIELDS[m][n][2])))
@@ -67,8 +67,9 @@ def render_diagnostics(model,guard):
       with st.form('diag-issue-form-'+g+'-'+path):
        choice=st.radio('关联决定',['retain','change','note'],format_func=lambda x:{'retain':'保留阻止关系（关联字段须手动取舍或不检查）','change':'修正关联字段','note':'与执行字段无关的只读说明'}[x])
        fields=st.multiselect('明确关联字段',list(rb.FIELDS[m]),default=issue['effective'].get('fields',[]) if isinstance(issue['effective'],dict) and isinstance(issue['effective'].get('fields'),list) and all(n in rb.FIELDS[m] for n in issue['effective']['fields']) else [])
-       loc=st.selectbox('提示来源位置',[s['location'] for s in r['segments']]);quote=st.text_input('提示的连续原句',value=str(issue['effective'].get('quote','')) if isinstance(issue['effective'],dict) else '')
-       why=st.selectbox('提示原因',sorted(rb.main.REASONS));reason=st.text_input('用户决定与理由（必填）')
+       locs=[s['location'] for s in r['segments']];savedloc=issue['effective'].get('location') if isinstance(issue['effective'],dict) else None
+       loc=st.selectbox('提示来源位置',locs,index=locs.index(savedloc) if savedloc in locs else 0);quote=st.text_input('提示的连续原句',value=str(issue['effective'].get('quote','')) if isinstance(issue['effective'],dict) else '')
+       reasons=sorted(rb.main.REASONS);oldreason=issue['effective'].get('reason') if isinstance(issue['effective'],dict) else None;why=st.selectbox('提示原因',reasons,index=reasons.index(oldreason) if oldreason in reasons else 0);reason=st.text_input('用户决定与理由（必填）')
        if st.form_submit_button('记录提示决定并重新校验'):
         guard(lambda:model.repair_diagnostic(path,'issue',{'fields':[] if choice=='note' else issue['original'].get('fields',[]) if choice=='retain' else fields,'quote':quote,'location':loc,'reason':why},reason));st.rerun()
     st.caption('普通未提及策略不能处理隔离字段；必须在这里明确取舍。已修复字段最终标为用户确认，原AI内容保留历史。')

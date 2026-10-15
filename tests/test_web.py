@@ -20,7 +20,7 @@ CORRECT_PRESET = json.loads((ROOT / 'samples/correct.body.json').read_text())
 
 class WebStateAcceptance(unittest.TestCase):
     def setUp(self):
-        self.tmp = TemporaryDirectory(dir=ROOT / 'work/phase2', prefix='state-test-')
+        self.tmp = TemporaryDirectory( prefix='state-test-')
         self.root = Path(self.tmp.name)
         self.model = WebSession(self.root)
 
@@ -42,7 +42,7 @@ class WebStateAcceptance(unittest.TestCase):
     def test_uploaded_filename_or_identical_bytes_never_prefill_body(self):
         self.assertTrue(self.model.load(DATA, '../../samples/errors.docx'))
         self.assertEqual(self.model.input_path.name, 'input.docx')
-        self.assertEqual(self.model.input_path.parent.parent, self.root)
+        self.assertEqual(self.model.input_path.parent.parent, self.root.resolve())
         self.assertEqual(self.model.body, [])
         self.assertIsNone(self.model.confirmed)
         self.assertFalse(self.model.check())

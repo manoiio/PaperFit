@@ -27,7 +27,7 @@ def item(report, rule, **loc):
 
 class Acceptance(unittest.TestCase):
     def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory(prefix='acceptance-', dir=ROOT / 'work/phase1')
+        self.tmp = tempfile.TemporaryDirectory(prefix='acceptance-')
         self.dir = Path(self.tmp.name)
 
     def tearDown(self):

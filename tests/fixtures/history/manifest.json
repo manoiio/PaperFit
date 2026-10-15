@@ -1,0 +1,72 @@
+[
+  {
+    "file": "phase3/final/real-api-record.json",
+    "sha256": "214675e512a6d81328db2e7306f24a6ef89ffa459c419bf589951d7721d9f301",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase3/final/user-confirmed-rules.json",
+    "sha256": "c6acc61f5dbd05348cad5368ec7a32b6545deb2d4e399299290b3f1d20215974",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase5/final/fixed-B-current.docx",
+    "sha256": "fe0297c2f8f300dbbba82e8fb1bd385e4a98bf313460a3c2d143d40b5a2eff71",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase5/final/fixed-B-current.types.json",
+    "sha256": "8fecee9784e0982c1ba6bc7a9e5f2b1c24077281ec15f496e891284b199886c0",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase5/final/template-B-current.json",
+    "sha256": "ef2562475c0bae94f34448946375880434a46b9e778d45483d9267a06210cc56",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase9/final/B-fixed.docx",
+    "sha256": "05f8a3ed7d532f13f42bdb723148812d4477746ba741ca69cf6f72a79ae92b38",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase9/final/template-B-active.json",
+    "sha256": "045bab51666698e7fe269eeb35e737b50893f3c455fee5fc58c701519cb78849",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase9/final/B-types.json",
+    "sha256": "59dcbe98057d32e647ccbf6fc2b86468c81b26d78e1bc4668777eeaf5eaa4f6a",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase12/long-400.docx",
+    "sha256": "ccb84cdc85d989444ddf176139a35d266690d6b7d80432df4e1d5767748ba06b",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase12/long-400.types.json",
+    "sha256": "67cf320af117d1d84f4275a37df3a007b49866e36048cac58649a20b19481729",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase15/final-current/browser-custom-B.docx",
+    "sha256": "b0e5360f47f94993f65c1e56ee5e29f59eeda07bcc1723170d75003efebd7159",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase15/final-current/browser-custom-B.types.json",
+    "sha256": "ea3b1648a2be8d4bbf50836468a772ba2772d7dd2822c581604a6a66f7533d3b",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase15/final-current/live-edited-B-template.json",
+    "sha256": "cf6e0ecc5bea4b9181ecae7328c32c0623253d9019d4b255bb26b4c34bc6d096",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  },
+  {
+    "file": "phase24/browser-round2.docx",
+    "sha256": "beb7a953409d243dbf2481508d5a044f7a6ba7f97addc0ddda3fd143c43c1043",
+    "source": "public synthetic historical acceptance fixture, not real coursework"
+  }
+]

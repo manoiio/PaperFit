@@ -37,7 +37,7 @@ class WidthAcceptance(unittest.TestCase):
  def model(self):
   s=WebSession(self.d/'web');self.assertTrue(s.load(self.p.read_bytes(),'../合成.docx'));s.set_body([1]);s.confirm();self.assertTrue(s.check());return s
  def test_b_table_actual_risk_and_excess(self):
-  r=check_widths(ROOT/'work/phase9/final/B-fixed.docx')['objects'][-1]
+  r=check_widths(ROOT/'tests/fixtures/history/phase9/final/B-fixed.docx')['objects'][-1]
   self.assertEqual(r['status'],'risk');self.assertTrue(r['fixable']);self.assertAlmostEqual(r['excess_mm'],15.01069,places=4);self.assertTrue(r['plan']['autofit_to_fixed'])
  def test_simple_image_and_table_risk(self):
   r=self.report();self.assertEqual(r['summary'],{'risks':2,'reviews':0,'passes':0});self.assertAlmostEqual(r['objects'][1]['declared_width_mm'],180,places=4)
@@ -158,7 +158,7 @@ class WidthAcceptance(unittest.TestCase):
  def test_geometry_not_visual_or_font_validation(self):
   r=self.fix();self.assertEqual(r['widths']['visual_status'],'not_reviewed');self.assertIn('不证明',width_markdown(r['widths']['after']));self.assertEqual(r['after']['summary']['rule_count'],7)
  def test_custom_body_title_rules_unchanged_by_width_adaptation(self):
-  p=ROOT/'work/phase9/final/B-fixed.docx';template=ROOT/'work/phase9/final/template-B-active.json';m=json.loads((ROOT/'work/phase9/final/B-types.json').read_text());rh=effective_rules(custom_rules_path=template,mode='extended')['sha256'];plan=check_widths(p,rules_sha256=rh)
+  p=ROOT/'tests/fixtures/history/phase9/final/B-fixed.docx';template=ROOT/'tests/fixtures/history/phase9/final/template-B-active.json';m=json.loads((ROOT/'tests/fixtures/history/phase9/final/B-types.json').read_text());rh=effective_rules(custom_rules_path=template,mode='extended')['sha256'];plan=check_widths(p,rules_sha256=rh)
   r=apply_width_adaptation(p,self.d/'B.docx',None,custom_rules_path=template,mode='extended',classification_manifest=m,plan=plan,selected_keys=['W01:table=1'],confirmed_fixed_keys=['W01:table=1'])
   self.assertEqual(r['after']['summary']['problem_count'],0);self.assertEqual(r['after']['summary']['review_count'],0);self.assertEqual(r['after']['rules']['sha256'],rh);self.assertEqual(r['after']['summary']['rule_count'],12)
 

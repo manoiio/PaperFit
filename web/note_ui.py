@@ -37,8 +37,8 @@ def render_notes(model):
   with st.expander('注释要求与补充配置'):
    if model.workbench['active']:
     st.caption('规则已在统一工作台确认；此处只核对论文对象，不重复配置相同格式。编辑或导入规则请使用上方工作台。')
-    from .workbench_ui import rows
-    st.dataframe([r for r in rows(model.current_rule_bundle()) if r['模块']==__import__('core.rule_bundle',fromlist=['LABELS']).LABELS['notes']],hide_index=True,width='stretch',height=220)
+    from .workbench_ui import rows as rule_rows
+    st.dataframe([r for r in rule_rows(model.current_rule_bundle()) if r['模块']==__import__('core.rule_bundle',fromlist=['LABELS']).LABELS['notes']],hide_index=True,width='stretch',height=220)
    else:
     values={};sources={}
     for k,label in KINDS.items():

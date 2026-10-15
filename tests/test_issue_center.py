@@ -124,7 +124,12 @@ class CenterAcceptance(unittest.TestCase):
   self.assertEqual(field_value(9,'R12',{'property':'size'},True),'9磅')
  def test_new_bundled_renderer_available(self):
   from core.preview import configuration
-  c,h=configuration();self.assertEqual(c['bundle'],'26.1013.11914');self.assertEqual(len(h),64)
+  import subprocess
+  from unittest.mock import patch
+  with TemporaryDirectory() as td:
+   p=Path(td);(p/'python/bin').mkdir(parents=True);(p/'python/bin/python3').write_text('mock runtime');script=p/'render.py';script.write_text('# mock renderer')
+   with patch('core.preview.RUNTIME',p),patch('core.preview.RENDERER',script),patch('core.preview.FONT_DIRS',[]),patch('core.preview.subprocess.run',return_value=subprocess.CompletedProcess([],0,'Test renderer','')):
+    c,h=configuration();self.assertEqual(c['renderer_version'],'Test renderer');self.assertEqual(len(h),64)
 
 class CenterUIAcceptance(unittest.TestCase):
  def test_navigation_and_filters_preserve_selection_and_scope(self):

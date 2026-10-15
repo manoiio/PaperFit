@@ -121,7 +121,7 @@ class EfficiencyAcceptance(unittest.TestCase):
  def test_sessions_isolated(self):
   a=self.fixed();b=self.model(True);a.result_package();self.assertIsNone(b.package_cache);self.assertNotEqual(a.task_dir,b.task_dir);a.batch_types([4],'other');self.assertIsNotNone(b.confirmed);self.assertNotEqual(a.readonly_cache,b.readonly_cache)
  def test_template_package_reloads_exact_rules_hash(self):
-  s=self.model(True);template=(ROOT/'work/phase9/final/template-B-active.json').read_bytes();self.assertTrue(s.import_template(template));self.assertTrue(s.apply_template());s.confirm();s.check();s.set_selection([f['key'] for f in s.eligible()]);self.assertTrue(s.generate())
+  s=self.model(True);template=(ROOT/'tests/fixtures/history/phase9/final/template-B-active.json').read_bytes();self.assertTrue(s.import_template(template));self.assertTrue(s.apply_template());s.confirm();s.check();s.set_selection([f['key'] for f in s.eligible()]);self.assertTrue(s.generate())
   with zipfile.ZipFile(BytesIO(s.result_package())) as z:
    path=self.root/'template.json';path.write_bytes(z.read('template.json'));self.assertEqual(z.read('rules.json'),z.read('template.json'));out=self.root/'out.docx';out.write_bytes(z.read('fixed.docx'));manifest=json.loads(z.read('scope.json'));after=check_document(out,None,mode='extended',classification_manifest=manifest,custom_rules_path=path);self.assertEqual(after['rules']['sha256'],s.result['after']['rules']['sha256']);self.assertEqual(after['summary'],s.result['after']['summary'])
  def test_pack_once_without_duplicate_zip_creation(self):
@@ -135,5 +135,5 @@ class EfficiencyAcceptance(unittest.TestCase):
  def test_repeat_shortcut_no_duplicate_manifest(self):
   s=self.model(True);before=len(list(s.task_dir.glob('confirmed-types-*.json')));s.confirm_and_check();s.confirm_and_check();self.assertEqual(len(list(s.task_dir.glob('confirmed-types-*.json'))),before);self.assertEqual(s.generation_count,0)
  def test_active_template_apply_invalidates_cached_report(self):
-  s=self.model(True);s.prepare_reading_export();self.assertTrue(s.readonly_cache);s.import_template((ROOT/'work/phase9/final/template-B-active.json').read_bytes());self.assertTrue(s.apply_template());self.assertIsNone(s.report);self.assertIsNone(s.confirmed);self.assertFalse(s.readonly_cache);self.assertFalse(s.reading_downloads());s.confirm_and_check();self.assertEqual(s.report['summary']['problem_count'],50)
+  s=self.model(True);s.prepare_reading_export();self.assertTrue(s.readonly_cache);s.import_template((ROOT/'tests/fixtures/history/phase9/final/template-B-active.json').read_bytes());self.assertTrue(s.apply_template());self.assertIsNone(s.report);self.assertIsNone(s.confirmed);self.assertFalse(s.readonly_cache);self.assertFalse(s.reading_downloads());s.confirm_and_check();self.assertEqual(s.report['summary']['problem_count'],50)
 if __name__=='__main__':unittest.main()

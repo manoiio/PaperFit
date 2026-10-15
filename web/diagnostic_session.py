@@ -14,7 +14,11 @@ class DiagnosticSession:
  def receive_diagnostic(self,record,*,historical=False):
   r=sd.validate_record(record);w=self.workbench
   if not w['confirmed_excerpt'] or w['segments']!=r['segments'] or w['confirmed_excerpt']!=r['input_sha256']:raise DemoError('诊断与当前已确认规范快照不符；不能用当前规范冒充历史输入')
-  self.archive_diagnostic();s=self.diagnostic_store();s['current']=r;s['adopted_sha256']=None;w['draft']=None;w['receipt']=None;w['historical']=historical;w['generation']+=1;w['origin']='local'
+  staged=deepcopy(self.diagnostic_store())
+  if staged['current']:
+   if len(staged['history'])>=sd.MAX_HISTORY:raise DemoError('历史已满，请明确导出/清理后继续')
+   staged['history'].append(staged['current'])
+  staged.update(current=r,adopted_sha256=None);sd.validate_store(staged);self.workbench['diagnostics']=staged;w['draft']=None;w['receipt']=None;w['historical']=historical;w['generation']+=1;w['origin']='local'
   return sd.diagnose(r)
  def diagnostic_analysis(self):
   s=self.diagnostic_store()
@@ -24,7 +28,7 @@ class DiagnosticSession:
   if r is None or r['segments']!=w['segments'] or r['input_sha256']!=w['confirmed_excerpt']:raise DemoError('规范已改变，旧诊断只保留历史，不能继续采用')
   return r
  def repair_diagnostic(self,path,action,data,reason):
-  r=sd.revise(self._diagnostic_current(),path,action,data,reason);s=self.diagnostic_store();s['current']=r
+  r=sd.revise(self._diagnostic_current(),path,action,data,reason);s=self.diagnostic_store();staged=deepcopy(s);staged.update(current=r,adopted_sha256=None);sd.validate_store(staged);s['current']=r
   if s['adopted_sha256']:self.workbench['draft']=None
   s['adopted_sha256']=None;self.workbench['generation']+=1
   return sd.diagnose(r)
@@ -36,7 +40,7 @@ class DiagnosticSession:
    if not f or not f['suggestion']:raise DemoError('含糊/无唯一映射字段不能批量修复')
    c=deepcopy(f['raw']);c['location']=f['suggestion']['to']
    r=sd.revise(r,path,'candidate',c,'用户核对原行号、唯一连续原句后明确采用来源映射')
-  s=self.diagnostic_store();s['current']=r
+  s=self.diagnostic_store();staged=deepcopy(s);staged.update(current=r,adopted_sha256=None);sd.validate_store(staged);s['current']=r
   if s['adopted_sha256']:self.workbench['draft']=None
   s['adopted_sha256']=None;self.workbench['generation']+=1;return sd.diagnose(r)
  def use_diagnostic_draft(self,*,acknowledged=False):

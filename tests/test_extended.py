@@ -16,13 +16,13 @@ from web.presentation import fmt
 
 ROOT=Path(__file__).resolve().parents[1];ERROR=ROOT/'samples/extended-errors.docx';CORRECT=ROOT/'samples/extended-correct.docx'
 MANIFEST=json.loads(ERROR.with_suffix('.types.json').read_text());CONTROL=json.loads(CORRECT.with_suffix('.types.json').read_text())
-SPEC=ROOT/'work/phase3/final/real-api-record.json'
+SPEC=ROOT/'tests/fixtures/history/phase3/final/real-api-record.json'
 
 def hashfile(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 class ExtendedAcceptance(unittest.TestCase):
     def setUp(self):
-        self.tmp=TemporaryDirectory(dir=ROOT/'work/phase4');self.dir=Path(self.tmp.name)
+        self.tmp=TemporaryDirectory();self.dir=Path(self.tmp.name)
     def tearDown(self):self.tmp.cleanup()
     def check(self,path=ERROR,manifest=MANIFEST,**args):
         return check_document(path,mode='extended',classification_manifest=manifest,**args)
@@ -206,7 +206,7 @@ class ExtendedAcceptance(unittest.TestCase):
         self.assertEqual(next(f for f in self.check()['findings'] if f['rule_id']=='R11')['source']['label'],'产品结构规则')
 
     def test_custom_body_coexists_fixed_titles_and_exact_new_indent_cause(self):
-        config=ROOT/'work/phase3/final/user-confirmed-rules.json'
+        config=ROOT/'tests/fixtures/history/phase3/final/user-confirmed-rules.json'
         r=self.check(CORRECT,CONTROL,custom_rules_path=config)
         self.assertTrue(any(x['locator']['paragraph']==14 for x in r['modification_dependencies']))
         result=self.fix(['R05','R06'],path=CORRECT,manifest=CONTROL,custom_rules_path=config)
@@ -224,7 +224,7 @@ class ExtendedAcceptance(unittest.TestCase):
             _ensure(_ensure(p,'pPr'),'ind').set(q('firstLine'),'600')
         path,m=self.modified(edit)
         result=self.fix(keys=['R05:paragraph=14:run=1'],path=path,manifest=m,
-                        custom_rules_path=ROOT/'work/phase3/final/user-confirmed-rules.json')
+                        custom_rules_path=ROOT/'tests/fixtures/history/phase3/final/user-confirmed-rules.json')
         key='R07:paragraph=14'
         self.assertEqual(next(f for f in result['before']['findings'] if f['key']==key)['status'],'problem')
         self.assertEqual(next(f for f in result['after']['findings'] if f['key']==key)['status'],'review')

@@ -71,7 +71,7 @@ def raw_value(pkg,p,r,tag,attr):
 
 class ObjectTemplateAcceptance(unittest.TestCase):
     def setUp(self):
-        self.temp=TemporaryDirectory(dir=ROOT/'work/phase9');self.dir=Path(self.temp.name);self.base=load_rules();self.model=WebSession(self.dir)
+        self.temp=TemporaryDirectory();self.dir=Path(self.temp.name);self.base=load_rules();self.model=WebSession(self.dir)
     def tearDown(self):self.temp.cleanup()
     def applied(self,values=B):
         m=self.model;m.set_mode('extended');m.set_norm_text((ROOT/'samples/norm9-B.txt').read_text());m.confirm_norm_text()
@@ -279,7 +279,7 @@ class ObjectTemplateAcceptance(unittest.TestCase):
         m=self.applied();active=deepcopy(m.active_template);m.set_norm_text('一级标题18pt。');m.confirm_norm_text()
         calls=[]
         def fail(*args,**kwargs):calls.append(1);raise TimeoutError()
-        with patch('ai.short_spec.http_post',side_effect=fail):self.assertFalse(m.parse_template())
+        with patch('ai.short_spec.http_post',side_effect=fail),patch('ai.template_spec.settings',return_value=Settings('test-only')):self.assertFalse(m.parse_template())
         self.assertEqual(len(calls),1);self.assertEqual(m.active_template,active);m.confirm();self.assertTrue(m.check());m.use_default_rules();m.confirm();self.assertTrue(m.check());self.assertEqual(m.report['summary']['problem_count'],0)
 
     def test_basic_mode_does_not_execute_custom_title_or_caption(self):

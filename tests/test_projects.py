@@ -40,12 +40,12 @@ class ProjectAcceptance(unittest.TestCase):
   s=self.model(True,False);s.batch_types([8,20],'other');n=self.restore(s)
   self.assertEqual(n.paragraph_types,s.paragraph_types);self.assertIsNone(n.confirmed);self.assertIsNone(n.report);self.assertFalse(n.selected)
  def test_custom_template_and_sources_preserved_no_api(self):
-  s=self.model(True);self.assertTrue(s.import_template((ROOT/'work/phase9/final/template-B-active.json').read_bytes()));self.assertTrue(s.apply_template());s.confirm_and_check()
+  s=self.model(True);self.assertTrue(s.import_template((ROOT/'tests/fixtures/history/phase9/final/template-B-active.json').read_bytes()));self.assertTrue(s.apply_template());s.confirm_and_check()
   with patch('ai.template_spec.parse_template_requirements',side_effect=AssertionError('No API')),patch('core.preview.render_preview',side_effect=AssertionError('No renderer')):
    n=self.restore(s)
   self.assertEqual(s.active_template,n.active_template);self.assertEqual(s.rules_hash,n.rules_hash);self.assertEqual(n.report['findings'],s.report['findings'])
  def test_unapplied_template_edits_stay_draft(self):
-  s=self.model(True,False);s.import_template((ROOT/'work/phase9/final/template-B-active.json').read_bytes());s.edit_template('heading1_font_size','manual',20,touched=True)
+  s=self.model(True,False);s.import_template((ROOT/'tests/fixtures/history/phase9/final/template-B-active.json').read_bytes());s.edit_template('heading1_font_size','manual',20,touched=True)
   n=self.restore(s);self.assertIsNone(n.active_template);self.assertEqual(n.template_values['heading1_font_size'],20);self.assertIn('heading1_font_size',n.template_touched);self.assertIsNone(n.confirmed)
  def test_short_spec_draft_preserved_without_request(self):
   s=self.model(False,False);s.set_spec_text('正文小四号，1.5倍行距');s.edit_draft('R05','manual',14,touched=True)
@@ -75,7 +75,7 @@ class ProjectAcceptance(unittest.TestCase):
  def test_mode_change_invalidates_download(self):
   s=self.model();s.prepare_project();s.set_mode('extended');self.assertIsNone(s.project_download())
  def test_template_change_invalidates_download(self):
-  s=self.model();s.prepare_project();s.import_template((ROOT/'work/phase9/final/template-B-active.json').read_bytes());self.assertIsNone(s.project_download())
+  s=self.model();s.prepare_project();s.import_template((ROOT/'tests/fixtures/history/phase9/final/template-B-active.json').read_bytes());self.assertIsNone(s.project_download())
  def test_output_external_change_refused(self):
   s=self.rounds();s.prepare_project();Path(s.history[0]['result']['output']).write_bytes(b'changed')
   with self.assertRaises(DemoError):s.project_download()
@@ -213,7 +213,7 @@ class ProjectAcceptance(unittest.TestCase):
   s=self.model();base=load_rules();values=defaults(base);sources={n:{'kind':'default_inherited','quote':'','location':None} for n in FIELDS};cfg=make_template('旧正文演示',values,sources,[],base)
   s.import_template(json.dumps(cfg,ensure_ascii=False).encode());s.apply_template();s.confirm_and_check();n=self.restore(s);self.assertEqual(n.active_template['structure_version'],2);self.assertEqual(n.active_template['field_sources'],s.active_template['field_sources'])
  def test_restore_review_full_custom_alignment_and_spacing(self):
-  s=self.model(True);s.import_template((ROOT/'work/phase9/final/template-B-active.json').read_bytes());s.apply_template();s.confirm_and_check();s.stage_project(s.prepare_project());rules,rows=s.project_review()
+  s=self.model(True);s.import_template((ROOT/'tests/fixtures/history/phase9/final/template-B-active.json').read_bytes());s.apply_template();s.confirm_and_check();s.stage_project(s.prepare_project());rules,rows=s.project_review()
   self.assertEqual(len(rules),12);self.assertEqual(len(rows),len(s.inventory['paragraphs']));r=next(r for r in rules if r['规则'].startswith('R09'));self.assertIn('居右',r['要求']);self.assertIn('1.5倍行距',r['要求']);self.assertNotIn('单倍',r['要求'])
  def test_full_heading_justified_summary_supported(self):
   from web.presentation import fmt

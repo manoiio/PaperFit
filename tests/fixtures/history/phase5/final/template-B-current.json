@@ -1,0 +1,186 @@
+{
+  "structure_version": 2,
+  "name": "课程论文演示要求B",
+  "supported_fields": [
+    "paper",
+    "margin_top",
+    "margin_bottom",
+    "margin_left",
+    "margin_right",
+    "font_cn",
+    "font_western",
+    "font_size",
+    "line_spacing",
+    "first_line_indent"
+  ],
+  "base_sha256": "1ef3ec0d674ddc3a1e5e5c84510dd7851f9011edf98c7efe92a46161d078ca10",
+  "final_values": {
+    "paper": "A4 portrait",
+    "margin_top": 30,
+    "margin_bottom": 20,
+    "margin_left": 35,
+    "margin_right": 30,
+    "font_cn": "黑体",
+    "font_western": "Arial",
+    "font_size": 14.0,
+    "line_spacing": 2,
+    "first_line_indent": 1
+  },
+  "field_sources": {
+    "paper": {
+      "kind": "ai_extracted",
+      "quote": "纸张为A4竖向。",
+      "location": "DOCX:P3"
+    },
+    "margin_top": {
+      "kind": "ai_extracted",
+      "quote": "上边距3cm。",
+      "location": "DOCX:T1:R1:C2:P1"
+    },
+    "margin_bottom": {
+      "kind": "ai_extracted",
+      "quote": "下边距2cm。",
+      "location": "DOCX:T1:R2:C2:P1"
+    },
+    "margin_left": {
+      "kind": "ai_extracted",
+      "quote": "左边距3.5cm。",
+      "location": "DOCX:T1:R3:C2:P1"
+    },
+    "margin_right": {
+      "kind": "ai_extracted",
+      "quote": "右边距3cm。",
+      "location": "DOCX:T1:R4:C2:P1"
+    },
+    "font_cn": {
+      "kind": "ai_extracted",
+      "quote": "正文中文字体为黑体。",
+      "location": "DOCX:T1:R5:C2:P1"
+    },
+    "font_western": {
+      "kind": "ai_extracted",
+      "quote": "正文西文字体为Arial。",
+      "location": "DOCX:T1:R6:C2:P1"
+    },
+    "font_size": {
+      "kind": "user_confirmed",
+      "quote": "正文普通文字字号为四号。",
+      "location": "DOCX:T1:R7:C2:P1"
+    },
+    "line_spacing": {
+      "kind": "ai_extracted",
+      "quote": "正文采用2倍行距。",
+      "location": "DOCX:T1:R8:C2:P1"
+    },
+    "first_line_indent": {
+      "kind": "ai_extracted",
+      "quote": "正文首行缩进1字符。",
+      "location": "DOCX:T1:R9:C2:P1"
+    }
+  },
+  "norm_excerpt": [
+    {
+      "location": "DOCX:P1",
+      "text": "软件演示规范B"
+    },
+    {
+      "location": "DOCX:P2",
+      "text": "仅用于测试论文有格软件，不是学校正式规范。"
+    },
+    {
+      "location": "DOCX:P3",
+      "text": "纸张为A4竖向。"
+    },
+    {
+      "location": "DOCX:T1:R1:C1:P1",
+      "text": "上边距"
+    },
+    {
+      "location": "DOCX:T1:R1:C2:P1",
+      "text": "上边距3cm。"
+    },
+    {
+      "location": "DOCX:T1:R2:C1:P1",
+      "text": "下边距"
+    },
+    {
+      "location": "DOCX:T1:R2:C2:P1",
+      "text": "下边距2cm。"
+    },
+    {
+      "location": "DOCX:T1:R3:C1:P1",
+      "text": "左边距"
+    },
+    {
+      "location": "DOCX:T1:R3:C2:P1",
+      "text": "左边距3.5cm。"
+    },
+    {
+      "location": "DOCX:T1:R4:C1:P1",
+      "text": "右边距"
+    },
+    {
+      "location": "DOCX:T1:R4:C2:P1",
+      "text": "右边距3cm。"
+    },
+    {
+      "location": "DOCX:T1:R5:C1:P1",
+      "text": "中文字体"
+    },
+    {
+      "location": "DOCX:T1:R5:C2:P1",
+      "text": "正文中文字体为黑体。"
+    },
+    {
+      "location": "DOCX:T1:R6:C1:P1",
+      "text": "西文字体"
+    },
+    {
+      "location": "DOCX:T1:R6:C2:P1",
+      "text": "正文西文字体为Arial。"
+    },
+    {
+      "location": "DOCX:T1:R7:C1:P1",
+      "text": "字号"
+    },
+    {
+      "location": "DOCX:T1:R7:C2:P1",
+      "text": "正文普通文字字号为四号。"
+    },
+    {
+      "location": "DOCX:T1:R8:C1:P1",
+      "text": "倍数行距"
+    },
+    {
+      "location": "DOCX:T1:R8:C2:P1",
+      "text": "正文采用2倍行距。"
+    },
+    {
+      "location": "DOCX:T1:R9:C1:P1",
+      "text": "首行缩进"
+    },
+    {
+      "location": "DOCX:T1:R9:C2:P1",
+      "text": "正文首行缩进1字符。"
+    },
+    {
+      "location": "DOCX:P4",
+      "text": "标题采用固定20磅行距。"
+    },
+    {
+      "location": "DOCX:P5",
+      "text": "请双面打印。"
+    }
+  ],
+  "norm_file_sha256": "6a9598edc6b80be8fd75bd68e00680b2d11e924f9ea9c477ac4a28f1ae5a78c9",
+  "extraction": {
+    "kind": "real_api",
+    "model": "deepseek-flash",
+    "timestamp_utc": "2026-10-13T18:09:13.238475+00:00"
+  },
+  "confirmation": {
+    "method": "local_user",
+    "timestamp_utc": "2026-10-13T18:10:30.505053+00:00",
+    "imported": false
+  }
+}

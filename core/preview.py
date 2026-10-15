@@ -7,8 +7,8 @@ from xml.sax.saxutils import escape
 from .package import Package,DemoError,sha256,write_new,parse,q
 from .formats import Resolver,Unresolved
 
-RUNTIME=Path('/Users/xlt/.cache/codex-runtimes/codex-primary-runtime/dependencies')
-RENDERER=Path('/Users/xlt/.codex/plugins/cache/openai-primary-runtime/documents/26.1013.11914/skills/documents/render_docx.py')
+RUNTIME=Path(os.environ.get('PAPERFIT_PREVIEW_RUNTIME',str(Path.home()/'.cache/codex-runtimes/codex-primary-runtime/dependencies')))
+RENDERER=Path(os.environ.get('PAPERFIT_PREVIEW_RENDERER',str(Path.home()/'.codex/plugins/cache/openai-primary-runtime/documents/26.1013.11914/skills/documents/render_docx.py')))
 FONT_DIRS=['/System/Library/Fonts/Supplemental','/System/Library/Fonts','/Library/Fonts',str(Path.home()/'Library/Fonts'),'/Applications/Microsoft Word.app/Contents/Resources/DFonts']
 CONFIG={'version':'preview-1.6','max_pages':10,'dpi':130,'timeout_seconds':45,
         'strong_font_aliases':['仿宋_GB2312'],
