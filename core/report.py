@@ -64,8 +64,9 @@ def modification_markdown(result):
     if 'widths' in result:
         from .widths import width_markdown
         lines += ['', result['widths']['message'], result['widths']['limitation'], '', width_markdown(result['widths']['after'])]
+    if result.get('impact'):lines += ['', '## 预演及采用影响',_fmt(result['impact']),'采用时重新核对：'+_fmt(result['rehearsal']),'预演及采用不等于视觉、目录页码或Word验收。']
     if 'round' in result:lines += ['', '轮次与输入来源：'+_fmt(result['round'])]
-    if 'problem_delta' in result:lines += ['', '问题变化（已解决/原有剩余/新出现）：'+_fmt(result['problem_delta'])]
+    if 'problem_delta' in result:lines += ['', ('兼容接口按key统计（run变化时不能替代稳定对齐结论）：' if result.get('impact') else '问题变化（已解决/原有剩余/新出现）：')+_fmt(result['problem_delta'])]
     for c in result['changes']:
         if c.get('dependency_note'):lines += ['', c['dependency_note'], '保留原有效格式的显式补丁：'+_fmt(c['preserved_format_patch'])]
     lines += ['', '未强制修正的待复核项：' + _fmt(result['skipped_review_keys']), '',

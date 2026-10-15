@@ -43,8 +43,9 @@ from .caption_session import CaptionSession
 from .material_session import MaterialSession
 from .workbench_session import WorkbenchSession
 from .scope_session import ScopeSession
+from .rehearsal_session import RehearsalSession
 
-class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, EfficiencySession, AsyncPreviewSession, ProjectSession, AcademicSession, TableSession, FrontSession, TocSession, CitationSession, NoteSession, CaptionSession, MaterialSession, WorkbenchSession, ScopeSession):
+class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, EfficiencySession, AsyncPreviewSession, ProjectSession, AcademicSession, TableSession, FrontSession, TocSession, CitationSession, NoteSession, CaptionSession, MaterialSession, WorkbenchSession, ScopeSession, RehearsalSession):
     def __init__(self, work_root, rules_path=DEFAULT_RULES):
         self.work_root = Path(work_root).resolve()
         self.rules_path = Path(rules_path).resolve()
@@ -88,6 +89,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         self.init_templates()
         self.init_workbench()
         self.init_preview()
+        self.init_rehearsal()
         self.init_efficiency()
         self.init_async_preview()
         self.init_project()
@@ -100,6 +102,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         self.material_exclusions={}
 
     def invalidate(self, preserve_tables=False):
+        self.cancel_rehearsal()
         if not preserve_tables:
             self.table_confirmed = None
             self.front_confirmed = None
@@ -145,6 +148,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
             return True
 
     def reset(self, preserve_settings=False):
+        self.cancel_rehearsal()
         self.cancel_project_import()
         self.project_export=None
         self.project_checkpoint=None
@@ -281,6 +285,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         self.error = None
 
     def check(self, force=False):
+        self.cancel_rehearsal()
         self.report = self.result = self.result_signature = None
         self.selected = []
         self.report_revision += 1
@@ -307,6 +312,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         allowed = {f['key'] for f in self.eligible()}
         selected = sorted(set(keys) & allowed)
         if selected != self.selected:
+            self.cancel_rehearsal()
             self.selected = selected
             self.result = self.result_signature = None
             self.error = None
@@ -316,6 +322,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
                 self.report_revision, tuple(self.selected))
 
     def generate(self):
+        self.cancel_rehearsal()
         try:
             self._current()
             if self.report is None or self.confirmed is None:

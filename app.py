@@ -343,8 +343,12 @@ if eligible and model.operation=='format':
             with st.expander(f'执行确认摘要：全部 {len(model.selected)} 项明确选择',expanded=True):
                 st.caption('生成将执行下面全部选择，包括其他页和当前筛选外的项；不会自动加入待复核记录。')
                 st.dataframe([{'key':k,'位置':position(lookup[k]['locator']),'规则':lookup[k]['rule_id'],'实际':field_value(lookup[k]['actual'],lookup[k]['rule_id'],lookup[k]['locator']),'要求':field_value(lookup[k]['expected'],lookup[k]['rule_id'],lookup[k]['locator'],True)} for k in model.selected],hide_index=True,width='stretch',height=240)
-        st.button('生成修正版', type='primary', disabled=not model.selected or model.result is not None,
-                  on_click=run_fix, width='stretch')
+        from web.rehearsal_ui import render_rehearsal
+        render_rehearsal(model)
+        with st.expander('高级兼容：不经预演直接生成'):
+            st.caption('直接使用相同修正器与保护，无法在生成正式轮次前核对实际关联影响。')
+            st.button('生成修正版', disabled=not model.selected or model.result is not None,
+                      on_click=run_fix, width='stretch')
         if model.result is not None:
             st.caption('当前选择已生成。下载或页面重运行不会再次修正；改变选择后可生成另一份新副本。')
 elif not eligible:
@@ -380,7 +384,11 @@ if model.result is not None:
                 st.success(f"已生成新DOCX：{len(result['changes'])} 项修改已保存，所选修改的落盘复查全部符合要求。")
             st.caption(f"第{result['round']['number']}轮输出；输入为"+('原稿' if result['round']['input_round']==0 else f"第{result['round']['input_round']}轮修正版"))
             delta=result['problem_delta']
-            st.write(f"已解决 {len(delta['resolved_keys'])} 个 · 原有剩余 {len(delta['remaining_keys'])} 个 · 新出现 {len(delta['new_keys'])} 个")
+            if result.get('impact'):
+                ic=result['impact']['counts']
+                st.write(f"稳定对应已解决 {ic['selected_resolved']+ic['natural_resolved']} 条 · 新出现问题 {ic['new_problem']} 条 · 转待复核 {ic['problem_to_review']} 条 · 无法可靠对齐 {ic['unaligned']} 条")
+            else:
+                st.write(f"已解决 {len(delta['resolved_keys'])} 个 · 原有剩余 {len(delta['remaining_keys'])} 个 · 新出现 {len(delta['new_keys'])} 个")
             if delta.get('unresolved_review_keys'):
                 st.warning(f"另有 {len(delta['unresolved_review_keys'])} 个原有问题转为待复核，尚未验证解决。")
             for cause in delta['new_problem_causes']:st.warning(cause['detail'])

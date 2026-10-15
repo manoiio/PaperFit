@@ -25,6 +25,8 @@ class CenterSession:
             r=h['result'];p=Path(r['output']);valid=p.is_file() and sha256(p.read_bytes())==r['output_body_manifest']['input_sha256']
             applicable=h['binding']==self._history_binding() and self.confirmed is not None
             d=r['problem_delta'];counts={'修改':len(r['changes']),'格式已解决':len(d['resolved_keys']),'格式剩余':r['after']['summary']['problem_count'],'格式新增':len(d['new_keys'])}
+            if r.get('impact'):
+                ic=r['impact']['counts'];counts.update({'格式已解决':ic['selected_resolved']+ic['natural_resolved'],'格式新增':ic['new_problem'],'转待复核':ic['problem_to_review'],'无法对齐':ic['unaligned']})
             if r.get('widths'):counts['宽度风险']=r['widths']['after']['summary']['risks']
             rows.append({'id':h['stem'],'round':r['round']['number'],'input_round':r['round']['input_round'],'operation':KIND.get(r.get('kind'),'格式修正'),
                          'status':'文件缺失或哈希变化，不可下载' if not valid else '导入的保存时历史；不是本次修改/完整性/视觉验收' if h.get('restored') else '适用于当前确认配置' if applicable else '不适用于当前状态（旧规则或范围）',
@@ -69,7 +71,7 @@ class CenterSession:
             self.center_cache[cache_key]=cached
         projection=project(report,cached['width'],cached['proposals'],inventory=cached['inventory'],context=context,boundaries=cached['boundaries'])
         from .scope_session import report_scope_summary
-        return {'scope_summary':report_scope_summary(report,classification),'context':context,'format':deepcopy(report),'width':deepcopy(cached['width']),'proposals':deepcopy(cached['proposals']),'projection':projection,
+        return {'impact':deepcopy(result.get('impact')) if result else None,'rehearsal':deepcopy(result.get('rehearsal')) if result else None,'scope_summary':report_scope_summary(report,classification),'context':context,'format':deepcopy(report),'width':deepcopy(cached['width']),'proposals':deepcopy(cached['proposals']),'projection':projection,
                 'changes':deepcopy(result['changes']) if result else [],'delta':deepcopy(result['problem_delta']) if result else None,
                 'pagination_applied':deepcopy(result.get('layout')) if result else None,'pagination_history':self.pagination_history(number,result),'preservation':deepcopy(result.get('preservation')) if result else None,
                 'steps':next_steps(report,cached['width'],result,is_output=bool(result)),'preview':{'status':'未生成预览'},'visual':{'status':'未记录人工视觉复核'},'history':self.history_rows()}

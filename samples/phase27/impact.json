@@ -1,0 +1,2697 @@
+{
+  "id": "rehearsal-f33f9ebd17a540dbad0314ae051023e2",
+  "binding": "e629ff8ee6f4554e08721bcefb5e5d2bdd125d73c91facbb67f34396a6fbe501",
+  "input_round": 0,
+  "output_is_formal": false,
+  "rules": {
+    "name": "华工本科工理类2015演示规则（正文及标题题注）（段落及摘要关键词参考文献）",
+    "version": "1.0.0+extended-demo-1.0.0+sections-demo-1.0",
+    "sha256": "110fbcbd4583fcb72746fac5a717122909ce4733d0247b7e88b925594be20934"
+  },
+  "input_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+  "output_sha256": "c51c4a8d88165279242f050425ae4ddd3b2577c6affb6f789bdd3a4352257d10",
+  "scope": {
+    "input_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+    "paragraph_types": {
+      "1": "other",
+      "2": "other",
+      "3": "other",
+      "4": "other",
+      "5": "abstract_cn_title",
+      "6": "abstract_cn_body",
+      "7": "heading1",
+      "8": "body",
+      "9": "body",
+      "10": "table_caption",
+      "11": "appendix_title",
+      "12": "appendix_text",
+      "13": "other",
+      "14": "other",
+      "15": "reference_title",
+      "16": "reference_item",
+      "17": "body",
+      "18": "other",
+      "19": "figure_caption"
+    },
+    "confirmed": true,
+    "confirmation": "网页用户逐项核对或确认整份分类；待确认项不检查、不修正",
+    "material_exclusions": {
+      "13": "合成程序代码，保留制表符和空白，不套普通文字"
+    },
+    "table_scope": {
+      "input_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+      "table_types": {
+        "1": "content"
+      },
+      "confirmed": true,
+      "confirmation": "网页人工核对论文内容/封面/其他表格"
+    },
+    "caption_scope": {
+      "input_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+      "confirmed": true,
+      "confirmation": "网页人工核对题注、章节、关联及范围声明",
+      "captions": {
+        "10": "normal",
+        "19": "normal"
+      },
+      "chapter_map": {
+        "7": 1
+      },
+      "associations": {
+        "10": "table:1",
+        "19": "image:p:18"
+      },
+      "complete": false,
+      "chapters_complete": false,
+      "template": {
+        "kind": "paper-grid-caption-supplement",
+        "structure_version": 1,
+        "name": "用户确认的题注编号位置核对",
+        "numbering": true,
+        "position": true
+      }
+    },
+    "note_scope": {
+      "input_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+      "objects": [
+        "footnote:1:3",
+        "footnote:2:4",
+        "footnote:3:5",
+        "endnote:1:3",
+        "endnote:2:4",
+        "endnote:3:5"
+      ],
+      "confirmed": true,
+      "confirmation": "网页人工核对Word注释范围与配置",
+      "template": {
+        "structure_version": 1,
+        "kind": "paper-grid-note-supplement",
+        "name": "用户确认的注释演示规则",
+        "values": {
+          "footnote": {
+            "font_cn": "宋体",
+            "font_size": 12,
+            "line_multiple": 1.5
+          },
+          "endnote": {
+            "font_cn": "宋体",
+            "font_size": 12,
+            "line_multiple": 1.5
+          }
+        },
+        "sources": {
+          "footnote": {
+            "font_cn": "school_default",
+            "font_size": "school_default",
+            "line_multiple": "school_default"
+          },
+          "endnote": {
+            "font_cn": "school_default",
+            "font_size": "school_default",
+            "line_multiple": "school_default"
+          }
+        }
+      }
+    },
+    "citation_scope": {
+      "input_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+      "scan": [
+        8,
+        9,
+        17
+      ],
+      "objects": {
+        "c:17:22:25": "citation"
+      },
+      "complete": false,
+      "references_complete": false,
+      "confirmed": true,
+      "confirmation": "网页人工核对引文准确范围、用途及完整性声明",
+      "template": {
+        "structure_version": 1,
+        "kind": "paper-grid-citation-supplement",
+        "name": "用户确认的引文演示检查",
+        "superscript": true,
+        "correspondence": true,
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "正文中应按顺序在引用参考文献处的文字右上角用[]标明，[]中序号应与参考文献中序号一致。",
+          "label": "2015学校演示材料，非现行通用规范"
+        }
+      }
+    },
+    "toc_scope": {
+      "input_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+      "confirmed": true,
+      "confirmation": "网页人工核对目录对象、级别及覆盖声明；实际页码未核对",
+      "objects": {
+        "d:3": "title",
+        "d:4": "level1"
+      },
+      "covered_levels": [
+        1,
+        2,
+        3
+      ],
+      "complete": false,
+      "headings_complete": false,
+      "template": {
+        "format": "paper-grid-toc-supplement",
+        "structure_version": 1,
+        "name": "2015目录演示补充要求",
+        "values": {
+          "title__font_cn": "黑体",
+          "title__font_size": 18,
+          "title__alignment": "center",
+          "title__line_multiple": 1.0,
+          "level1__font_cn": "黑体",
+          "level1__font_size": 14,
+          "level1__alignment": "left",
+          "level1__line_multiple": 1.5,
+          "level2__font_cn": "宋体",
+          "level2__font_size": 12,
+          "level2__alignment": "left",
+          "level2__line_multiple": 1.5,
+          "level3__font_cn": "宋体",
+          "level3__font_size": 12,
+          "level3__alignment": "left",
+          "level3__line_multiple": 1.5
+        },
+        "sources": {
+          "title__font_cn": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "title__font_size": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "title__alignment": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "title__line_multiple": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level1__font_cn": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level1__font_size": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level1__alignment": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level1__line_multiple": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level2__font_cn": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level2__font_size": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level2__alignment": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level2__line_multiple": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level3__font_cn": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level3__font_size": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level3__alignment": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          },
+          "level3__line_multiple": {
+            "kind": "school_demo",
+            "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+            "location": "学校PDF物理页18"
+          }
+        },
+        "confirmation": "须人工确认目录对象与层级；非现行通用校规"
+      }
+    },
+    "front_scope": {
+      "input_sha256": "41776569fac2c2a32902c4a1d3c34c985d07b5664539defc790161fbbba5bae1",
+      "confirmed": true,
+      "confirmation": "网页人工核对封面对象与节用途；不补造信息",
+      "objects": {
+        "p:1": "title"
+      },
+      "section_roles": {
+        "1": "mixed",
+        "2": "mixed"
+      },
+      "template": {
+        "format": "paper-grid-front-supplement",
+        "structure_version": 1,
+        "name": "华工本科工理类2015演示规则封面与页眉页脚补充",
+        "values": {
+          "cover_title__font_cn": "黑体",
+          "cover_title__font_size": 22,
+          "cover_title__bold": true,
+          "cover_title__alignment": "center",
+          "header_text__font_cn": null,
+          "header_text__font_western": null,
+          "header_text__font_size": null,
+          "header_text__alignment": "center",
+          "footer_text__font_cn": null,
+          "footer_text__font_western": null,
+          "footer_text__font_size": null,
+          "footer_text__alignment": null,
+          "header_distance_mm": 15,
+          "footer_distance_mm": 15
+        },
+        "sources": {
+          "cover_title__font_cn": {
+            "kind": "school_demo",
+            "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。",
+            "location": "PDF:17,21"
+          },
+          "cover_title__font_size": {
+            "kind": "school_demo",
+            "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。",
+            "location": "PDF:17,21"
+          },
+          "cover_title__bold": {
+            "kind": "school_demo",
+            "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。",
+            "location": "PDF:17,21"
+          },
+          "cover_title__alignment": {
+            "kind": "school_demo",
+            "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。",
+            "location": "PDF:17,21"
+          },
+          "header_text__font_cn": {
+            "kind": "not_enabled",
+            "quote": "",
+            "location": null
+          },
+          "header_text__font_western": {
+            "kind": "not_enabled",
+            "quote": "",
+            "location": null
+          },
+          "header_text__font_size": {
+            "kind": "not_enabled",
+            "quote": "",
+            "location": null
+          },
+          "header_text__alignment": {
+            "kind": "school_demo",
+            "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。",
+            "location": "PDF:19"
+          },
+          "footer_text__font_cn": {
+            "kind": "not_enabled",
+            "quote": "",
+            "location": null
+          },
+          "footer_text__font_western": {
+            "kind": "not_enabled",
+            "quote": "",
+            "location": null
+          },
+          "footer_text__font_size": {
+            "kind": "not_enabled",
+            "quote": "",
+            "location": null
+          },
+          "footer_text__alignment": {
+            "kind": "not_enabled",
+            "quote": "",
+            "location": null
+          },
+          "header_distance_mm": {
+            "kind": "school_demo",
+            "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。",
+            "location": "PDF:19"
+          },
+          "footer_distance_mm": {
+            "kind": "school_demo",
+            "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。",
+            "location": "PDF:19"
+          }
+        },
+        "confirmation": "固定原文配置；仅用户明确确认对象后执行"
+      }
+    }
+  },
+  "selected": [
+    {
+      "key": "R05:paragraph=8:run=1",
+      "locator": {
+        "paragraph": 8,
+        "run": 1
+      },
+      "rule_id": "R05",
+      "actual": {
+        "pt": 13.0
+      },
+      "expected": 12,
+      "source": {
+        "file": "00-全员必看/本科毕业设计论文.pdf",
+        "physical_page": 18,
+        "quote": "正文：小四号",
+        "interpretation": "小四按12pt换算；普通文字不包含上角标、公式等。"
+      }
+    }
+  ],
+  "changes": [
+    {
+      "key": "R05:paragraph=8:run=1",
+      "rule_id": "R05",
+      "locator": {
+        "paragraph": 8,
+        "run": 1
+      },
+      "before": {
+        "pt": 13.0
+      },
+      "after": {
+        "pt": 12.0
+      },
+      "verification": "pass",
+      "source": {
+        "file": "00-全员必看/本科毕业设计论文.pdf",
+        "physical_page": 18,
+        "quote": "正文：小四号",
+        "interpretation": "小四按12pt换算；普通文字不包含上角标、公式等。"
+      }
+    }
+  ],
+  "impact": {
+    "coverage_changes": {
+      "before_count": 6,
+      "after_count": 6,
+      "added": [],
+      "removed": [],
+      "reason": "新增覆盖提示不算通过；引文上标/必要run拆分可使普通正文检查增加特殊片段提示。"
+    },
+    "version": 1,
+    "alignment": "实际对象定位及属性；run分区变化时不推断普通run记录对应",
+    "counts": {
+      "selected_resolved": 1,
+      "natural_resolved": 1,
+      "new_problem": 0,
+      "problem_to_review": 0,
+      "review_to_determined": 0,
+      "remaining_selected": 0,
+      "remaining_unselected": 49,
+      "remaining_review": 22,
+      "unaligned": 0,
+      "not_applicable": 0
+    },
+    "records": [
+      {
+        "kind": "selected_resolved",
+        "label": "所选问题已解决",
+        "rule_id": "R05",
+        "locator": {
+          "paragraph": 8,
+          "run": 1
+        },
+        "before_key": "R05:paragraph=8:run=1",
+        "after_key": "R05:paragraph=8:run=1",
+        "before_status": "problem",
+        "after_status": "pass",
+        "before": {
+          "pt": 13.0
+        },
+        "after": {
+          "pt": 12.0
+        },
+        "expected": 12,
+        "selected": true,
+        "reason": "所选属性经落盘读回符合。",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "正文：小四号",
+          "interpretation": "小四按12pt换算；普通文字不包含上角标、公式等。"
+        }
+      },
+      {
+        "kind": "natural_resolved",
+        "label": "未选问题自然符合",
+        "rule_id": "R07",
+        "locator": {
+          "paragraph": 8
+        },
+        "before_key": "R07:paragraph=8",
+        "after_key": "R07:paragraph=8",
+        "before_status": "problem",
+        "after_status": "pass",
+        "before": {
+          "first_line_chars": null,
+          "first_line_pt": 24.0,
+          "hanging": null,
+          "hanging_chars": null,
+          "uniform_size_pt": 13.0
+        },
+        "after": {
+          "first_line_chars": null,
+          "first_line_pt": 24.0,
+          "hanging": null,
+          "hanging_chars": null,
+          "uniform_size_pt": 12.0
+        },
+        "expected": 2,
+        "selected": false,
+        "reason": "字号变化后，原24.0pt缩进重新等效2字符（读回字号12.0pt）；未修改缩进。",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "段首行缩进2个汉字",
+          "interpretation": "firstLineChars=200；可判断等效点值=2×当前统一字号，不固定48pt；冲突属性不算通过。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R06",
+        "locator": {
+          "paragraph": 9
+        },
+        "before_key": "R06:paragraph=9",
+        "after_key": "R06:paragraph=9",
+        "before_status": "review",
+        "after_status": "review",
+        "before": {
+          "line_rule": "auto",
+          "multiple": 1.5,
+          "pt": null
+        },
+        "after": {
+          "line_rule": "auto",
+          "multiple": 1.5,
+          "pt": null
+        },
+        "expected": 1.5,
+        "selected": false,
+        "reason": "混有特殊run或文档网格，段落行距不自动修正",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "正文：小四号，宋体，1.5倍行距",
+          "interpretation": null
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R07",
+        "locator": {
+          "paragraph": 9
+        },
+        "before_key": "R07:paragraph=9",
+        "after_key": "R07:paragraph=9",
+        "before_status": "review",
+        "after_status": "review",
+        "before": {
+          "first_line_chars": null,
+          "first_line_pt": 24.0,
+          "hanging": null,
+          "hanging_chars": null,
+          "uniform_size_pt": 12.0
+        },
+        "after": {
+          "first_line_chars": null,
+          "first_line_pt": 24.0,
+          "hanging": null,
+          "hanging_chars": null,
+          "uniform_size_pt": 12.0
+        },
+        "expected": 2,
+        "selected": false,
+        "reason": "特殊run、编号、异常属性或继承悬挂缩进：不改段落缩进",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "段首行缩进2个汉字",
+          "interpretation": "firstLineChars=200；可判断等效点值=2×当前统一字号，不固定48pt；冲突属性不算通过。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R07",
+        "locator": {
+          "paragraph": 17
+        },
+        "before_key": "R07:paragraph=17",
+        "after_key": "R07:paragraph=17",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "first_line_chars": null,
+          "first_line_pt": null,
+          "hanging": null,
+          "hanging_chars": null,
+          "uniform_size_pt": 12.0
+        },
+        "after": {
+          "first_line_chars": null,
+          "first_line_pt": null,
+          "hanging": null,
+          "hanging_chars": null,
+          "uniform_size_pt": 12.0
+        },
+        "expected": 2,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "段首行缩进2个汉字",
+          "interpretation": "firstLineChars=200；可判断等效点值=2×当前统一字号，不固定48pt；冲突属性不算通过。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R08",
+        "locator": {
+          "paragraph": 7,
+          "run": 1,
+          "property": "font_eastAsia"
+        },
+        "before_key": "R08:paragraph=7:run=1:property=font_eastAsia",
+        "after_key": "R08:paragraph=7:run=1:property=font_eastAsia",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "slot": "eastAsia",
+          "font": "宋体"
+        },
+        "after": {
+          "slot": "eastAsia",
+          "font": "宋体"
+        },
+        "expected": {
+          "slot": "eastAsia",
+          "font": "黑体"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "小二号黑体，居中，单倍行距",
+          "interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R08",
+        "locator": {
+          "paragraph": 7,
+          "run": 1,
+          "property": "size"
+        },
+        "before_key": "R08:paragraph=7:run=1:property=size",
+        "after_key": "R08:paragraph=7:run=1:property=size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "pt": 16.0
+        },
+        "after": {
+          "pt": 16.0
+        },
+        "expected": {
+          "pt": 18
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "小二号黑体，居中，单倍行距",
+          "interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R08",
+        "locator": {
+          "paragraph": 7,
+          "property": "alignment"
+        },
+        "before_key": "R08:paragraph=7:property=alignment",
+        "after_key": "R08:paragraph=7:property=alignment",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "alignment": "left"
+        },
+        "after": {
+          "alignment": "left"
+        },
+        "expected": {
+          "alignment": "center"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "小二号黑体，居中，单倍行距",
+          "interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R08",
+        "locator": {
+          "paragraph": 7,
+          "property": "line"
+        },
+        "before_key": "R08:paragraph=7:property=line",
+        "after_key": "R08:paragraph=7:property=line",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "line_rule": "auto",
+          "multiple": 1.5,
+          "pt": null
+        },
+        "after": {
+          "line_rule": "auto",
+          "multiple": 1.5,
+          "pt": null
+        },
+        "expected": {
+          "multiple": 1
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "小二号黑体，居中，单倍行距",
+          "interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R12",
+        "locator": {
+          "paragraph": 10,
+          "run": 1,
+          "property": "font_ascii"
+        },
+        "before_key": "R12:paragraph=10:run=1:property=font_ascii",
+        "after_key": "R12:paragraph=10:run=1:property=font_ascii",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "slot": "ascii",
+          "font": "Times New Roman"
+        },
+        "after": {
+          "slot": "ascii",
+          "font": "Times New Roman"
+        },
+        "expected": {
+          "slot": "ascii",
+          "font": "宋体"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体",
+          "interpretation": null
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R12",
+        "locator": {
+          "paragraph": 19,
+          "run": 1,
+          "property": "font_ascii"
+        },
+        "before_key": "R12:paragraph=19:run=1:property=font_ascii",
+        "after_key": "R12:paragraph=19:run=1:property=font_ascii",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "slot": "ascii",
+          "font": "Times New Roman"
+        },
+        "after": {
+          "slot": "ascii",
+          "font": "Times New Roman"
+        },
+        "expected": {
+          "slot": "ascii",
+          "font": "宋体"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体",
+          "interpretation": null
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R12",
+        "locator": {
+          "paragraph": 19,
+          "run": 1,
+          "property": "size"
+        },
+        "before_key": "R12:paragraph=19:run=1:property=size",
+        "after_key": "R12:paragraph=19:run=1:property=size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "pt": 12.0
+        },
+        "after": {
+          "pt": 12.0
+        },
+        "expected": {
+          "pt": 10.5
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体",
+          "interpretation": null
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R14",
+        "locator": {
+          "paragraph": 5,
+          "property": "before"
+        },
+        "before_key": "R14:paragraph=5:property=before",
+        "after_key": "R14:paragraph=5:property=before",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "value": 0.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal",
+            "直接段落格式"
+          ],
+          "raw": {
+            "after": "0",
+            "line": "240",
+            "lineRule": "auto",
+            "before": "0"
+          }
+        },
+        "after": {
+          "value": 0.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal",
+            "直接段落格式"
+          ],
+          "raw": {
+            "after": "0",
+            "line": "240",
+            "lineRule": "auto",
+            "before": "0"
+          }
+        },
+        "expected": {
+          "value": 0.5,
+          "unit": "lines"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 22,
+          "quote": "标题小二号黑体，居中，单倍行距，段前段后各0.5行",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R14",
+        "locator": {
+          "paragraph": 5,
+          "property": "after"
+        },
+        "before_key": "R14:paragraph=5:property=after",
+        "after_key": "R14:paragraph=5:property=after",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "value": 0.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal",
+            "直接段落格式"
+          ],
+          "raw": {
+            "after": "0",
+            "line": "240",
+            "lineRule": "auto",
+            "before": "0"
+          }
+        },
+        "after": {
+          "value": 0.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal",
+            "直接段落格式"
+          ],
+          "raw": {
+            "after": "0",
+            "line": "240",
+            "lineRule": "auto",
+            "before": "0"
+          }
+        },
+        "expected": {
+          "value": 0.5,
+          "unit": "lines"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 22,
+          "quote": "标题小二号黑体，居中，单倍行距，段前段后各0.5行",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R15",
+        "locator": {
+          "paragraph": 6,
+          "property": "first_line_indent"
+        },
+        "before_key": "R15:paragraph=6:property=first_line_indent",
+        "after_key": "R15:paragraph=6:property=first_line_indent",
+        "before_status": "review",
+        "after_status": "review",
+        "before": {
+          "unresolved": "首行缩进未明确设置"
+        },
+        "after": {
+          "unresolved": "首行缩进未明确设置"
+        },
+        "expected": {
+          "chars": 2
+        },
+        "selected": false,
+        "reason": "首行缩进未明确设置",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "中文摘要内容：小四号宋体，1.5倍行距，段首行空两个汉字",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R15",
+        "locator": {
+          "paragraph": 6,
+          "run": 1,
+          "property": "font_eastAsia"
+        },
+        "before_key": "R15:paragraph=6:run=1:property=font_eastAsia",
+        "after_key": "R15:paragraph=6:run=1:property=font_eastAsia",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "楷体",
+        "after": "楷体",
+        "expected": "宋体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "中文摘要内容：小四号宋体，1.5倍行距，段首行空两个汉字",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R15",
+        "locator": {
+          "paragraph": 6,
+          "run": 1,
+          "property": "size"
+        },
+        "before_key": "R15:paragraph=6:run=1:property=size",
+        "after_key": "R15:paragraph=6:run=1:property=size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 13.0,
+        "after": 13.0,
+        "expected": 12,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "中文摘要内容：小四号宋体，1.5倍行距，段首行空两个汉字",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R13",
+        "locator": {
+          "paragraph": 7,
+          "property": "before"
+        },
+        "before_key": "R13:paragraph=7:property=before",
+        "after_key": "R13:paragraph=7:property=before",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "value": 0.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal",
+            "paragraph样式:Heading1",
+            "直接段落格式"
+          ],
+          "raw": {
+            "after": "0",
+            "line": "360",
+            "lineRule": "auto",
+            "before": "0"
+          }
+        },
+        "after": {
+          "value": 0.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal",
+            "paragraph样式:Heading1",
+            "直接段落格式"
+          ],
+          "raw": {
+            "after": "0",
+            "line": "360",
+            "lineRule": "auto",
+            "before": "0"
+          }
+        },
+        "expected": {
+          "value": 0.5,
+          "unit": "lines"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 28,
+          "quote": "各章/各节标题段前、段后各0.5行（范例）",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R13",
+        "locator": {
+          "paragraph": 7,
+          "property": "after"
+        },
+        "before_key": "R13:paragraph=7:property=after",
+        "after_key": "R13:paragraph=7:property=after",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "value": 0.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal",
+            "paragraph样式:Heading1",
+            "直接段落格式"
+          ],
+          "raw": {
+            "after": "0",
+            "line": "360",
+            "lineRule": "auto",
+            "before": "0"
+          }
+        },
+        "after": {
+          "value": 0.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal",
+            "paragraph样式:Heading1",
+            "直接段落格式"
+          ],
+          "raw": {
+            "after": "0",
+            "line": "360",
+            "lineRule": "auto",
+            "before": "0"
+          }
+        },
+        "expected": {
+          "value": 0.5,
+          "unit": "lines"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 28,
+          "quote": "各章/各节标题段前、段后各0.5行（范例）",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R38",
+        "locator": {
+          "paragraph": 11,
+          "property": "alignment"
+        },
+        "before_key": "R38:paragraph=11:property=alignment",
+        "after_key": "R38:paragraph=11:property=alignment",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "left",
+        "after": "left",
+        "expected": "center",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "附录标题用小二号黑体，居中，单倍行距；附录文献正文为小四号宋体。",
+          "label": "2015明确附录条文；仅确认普通文献文字"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R38",
+        "locator": {
+          "paragraph": 11,
+          "property": "line_spacing"
+        },
+        "before_key": "R38:paragraph=11:property=line_spacing",
+        "after_key": "R38:paragraph=11:property=line_spacing",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "multiple": 1.5,
+          "line_rule": "auto",
+          "pt": null
+        },
+        "after": {
+          "multiple": 1.5,
+          "line_rule": "auto",
+          "pt": null
+        },
+        "expected": {
+          "multiple": 1
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "附录标题用小二号黑体，居中，单倍行距；附录文献正文为小四号宋体。",
+          "label": "2015明确附录条文；仅确认普通文献文字"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R38",
+        "locator": {
+          "paragraph": 11,
+          "run": 1,
+          "property": "font_eastAsia"
+        },
+        "before_key": "R38:paragraph=11:run=1:property=font_eastAsia",
+        "after_key": "R38:paragraph=11:run=1:property=font_eastAsia",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "宋体",
+        "after": "宋体",
+        "expected": "黑体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "附录标题用小二号黑体，居中，单倍行距；附录文献正文为小四号宋体。",
+          "label": "2015明确附录条文；仅确认普通文献文字"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R38",
+        "locator": {
+          "paragraph": 11,
+          "run": 1,
+          "property": "size"
+        },
+        "before_key": "R38:paragraph=11:run=1:property=size",
+        "after_key": "R38:paragraph=11:run=1:property=size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 16.0,
+        "after": 16.0,
+        "expected": 18,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "附录标题用小二号黑体，居中，单倍行距；附录文献正文为小四号宋体。",
+          "label": "2015明确附录条文；仅确认普通文献文字"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R39",
+        "locator": {
+          "paragraph": 12,
+          "run": 1,
+          "property": "font_eastAsia"
+        },
+        "before_key": "R39:paragraph=12:run=1:property=font_eastAsia",
+        "after_key": "R39:paragraph=12:run=1:property=font_eastAsia",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "楷体",
+        "after": "楷体",
+        "expected": "宋体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "附录标题用小二号黑体，居中，单倍行距；附录文献正文为小四号宋体。",
+          "label": "2015明确附录条文；仅确认普通文献文字"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R39",
+        "locator": {
+          "paragraph": 12,
+          "run": 1,
+          "property": "size"
+        },
+        "before_key": "R39:paragraph=12:run=1:property=size",
+        "after_key": "R39:paragraph=12:run=1:property=size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 13.0,
+        "after": 13.0,
+        "expected": 12,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "附录标题用小二号黑体，居中，单倍行距；附录文献正文为小四号宋体。",
+          "label": "2015明确附录条文；仅确认普通文献文字"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R20",
+        "locator": {
+          "paragraph": 15,
+          "property": "before"
+        },
+        "before_key": "R20:paragraph=15:property=before",
+        "after_key": "R20:paragraph=15:property=before",
+        "before_status": "review",
+        "after_status": "review",
+        "before": {
+          "unresolved": "有效继承路径也未设置before间距；未按0处理"
+        },
+        "after": {
+          "unresolved": "有效继承路径也未设置before间距；未按0处理"
+        },
+        "expected": {
+          "value": 0.5,
+          "unit": "lines"
+        },
+        "selected": false,
+        "reason": "有效继承路径也未设置before间距；未按0处理",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 36,
+          "quote": "参考文献标题黑体小二号居中单倍行距，段前段后各0.5行",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R20",
+        "locator": {
+          "paragraph": 15,
+          "property": "after"
+        },
+        "before_key": "R20:paragraph=15:property=after",
+        "after_key": "R20:paragraph=15:property=after",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "value": 10.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal"
+          ],
+          "raw": {
+            "after": "200",
+            "line": "360",
+            "lineRule": "auto"
+          }
+        },
+        "after": {
+          "value": 10.0,
+          "unit": "pt",
+          "origin": [
+            "docDefaults",
+            "paragraph样式:Normal"
+          ],
+          "raw": {
+            "after": "200",
+            "line": "360",
+            "lineRule": "auto"
+          }
+        },
+        "expected": {
+          "value": 0.5,
+          "unit": "lines"
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 36,
+          "quote": "参考文献标题黑体小二号居中单倍行距，段前段后各0.5行",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R20",
+        "locator": {
+          "paragraph": 15,
+          "property": "alignment"
+        },
+        "before_key": "R20:paragraph=15:property=alignment",
+        "after_key": "R20:paragraph=15:property=alignment",
+        "before_status": "review",
+        "after_status": "review",
+        "before": {
+          "unresolved": "对齐未设置/未支持或无法可靠继承"
+        },
+        "after": {
+          "unresolved": "对齐未设置/未支持或无法可靠继承"
+        },
+        "expected": "center",
+        "selected": false,
+        "reason": "对齐未设置/未支持或无法可靠继承",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 36,
+          "quote": "参考文献标题黑体小二号居中单倍行距，段前段后各0.5行",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R20",
+        "locator": {
+          "paragraph": 15,
+          "property": "line_spacing"
+        },
+        "before_key": "R20:paragraph=15:property=line_spacing",
+        "after_key": "R20:paragraph=15:property=line_spacing",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "multiple": 1.5,
+          "line_rule": "auto",
+          "pt": null
+        },
+        "after": {
+          "multiple": 1.5,
+          "line_rule": "auto",
+          "pt": null
+        },
+        "expected": {
+          "multiple": 1
+        },
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 36,
+          "quote": "参考文献标题黑体小二号居中单倍行距，段前段后各0.5行",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R20",
+        "locator": {
+          "paragraph": 15,
+          "run": 1,
+          "property": "font_eastAsia"
+        },
+        "before_key": "R20:paragraph=15:run=1:property=font_eastAsia",
+        "after_key": "R20:paragraph=15:run=1:property=font_eastAsia",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "宋体",
+        "after": "宋体",
+        "expected": "黑体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 36,
+          "quote": "参考文献标题黑体小二号居中单倍行距，段前段后各0.5行",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R20",
+        "locator": {
+          "paragraph": 15,
+          "run": 1,
+          "property": "size"
+        },
+        "before_key": "R20:paragraph=15:run=1:property=size",
+        "after_key": "R20:paragraph=15:run=1:property=size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 12.0,
+        "after": 12.0,
+        "expected": 18,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 36,
+          "quote": "参考文献标题黑体小二号居中单倍行距，段前段后各0.5行",
+          "label": "2015演示规则原文/范例；不宣称现行标准"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R22",
+        "locator": {
+          "document": 1,
+          "property": "存在_abstract_en_title"
+        },
+        "before_key": "R22:document=1:property=存在_abstract_en_title",
+        "after_key": "R22:document=1:property=存在_abstract_en_title",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": ">=1",
+        "selected": false,
+        "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 16,
+          "quote": "摘要400–600字，关键词3–5个，主要参考文献10篇以上/外文2篇以上；本程序只统计确认条目，外文与主要文献身份未判断。",
+          "label": "2015范例只读口径"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R22",
+        "locator": {
+          "document": 1,
+          "property": "存在_abstract_en_body"
+        },
+        "before_key": "R22:document=1:property=存在_abstract_en_body",
+        "after_key": "R22:document=1:property=存在_abstract_en_body",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": ">=1",
+        "selected": false,
+        "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 16,
+          "quote": "摘要400–600字，关键词3–5个，主要参考文献10篇以上/外文2篇以上；本程序只统计确认条目，外文与主要文献身份未判断。",
+          "label": "2015范例只读口径"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R22",
+        "locator": {
+          "document": 1,
+          "property": "存在_keywords_cn"
+        },
+        "before_key": "R22:document=1:property=存在_keywords_cn",
+        "after_key": "R22:document=1:property=存在_keywords_cn",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": ">=1",
+        "selected": false,
+        "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 16,
+          "quote": "摘要400–600字，关键词3–5个，主要参考文献10篇以上/外文2篇以上；本程序只统计确认条目，外文与主要文献身份未判断。",
+          "label": "2015范例只读口径"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R22",
+        "locator": {
+          "document": 1,
+          "property": "存在_keywords_en"
+        },
+        "before_key": "R22:document=1:property=存在_keywords_en",
+        "after_key": "R22:document=1:property=存在_keywords_en",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": ">=1",
+        "selected": false,
+        "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 16,
+          "quote": "摘要400–600字，关键词3–5个，主要参考文献10篇以上/外文2篇以上；本程序只统计确认条目，外文与主要文献身份未判断。",
+          "label": "2015范例只读口径"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R22",
+        "locator": {
+          "document": 1,
+          "property": "中文摘要字数"
+        },
+        "before_key": "R22:document=1:property=中文摘要字数",
+        "after_key": "R22:document=1:property=中文摘要字数",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 54,
+        "after": 54,
+        "expected": "400–600",
+        "selected": false,
+        "reason": "复杂结构不能宣称计数完整；正文非空白Unicode字符数，标点/数字计入，不含标题或关键词；不生成/扩写摘要",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 16,
+          "quote": "摘要400–600字，关键词3–5个，主要参考文献10篇以上/外文2篇以上；本程序只统计确认条目，外文与主要文献身份未判断。",
+          "label": "2015范例只读口径"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R22",
+        "locator": {
+          "document": 1,
+          "property": "参考文献条目数"
+        },
+        "before_key": "R22:document=1:property=参考文献条目数",
+        "after_key": "R22:document=1:property=参考文献条目数",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 1,
+        "after": 1,
+        "expected": "确认条目≥10（主要文献/外文身份另核对）",
+        "selected": false,
+        "reason": "按人工确认条目计数；不足时核对范围或资料，不生成文献；不判断主要文献身份、语种或所有著录格式",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 16,
+          "quote": "摘要400–600字，关键词3–5个，主要参考文献10篇以上/外文2篇以上；本程序只统计确认条目，外文与主要文献身份未判断。",
+          "label": "2015范例只读口径"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R23",
+        "locator": {
+          "table": 1,
+          "row": 1,
+          "cell": 1,
+          "cell_paragraph": 1,
+          "run": 1,
+          "property": "font_cn"
+        },
+        "before_key": "R23:table=1:row=1:cell=1:cell_paragraph=1:run=1:property=font_cn",
+        "after_key": "R23:table=1:row=1:cell=1:cell_paragraph=1:run=1:property=font_cn",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "eastAsia": "楷体"
+        },
+        "after": {
+          "eastAsia": "楷体"
+        },
+        "expected": "宋体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体。",
+          "interpretation": "本轮将插表文字解释为人工确认的论文内容表格普通文字；仅中文字体和普通字号，不推定西文字体、行距、对齐或缩进。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R23",
+        "locator": {
+          "table": 1,
+          "row": 1,
+          "cell": 1,
+          "cell_paragraph": 1,
+          "run": 1,
+          "property": "font_size"
+        },
+        "before_key": "R23:table=1:row=1:cell=1:cell_paragraph=1:run=1:property=font_size",
+        "after_key": "R23:table=1:row=1:cell=1:cell_paragraph=1:run=1:property=font_size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "pt": 12.0
+        },
+        "after": {
+          "pt": 12.0
+        },
+        "expected": 10.5,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体。",
+          "interpretation": "本轮将插表文字解释为人工确认的论文内容表格普通文字；仅中文字体和普通字号，不推定西文字体、行距、对齐或缩进。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R23",
+        "locator": {
+          "table": 1,
+          "row": 1,
+          "cell": 2,
+          "cell_paragraph": 1,
+          "run": 1,
+          "property": "font_cn"
+        },
+        "before_key": "R23:table=1:row=1:cell=2:cell_paragraph=1:run=1:property=font_cn",
+        "after_key": "R23:table=1:row=1:cell=2:cell_paragraph=1:run=1:property=font_cn",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "eastAsia": "楷体"
+        },
+        "after": {
+          "eastAsia": "楷体"
+        },
+        "expected": "宋体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体。",
+          "interpretation": "本轮将插表文字解释为人工确认的论文内容表格普通文字；仅中文字体和普通字号，不推定西文字体、行距、对齐或缩进。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R23",
+        "locator": {
+          "table": 1,
+          "row": 1,
+          "cell": 2,
+          "cell_paragraph": 1,
+          "run": 1,
+          "property": "font_size"
+        },
+        "before_key": "R23:table=1:row=1:cell=2:cell_paragraph=1:run=1:property=font_size",
+        "after_key": "R23:table=1:row=1:cell=2:cell_paragraph=1:run=1:property=font_size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "pt": 12.0
+        },
+        "after": {
+          "pt": 12.0
+        },
+        "expected": 10.5,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体。",
+          "interpretation": "本轮将插表文字解释为人工确认的论文内容表格普通文字；仅中文字体和普通字号，不推定西文字体、行距、对齐或缩进。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R23",
+        "locator": {
+          "table": 1,
+          "row": 2,
+          "cell": 1,
+          "cell_paragraph": 1,
+          "run": 1,
+          "property": "font_cn"
+        },
+        "before_key": "R23:table=1:row=2:cell=1:cell_paragraph=1:run=1:property=font_cn",
+        "after_key": "R23:table=1:row=2:cell=1:cell_paragraph=1:run=1:property=font_cn",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "eastAsia": "楷体"
+        },
+        "after": {
+          "eastAsia": "楷体"
+        },
+        "expected": "宋体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体。",
+          "interpretation": "本轮将插表文字解释为人工确认的论文内容表格普通文字；仅中文字体和普通字号，不推定西文字体、行距、对齐或缩进。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R23",
+        "locator": {
+          "table": 1,
+          "row": 2,
+          "cell": 1,
+          "cell_paragraph": 1,
+          "run": 1,
+          "property": "font_size"
+        },
+        "before_key": "R23:table=1:row=2:cell=1:cell_paragraph=1:run=1:property=font_size",
+        "after_key": "R23:table=1:row=2:cell=1:cell_paragraph=1:run=1:property=font_size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "pt": 12.0
+        },
+        "after": {
+          "pt": 12.0
+        },
+        "expected": 10.5,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体。",
+          "interpretation": "本轮将插表文字解释为人工确认的论文内容表格普通文字；仅中文字体和普通字号，不推定西文字体、行距、对齐或缩进。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R23",
+        "locator": {
+          "table": 1,
+          "row": 2,
+          "cell": 2,
+          "cell_paragraph": 1,
+          "run": 1,
+          "property": "font_cn"
+        },
+        "before_key": "R23:table=1:row=2:cell=2:cell_paragraph=1:run=1:property=font_cn",
+        "after_key": "R23:table=1:row=2:cell=2:cell_paragraph=1:run=1:property=font_cn",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "eastAsia": "楷体"
+        },
+        "after": {
+          "eastAsia": "楷体"
+        },
+        "expected": "宋体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体。",
+          "interpretation": "本轮将插表文字解释为人工确认的论文内容表格普通文字；仅中文字体和普通字号，不推定西文字体、行距、对齐或缩进。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R23",
+        "locator": {
+          "table": 1,
+          "row": 2,
+          "cell": 2,
+          "cell_paragraph": 1,
+          "run": 1,
+          "property": "font_size"
+        },
+        "before_key": "R23:table=1:row=2:cell=2:cell_paragraph=1:run=1:property=font_size",
+        "after_key": "R23:table=1:row=2:cell=2:cell_paragraph=1:run=1:property=font_size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "pt": 12.0
+        },
+        "after": {
+          "pt": 12.0
+        },
+        "expected": 10.5,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）的标题和文字：五号，宋体。",
+          "interpretation": "本轮将插表文字解释为人工确认的论文内容表格普通文字；仅中文字体和普通字号，不推定西文字体、行距、对齐或缩进。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R24",
+        "locator": {
+          "paragraph": 1,
+          "property": "alignment"
+        },
+        "before_key": "R24:paragraph=1:property=alignment",
+        "after_key": "R24:paragraph=1:property=alignment",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "left",
+        "after": "left",
+        "expected": "center",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R24",
+        "locator": {
+          "paragraph": 1,
+          "run": 1,
+          "property": "font_cn"
+        },
+        "before_key": "R24:paragraph=1:run=1:property=font_cn",
+        "after_key": "R24:paragraph=1:run=1:property=font_cn",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "eastAsia": "宋体"
+        },
+        "after": {
+          "eastAsia": "宋体"
+        },
+        "expected": "黑体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R24",
+        "locator": {
+          "paragraph": 1,
+          "run": 1,
+          "property": "font_size"
+        },
+        "before_key": "R24:paragraph=1:run=1:property=font_size",
+        "after_key": "R24:paragraph=1:run=1:property=font_size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 20.0,
+        "after": 20.0,
+        "expected": 22,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R24",
+        "locator": {
+          "paragraph": 1,
+          "run": 1,
+          "property": "bold"
+        },
+        "before_key": "R24:paragraph=1:run=1:property=bold",
+        "after_key": "R24:paragraph=1:run=1:property=bold",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": false,
+        "after": false,
+        "expected": true,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R25",
+        "locator": {
+          "document": 1,
+          "property": "candidates_name"
+        },
+        "before_key": "R25:document=1:property=candidates_name",
+        "after_key": "R25:document=1:property=candidates_name",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": "一个经人工核对的姓名",
+        "selected": false,
+        "reason": "未确认候选不等于实际缺少字段；只覆盖明确普通段落/普通表格",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "封面范例字段仅供人工核对，不补造个人资料。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R25",
+        "locator": {
+          "document": 1,
+          "property": "candidates_student_id"
+        },
+        "before_key": "R25:document=1:property=candidates_student_id",
+        "after_key": "R25:document=1:property=candidates_student_id",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": "一个经人工核对的学号",
+        "selected": false,
+        "reason": "未确认候选不等于实际缺少字段；只覆盖明确普通段落/普通表格",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "封面范例字段仅供人工核对，不补造个人资料。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R25",
+        "locator": {
+          "document": 1,
+          "property": "candidates_college"
+        },
+        "before_key": "R25:document=1:property=candidates_college",
+        "after_key": "R25:document=1:property=candidates_college",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": "一个经人工核对的学院",
+        "selected": false,
+        "reason": "未确认候选不等于实际缺少字段；只覆盖明确普通段落/普通表格",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "封面范例字段仅供人工核对，不补造个人资料。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R25",
+        "locator": {
+          "document": 1,
+          "property": "candidates_major"
+        },
+        "before_key": "R25:document=1:property=candidates_major",
+        "after_key": "R25:document=1:property=candidates_major",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": "一个经人工核对的专业",
+        "selected": false,
+        "reason": "未确认候选不等于实际缺少字段；只覆盖明确普通段落/普通表格",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "封面范例字段仅供人工核对，不补造个人资料。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R25",
+        "locator": {
+          "document": 1,
+          "property": "candidates_supervisor"
+        },
+        "before_key": "R25:document=1:property=candidates_supervisor",
+        "after_key": "R25:document=1:property=candidates_supervisor",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": "一个经人工核对的指导教师",
+        "selected": false,
+        "reason": "未确认候选不等于实际缺少字段；只覆盖明确普通段落/普通表格",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "封面范例字段仅供人工核对，不补造个人资料。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R25",
+        "locator": {
+          "document": 1,
+          "property": "candidates_date"
+        },
+        "before_key": "R25:document=1:property=candidates_date",
+        "after_key": "R25:document=1:property=candidates_date",
+        "before_status": "review",
+        "after_status": "review",
+        "before": 0,
+        "after": 0,
+        "expected": "一个经人工核对的日期",
+        "selected": false,
+        "reason": "未确认候选不等于实际缺少字段；只覆盖明确普通段落/普通表格",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 17,
+          "quote": "封面范例字段仅供人工核对，不补造个人资料。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R26",
+        "locator": {
+          "section": 1,
+          "property": "header_distance_mm"
+        },
+        "before_key": "R26:section=1:property=header_distance_mm",
+        "after_key": "R26:section=1:property=header_distance_mm",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 11.994444444444444,
+        "after": 11.994444444444444,
+        "expected": 15,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R26",
+        "locator": {
+          "section": 1,
+          "property": "footer_distance_mm"
+        },
+        "before_key": "R26:section=1:property=footer_distance_mm",
+        "after_key": "R26:section=1:property=footer_distance_mm",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 12.7,
+        "after": 12.7,
+        "expected": 15,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R29",
+        "locator": {
+          "section": 1,
+          "property": "mixed_use"
+        },
+        "before_key": "R29:section=1:property=mixed_use",
+        "after_key": "R29:section=1:property=mixed_use",
+        "before_status": "review",
+        "after_status": "review",
+        "before": "一节混合用途",
+        "after": "一节混合用途",
+        "expected": null,
+        "selected": false,
+        "reason": "不能按段落推算物理页码，不拆节、不重建编号",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "页眉分奇偶页；页码从主体开始连续编写，前置罗马数字，封面不编页码。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R26",
+        "locator": {
+          "section": 2,
+          "property": "header_distance_mm"
+        },
+        "before_key": "R26:section=2:property=header_distance_mm",
+        "after_key": "R26:section=2:property=header_distance_mm",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 11.994444444444444,
+        "after": 11.994444444444444,
+        "expected": 15,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R26",
+        "locator": {
+          "section": 2,
+          "property": "footer_distance_mm"
+        },
+        "before_key": "R26:section=2:property=footer_distance_mm",
+        "after_key": "R26:section=2:property=footer_distance_mm",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 12.7,
+        "after": 12.7,
+        "expected": 15,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R29",
+        "locator": {
+          "section": 2,
+          "property": "mixed_use"
+        },
+        "before_key": "R29:section=2:property=mixed_use",
+        "after_key": "R29:section=2:property=mixed_use",
+        "before_status": "review",
+        "after_status": "review",
+        "before": "一节混合用途",
+        "after": "一节混合用途",
+        "expected": null,
+        "selected": false,
+        "reason": "不能按段落推算物理页码，不拆节、不重建编号",
+        "source": {
+          "label": "2015学校演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 19,
+          "quote": "页眉分奇偶页；页码从主体开始连续编写，前置罗马数字，封面不编页码。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R30",
+        "locator": {
+          "toc_object": 3,
+          "paragraph": 3,
+          "property": "alignment"
+        },
+        "before_key": "R30:toc_object=3:paragraph=3:property=alignment",
+        "after_key": "R30:toc_object=3:paragraph=3:property=alignment",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "left",
+        "after": "left",
+        "expected": "center",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校目录演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R30",
+        "locator": {
+          "toc_object": 3,
+          "paragraph": 3,
+          "run": 1,
+          "property": "font_cn"
+        },
+        "before_key": "R30:toc_object=3:paragraph=3:run=1:property=font_cn",
+        "after_key": "R30:toc_object=3:paragraph=3:run=1:property=font_cn",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "宋体",
+        "after": "宋体",
+        "expected": "黑体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校目录演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R30",
+        "locator": {
+          "toc_object": 3,
+          "paragraph": 3,
+          "run": 1,
+          "property": "font_size"
+        },
+        "before_key": "R30:toc_object=3:paragraph=3:run=1:property=font_size",
+        "after_key": "R30:toc_object=3:paragraph=3:run=1:property=font_size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 16.0,
+        "after": 16.0,
+        "expected": 18,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校目录演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R31",
+        "locator": {
+          "toc_object": 4,
+          "paragraph": 4,
+          "property": "line_multiple"
+        },
+        "before_key": "R31:toc_object=4:paragraph=4:property=line_multiple",
+        "after_key": "R31:toc_object=4:paragraph=4:property=line_multiple",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": {
+          "multiple": 1.0
+        },
+        "after": {
+          "multiple": 1.0
+        },
+        "expected": 1.5,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校目录演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R31",
+        "locator": {
+          "toc_object": 4,
+          "paragraph": 4,
+          "run": 1,
+          "property": "font_cn"
+        },
+        "before_key": "R31:toc_object=4:paragraph=4:run=1:property=font_cn",
+        "after_key": "R31:toc_object=4:paragraph=4:run=1:property=font_cn",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "宋体",
+        "after": "宋体",
+        "expected": "黑体",
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校目录演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R31",
+        "locator": {
+          "toc_object": 4,
+          "paragraph": 4,
+          "run": 1,
+          "property": "font_size"
+        },
+        "before_key": "R31:toc_object=4:paragraph=4:run=1:property=font_size",
+        "after_key": "R31:toc_object=4:paragraph=4:run=1:property=font_size",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": 12.0,
+        "after": 12.0,
+        "expected": 14,
+        "selected": false,
+        "reason": "",
+        "source": {
+          "label": "2015学校目录演示原文；非现行标准",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。"
+        }
+      },
+      {
+        "kind": "remaining_unselected",
+        "label": "仍存在的未选问题",
+        "rule_id": "R33",
+        "locator": {
+          "citation": "c:17:22:25",
+          "paragraph": 17,
+          "start": 22,
+          "end": 25
+        },
+        "before_key": "R33:citation=c:17:22:25:paragraph=17:start=22:end=25",
+        "after_key": "R33:citation=c:17:22:25:paragraph=17:start=22:end=25",
+        "before_status": "problem",
+        "after_status": "problem",
+        "before": "baseline",
+        "after": "baseline",
+        "expected": "superscript",
+        "selected": false,
+        "reason": "仅改变此引文vertAlign；不缩小字号。跨run按原始字符快照拆分，前后文字保留。",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "正文中应按顺序在引用参考文献处的文字右上角用[]标明，[]中序号应与参考文献中序号一致。",
+          "label": "2015学校演示材料，非现行通用规范"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R34",
+        "locator": {
+          "document": 1,
+          "property": "first_occurrence"
+        },
+        "before_key": "R34:document=1:property=first_occurrence",
+        "after_key": "R34:document=1:property=first_occurrence",
+        "before_status": "review",
+        "after_status": "review",
+        "before": [
+          1
+        ],
+        "after": [
+          1
+        ],
+        "expected": "首次引用从1顺序出现；重复引用不重复计入",
+        "selected": false,
+        "reason": "仅局部首次顺序；范围或编号不足，未完成全文顺序验收",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "正文中应按顺序在引用参考文献处的文字右上角用[]标明，[]中序号应与参考文献中序号一致。",
+          "label": "2015学校演示材料，非现行通用规范"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R42",
+        "locator": {
+          "caption_sequence": 1,
+          "property": "sequence"
+        },
+        "before_key": "R42:caption_sequence=1:property=sequence",
+        "after_key": "R42:caption_sequence=1:property=sequence",
+        "before_status": "review",
+        "after_status": "review",
+        "before": [
+          1
+        ],
+        "after": [
+          1
+        ],
+        "expected": "完整范围内同章同类连续编号",
+        "selected": false,
+        "reason": "部分范围、编号冲突或特殊形式，不能判定完整序列",
+        "source": {
+          "label": "2015学校材料；章内连续序列为产品核对解释",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）应有图（表）题（由序号和标题组成），图（表）号按章编序，如第一章第一图的号为“图1-1”。图题置于图下方，表题置于表上方。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R42",
+        "locator": {
+          "caption_sequence": 2,
+          "property": "sequence"
+        },
+        "before_key": "R42:caption_sequence=2:property=sequence",
+        "after_key": "R42:caption_sequence=2:property=sequence",
+        "before_status": "review",
+        "after_status": "review",
+        "before": [
+          1
+        ],
+        "after": [
+          1
+        ],
+        "expected": "完整范围内同章同类连续编号",
+        "selected": false,
+        "reason": "部分范围、编号冲突或特殊形式，不能判定完整序列",
+        "source": {
+          "label": "2015学校材料；章内连续序列为产品核对解释",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "插图（表）应有图（表）题（由序号和标题组成），图（表）号按章编序，如第一章第一图的号为“图1-1”。图题置于图下方，表题置于表上方。"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R37",
+        "locator": {
+          "note_id": "3",
+          "note_index": 5,
+          "note_kind": "endnote",
+          "note_paragraph": 1,
+          "property": "structure"
+        },
+        "before_key": "R37:note_id=3:note_index=5:note_kind=endnote:note_paragraph=1:property=structure",
+        "after_key": "R37:note_id=3:note_index=5:note_kind=endnote:note_paragraph=1:property=structure",
+        "before_status": "review",
+        "after_status": "review",
+        "before": null,
+        "after": null,
+        "expected": null,
+        "selected": false,
+        "reason": "段落含链接；行距不修，域缓存及复杂对象不检查",
+        "source": {
+          "label": "注释结构只读边界",
+          "quote": "段落含链接；行距不修，域缓存及复杂对象不检查"
+        }
+      },
+      {
+        "kind": "remaining_review",
+        "label": "仍待复核的记录",
+        "rule_id": "R37",
+        "locator": {
+          "note_id": "3",
+          "note_index": 5,
+          "note_kind": "endnote",
+          "note_paragraph": 1,
+          "property": "line_multiple"
+        },
+        "before_key": "R37:note_id=3:note_index=5:note_kind=endnote:note_paragraph=1:property=line_multiple",
+        "after_key": "R37:note_id=3:note_index=5:note_kind=endnote:note_paragraph=1:property=line_multiple",
+        "before_status": "review",
+        "after_status": "review",
+        "before": {
+          "unresolved": "段落含链接；行距不修，域缓存及复杂对象不检查"
+        },
+        "after": {
+          "unresolved": "段落含链接；行距不修，域缓存及复杂对象不检查"
+        },
+        "expected": 1.5,
+        "selected": false,
+        "reason": "段落含链接；行距不修，域缓存及复杂对象不检查",
+        "source": {
+          "label": "2015学校演示材料（Word普通注释对象解释）",
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "参考文献和注释正文为小四号，宋体，1.5倍行距。"
+        }
+      }
+    ],
+    "selected_record_count": 1,
+    "change_record_count": 1,
+    "xml_attribute_change_count": 1,
+    "xml_attribute_changes": [
+      {
+        "part": "word/document.xml",
+        "xml_object": "/w:document/w:body/w:p[8]/w:r/w:rPr/w:sz",
+        "attribute": "val",
+        "before": "26",
+        "after": "24"
+      }
+    ],
+    "attribute_count_note": "XML属性变动数独立计数，包含有效格式保留所需属性；不等于问题记录变化数。",
+    "selected_outcomes": [
+      {
+        "key": "R05:paragraph=8:run=1",
+        "locator": {
+          "paragraph": 8,
+          "run": 1
+        },
+        "status": "已修正",
+        "verification": "pass"
+      }
+    ],
+    "remaining_summary": {
+      "rule_count": 42,
+      "problem_count": 49,
+      "review_count": 28,
+      "review_findings": 22,
+      "review_notes": 6,
+      "pass_count": 63,
+      "not_applicable_count": 13,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 31
+    },
+    "coverage_notes": [
+      {
+        "locator": {
+          "paragraph": 9,
+          "run": 2
+        },
+        "status": "review",
+        "detail": "图片、域、注释引用或其他非普通run结构：该run未检查、未修正"
+      },
+      {
+        "locator": {
+          "paragraph": 9,
+          "run": 3
+        },
+        "status": "review",
+        "detail": "图片、域、注释引用或其他非普通run结构：该run未检查、未修正"
+      },
+      {
+        "locator": {
+          "paragraph": 9,
+          "run": 4
+        },
+        "status": "review",
+        "detail": "图片、域、注释引用或其他非普通run结构：该run未检查、未修正"
+      },
+      {
+        "locator": {
+          "paragraph": 9,
+          "run": 5
+        },
+        "status": "review",
+        "detail": "图片、域、注释引用或其他非普通run结构：该run未检查、未修正"
+      },
+      {
+        "locator": {
+          "paragraph": 9,
+          "run": 6
+        },
+        "status": "review",
+        "detail": "图片、域、注释引用或其他非普通run结构：该run未检查、未修正"
+      },
+      {
+        "locator": {
+          "paragraph": 9,
+          "run": 7
+        },
+        "status": "review",
+        "detail": "图片、域、注释引用或其他非普通run结构：该run未检查、未修正"
+      }
+    ],
+    "limits": [
+      "预演是实际格式事务及读回复查；不是视觉、目录页码或Word兼容验收。",
+      "未选属性不自动修改；新增问题须另行选择进入下一轮。"
+    ]
+  },
+  "created_at": "2026-10-15T14:23:34.140747+00:00",
+  "elapsed_seconds": 0.06562741694506258,
+  "execution_version": "format-rehearsal-v1",
+  "execution_sha256": "d4f9d6e19975f4b221fc690528260ea64ab6ad85a50b5527996f991ac8b37d72"
+}

@@ -1,0 +1,51 @@
+{
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.14.5"
+  },
+  "runs": [
+    {
+      "direct_full_round_seconds": 0.1329868750181049,
+      "rehearsal_seconds": 0.0891361249377951,
+      "repeat_view_median_seconds": 0.0053790840320289135,
+      "adopt_seconds": 0.1648436659015715,
+      "fix_calls_direct": 1,
+      "fix_calls_rehearsal": 1,
+      "fix_calls_adopt": 0,
+      "rounds_each": 1,
+      "remaining_rehearsal_directories": 0
+    },
+    {
+      "direct_full_round_seconds": 0.1346735410625115,
+      "rehearsal_seconds": 0.08085766702424735,
+      "repeat_view_median_seconds": 0.005712124984711409,
+      "adopt_seconds": 0.21842362498864532,
+      "fix_calls_direct": 1,
+      "fix_calls_rehearsal": 1,
+      "fix_calls_adopt": 0,
+      "rounds_each": 1,
+      "remaining_rehearsal_directories": 0
+    },
+    {
+      "direct_full_round_seconds": 0.1660772500326857,
+      "rehearsal_seconds": 0.09724525001365691,
+      "repeat_view_median_seconds": 0.006976583041250706,
+      "adopt_seconds": 0.20131729100830853,
+      "fix_calls_direct": 1,
+      "fix_calls_rehearsal": 1,
+      "fix_calls_adopt": 0,
+      "rounds_each": 1,
+      "remaining_rehearsal_directories": 0
+    }
+  ],
+  "medians_seconds": {
+    "direct_full_round_seconds": 0.1346735410625115,
+    "rehearsal_seconds": 0.0891361249377951,
+    "repeat_view_median_seconds": 0.005712124984711409,
+    "adopt_seconds": 0.20131729100830853
+  },
+  "API_requests": 0,
+  "automatic_renders": 0,
+  "note": "相同源文件、规则、范围和选择；预演前置计算并增加绑定重验，不宣称总耗时缩短。"
+}

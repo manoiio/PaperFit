@@ -1,0 +1,13 @@
+{
+  "environment": "local Python 3.14.5",
+  "direct_engine_and_readback_seconds": 0.053138457937166095,
+  "first_rehearsal_seconds": 0.07132437499240041,
+  "repeat_view_seconds": [
+    0.004980291938409209,
+    0.005065583041869104,
+    0.004968916065990925
+  ],
+  "repeat_view_median_seconds": 0.004980291938409209,
+  "adoption_including_actual_recheck_seconds": 0.15783262497279793,
+  "note": "预演前置执行一次修正；采用重新验证但不再次修正，不据此宣称端到端提速。"
+}
