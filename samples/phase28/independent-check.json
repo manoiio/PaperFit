@@ -1,0 +1,13 @@
+{
+  "input_sha256": "45605f1fdecccdd52c8e2ba01086fd1813be6c22cb5370df91d595b4494085db",
+  "middle_sha256": "f1ad34dc289d4264709b50a6c4fa430d1beef60426f81183a6bd840df7670337",
+  "final_sha256": "81c592a9d22599fcbc87ed0baf1cb1a51886f874e591608bd9b6b7fda4c2a484",
+  "step1_exactly_six_authorized_attributes": true,
+  "step2_exact_selected_character_superscript_only": true,
+  "all_text_and_order_preserved": true,
+  "all_unselected_parts_byte_equal": true,
+  "tables_media_fields_links_numbering_sections_preserved": true,
+  "unselected_28pt_indent_preserved": true,
+  "code_whitespace_preserved": true,
+  "not_visual_or_Word_acceptance": true
+}

@@ -44,8 +44,9 @@ from .material_session import MaterialSession
 from .workbench_session import WorkbenchSession
 from .scope_session import ScopeSession
 from .rehearsal_session import RehearsalSession
+from .plan_session import PlanSession
 
-class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, EfficiencySession, AsyncPreviewSession, ProjectSession, AcademicSession, TableSession, FrontSession, TocSession, CitationSession, NoteSession, CaptionSession, MaterialSession, WorkbenchSession, ScopeSession, RehearsalSession):
+class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, EfficiencySession, AsyncPreviewSession, ProjectSession, AcademicSession, TableSession, FrontSession, TocSession, CitationSession, NoteSession, CaptionSession, MaterialSession, WorkbenchSession, ScopeSession, RehearsalSession, PlanSession):
     def __init__(self, work_root, rules_path=DEFAULT_RULES):
         self.work_root = Path(work_root).resolve()
         self.rules_path = Path(rules_path).resolve()
@@ -367,7 +368,8 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         if digest(data) != self.result['output_body_manifest']['input_sha256']:
             self.result = self.result_signature = None
             raise DemoError('修正版文件发生变化，请重新生成')
-        if self.result.get('kind') in ('figure_layout','pagination_layout','width_adaptation','caption_position') and digest(Path(self.result['round_input_path']).read_bytes()) != self.result['round']['input_sha256']:
+        if self.result.get('plan'):self.plan_step_downloads()
+        if (self.result.get('plan') or self.result.get('kind') in ('figure_layout','pagination_layout','width_adaptation','caption_position')) and digest(Path(self.result['round_input_path']).read_bytes()) != self.result['round']['input_sha256']:
             self.result = self.result_signature = None
             raise DemoError('本轮辅助输入文件发生变化，结果已失效')
         j = lambda x: (json.dumps(x, ensure_ascii=False, indent=2) + '\n').encode('utf-8')
@@ -377,7 +379,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
                     'result.json': j(self.result), 'fixed.body.json': j(self.result['output_body_manifest'])}
         reports=self.cached_bytes('legacy',self.result,build)
         files = {'fixed.docx': data, 'original.docx': self.original_bytes,
-                'round-input.docx': (Path(self.result['round_input_path']).read_bytes() if self.result.get('kind') in ('figure_layout','pagination_layout','width_adaptation','caption_position') else self.input_bytes),
+                'round-input.docx': (Path(self.result['round_input_path']).read_bytes() if self.result.get('plan') or self.result.get('kind') in ('figure_layout','pagination_layout','width_adaptation','caption_position') else self.input_bytes),
                 **reports}
         if 'widths' in self.result:
             from core.widths import width_markdown

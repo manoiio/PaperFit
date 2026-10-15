@@ -1,0 +1,45 @@
+{
+  "author": "合成注入清单，先于检查结果制定",
+  "ordinary": {
+    "p3r1": [
+      "eastAsia黑体→宋体",
+      "14pt→12pt"
+    ],
+    "p3r2r3": [
+      "14pt→12pt"
+    ],
+    "p4r1": [
+      "eastAsia黑体→宋体",
+      "14pt→12pt"
+    ]
+  },
+  "citations": [
+    {
+      "paragraph": 3,
+      "start": 7,
+      "end": 10
+    },
+    {
+      "paragraph": 3,
+      "start": 21,
+      "end": 24
+    },
+    {
+      "paragraph": 4,
+      "start": 12,
+      "end": 15
+    },
+    {
+      "paragraph": 5,
+      "start": 20,
+      "end": 23
+    }
+  ],
+  "not_selected": [
+    "p3首行28pt（14pt时等效两字符；变12pt后不等效）",
+    "其他全部格式问题",
+    "复杂域只读引文",
+    "数组[8]",
+    "代码p18、图片、表格、分节、所有非主文档部件"
+  ]
+}

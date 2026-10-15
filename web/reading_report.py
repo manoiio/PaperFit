@@ -65,6 +65,7 @@ def portable(bundle,*,display_name='待检查文档.docx',include_excerpts=False
                 row['raw']={k:v for k,v in row['raw'].items() if k not in ('text','caption_text','label')}
         if out['pagination_applied']:
             out['pagination_applied']={k:v for k,v in out['pagination_applied'].items() if k not in ('pairs',)}
+    if bundle.get('plan'):out['plan']=bundle['plan']
     if bundle.get('scope_summary'):out['scope_summary']=bundle['scope_summary']
     if bundle.get('impact'):out['impact']=bundle['impact'];out['rehearsal']=bundle['rehearsal']
     if bundle.get('saved_record'):out['saved_record']=bundle['saved_record']
@@ -111,6 +112,9 @@ def html_report(data):
     if data.get('impact'):
         im=data['impact']
         parts+=['<h2>预演与正式采用的关联影响</h2>','<p>正式采用重新验证绑定及原事务白名单，复用预演副本；没有再次修正，尚未自动切换处理输入。这不构成视觉验收。</p>',table(['变化类别','记录数'],[[IMPACT_LABELS.get(k,k),v] for k,v in im['counts'].items()]),table(['规则','对象','变化','修改前','读回后','说明'],[[r['rule_id'],locate(r['locator']),r['label'],change_value(r['before'],r['rule_id']),change_value(r['after'],r['rule_id']),r['reason']] for r in im['records']])]
+    if data.get('plan'):
+        p=data['plan']['summary']
+        parts+=['<h2>已采用分步计划（每步独立事务）</h2>','<p>采用时0次完整修正；当前输入尚未自动切换。结果包含最终DOCX及各步修改和复查，中间DOCX另行下载。</p>',table(['步骤','正式轮次','父轮次','输入哈希','输出哈希'],[[i+1,r['number'],r['parent'],r['input_sha256'],r['output_sha256']] for i,r in enumerate(p['rounds'])]),'<h3>整计划最终影响（不累加中间问题数）</h3>',table(['变化类别','记录数'],[[IMPACT_LABELS.get(k,k),v] for k,v in p['overall_impact']['counts'].items()])]
     layout=data['pagination_applied']
     parts+=['<h2>分页辅助应用结果</h2>']
     if layout:
@@ -129,6 +133,7 @@ def html_report(data):
 def markdown_report(data):
     s=data['format_summary'];out=['# 论文有格阅读报告','',data['display_name']+' · 第'+str(data['context']['round'])+'轮',data['conclusion'],f"启用规则{s['rule_count']}；格式问题{s['problem_count']}；格式待复核{s['review_count']}", '宽度：'+json.dumps(data['width_summary'],ensure_ascii=False),'Word：未验收','']
     if data.get('impact'):out+=['预演与正式采用影响：'+json.dumps(data['impact'],ensure_ascii=False),'采用绑定核对：'+json.dumps(data['rehearsal'],ensure_ascii=False)]
+    if data.get('plan'):out+=['分步计划及父子关系：'+json.dumps(data['plan'],ensure_ascii=False)]
     if data.get('scope_summary'):out+=['范围状态摘要：'+json.dumps(data['scope_summary'],ensure_ascii=False)]
     if data.get('caption_summary'):out+=['题注编号/结构位置/实际分页：'+json.dumps(data['caption_summary'],ensure_ascii=False)]
     for r in data['records']:out.append('- '+CATEGORIES[r['category']]+' · '+r['record_key']+' · '+r['position']+' · '+STATUS[r['status']]+'：'+r['actual']+' → '+r['expected']+'；'+r['reason'])

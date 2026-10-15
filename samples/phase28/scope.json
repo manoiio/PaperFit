@@ -1,0 +1,72 @@
+{
+  "roles": {
+    "1": "other",
+    "2": "heading1",
+    "3": "body",
+    "4": "body",
+    "5": "body",
+    "6": "body",
+    "7": "reference_title",
+    "8": "reference_item",
+    "9": "reference_item",
+    "10": "reference_item",
+    "11": "reference_item",
+    "12": "reference_item",
+    "13": "reference_item",
+    "14": "reference_item",
+    "15": "reference_item",
+    "16": "reference_item",
+    "17": "reference_item",
+    "18": "other",
+    "19": "other",
+    "20": "other"
+  },
+  "scan": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "excluded_citation_text": "[8]",
+  "material_exclusions": {
+    "18": "人工排除：合成程序代码，保留制表与换行"
+  },
+  "selected_ordinary": {
+    "paragraphs": [
+      3,
+      4
+    ],
+    "runs": [
+      1,
+      2,
+      3
+    ],
+    "rules": [
+      "R03",
+      "R04",
+      "R05"
+    ]
+  },
+  "selected_citations": [
+    {
+      "paragraph": 3,
+      "start": 7,
+      "end": 10
+    },
+    {
+      "paragraph": 3,
+      "start": 21,
+      "end": 24
+    },
+    {
+      "paragraph": 4,
+      "start": 12,
+      "end": 15
+    },
+    {
+      "paragraph": 5,
+      "start": 20,
+      "end": 23
+    }
+  ]
+}

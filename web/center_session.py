@@ -71,7 +71,7 @@ class CenterSession:
             self.center_cache[cache_key]=cached
         projection=project(report,cached['width'],cached['proposals'],inventory=cached['inventory'],context=context,boundaries=cached['boundaries'])
         from .scope_session import report_scope_summary
-        return {'impact':deepcopy(result.get('impact')) if result else None,'rehearsal':deepcopy(result.get('rehearsal')) if result else None,'scope_summary':report_scope_summary(report,classification),'context':context,'format':deepcopy(report),'width':deepcopy(cached['width']),'proposals':deepcopy(cached['proposals']),'projection':projection,
+        return {'plan':deepcopy(result.get('plan')) if result else None,'impact':deepcopy(result.get('impact')) if result else None,'rehearsal':deepcopy(result.get('rehearsal')) if result else None,'scope_summary':report_scope_summary(report,classification),'context':context,'format':deepcopy(report),'width':deepcopy(cached['width']),'proposals':deepcopy(cached['proposals']),'projection':projection,
                 'changes':deepcopy(result['changes']) if result else [],'delta':deepcopy(result['problem_delta']) if result else None,
                 'pagination_applied':deepcopy(result.get('layout')) if result else None,'pagination_history':self.pagination_history(number,result),'preservation':deepcopy(result.get('preservation')) if result else None,
                 'steps':next_steps(report,cached['width'],result,is_output=bool(result)),'preview':{'status':'未生成预览'},'visual':{'status':'未记录人工视觉复核'},'history':self.history_rows()}

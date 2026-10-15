@@ -460,7 +460,7 @@ if model.result is not None:
             with st.expander('保存后全部格式及覆盖详情'):
                 report_view(after, model.inventory)
             if result.get('output'):
-                st.button('以本轮修正版开始下一轮',on_click=model.next_round,type='primary',width='stretch',
+                st.button('以计划最终副本继续' if model.result.get('plan') else '以本轮修正版开始下一轮',on_click=model.next_round,type='primary',width='stretch',
                           help='明确切换输入，沿用结构保留核对通过且绑定新文件哈希的清单；原稿和各轮文件均保留。')
 
 from web.preview_ui import render_preview_panel

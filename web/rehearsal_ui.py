@@ -5,6 +5,9 @@ from .issues import locate,STATUS
 from .reading_report import change_value
 
 def render_rehearsal(model):
+    if model.selected:
+        from .plan_ui import render_plan
+        if render_plan(model):return
     def start():
         with st.spinner('正在执行所选修正、完整性验证及落盘复查；尚不登记轮次…'):model.rehearse()
     st.button('预演所选修正',type='primary',disabled=not model.selected or model.result is not None,on_click=start,width='stretch')

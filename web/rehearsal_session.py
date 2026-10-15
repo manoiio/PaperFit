@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[1]
 VERSION='format-rehearsal-v1'
 
 def execution_hash():
-    paths=sorted((ROOT/'core').glob('*.py'))+[ROOT/'web/session.py',Path(__file__),ROOT/'web/scope_session.py']
+    paths=sorted((ROOT/'core').glob('*.py'))+[ROOT/'web/session.py',Path(__file__),ROOT/'web/scope_session.py',ROOT/'web/plan_session.py']
     return fingerprint({str(p.relative_to(ROOT)):sha256(p.read_bytes()) for p in paths})
 
 class RehearsalSession:
@@ -49,6 +49,7 @@ class RehearsalSession:
     def rehearsal_view(self):
         r=self.rehearsal
         if not r:return None
+        if r.get('kind')=='format_plan':return self.plan_rehearsal_view()
         try:
             if self.rehearsal_binding()!=r.get('adopted_binding',r['binding']):raise DemoError('输入、规则、范围或选择已变化，请重新预演')
             if r.get('adopted_round'):
@@ -102,6 +103,7 @@ class RehearsalSession:
         return (json.dumps(clean(view),ensure_ascii=False,indent=2)+'\n').encode()
 
     def adopt_rehearsal(self, identifier, *, acknowledged=False):
+        if self.rehearsal and self.rehearsal.get("kind")=="format_plan":return self.adopt_plan(identifier,acknowledged=acknowledged)
         start=time.perf_counter();archive=None;destination=None
         try:
             if acknowledged is not True:raise DemoError('请先核对实际修改、关联影响及剩余事项')

@@ -1,0 +1,20 @@
+{
+  "manual_engine_two_round_seconds": 0.10410291608422995,
+  "plan_rehearsal_seconds": 0.15965466608759016,
+  "view_seconds": [
+    0.0063507918966934085,
+    0.00620441697537899,
+    0.006303250091150403
+  ],
+  "view_median_seconds": 0.006303250091150403,
+  "adoption_with_revalidation_seconds": 0.2642271670047194,
+  "manual_engine_calls": 2,
+  "plan_engine_calls": 2,
+  "adoption_engine_calls": 0,
+  "formal_rounds": 2,
+  "current_input_round": 0,
+  "remaining_rehearsal_directories": 0,
+  "API_requests": 0,
+  "automatic_renders": 0,
+  "note": "预演增加前置计算；采用重新校验，不再修正。函数时间不等于人工操作时间。"
+}

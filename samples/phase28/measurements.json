@@ -1,0 +1,72 @@
+{
+  "environment": "Python 3.14.5",
+  "runs": [
+    {
+      "manual_engine_two_round_seconds": 0.1324712079949677,
+      "plan_rehearsal_seconds": 0.17870745796244591,
+      "view_seconds": [
+        0.006789250066503882,
+        0.009251583949662745,
+        0.007365124998614192
+      ],
+      "view_median_seconds": 0.007365124998614192,
+      "adoption_with_revalidation_seconds": 0.2993497910210863,
+      "manual_engine_calls": 2,
+      "plan_engine_calls": 2,
+      "adoption_engine_calls": 0,
+      "formal_rounds": 2,
+      "current_input_round": 0,
+      "remaining_rehearsal_directories": 0,
+      "API_requests": 0,
+      "automatic_renders": 0,
+      "note": "预演增加前置计算；采用重新校验，不再修正。函数时间不等于人工操作时间。"
+    },
+    {
+      "manual_engine_two_round_seconds": 0.1031278750160709,
+      "plan_rehearsal_seconds": 0.15142329095397145,
+      "view_seconds": [
+        0.005894334055483341,
+        0.005750250071287155,
+        0.005584166967310011
+      ],
+      "view_median_seconds": 0.005750250071287155,
+      "adoption_with_revalidation_seconds": 0.3334612910402939,
+      "manual_engine_calls": 2,
+      "plan_engine_calls": 2,
+      "adoption_engine_calls": 0,
+      "formal_rounds": 2,
+      "current_input_round": 0,
+      "remaining_rehearsal_directories": 0,
+      "API_requests": 0,
+      "automatic_renders": 0,
+      "note": "预演增加前置计算；采用重新校验，不再修正。函数时间不等于人工操作时间。"
+    },
+    {
+      "manual_engine_two_round_seconds": 0.11306779191363603,
+      "plan_rehearsal_seconds": 0.1813335840124637,
+      "view_seconds": [
+        0.006140041048638523,
+        0.0058452499797567725,
+        0.005824957974255085
+      ],
+      "view_median_seconds": 0.0058452499797567725,
+      "adoption_with_revalidation_seconds": 0.28717158397194,
+      "manual_engine_calls": 2,
+      "plan_engine_calls": 2,
+      "adoption_engine_calls": 0,
+      "formal_rounds": 2,
+      "current_input_round": 0,
+      "remaining_rehearsal_directories": 0,
+      "API_requests": 0,
+      "automatic_renders": 0,
+      "note": "预演增加前置计算；采用重新校验，不再修正。函数时间不等于人工操作时间。"
+    }
+  ],
+  "medians_seconds": {
+    "manual_engine_two_round_seconds": 0.11306779191363603,
+    "plan_rehearsal_seconds": 0.17870745796244591,
+    "view_median_seconds": 0.0058452499797567725,
+    "adoption_with_revalidation_seconds": 0.2993497910210863
+  },
+  "note": "每次采用真实重新校验、0次完整修正；计算两步不变，没有声称端到端提速。"
+}

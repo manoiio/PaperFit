@@ -93,6 +93,7 @@ class EfficiencySession:
         """每次都先重新核对文档/规则；ZIP仅固定成员，无原稿/路径/日志。"""
         files=self.downloads()
         if not files:raise DemoError('本轮结果不存在或已经失效')
+        steps=self.plan_step_downloads() if self.result.get('plan') else []
         from .reading_report import portable,clean,html_report,markdown_report
         from core.report import markdown,modification_markdown
         b=self.current_bundle();d=portable(b)
@@ -111,6 +112,14 @@ class EfficiencySession:
                  'scope.json':encoded(self.result.get('output_classification_manifest',self.result['output_body_manifest'])),
                  'rules.json':rule_bytes,
                      'README.txt':('论文有格本轮结果包\n第'+str(self.result['round']['number'])+'轮；输出和规则哈希见报告。\n只代表启用规则及确认范围，分页另行目视核对；Word未验收。\n默认不含原稿、页面图片、日志、API记录或完整论文摘录。\n').encode()}
+            if steps:
+                members['plan-summary.json']=encoded(d['plan'])
+                members['README.txt']+='分步计划：仅含最终DOCX；中间副本可单独下载。各步修改和复查见steps目录。\n'.encode()
+                for i,step in enumerate(steps,1):
+                    h=next(h for h in self.history if h['result']['round']['number']==step['round'])
+                    safe_step=clean(h['result']);safe_step['output']='step-'+str(i)+'.docx';safe_step['after']['input']=safe_step['output']
+                    members[f'steps/step-{i}-changes.md']=modification_markdown(safe_step).encode()
+                    members[f'steps/step-{i}-recheck.md']=markdown(safe_step['after']).encode()
             members['scope-summary.json']=encoded(d['scope_summary'])
             if d.get('impact'):members['rehearsal-impact.json']=encoded({'impact':d['impact'],'adoption':d['rehearsal']})
             if self.mode=='academic':

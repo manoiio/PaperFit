@@ -1,0 +1,17 @@
+{
+  "source": "实际浏览器下载副本，现有公开check_document独立读回",
+  "input_sha256": "81c592a9d22599fcbc87ed0baf1cb1a51886f874e591608bd9b6b7fda4c2a484",
+  "summary": {
+    "rule_count": 24,
+    "problem_count": 9,
+    "review_count": 32,
+    "review_findings": 24,
+    "review_notes": 8,
+    "pass_count": 64,
+    "not_applicable_count": 16,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 15
+  },
+  "selected_citations_pass": true,
+  "not_a_visual_or_citation_semantics_conclusion": true
+}

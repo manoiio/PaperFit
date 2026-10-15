@@ -90,7 +90,7 @@ class ProjectSession:
                                 **({'input_scope':manifest_scope(self,before,ih)} if r.get('kind')=='caption_position' else {}),
                                 'scope':manifest_scope(self,after,oh),'changes':clean(h.get('saved_changes',r['changes'])),
                                 'kind':r.get('kind','format'),'saved_summary':clean(h.get('saved_record',{'format':after['summary'],'preservation':r.get('preservation'),
-                                        'pagination':r.get('layout'),'width':r.get('widths'),'delta':r.get('problem_delta')}))})
+                                        'pagination':r.get('layout'),'width':r.get('widths'),'delta':r.get('problem_delta'),'plan':r.get('plan')}))})
         data={'format':'paper-grid-project','version':VERSION,'saved_at':datetime.now(timezone.utc).isoformat(),
               'display_name':clean(Path(self.display_name.replace('\\','/')).name[:100]) or '文档.docx',
               'documents':list(docs.values()),'rules':list(rules.values()),
