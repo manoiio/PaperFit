@@ -1,0 +1,12 @@
+{
+  "version": "backmatter-demo-1.0",
+  "source_file": "00-全员必看/本科毕业设计论文.pdf",
+  "objects": {
+    "appendix_title": {"font_cn":"黑体", "font_size":18, "alignment":"center", "line_spacing":1},
+    "appendix_text": {"font_cn":"宋体", "font_size":12},
+    "ack_title": {},
+    "ack_text": {}
+  },
+  "source": {"physical_page":19,"quote":"附录标题用小二号黑体，居中，单倍行距；附录文献正文为小四号宋体。"},
+  "limits": ["附录和致谢按需存在，没有时不判缺项。", "附录普通文字须明确确认适用文献正文解释；代码、数据、运行输出、图表及其他材料不能整章套用。", "致谢范例物理页38仅显示标题与省略号，未提供可可靠执行的字体字号行距要求；致谢默认属性均未启用。", "内容、代码正确性、致谢是否适当、目录实际页码及所有排版行为未验证。"]
+}

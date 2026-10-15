@@ -1,0 +1,173 @@
+{
+  "name": "华工本科工理类2015演示规则前后置章节",
+  "version": "sections-demo-1.0",
+  "source_file": "00-全员必看/本科毕业设计论文.pdf",
+  "objects": {
+    "body": {},
+    "heading1": {
+      "before": {
+        "value": 0.5,
+        "unit": "lines"
+      },
+      "after": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    },
+    "heading2": {
+      "before": {
+        "value": 0.5,
+        "unit": "lines"
+      },
+      "after": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    },
+    "heading3": {
+      "before": {
+        "value": 0.5,
+        "unit": "lines"
+      },
+      "after": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    },
+    "figure_caption": {},
+    "table_caption": {},
+    "abstract_cn_title": {
+      "font_cn": "黑体",
+      "font_western": null,
+      "font_size": 18,
+      "alignment": "center",
+      "line_spacing": 1,
+      "before": {
+        "value": 0.5,
+        "unit": "lines"
+      },
+      "after": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    },
+    "abstract_en_title": {
+      "font_cn": null,
+      "font_western": "Times New Roman",
+      "font_size": 18,
+      "alignment": "center",
+      "line_spacing": 1,
+      "before": {
+        "value": 0.5,
+        "unit": "lines"
+      },
+      "after": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    },
+    "reference_title": {
+      "font_cn": "黑体",
+      "font_western": null,
+      "font_size": 18,
+      "alignment": "center",
+      "line_spacing": 1,
+      "before": {
+        "value": 0.5,
+        "unit": "lines"
+      },
+      "after": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    },
+    "abstract_cn_body": {
+      "font_cn": "宋体",
+      "font_size": 12,
+      "line_spacing": 1.5,
+      "first_line_indent": 2
+    },
+    "abstract_en_body": {
+      "font_western": "Times New Roman",
+      "font_size": 12,
+      "line_spacing": 1.5,
+      "alignment": "both"
+    },
+    "keywords_cn": {
+      "alignment": "left",
+      "label_font_cn": "黑体",
+      "label_font_size": 12,
+      "content_font_cn": "宋体",
+      "content_font_size": 12
+    },
+    "keywords_en": {
+      "alignment": "left",
+      "label_font_western": "Times New Roman",
+      "label_font_size": 12,
+      "label_bold": true,
+      "content_font_western": "Times New Roman",
+      "content_font_size": 12
+    },
+    "reference_item": {
+      "font_cn": "宋体",
+      "font_size": 12,
+      "line_spacing": 1.5
+    }
+  },
+  "sources": {
+    "heading1": {
+      "page": 28,
+      "quote": "各章/各节标题段前、段后各0.5行（范例）"
+    },
+    "heading2": {
+      "page": 28,
+      "quote": "各章/各节标题段前、段后各0.5行（范例）"
+    },
+    "heading3": {
+      "page": 28,
+      "quote": "各章/各节标题段前、段后各0.5行（范例）"
+    },
+    "abstract_cn_title": {
+      "page": 22,
+      "quote": "标题小二号黑体，居中，单倍行距，段前段后各0.5行"
+    },
+    "abstract_cn_body": {
+      "page": 17,
+      "quote": "中文摘要内容：小四号宋体，1.5倍行距，段首行空两个汉字"
+    },
+    "abstract_en_title": {
+      "page": 23,
+      "quote": "标题小二号Times New Roman，居中，单倍行距，段前段后各0.5行"
+    },
+    "abstract_en_body": {
+      "page": 23,
+      "quote": "正文小四号Times New Roman，1.5倍行距，两端对齐"
+    },
+    "keywords_cn": {
+      "page": 17,
+      "quote": "关键词标题小四号黑体居左，内容小四号宋体；分号隔开"
+    },
+    "keywords_en": {
+      "page": 23,
+      "quote": "Keywords：Times New Roman，小四号，加粗，居左；关键词Times New Roman，小四号"
+    },
+    "reference_title": {
+      "page": 36,
+      "quote": "参考文献标题黑体小二号居中单倍行距，段前段后各0.5行"
+    },
+    "reference_item": {
+      "page": 18,
+      "quote": "参考文献和注释正文为小四号，宋体，1.5倍行距"
+    },
+    "document": {
+      "page": 16,
+      "quote": "论文摘要要求400–600字；关键词要求3–5个；主要参考文献10篇以上，外文文献2篇以上（有例外）。本程序只计确认条目，不判断著录真实性/主要文献或外文篇数。"
+    }
+  },
+  "limitations": [
+    "范例间距采用行单位，不转换为磅值",
+    "英文摘要缩进和参考文献条目缩进/间距未明确，不默认启用",
+    "未配置属性不自行补值",
+    "只读计数不判断内容意义或中英文一致性"
+  ]
+}

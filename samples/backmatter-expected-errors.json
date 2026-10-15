@@ -1,0 +1,57 @@
+{
+  "basis": "人工根据注入操作预先列出，非复制检查结果",
+  "objects": [
+    {
+      "paragraphs": [
+        8,
+        15
+      ],
+      "properties": [
+        "font_eastAsia",
+        "size",
+        "alignment",
+        "line_spacing"
+      ]
+    },
+    {
+      "paragraphs": [
+        9,
+        17
+      ],
+      "properties": [
+        "font_eastAsia",
+        "size"
+      ]
+    },
+    {
+      "paragraph": 10,
+      "run": 2,
+      "properties": [
+        "font_eastAsia",
+        "size"
+      ]
+    }
+  ],
+  "excluded_materials": [
+    11,
+    12,
+    13,
+    14,
+    16
+  ],
+  "ack_default": "R40/R41未配置，不以默认字体要求修正",
+  "toc": {
+    "objects": {
+      "d:3": "title",
+      "d:4": "level1",
+      "d:5": "level1",
+      "d:6": "level1"
+    },
+    "targets": [
+      8,
+      15,
+      18
+    ],
+    "page_numbers": "保存文本，真实页码未核对"
+  }
+}

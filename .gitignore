@@ -1,0 +1,21 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+
+# Local runtime, generated deliverables, and browser sessions
+.DS_Store
+.playwright-cli/
+work/
+outputs/
+.streamlit/secrets.toml
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Course source materials (kept locally)
+/00-全员必看/
+/03-第三组-技术/
+/PPT评讲.txt

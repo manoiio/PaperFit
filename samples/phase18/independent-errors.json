@@ -1,0 +1,52 @@
+{
+  "construction_spec": "独立注入记录，未读取程序检查输出",
+  "manual-errors": [
+    {
+      "object": "d:2",
+      "run": 2,
+      "property": "font_cn",
+      "actual": "宋体",
+      "expected": "黑体"
+    },
+    {
+      "object": "d:2",
+      "run": 2,
+      "property": "font_size",
+      "actual": 16,
+      "expected": 18
+    },
+    {
+      "object": "d:3",
+      "property": "alignment",
+      "actual": "center",
+      "expected": "left"
+    },
+    {
+      "object": "d:3",
+      "property": "line_multiple",
+      "actual": "固定20磅",
+      "expected": 1.5
+    },
+    {
+      "object": "d:4",
+      "run": 2,
+      "property": "font_cn",
+      "actual": "黑体（字符样式）",
+      "expected": "宋体"
+    },
+    {
+      "object": "d:4",
+      "run": 2,
+      "property": "font_size",
+      "actual": 16,
+      "expected": 12
+    }
+  ],
+  "immutable_objects": [
+    "目录标题文字/编号/制表符/保存页码",
+    "域指令/边界/超链接/书签",
+    "编号XML及所有非主文档ZIP部件",
+    "表格文字和图片媒体"
+  ],
+  "automatic": "常见SDT+TOC复杂域+3内部书签链接+3嵌套PAGEREF；只读"
+}

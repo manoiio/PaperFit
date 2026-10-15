@@ -1,0 +1,34 @@
+{
+  "input_sha256": "245e29e6bad60c7ee7cfd9b2eaf4ef336b8182c9ded122f1ffef6887a8bd5344",
+  "paragraph_types": {
+    "1": "other",
+    "2": "other",
+    "3": "other",
+    "4": "other",
+    "5": "other",
+    "6": "other",
+    "7": "body",
+    "8": "appendix_title",
+    "9": "appendix_text",
+    "10": "appendix_text",
+    "11": "other",
+    "12": "other",
+    "13": "other",
+    "14": "other",
+    "15": "appendix_title",
+    "16": "other",
+    "17": "appendix_text",
+    "18": "ack_title",
+    "19": "ack_text",
+    "20": "ack_text"
+  },
+  "confirmed": true,
+  "confirmation": "合成样本独立人工类型清单",
+  "material_exclusions": {
+    "11": "程序代码，保留空格、制表符和换行",
+    "12": "数据及运行输出",
+    "13": "图表说明材料",
+    "14": "图片材料",
+    "16": "程序代码"
+  }
+}

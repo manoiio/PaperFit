@@ -1,0 +1,21 @@
+[server]
+address = "127.0.0.1"
+port = 8501
+# HTTP ceiling for project ZIPs; DOCX/norm/template widgets and core keep stricter limits.
+maxUploadSize = 100
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+[runner]
+# Foreground callbacks update one session sequentially; real rendering is off-thread.
+fastReruns = false
+
+[theme]
+base = "light"
+primaryColor = "#173e68"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f3f6fa"
+textColor = "#1e293b"
+font = "sans serif"

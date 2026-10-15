@@ -1,0 +1,141 @@
+{
+  "input_sha256": "c84ca61138000a084fb7223f6234e24ee51bf35fdb69a6c889365cec0b857f56",
+  "paragraph_types": {
+    "1": "other",
+    "2": "other",
+    "3": "heading1",
+    "4": "body",
+    "5": "heading2",
+    "6": "body",
+    "7": "heading3",
+    "8": "body",
+    "9": "other",
+    "10": "other"
+  },
+  "confirmed": true,
+  "confirmation": "独立构造清单人工确认",
+  "toc_scope": {
+    "input_sha256": "c84ca61138000a084fb7223f6234e24ee51bf35fdb69a6c889365cec0b857f56",
+    "confirmed": true,
+    "confirmation": "独立构造清单人工确认",
+    "objects": {
+      "d:2": "title",
+      "d:3": "level1",
+      "d:4": "level2",
+      "d:5": "level3"
+    },
+    "covered_levels": [
+      1,
+      2,
+      3
+    ],
+    "complete": false,
+    "headings_complete": false,
+    "template": {
+      "format": "paper-grid-toc-supplement",
+      "structure_version": 1,
+      "name": "2015目录演示补充要求",
+      "values": {
+        "title__font_cn": "黑体",
+        "title__font_size": 18,
+        "title__alignment": "center",
+        "title__line_multiple": 1.0,
+        "level1__font_cn": "黑体",
+        "level1__font_size": 14,
+        "level1__alignment": "left",
+        "level1__line_multiple": 1.5,
+        "level2__font_cn": "宋体",
+        "level2__font_size": 12,
+        "level2__alignment": "left",
+        "level2__line_multiple": 1.5,
+        "level3__font_cn": "宋体",
+        "level3__font_size": 12,
+        "level3__alignment": "left",
+        "level3__line_multiple": 1.5
+      },
+      "sources": {
+        "title__font_cn": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "title__font_size": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "title__alignment": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "title__line_multiple": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level1__font_cn": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level1__font_size": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level1__alignment": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level1__line_multiple": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level2__font_cn": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level2__font_size": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level2__alignment": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level2__line_multiple": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level3__font_cn": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level3__font_size": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level3__alignment": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        },
+        "level3__line_multiple": {
+          "kind": "school_demo",
+          "quote": "目录标题：小二号黑体，居中，单倍行距。目录中各章题序及标题：四号黑体，居左，1.5倍行距；各次级标题及题序：小四号，宋体，居左，1.5倍行距。",
+          "location": "学校PDF物理页18"
+        }
+      },
+      "confirmation": "须人工确认目录对象与层级；非现行通用校规"
+    }
+  }
+}

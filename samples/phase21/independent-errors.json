@@ -1,0 +1,53 @@
+{
+  "authoring_oracle": "构造者独立指定；不复制检查结果",
+  "errors": [
+    {
+      "kind": "footnote",
+      "id": "1",
+      "paragraph": 1,
+      "properties": [
+        "line_multiple",
+        "late_run_font_cn",
+        "late_run_font_size"
+      ]
+    },
+    {
+      "kind": "footnote",
+      "id": "2",
+      "paragraph": 1,
+      "properties": [
+        "line_multiple",
+        "style_font_cn",
+        "style_font_size"
+      ]
+    },
+    {
+      "kind": "endnote",
+      "id": "1",
+      "paragraph": 1,
+      "properties": [
+        "line_multiple",
+        "late_run_font_size"
+      ]
+    },
+    {
+      "kind": "endnote",
+      "id": "2",
+      "paragraph": 2,
+      "properties": [
+        "line_multiple"
+      ]
+    }
+  ],
+  "safe_problem_count": 9,
+  "protected": [
+    "main document bytes",
+    "body reference IDs",
+    "internal automatic markers and rPr",
+    "separator -1",
+    "continuationSeparator 0",
+    "hyperlink",
+    "settings numbering",
+    "styles relationships media table and section"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "software_demo": true,
+  "errors": {
+    "caption-errors": {
+      "reverse_figure": "图1-1 示例曲线紧接图片之前",
+      "reverse_table": "表 1-1 示例数据紧接表格之后",
+      "format": "第一章首段正文13pt，要求12pt；位置纠正不应改动"
+    },
+    "caption-number-risks": [
+      "同类同章重复1-1",
+      "图9-4所属第二章不一致",
+      "表2-2缺少标题文字",
+      "续表、附录编号和SEQ只读"
+    ]
+  },
+  "independent_checks": [
+    "按ZIP顺序取XML子树，以唯一允许的相邻交换还原后整根c14n相等",
+    "全部非document.xml成员原字节相等",
+    "重复文字对象不合并，代码排除与引文字符范围按原对象保持"
+  ]
+}

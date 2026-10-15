@@ -1,0 +1,30 @@
+{
+  "roles": {
+    "1": "other",
+    "2": "other",
+    "3": "other",
+    "4": "other",
+    "5": "abstract_cn_title",
+    "6": "abstract_cn_body",
+    "7": "heading1",
+    "8": "body",
+    "9": "body",
+    "10": "table_caption",
+    "11": "appendix_title",
+    "12": "appendix_text",
+    "13": "other"
+  },
+  "cover": {
+    "p:1": "title"
+  },
+  "toc": {
+    "d:3": "title",
+    "d:4": "level1"
+  },
+  "table": {
+    "1": "content"
+  },
+  "excluded": {
+    "13": "明确排除合成程序代码，不做普通文字修正"
+  }
+}

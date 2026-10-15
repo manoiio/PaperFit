@@ -1,0 +1,17 @@
+{
+  "description":"独立人工清单；脱敏软件演示样本，不由检查结果生成",
+  "input":"extended-errors.docx",
+  "expected_problem_count":9,
+  "items":[
+    {"rule":"R08","paragraph":7,"run":1,"property":"font_eastAsia","expected":{"slot":"eastAsia","font":"黑体"}},
+    {"rule":"R08","paragraph":7,"property":"alignment","expected":{"alignment":"center"}},
+    {"rule":"R08","paragraph":7,"property":"line","expected":{"multiple":1}},
+    {"rule":"R09","paragraph":9,"run":2,"property":"size","expected":{"pt":15}},
+    {"rule":"R10","paragraph":11,"run":2,"property":"size","expected":{"pt":14}},
+    {"rule":"R11","paragraph":13,"expected":{"style_id":"Heading2","outline_level":1}},
+    {"rule":"R12","paragraph":16,"run":2,"property":"font_eastAsia","expected":{"slot":"eastAsia","font":"宋体"}},
+    {"rule":"R12","paragraph":16,"run":2,"property":"size","expected":{"pt":10.5}},
+    {"rule":"R12","paragraph":17,"run":1,"property":"size","expected":{"pt":10.5}}
+  ],
+  "excluded":["目录条目6","摘要4","参考文献22","参考文献区域短文本23","域段落24","图片段15","表格内段落"]
+}

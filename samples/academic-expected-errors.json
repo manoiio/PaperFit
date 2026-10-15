@@ -1,0 +1,122 @@
+{
+  "kind": "软件演示独立错误清单（样本作者制定，不来自检查器输出）",
+  "objects": [
+    {
+      "paragraph": 3,
+      "property": "before",
+      "actual": {
+        "value": 6,
+        "unit": "pt"
+      },
+      "expected": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    },
+    {
+      "paragraph": 3,
+      "property": "alignment",
+      "actual": "left",
+      "expected": "center"
+    },
+    {
+      "paragraph": 4,
+      "run": 2,
+      "property": "size",
+      "actual": 14,
+      "expected": 12
+    },
+    {
+      "paragraph": 5,
+      "part": "label",
+      "property": "font_eastAsia",
+      "affected_runs": [
+        1,
+        2
+      ],
+      "actual": "宋体",
+      "expected": "黑体"
+    },
+    {
+      "paragraph": 5,
+      "part": "content",
+      "property": "size",
+      "actual": 14,
+      "expected": 12
+    },
+    {
+      "paragraph": 7,
+      "property": "alignment",
+      "actual": "left",
+      "expected": "both"
+    },
+    {
+      "paragraph": 8,
+      "part": "label",
+      "property": "bold",
+      "actual": false,
+      "expected": true,
+      "content_bold_must_remain": false
+    },
+    {
+      "paragraph": 9,
+      "property": "before",
+      "actual": {
+        "value": 0.25,
+        "unit": "lines"
+      },
+      "expected": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    },
+    {
+      "paragraphs": [
+        19,
+        20,
+        21
+      ],
+      "properties": {
+        "font_eastAsia": {
+          "actual": "黑体",
+          "expected": "宋体"
+        },
+        "size": {
+          "actual": 10,
+          "expected": 12
+        },
+        "line_spacing": {
+          "actual": {
+            "rule": "exact",
+            "pt": 20
+          },
+          "expected": {
+            "multiple": 1.5
+          }
+        }
+      },
+      "source": "DemoReference段落样式继承"
+    }
+  ],
+  "expected_problem_records": 18,
+  "expected_review_records": 0,
+  "protected_objects": {
+    "inline_images": 1,
+    "top_level_tables": 1,
+    "sections": 1
+  },
+  "unconfigured": [
+    "中文摘要正文加粗、段前段后、对齐、西文字体",
+    "英文摘要正文首行缩进、加粗",
+    "关键词内容加粗",
+    "参考文献条目西文字体、缩进、段前段后"
+  ],
+  "correct_control": {
+    "problem_records": 0,
+    "review_records": 0,
+    "cn_abstract_non_whitespace_unicode_characters": 450,
+    "cn_keywords": 3,
+    "en_keywords": 3,
+    "references": 10
+  }
+}

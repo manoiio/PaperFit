@@ -1,0 +1,71 @@
+{
+  "format": "paper-grid-spec-diagnosis",
+  "version": 1,
+  "kind": "synthetic",
+  "segments": [
+    {
+      "location": "TXT:L1",
+      "text": "软件演示自定义格式要求，不是学校正式规范。"
+    },
+    {
+      "location": "TXT:L2",
+      "text": "正文中文字体宋体，正文西文字体Times New Roman，正文小四号，正文1.5倍行距，正文首行缩进2字符。"
+    },
+    {
+      "location": "TXT:L3",
+      "text": "一级标题黑体，一级标题18pt，一级标题居中，一级标题单倍行距。"
+    },
+    {
+      "location": "TXT:L4",
+      "text": "中文摘要正文宋体，中文摘要正文12pt，中文摘要正文1.5倍行距。"
+    },
+    {
+      "location": "TXT:L5",
+      "text": "表内文字宋体，表内文字10.5pt。"
+    },
+    {
+      "location": "TXT:L6",
+      "text": "附录标题黑体，附录标题18pt，附录标题居中，附录标题单倍行距。"
+    },
+    {
+      "location": "TXT:L7",
+      "text": "附录普通文字宋体，附录普通文字12pt。"
+    },
+    {
+      "location": "TXT:L8",
+      "text": "封面论文标题黑体，封面论文标题22pt，封面论文标题加粗，封面论文标题居中。"
+    },
+    {
+      "location": "TXT:L9",
+      "text": "页眉距离18mm。页眉中文字体宋体，页眉字号10.5pt，页眉居中。"
+    },
+    {
+      "location": "TXT:L10",
+      "text": "目录标题黑体，目录标题18pt，目录标题居中，目录标题单倍行距。"
+    },
+    {
+      "location": "TXT:L11",
+      "text": "目录一级条目黑体，目录一级条目14pt，目录一级条目居左，目录一级条目1.5倍行距。"
+    },
+    {
+      "location": "TXT:L12",
+      "text": "脚注普通文字宋体，脚注普通文字10.5pt，脚注普通文字1.25倍行距。"
+    },
+    {
+      "location": "TXT:L13",
+      "text": "尾注普通文字宋体，尾注普通文字12pt，尾注普通文字2倍行距。"
+    },
+    {
+      "location": "TXT:L14",
+      "text": "打印使用双面打印；自动刷新目录页码。不规定页脚距离。附录程序代码保留空格及换行，不作为普通文字。"
+    }
+  ],
+  "input_sha256": "bf08f79463a572c8875be3555fb625d948e7540884e76fb4f7339b66b18c53c3",
+  "content": "{\"main\":{\"fields\":{\"font_cn\":{\"value\":\"宋体\",\"unit\":\"font\",\"quote\":\"正文中文字体宋体\",\"location\":\"L2\",\"support\":\"supported\"},\"font_western\":{\"value\":\"Times New Roman\",\"unit\":\"font\",\"quote\":\"正文西文字体Times New Roman\",\"location\":\"L2\",\"support\":\"supported\"},\"font_size\":{\"value\":12,\"unit\":\"pt\",\"quote\":\"正文小四号\",\"location\":\"L2\",\"support\":\"supported\"},\"line_spacing\":{\"value\":1.5,\"unit\":\"multiple\",\"quote\":\"正文1.5倍行距\",\"location\":\"L2\",\"support\":\"supported\"},\"first_line_indent\":{\"value\":2,\"unit\":\"chars\",\"quote\":\"正文首行缩进2字符\",\"location\":\"L2\",\"support\":\"supported\"},\"heading1_font_cn\":{\"value\":\"黑体\",\"unit\":\"font\",\"quote\":\"一级标题黑体\",\"location\":\"L3\",\"support\":\"supported\"},\"heading1_font_size\":{\"value\":18,\"unit\":\"pt\",\"quote\":\"一级标题18pt\",\"location\":\"L3\",\"support\":\"supported\"},\"heading1_alignment\":{\"value\":\"center\",\"unit\":\"alignment\",\"quote\":\"一级标题居中\",\"location\":\"L3\",\"support\":\"supported\"},\"heading1_line_spacing\":{\"value\":1,\"unit\":\"multiple\",\"quote\":\"一级标题单倍行距\",\"location\":\"L3\",\"support\":\"supported\"},\"abstract_cn_body__font_cn\":{\"value\":\"宋体\",\"unit\":\"font\",\"quote\":\"中文摘要正文宋体\",\"location\":\"L4\",\"support\":\"supported\"},\"abstract_cn_body__font_size\":{\"value\":12,\"unit\":\"pt\",\"quote\":\"中文摘要正文12pt\",\"location\":\"L4\",\"support\":\"supported\"},\"abstract_cn_body__line_spacing\":{\"value\":1.5,\"unit\":\"multiple\",\"quote\":\"中文摘要正文1.5倍行距\",\"location\":\"L4\",\"support\":\"supported\"},\"table_content__font_cn\":{\"value\":\"宋体\",\"unit\":\"font\",\"quote\":\"表内文字宋体\",\"location\":\"L5\",\"support\":\"supported\"},\"table_content__font_size\":{\"value\":10.5,\"unit\":\"pt\",\"quote\":\"表内文字10.5pt\",\"location\":\"L5\",\"support\":\"supported\"},\"appendix_title__font_cn\":{\"value\":\"黑体\",\"unit\":\"font\",\"quote\":\"附录标题黑体\",\"location\":\"L6\",\"support\":\"supported\"},\"appendix_title__font_size\":{\"value\":18,\"unit\":\"pt\",\"quote\":\"附录标题18pt\",\"location\":\"L6\",\"support\":\"supported\"},\"appendix_title__alignment\":{\"value\":\"center\",\"unit\":\"alignment\",\"quote\":\"附录标题居中\",\"location\":\"L6\",\"support\":\"supported\"},\"appendix_title__line_spacing\":{\"value\":1,\"unit\":\"multiple\",\"quote\":\"附录标题单倍行距\",\"location\":\"L6\",\"support\":\"supported\"},\"appendix_text__font_cn\":{\"value\":\"宋体\",\"unit\":\"font\",\"quote\":\"附录普通文字宋体\",\"location\":\"L7\",\"support\":\"supported\"},\"appendix_text__font_size\":{\"value\":12,\"unit\":\"pt\",\"quote\":\"附录普通文字12pt\",\"location\":\"L7\",\"support\":\"supported\"}},\"issues\":[{\"fields\":[\"font_cn\",\"font_western\",\"font_size\",\"line_spacing\",\"first_line_indent\",\"heading1_font_cn\",\"heading1_font_size\",\"heading1_alignment\",\"heading1_line_spacing\",\"abstract_cn_body__font_cn\",\"abstract_cn_body__font_size\",\"abstract_cn_body__line_spacing\",\"table_content__font_cn\",\"table_content__font_size\",\"appendix_title__font_cn\",\"appendix_title__font_size\",\"appendix_title__alignment\",\"appendix_title__line_spacing\",\"appendix_text__font_cn\",\"appendix_text__font_size\"],\"quote\":\"软件演示自定义格式要求，不是学校正式规范。\",\"location\":\"L1\",\"reason\":\"unsupported\"}]},\"front\":{\"fields\":{\"cover_title__font_cn\":{\"value\":\"黑体\",\"unit\":\"font_cn\",\"quote\":\"封面论文标题黑体\",\"location\":\"L8\",\"support\":\"supported\"},\"cover_title__font_size\":{\"value\":22,\"unit\":\"pt\",\"quote\":\"封面论文标题22pt\",\"location\":\"L8\",\"support\":\"supported\"},\"cover_title__bold\":{\"value\":true,\"unit\":\"bold\",\"quote\":\"封面论文标题加粗\",\"location\":\"L8\",\"support\":\"supported\"},\"cover_title__alignment\":{\"value\":\"center\",\"unit\":\"alignment\",\"quote\":\"封面论文标题居中\",\"location\":\"L8\",\"support\":\"supported\"},\"header_text__font_cn\":{\"value\":\"宋体\",\"unit\":\"font_cn\",\"quote\":\"页眉中文字体宋体\",\"location\":\"L9\",\"support\":\"supported\"},\"header_text__font_size\":{\"value\":10.5,\"unit\":\"pt\",\"quote\":\"页眉字号10.5pt\",\"location\":\"L9\",\"support\":\"supported\"},\"header_text__alignment\":{\"value\":\"center\",\"unit\":\"alignment\",\"quote\":\"页眉居中\",\"location\":\"L9\",\"support\":\"supported\"},\"header_distance_mm\":{\"value\":18,\"unit\":\"mm\",\"quote\":\"页眉距离18mm\",\"location\":\"L9\",\"support\":\"supported\"}},\"issues\":[{\"fields\":[\"footer_distance_mm\"],\"quote\":\"不规定页脚距离。附录程序代码保留空格及换行，不作为普通文字。\",\"location\":\"L14\",\"reason\":\"unsupported\"}]},\"toc\":{\"fields\":{\"title__font_cn\":{\"value\":\"黑体\",\"unit\":\"font\",\"quote\":\"目录标题黑体\",\"location\":\"L10\",\"support\":\"supported\"},\"title__font_size\":{\"value\":18,\"unit\":\"pt\",\"quote\":\"目录标题18pt\",\"location\":\"L10\",\"support\":\"supported\"},\"title__alignment\":{\"value\":\"center\",\"unit\":\"alignment\",\"quote\":\"目录标题居中\",\"location\":\"L10\",\"support\":\"supported\"},\"title__line_multiple\":{\"value\":1,\"unit\":\"multiple\",\"quote\":\"目录标题单倍行距\",\"location\":\"L10\",\"support\":\"supported\"},\"level1__font_cn\":{\"value\":\"黑体\",\"unit\":\"font\",\"quote\":\"目录一级条目黑体\",\"location\":\"L11\",\"support\":\"supported\"},\"level1__font_size\":{\"value\":14,\"unit\":\"pt\",\"quote\":\"目录一级条目14pt\",\"location\":\"L11\",\"support\":\"supported\"},\"level1__alignment\":{\"value\":\"left\",\"unit\":\"alignment\",\"quote\":\"目录一级条目居左\",\"location\":\"L11\",\"support\":\"supported\"},\"level1__line_multiple\":{\"value\":1.5,\"unit\":\"multiple\",\"quote\":\"目录一级条目1.5倍行距\",\"location\":\"L11\",\"support\":\"supported\"}},\"issues\":[]},\"notes\":{\"fields\":{\"footnote__font_cn\":{\"value\":\"宋体\",\"unit\":\"font\",\"quote\":\"脚注普通文字宋体\",\"location\":\"L12\",\"support\":\"supported\"},\"footnote__font_size\":{\"value\":10.5,\"unit\":\"pt\",\"quote\":\"脚注普通文字10.5pt\",\"location\":\"L12\",\"support\":\"supported\"},\"footnote__line_multiple\":{\"value\":1.25,\"unit\":\"multiple\",\"quote\":\"脚注普通文字1.25倍行距\",\"location\":\"L12\",\"support\":\"supported\"},\"endnote__font_cn\":{\"value\":\"宋体\",\"unit\":\"font\",\"quote\":\"尾注普通文字宋体\",\"location\":\"L13\",\"support\":\"supported\"},\"endnote__font_size\":{\"value\":12,\"unit\":\"pt\",\"quote\":\"尾注普通文字12pt\",\"location\":\"L13\",\"support\":\"supported\"},\"endnote__line_multiple\":{\"value\":2,\"unit\":\"multiple\",\"quote\":\"尾注普通文字2倍行距\",\"location\":\"L13\",\"support\":\"supported\"}},\"issues\":[]}}",
+  "content_sha256": "53159c5b78def6a515738d3a34610386540d52ea61eadf2c92aafe3c0415458b",
+  "finish_reason": "stop",
+  "tool_calls": false,
+  "receipt": null,
+  "protocol_error": null,
+  "edits": []
+}

@@ -1,0 +1,73 @@
+{
+  "source": "独立作者清单，非程序报告复制",
+  "errors": {
+    "3": [
+      {
+        "occurrence": 1,
+        "text": "[1]",
+        "superscript": false
+      },
+      {
+        "occurrence": 2,
+        "text": "[1]",
+        "superscript": false
+      },
+      {
+        "occurrence": 3,
+        "text": "[8]",
+        "decision": "excluded"
+      }
+    ],
+    "4": [
+      {
+        "text": "[2]",
+        "partial_superscript": true
+      }
+    ],
+    "5": [
+      {
+        "text": "[1]",
+        "style_superscript": true
+      },
+      {
+        "text": "[3]",
+        "style_baseline": true
+      }
+    ],
+    "6": [
+      {
+        "text": "[1]",
+        "field": "readonly"
+      }
+    ]
+  },
+  "fixable_citations": 4,
+  "expected_numbers": [
+    1,
+    2,
+    3
+  ],
+  "preserve": [
+    "全文字符顺序",
+    "数组[8]",
+    "所有非所选字符属性",
+    "REF域指令/缓存",
+    "表格和媒体",
+    "所有非document.xml成员"
+  ],
+  "automatic-and-field": {
+    "source": "样本作者独立指定，不由检查器输出填充",
+    "cross_paragraph_field_cache_paragraphs": [
+      3,
+      4
+    ],
+    "first_reference_paragraph": 8,
+    "first_reference_numbering": "Word ListNumber decimal，显示编号不由程序求值",
+    "manual_number_subset": "2–10；存在未解析自动编号时不能仅据此断言全文缺1或跳号",
+    "safe_superscript_problem": {
+      "paragraph": 5,
+      "text": "[3]"
+    },
+    "other_objects": "域缓存与编号只读"
+  }
+}

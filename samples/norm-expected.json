@@ -1,0 +1,31 @@
+{
+  "description": "独立人工期望清单；不是引擎生成结果",
+  "A": {
+    "paper": "A4 portrait",
+    "margin_top": 25,
+    "margin_bottom": 25,
+    "margin_left": 25,
+    "margin_right": 25,
+    "font_cn": "宋体",
+    "font_western": "Times New Roman",
+    "font_size": 12,
+    "line_spacing": 1.5,
+    "first_line_indent": 2
+  },
+  "B": {
+    "paper": "A4 portrait",
+    "margin_top": 30,
+    "margin_bottom": 20,
+    "margin_left": 35,
+    "margin_right": 30,
+    "font_cn": "黑体",
+    "font_western": "Arial",
+    "font_size": 14,
+    "line_spacing": 2,
+    "first_line_indent": 1
+  },
+  "unsupported": [
+    "请双面打印。",
+    "标题采用固定20磅行距。"
+  ]
+}

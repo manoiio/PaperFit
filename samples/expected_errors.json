@@ -1,0 +1,17 @@
+{
+  "description": "独立手工错误清单；验收按规则、准确位置和期望值比较，非检查器输出派生。",
+  "body_paragraphs": [4, 5, 6, 11, 14, 15],
+  "errors": [
+    {"rule_id": "R01", "locator": {"section": 1}, "expected": {"width_mm": 210, "height_mm": 297}},
+    {"rule_id": "R02", "locator": {"section": 1}, "expected": {"top_mm": 25, "bottom_mm": 25, "left_mm": 25, "right_mm": 25}},
+    {"rule_id": "R02", "locator": {"section": 2}, "expected": {"top_mm": 25, "bottom_mm": 25, "left_mm": 25, "right_mm": 25}},
+    {"rule_id": "R05", "locator": {"paragraph": 4, "run": 2}, "expected": 12},
+    {"rule_id": "R06", "locator": {"paragraph": 4}, "expected": 1.5},
+    {"rule_id": "R03", "locator": {"paragraph": 5, "run": 1}, "expected": "宋体"},
+    {"rule_id": "R06", "locator": {"paragraph": 5}, "expected": 1.5},
+    {"rule_id": "R07", "locator": {"paragraph": 6}, "expected": 2},
+    {"rule_id": "R07", "locator": {"paragraph": 11}, "expected": 2},
+    {"rule_id": "R04", "locator": {"paragraph": 14, "run": 2}, "expected": "Times New Roman"},
+    {"rule_id": "R05", "locator": {"paragraph": 14, "run": 2}, "expected": 12}
+  ]
+}

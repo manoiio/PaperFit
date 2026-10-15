@@ -1,0 +1,72 @@
+{
+  "name": "华工本科工理类2015演示规则（标题题注扩展）",
+  "version": "extended-demo-1.0.0",
+  "source_file": "00-全员必看/本科毕业设计论文.pdf",
+  "rules": {
+    "R08": {
+      "name": "一级标题格式",
+      "expected": {
+        "font_cn": "黑体",
+        "font_latin": "Times New Roman",
+        "size_pt": 18,
+        "alignment": "center",
+        "line_multiple": 1
+      },
+      "page": 18,
+      "quote": "小二号黑体，居中，单倍行距",
+      "demo_interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+    },
+    "R09": {
+      "name": "二级标题格式",
+      "expected": {
+        "font_cn": "黑体",
+        "font_latin": "Times New Roman",
+        "size_pt": 15,
+        "alignment": "left",
+        "line_multiple": 1
+      },
+      "page": 18,
+      "quote": "小三号，黑体，居左，单倍行距",
+      "demo_interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+    },
+    "R10": {
+      "name": "三级标题格式",
+      "expected": {
+        "font_cn": "黑体",
+        "font_latin": "Times New Roman",
+        "size_pt": 14,
+        "alignment": "left",
+        "line_multiple": 1
+      },
+      "page": 18,
+      "quote": "四号，黑体，居左，单倍行距",
+      "demo_interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+    },
+    "R11": {
+      "name": "标题样式与大纲级别",
+      "expected": {
+        "heading_levels": [
+          1,
+          2,
+          3
+        ]
+      },
+      "source": {
+        "label": "产品结构规则",
+        "file": null,
+        "physical_page": null,
+        "quote": "使用已存在且可验证的内置Heading 1–3及对应大纲级别；保持其他有效格式，不是学校明确规定英文样式名。"
+      }
+    },
+    "R12": {
+      "name": "普通图表题注字体字号",
+      "expected": {
+        "font_cn": "宋体",
+        "font_latin": "宋体",
+        "size_pt": 10.5
+      },
+      "page": 18,
+      "quote": "插图（表）的标题和文字：五号，宋体"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "华工本科工理类2015演示规则",
+  "version": "1.0.0",
+  "scope": "各节页面；仅明确确认的主文档顶层正文段落中的普通文字。非当前学校现行标准声明。",
+  "source_file": "00-全员必看/本科毕业设计论文.pdf",
+  "rules": {
+    "R01": {"name": "A4纸张", "expected": {"width_mm": 210, "height_mm": 297}, "page": 20, "quote": "编排并打印在标准A4纸上"},
+    "R02": {"name": "页面边距", "expected": {"top_mm": 25, "bottom_mm": 25, "left_mm": 25, "right_mm": 25}, "page": 20, "quote": "所有页面的上下左右页面边距为25mm"},
+    "R03": {"name": "正文中文字体", "expected": "宋体", "page": 18, "quote": "正文：小四号，宋体，1.5倍行距"},
+    "R04": {"name": "正文西文字体", "expected": "Times New Roman", "page": 18, "quote": "英文单词：字号、行距与正文相同，字体为Times New Roman", "demo_interpretation": "演示将西文数字一并检查；只支持ASCII和Latin字符，不推断复杂文字字体槽位。"},
+    "R05": {"name": "正文普通文字字号", "expected": 12, "unit": "pt", "page": 18, "quote": "正文：小四号", "demo_interpretation": "小四按12pt换算；普通文字不包含上角标、公式等。"},
+    "R06": {"name": "正文行距", "expected": 1.5, "unit": "multiple", "page": 18, "quote": "正文：小四号，宋体，1.5倍行距"},
+    "R07": {"name": "正文首行缩进", "expected": 2, "unit": "CJK characters", "page": 18, "quote": "段首行缩进2个汉字", "demo_interpretation": "firstLineChars=200；可判断等效点值=2×当前统一字号，不固定48pt；冲突属性不算通过。"}
+  }
+}

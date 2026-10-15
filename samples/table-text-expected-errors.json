@@ -1,0 +1,51 @@
+{
+  "description": "独立合成注入清单；只列确定错误，复杂/特殊对象另待复核",
+  "expected_problem_count": 5,
+  "errors": [
+    {
+      "table": 2,
+      "row": 2,
+      "cell": 2,
+      "cell_paragraph": 1,
+      "run": 2,
+      "property": "font_cn",
+      "expected": "宋体"
+    },
+    {
+      "table": 2,
+      "row": 2,
+      "cell": 2,
+      "cell_paragraph": 1,
+      "run": 2,
+      "property": "font_size",
+      "expected": 10.5
+    },
+    {
+      "table": 3,
+      "row": 2,
+      "cell": 2,
+      "cell_paragraph": 1,
+      "run": 1,
+      "property": "font_cn",
+      "expected": "宋体"
+    },
+    {
+      "table": 3,
+      "row": 2,
+      "cell": 2,
+      "cell_paragraph": 1,
+      "run": 1,
+      "property": "font_size",
+      "expected": 10.5
+    },
+    {
+      "table": 4,
+      "row": 1,
+      "cell": 1,
+      "cell_paragraph": 1,
+      "run": 2,
+      "property": "font_size",
+      "expected": 10.5
+    }
+  ]
+}

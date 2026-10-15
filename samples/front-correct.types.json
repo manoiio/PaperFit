@@ -1,0 +1,140 @@
+{
+  "input_sha256": "6ec42dec416733ad9a5f7755ea4c32fc48c63c537d8dce5ddaeb25df3018b774",
+  "paragraph_types": {
+    "1": "other",
+    "2": "other",
+    "3": "other",
+    "4": "other",
+    "5": "other",
+    "6": "other",
+    "7": "other",
+    "8": "other",
+    "9": "other",
+    "10": "other",
+    "11": "other",
+    "12": "other",
+    "13": "other",
+    "14": "other",
+    "15": "other",
+    "16": "other",
+    "17": "other",
+    "18": "other"
+  },
+  "confirmed": true,
+  "confirmation": "软件演示，只确认封面/分节新能力，其他类型排除",
+  "front_scope": {
+    "input_sha256": "6ec42dec416733ad9a5f7755ea4c32fc48c63c537d8dce5ddaeb25df3018b774",
+    "confirmed": true,
+    "confirmation": "合成样本人工独立定位；用户使用仍须核对",
+    "objects": {
+      "p:2": "title",
+      "t:1:1:1:1": "name",
+      "t:1:1:2:1": "name",
+      "t:1:2:2:1": "student_id",
+      "t:1:3:2:1": "college",
+      "p:3": "major",
+      "p:4": "supervisor",
+      "p:5": "date"
+    },
+    "section_roles": {
+      "1": "cover",
+      "2": "front",
+      "3": "body",
+      "4": "mixed"
+    },
+    "template": {
+      "format": "paper-grid-front-supplement",
+      "structure_version": 1,
+      "name": "封面分节软件演示补充要求",
+      "values": {
+        "cover_title__font_cn": "黑体",
+        "cover_title__font_size": 22,
+        "cover_title__bold": true,
+        "cover_title__alignment": "center",
+        "header_text__font_cn": null,
+        "header_text__font_western": null,
+        "header_text__font_size": null,
+        "header_text__alignment": "center",
+        "footer_text__font_cn": null,
+        "footer_text__font_western": null,
+        "footer_text__font_size": null,
+        "footer_text__alignment": null,
+        "header_distance_mm": 15,
+        "footer_distance_mm": 15
+      },
+      "sources": {
+        "cover_title__font_cn": {
+          "kind": "school_demo",
+          "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。",
+          "location": "PDF:17,21"
+        },
+        "cover_title__font_size": {
+          "kind": "school_demo",
+          "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。",
+          "location": "PDF:17,21"
+        },
+        "cover_title__bold": {
+          "kind": "school_demo",
+          "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。",
+          "location": "PDF:17,21"
+        },
+        "cover_title__alignment": {
+          "kind": "school_demo",
+          "quote": "论文封面均使用中文撰写。二号，黑体，加粗，居中。",
+          "location": "PDF:17,21"
+        },
+        "header_text__font_cn": {
+          "kind": "not_enabled",
+          "quote": "",
+          "location": null
+        },
+        "header_text__font_western": {
+          "kind": "not_enabled",
+          "quote": "",
+          "location": null
+        },
+        "header_text__font_size": {
+          "kind": "not_enabled",
+          "quote": "",
+          "location": null
+        },
+        "header_text__alignment": {
+          "kind": "user_confirmed",
+          "quote": "",
+          "location": null
+        },
+        "footer_text__font_cn": {
+          "kind": "not_enabled",
+          "quote": "",
+          "location": null
+        },
+        "footer_text__font_western": {
+          "kind": "not_enabled",
+          "quote": "",
+          "location": null
+        },
+        "footer_text__font_size": {
+          "kind": "not_enabled",
+          "quote": "",
+          "location": null
+        },
+        "footer_text__alignment": {
+          "kind": "not_enabled",
+          "quote": "",
+          "location": null
+        },
+        "header_distance_mm": {
+          "kind": "school_demo",
+          "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。",
+          "location": "PDF:19"
+        },
+        "footer_distance_mm": {
+          "kind": "school_demo",
+          "quote": "页眉的上边距为15mm；其上居中打印页眉；页脚的下边距为15mm。",
+          "location": "PDF:19"
+        }
+      },
+      "confirmation": "固定原文配置；仅用户明确确认对象后执行"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "input_sha256": "529f6202d52f9c219656ce906659c90ecc8415567f195fa082b2f0ae1dd9f7a6",
+  "paragraph_types": {
+    "1": "other",
+    "2": "other",
+    "3": "other",
+    "4": "other",
+    "5": "other",
+    "6": "other",
+    "7": "heading1",
+    "8": "body",
+    "9": "heading2",
+    "10": "body",
+    "11": "heading3",
+    "12": "body",
+    "13": "heading2",
+    "14": "body",
+    "15": "other",
+    "16": "figure_caption",
+    "17": "table_caption",
+    "18": "other",
+    "19": "heading1",
+    "20": "body",
+    "21": "other",
+    "22": "other",
+    "23": "other",
+    "24": "other"
+  },
+  "confirmed": true,
+  "confirmation": "合成样本作者人工核对；程序建议仍须网页用户再次确认"
+}

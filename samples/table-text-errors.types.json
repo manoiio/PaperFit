@@ -1,0 +1,49 @@
+{
+  "input_sha256": "4463c2da9771a974c7f02f71c41d73520f5a3cb97773a38453383911a324d5d5",
+  "paragraph_types": {
+    "1": "other",
+    "2": "other",
+    "3": "abstract_cn_title",
+    "4": "abstract_cn_body",
+    "5": "keywords_cn",
+    "6": "abstract_en_title",
+    "7": "abstract_en_body",
+    "8": "keywords_en",
+    "9": "heading1",
+    "10": "body",
+    "11": "heading2",
+    "12": "body",
+    "13": "heading3",
+    "14": "body",
+    "15": "other",
+    "16": "figure_caption",
+    "17": "table_caption",
+    "18": "reference_title",
+    "19": "reference_item",
+    "20": "reference_item",
+    "21": "reference_item",
+    "22": "reference_item",
+    "23": "reference_item",
+    "24": "reference_item",
+    "25": "reference_item",
+    "26": "reference_item",
+    "27": "reference_item",
+    "28": "reference_item"
+  },
+  "confirmed": true,
+  "confirmation": "合成样本作者独立核对；网页仍需用户确认",
+  "table_scope": {
+    "input_sha256": "4463c2da9771a974c7f02f71c41d73520f5a3cb97773a38453383911a324d5d5",
+    "table_types": {
+      "1": "cover",
+      "2": "content",
+      "3": "content",
+      "4": "content",
+      "5": "content",
+      "6": "content",
+      "7": "content"
+    },
+    "confirmed": true,
+    "confirmation": "样本作者独立核对用途"
+  }
+}

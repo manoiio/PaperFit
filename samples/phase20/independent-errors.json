@@ -1,0 +1,34 @@
+{
+  "authoring_oracle": "由样本构造独立指定，不复制检查输出",
+  "errors": {
+    "1": [
+      "left"
+    ],
+    "2": [
+      "right"
+    ],
+    "3": [
+      "left",
+      "right"
+    ],
+    "4": []
+  },
+  "expected_preserved": [
+    "top single",
+    "bottom double",
+    "insideH single",
+    "insideV single",
+    "all text, grid widths, padding, media and ZIP members"
+  ],
+  "long": {
+    "rows": 83,
+    "columns": 3,
+    "header_rows": [
+      1,
+      2
+    ],
+    "no_fixed_height": true,
+    "no_forced_break": true,
+    "input_left_cell_override": "double"
+  }
+}

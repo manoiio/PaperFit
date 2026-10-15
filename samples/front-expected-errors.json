@@ -1,0 +1,55 @@
+{
+  "description": "独立人工注入；不含程序检查结果。其他结构/页码只读待复核不应清零。",
+  "errors": [
+    {
+      "rule": "R24",
+      "locator": "p:2/run:2",
+      "property": "font_cn",
+      "actual": "宋体",
+      "expected": "黑体"
+    },
+    {
+      "rule": "R24",
+      "locator": "p:2/run:2",
+      "property": "font_size",
+      "actual": 12,
+      "expected": 22
+    },
+    {
+      "rule": "R24",
+      "locator": "p:2/run:2",
+      "property": "bold",
+      "actual": false,
+      "expected": true
+    },
+    {
+      "rule": "R24",
+      "locator": "p:2",
+      "property": "alignment",
+      "actual": "left",
+      "expected": "center"
+    },
+    {
+      "rule": "R26",
+      "section": 2,
+      "property": "header_distance_mm",
+      "actual": 9,
+      "expected": 15
+    },
+    {
+      "rule": "R26",
+      "section": 3,
+      "property": "footer_distance_mm",
+      "actual": 8,
+      "expected": 15
+    },
+    {
+      "rule": "R27",
+      "section": 2,
+      "story": "header:default",
+      "property": "alignment",
+      "actual": "left",
+      "expected": "center"
+    }
+  ]
+}

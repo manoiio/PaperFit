@@ -1,0 +1,43 @@
+{
+  "independent_manual_design": true,
+  "page_mm": 210,
+  "margins_mm": {
+    "left": 35,
+    "right": 30
+  },
+  "body_mm": 145,
+  "tables": [
+    {
+      "index": 1,
+      "width_mm": 180,
+      "auto": true,
+      "fixable": true
+    },
+    {
+      "index": 2,
+      "width_mm": 100,
+      "must_preserve": true
+    },
+    {
+      "index": 3,
+      "width_mm": 180,
+      "merged": true,
+      "review": true
+    }
+  ],
+  "images": [
+    {
+      "width_mm": 180,
+      "fixable": true
+    },
+    {
+      "width_mm": 60,
+      "must_preserve": true
+    }
+  ],
+  "B": {
+    "input": "work/phase9/final/B-fixed.docx",
+    "table_width_mm": 160.02,
+    "body_width_mm": 145.0093
+  }
+}

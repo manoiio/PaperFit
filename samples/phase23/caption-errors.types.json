@@ -1,0 +1,23 @@
+{
+  "input_sha256": "ac4d92fc12313f456337537a574a79df74f6f62e219f3fcf8d090e3db4607ebe",
+  "paragraph_types": {
+    "1": "other",
+    "2": "other",
+    "3": "heading1",
+    "4": "body",
+    "5": "figure_caption",
+    "6": "other",
+    "7": "body",
+    "8": "table_caption",
+    "9": "body",
+    "10": "heading1",
+    "11": "body",
+    "12": "other",
+    "13": "figure_caption",
+    "14": "body",
+    "15": "table_caption",
+    "16": "body"
+  },
+  "confirmed": true,
+  "confirmation": "合成样本独立人工范围"
+}
