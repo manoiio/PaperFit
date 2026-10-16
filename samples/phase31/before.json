@@ -5,7 +5,7 @@
   "rules": {
     "name": "用户确认的段落属性演示（正文及标题题注）（段落及摘要关键词参考文献）",
     "version": "template-demo-4.0.0+extended-demo-1.0.0+sections-demo-1.0",
-    "sha256": "4980e0f07ed585236d6313a22e6eeba08795aba726dbb387768910398a8f0ad9",
+    "sha256": "99cc85e2460313fda1fdfe68ae510fb13b2004d0e3858b1c306804ec5da2e116",
     "kind": "user_confirmed_template",
     "base_sha256": "1ef3ec0d674ddc3a1e5e5c84510dd7851f9011edf98c7efe92a46161d078ca10",
     "sources": {
@@ -132,7 +132,7 @@
     "template_structure_version": 4,
     "compatibility": null,
     "mode": "academic",
-    "body_config_sha256": "0035e15c35f3676471c09623309b33e6a63185962c039ff44db7ed83ebed4ecb",
+    "body_config_sha256": "66fb6db520dc66180a2e7a7512fbde0143d2d1ad845888f8b09f44f13d7bdbdd",
     "extension_sha256": "1dccdfa3c93b951dad721a980e55d3d821354df9ceef5fe48d1482fbe938c96c",
     "academic_sha256": "2db221cbc6b1a9e31d1cc133f1f545e0943ea796c959c71f23f9bc81e9623539",
     "citation_supplement": {

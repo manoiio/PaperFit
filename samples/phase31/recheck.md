@@ -1,7 +1,7 @@
 # 论文有格检查报告
 
 规则：用户确认的段落属性演示（正文及标题题注）（段落及摘要关键词参考文献） vtemplate-demo-4.0.0+extended-demo-1.0.0+sections-demo-1.0
-规则配置SHA256：4980e0f07ed585236d6313a22e6eeba08795aba726dbb387768910398a8f0ad9
+规则配置SHA256：99cc85e2460313fda1fdfe68ae510fb13b2004d0e3858b1c306804ec5da2e116
 模板结构版本：4；兼容转换：null
 输入：fixed.docx
 SHA256：0bfdb4bde938d9e01abe5ba6e4ed7e9f1d21a5185a5f3b010419f480cd0e4e8b

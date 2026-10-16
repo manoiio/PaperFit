@@ -53,5 +53,13 @@
   },
   "isolation": "Two independent Chrome sessions with different tasks/files/history; no shared document/report. Service restart clears in-memory sessions, explicit project import restores only target.",
   "failures": "Some automation attempts timed out during rerun, hidden checkbox or open dropdown; actual UI reread then completed. Failed attempts not successful timing. No private state injection.",
-  "limits": "Only synthetic data; UI actions are not Word/page proof; downloads independently inspected."
+  "limits": "Only synthetic data; UI actions are not Word/page proof; downloads independently inspected.",
+  "final_grid_guard_recheck": {
+    "actual_browser_project_restore": true,
+    "current_round": 2,
+    "problem_count": 0,
+    "review_count": 37,
+    "old_visual_not_restored": true,
+    "final_DOCX_unchanged": true
+  }
 }

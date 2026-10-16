@@ -7,33 +7,33 @@
     {
       "operation": "scripts/check_repository.py",
       "returncode": 0,
-      "seconds": 0.029669083072803915,
+      "seconds": 0.029472165973857045,
       "test_summary": []
     },
     {
       "operation": "unittest discover",
       "returncode": 0,
-      "seconds": 163.8198244589148,
+      "seconds": 160.63966620806605,
       "test_summary": [
-        "Ran 1145 tests in 163.195s\n\nOK"
+        "Ran 1145 tests in 160.035s\n\nOK"
       ]
     },
     {
       "operation": "scripts/reproduce_citation_paragraph_demo.py",
       "returncode": 0,
-      "seconds": 1.1323284999234602,
+      "seconds": 1.1132993339560926,
       "test_summary": []
     },
     {
       "operation": "scripts/verify_citation_paragraph_output.py",
       "returncode": 0,
-      "seconds": 0.044672208023257554,
+      "seconds": 0.047198374988511205,
       "test_summary": []
     },
     {
       "operation": "scripts/verify_citation_paragraph_output.py",
       "returncode": 0,
-      "seconds": 0.043259707977995276,
+      "seconds": 0.04593229200690985,
       "test_summary": []
     }
   ],

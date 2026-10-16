@@ -92,6 +92,12 @@ class CitationParagraphTests(TestCase):
   r=self.altered(fn);self.assertEqual(finding(r,3,'R06')['status'],'review');self.assertEqual(finding(r,3,'R13','after')['status'],'review');self.assertEqual(finding(r,3,'R13','alignment')['status'],'problem')
   def off(pkg):fn(pkg);_ensure(_ensure(pkg.paragraphs[2],'pPr'),'snapToGrid').set(q('val'),'0')
   self.assertEqual(finding(self.altered(off),3,'R06')['status'],'problem')
+  for kind in ('unknown','duplicate'):
+   def abnormal(pkg):
+    if kind=='unknown':_ensure(pkg.sections[0],'docGrid').set(q('type'),'unsupported-grid')
+    else:
+     _ensure(pkg.sections[0],'docGrid').set(q('type'),'default');E.SubElement(pkg.sections[0],q('docGrid')).set(q('type'),'lines')
+   r=self.altered(abnormal);self.assertEqual(finding(r,3,'R06')['status'],'review',kind);self.assertEqual(finding(r,4,'R07')['status'],'review',kind);self.assertEqual(finding(r,3,'R13','after')['status'],'review',kind);self.assertEqual(finding(r,3,'R13','alignment')['status'],'problem',kind)
  def test_spacing_units_automatic_contextual_and_conflicts(self):
   for attr,v,prop in [('beforeAutospacing','1','before'),('beforeAutospacing','invalid','before'),('beforeLines','50','before')]:
    r=self.altered(lambda p:_ensure(_ensure(p.paragraphs[2],'pPr'),'spacing').set(q(attr),v));self.assertEqual(finding(r,3,'R13',prop)['status'],'review');self.assertEqual(finding(r,3,'R13','alignment')['status'],'problem')

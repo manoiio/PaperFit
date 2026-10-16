@@ -220,7 +220,7 @@ def _check(pkg, body, rules, classification=None):
         # snapToGrid can make the actual 1.5 line layout uncertain. The XML value alone is not enough.
         grid = any(s.find(q('docGrid')) is not None and s.find(q('docGrid')).get(q('type')) in
                    ('lines', 'linesAndChars', 'snapToChars') for s in pkg.sections)
-        pending = (proof.get('structurally_safe') and spacing.get('line') is not None and line is None) or paragraph_special or mode not in ('auto', 'exact', 'atLeast') or (line is not None and line <= 0) or (
+        pending = (proof.get('structurally_safe') and (proof.get('grid_active') or spacing.get('line') is not None and line is None)) or paragraph_special or mode not in ('auto', 'exact', 'atLeast') or (line is not None and line <= 0) or (
             grid and res.value(pl, 'snapToGrid', '1') not in ('0', 'false', 'off'))
         if pending:
             add('R06', loc, actual, 'review', False, '混有特殊run或文档网格，段落行距不自动修正')

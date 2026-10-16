@@ -32,7 +32,12 @@ def build(pkg,classification):
     for tag in ('snapToGrid','contextualSpacing'):
      values=layer.findall(q(tag))
      if len(values)>1 or values and values[0].get(q('val'),'1') not in ('0','1','false','true','off','on'):raise Unresolved('重复或未知段落OnOff属性：'+tag)
-   out['grid_active']=any(s.find(q('docGrid')) is not None and s.find(q('docGrid')).get(q('type')) in ('lines','linesAndChars','snapToChars') for s in pkg.sections) and res.value(pl,'snapToGrid','1') not in ('0','false','off')
+   # Only an absent/default single grid proves no grid effect. Unknown or
+   # duplicated grids stay conservative for the new exception, even if their
+   # first declaration happens to look disabled. Alignment/char units remain
+   # independently readable; no pixel/layout conclusion is inferred.
+   grids=[s.findall(q('docGrid')) for s in pkg.sections]
+   out['grid_active']=any(len(gs)>1 or any(g.get(q('type')) not in (None,'default') for g in gs) for gs in grids) and res.value(pl,'snapToGrid','1') not in ('0','false','off')
    if any(x.find(q('numPr')) is not None for x in pl):raise Unresolved('自动编号/列表依赖仍保护，不豁免段落属性')
    spans=[(r['start'],r['end']) for r in citations];ends=[b for a,b in spans];offset=0
    for i,r in enumerate(p.findall(q('r')),1):
