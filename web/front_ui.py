@@ -21,7 +21,7 @@ def render_front(model):
   with st.expander('确认封面字段与论文标题',expanded=True):
    opts=inv['cover_objects'];st.dataframe([{'对象':r['id'],'简短文字':r['text'][:55],'标签候选':[FIELDS[x] for x in r['candidates']],'已指定':FIELDS.get(d['objects'].get(r['id']), '未指定'),'特殊结构':r['special'] or ''} for r in opts],hide_index=True,width='stretch',height=220)
    if opts:
-    with st.form('front-object-form-'+token):
+    with st.container(key='front-object-form-'+token):
      obj=st.selectbox('封面对象定位',[r['id'] for r in opts],format_func=lambda k:k+' · '+next(r['text'][:35] for r in opts if r['id']==k),key='front-object-'+token)
      typ=st.selectbox('此对象代表的封面字段',['none',*FIELDS],index=['none',*FIELDS].index(d['objects'].get(obj,'none')),format_func=lambda x:'不指定' if x=='none' else FIELDS[x],key='front-type-'+token+'-'+obj)
      def assign():
@@ -29,7 +29,7 @@ def render_front(model):
       if typ=='none':s['objects'].pop(obj,None)
       else:s['objects'][obj]=typ
       model.edit_front(s)
-     if st.form_submit_button('应用此封面定位草稿'):guard(assign);st.rerun()
+     if st.button('应用此封面定位草稿'):guard(assign);st.rerun()
   with st.expander('真实分节、用途与页眉页脚关系',expanded=True):
    st.dataframe([{'节':s['index'],'XML对象范围':str(s['body_objects']),'顶层段落范围':str(s['paragraphs']),'纸张mm':str({k:round(int(v)*25.4/1440,2) if v.isdigit() and k in ('w','h') else v for k,v in s['page'].items()}),'页边距及距离mm':str({k:round(int(v)*25.4/1440,2) if v.isdigit() else v for k,v in s['margins'].items()}),'首页不同':s['first_page_different'],'奇偶不同':s['odd_even_different'],'用途':ROLES[d['section_roles'][str(s['index'])]]} for s in inv['sections']],hide_index=True,width='stretch')
    if inv['sections']:

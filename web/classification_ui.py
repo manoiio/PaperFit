@@ -6,7 +6,7 @@ from .session import public_error
 
 REVERSE={v:k for k,v in TYPES.items()}
 
-def render_classification(model, run_check):
+def render_classification(model, run_check, unified=False):
     def confirm():
         try:model.confirm_classification()
         except Exception as exc:model.error=public_error(exc)
@@ -73,8 +73,9 @@ def render_classification(model, run_check):
         ambiguous=[str(p['index']) for p in model.suggestions['paragraphs'] if p['ambiguous']]
         if ambiguous:st.caption('请特别核对原建议有歧义的段落：'+', '.join(ambiguous)+'。点击确认表示已核对整份当前分类。')
         st.caption('已确认分类，绑定当前文件与规则。' if model.classification_confirmed else '分类尚未确认；改分类、文件或模式后需重新确认。')
-        st.caption('快捷按钮表示本人已核对整份当前分类，包括歧义与待确认项；这些提示不会因此变成通过。')
-        st.button('核对完成并开始检查',on_click=model.confirm_and_check,type='primary',width='stretch')
-        a,b=st.columns(2)
-        a.button('确认分类并应用范围',on_click=confirm,width='stretch')
-        b.button('开始检查',on_click=run_check,disabled=model.classification_confirmed is None,width='stretch')
+        with st.expander('高级：原分区域确认与独立检查'):
+            st.caption('快捷按钮表示本人已核对整份当前分类，包括歧义与待确认项；这些提示不会因此变成通过。')
+            st.button('核对完成并开始检查',on_click=model.confirm_and_check,type='primary',width='stretch')
+            a,b=st.columns(2)
+            a.button('确认分类并应用范围',on_click=confirm,width='stretch')
+            b.button('开始检查',on_click=run_check,disabled=model.classification_confirmed is None,width='stretch')

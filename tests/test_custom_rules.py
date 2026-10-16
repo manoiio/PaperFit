@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """模拟API自动验收，不调用网络、不消耗余额。默认47项继续单独保留。"""
 from copy import deepcopy
 from pathlib import Path
@@ -286,7 +287,7 @@ class CustomUIAcceptance(unittest.TestCase):
         self.at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=20).run()
     def tearDown(self):self.at.session_state['workflow'].reset()
     def click(self,label):
-        next(b for b in self.at.button if b.label==label).click().run()
+        ui_click(self.at,label)
         self.assertFalse(list(self.at.exception))
     def test_mock_parse_edit_confirm_and_default_restore_widgets(self):
         self.click('使用正确对照');self.click('填入示例B')
@@ -303,7 +304,7 @@ class CustomUIAcceptance(unittest.TestCase):
         self.click('切换回默认演示规则')
         self.assertIsNone(m.report);self.assertIsNone(m.custom_rules_path)
     def test_missing_mock_field_explicit_default_no_hidden_ai_fill(self):
-        self.click('使用正确对照')
+        self.click('使用正确对照');show(self.at,1,rules=True)
         text='正文小四号'
         next(t for t in self.at.text_area if t.label.startswith('短格式')).set_value(text).run()
         d={'font_size':{'value':12,'quote':text},'line_spacing':None,'unsupported':[]}

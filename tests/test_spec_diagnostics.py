@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 import unittest,json,tempfile
 from pathlib import Path
 from copy import deepcopy
@@ -111,11 +112,11 @@ class SpecDiagnosisTests(unittest.TestCase):
 
  def test_issue_form_uses_submitted_relation_and_reason(self):
   from streamlit.testing.v1 import AppTest
-  self.s.load_synthetic_diagnostic();app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();self.assertFalse(app.exception)
+  self.s.load_synthetic_diagnostic();app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,1,rules=True);self.assertFalse(app.exception)
   next(x for x in app.radio if x.label=='关联决定').set_value('note')
   next(x for x in app.selectbox if x.label=='提示来源位置').set_value('TXT:L1')
   next(x for x in app.text_input if x.label=='用户决定与理由（必填）').set_value('已经核对免责声明，只是说明并不阻止执行字段')
-  next(x for x in app.button if x.label=='记录提示决定并重新校验').click();app.run();self.assertFalse(app.exception)
+  next(x for x in app.button if x.label=='记录提示决定并重新校验').click();app.run();show(app,1,rules=True);self.assertFalse(app.exception)
   e=self.s.diagnostic_store()['current']['edits'][-1];self.assertEqual(e['data']['fields'],[]);self.assertEqual(e['data']['location'],'TXT:L1');self.assertTrue(e['reason'].startswith('已经核对'))
   self.assertEqual(self.s.diagnostic_analysis()['fields']['main.font_size']['state'],'isolated')
  def test_batch_repair_is_atomic_on_bad_member(self):
@@ -130,7 +131,7 @@ class SpecDiagnosisTests(unittest.TestCase):
  def test_repaired_issue_form_retains_actual_source(self):
   from streamlit.testing.v1 import AppTest
   self.s.load_synthetic_diagnostic();issue=json.loads(self.s.diagnostic_store()['current']['content'])['front']['issues'][0];issue.update(fields=[],location='TXT:L14');self.s.repair_diagnostic('front.issues.0','issue',issue,'核对后不规定页脚距，仅记录说明')
-  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();next(x for x in app.selectbox if x.label=='待核对提示').set_value('front.issues.0');app.run();self.assertFalse(app.exception)
+  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,1,rules=True);next(x for x in app.selectbox if x.label=='待核对提示').set_value('front.issues.0');app.run();show(app,1,rules=True);self.assertFalse(app.exception)
   self.assertEqual(next(x for x in app.selectbox if x.label=='提示来源位置').value,'TXT:L14');self.assertEqual(next(x for x in app.selectbox if x.label=='提示原因').value,'unsupported')
 
  def test_default_after_adoption_can_save_project(self):
@@ -145,4 +146,4 @@ class SpecDiagnosisTests(unittest.TestCase):
  def test_note_bulk_selection_under_active_workbench_uses_inventory(self):
   from streamlit.testing.v1 import AppTest
   self.s.receive_diagnostic(rec());self.s.use_diagnostic_draft(acknowledged=True);self.s.workbench_policy('keep',acknowledged=True);self.s.apply_workbench(acknowledged=True);self.s.enable_notes(True)
-  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();next(x for x in app.button if x.label=='选择当前筛选的注释').click();app.run();self.assertFalse(app.exception);self.assertEqual(len(self.s.note_draft['objects']),6);self.assertIsNone(self.s.error)
+  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,2,'note');next(x for x in app.button if x.label=='选择当前筛选的注释').click();app.run();show(app,1,rules=True);self.assertFalse(app.exception);self.assertEqual(len(self.s.note_draft['objects']),6);self.assertIsNone(self.s.error)

@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """第五阶段实际行为验收。所有自动API使用模拟响应，绝不消耗余额。"""
 from pathlib import Path
 from copy import deepcopy
@@ -353,7 +354,11 @@ class TemplateAcceptance(unittest.TestCase):
     def test_web_import_parse_confirm_and_reload_uses_same_engine(self):
         app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=10).run()
         self.assertFalse(app.exception)
-        def button(label):return next(b for b in app.button if b.label==label)
+        def button(label):
+            if label.startswith('使用'):show(app,1)
+            elif label in ('确认正文范围','开始检查'):show(app,2,'paragraph')
+            else:show(app,1,rules=True)
+            return next(b for b in app.button if b.label==label)
         button('导入演示规范A（TXT）').click().run();self.assertFalse(app.exception)
         m=app.session_state.workflow
         self.assertEqual(m.norm_inventory['kind'],'txt');self.assertIn('小四号',m.norm_text)
@@ -367,6 +372,7 @@ class TemplateAcceptance(unittest.TestCase):
         button('确认正文范围').click().run();button('开始检查').click().run()
         self.assertFalse(app.exception);self.assertEqual(m.report['summary']['problem_count'],0)
         # User edit becomes manual; applying invalidates actual report and original download binding.
+        show(app,1,rules=True)
         value=next(w for w in app.number_input if w.label=='正文普通文字字号值')
         value.set_value(14.0).run();self.assertFalse(app.exception)
         self.assertEqual(m.active_template['final_values']['font_size'],12)

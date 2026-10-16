@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """Portable behavioural tests: no local history outputs, API, Word or renderer."""
 import json,tempfile,unittest
 from copy import deepcopy

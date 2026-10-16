@@ -74,10 +74,10 @@ def render_workbench(model,root):
     with st.expander(f'未提及 / 待决定 {len(pending)} 个字段 · 明确批量策略',expanded=True):
      st.caption('该策略只作用于下表所列未决定字段；冲突字段可手动取舍或不检查，不会被当作AI提取。')
      st.dataframe(pending,hide_index=True,width='stretch',height=160)
-     with st.form('wb-missing-policy-'+g):
+     with st.container(key='wb-missing-policy-'+g):
       strategy=st.radio('这些字段的处理',['keep','disabled'],format_func=lambda p:'保留当前已生效值（未配置仍未配置）' if p=='keep' else '不检查这些属性',horizontal=True,key='wb-policy-'+g)
       ack=st.checkbox('已核对批量影响字段，采用以上策略',key='wb-policy-ack-'+g)
-      if st.form_submit_button('采用未决定字段策略'):
+      if st.button('采用未决定字段策略'):
        guard(lambda:model.workbench_policy(strategy,acknowledged=ack));st.rerun()
    m=st.selectbox('查看与编辑模块',list(rb.MODULES),format_func=rb.LABELS.get,key='wb-module-'+g)
    fs=d['fields'][m]
@@ -91,7 +91,7 @@ def render_workbench(model,root):
    if opts:
     n=st.selectbox('编辑字段',opts,format_func=lambda n:rb.FIELDS[m][n][1]+' · '+n,key='wb-field-'+g+'-'+m)
     f=fs[n]
-    with st.form('wb-edit-form-'+g+'-'+m+'-'+n):
+    with st.container(key='wb-edit-form-'+g+'-'+m+'-'+n):
      mode=st.selectbox('此字段采用方式',['manual','keep','disabled']+(['ai'] if f['candidate'] else []),format_func=lambda x:{'manual':'手动指定（用户确认值）','keep':'保留当前生效值','disabled':'不检查','ai':'采用本次提取值'}[x],key='wb-edit-mode-'+g+'-'+m+'-'+n)
      seed=f['value'] if f['value'] is not None else (rb.flat(m,d['baseline']['modules'][m])[n] if d['baseline']['modules'][m] else None)
      val=st.text_input('最终值（文字枚举；数字直接填写；布尔true/false；间距示例 {"value":0.5,"unit":"lines"}）',value=str(seed) if isinstance(seed,str) else json.dumps(seed,ensure_ascii=False),key='wb-value-'+g+'-'+m+'-'+n)
@@ -100,7 +100,7 @@ def render_workbench(model,root):
       try:v=strict_json(val)
       except Exception:v=val
       model.workbench_edit(m,n,mode,v)
-     if st.form_submit_button('采用此字段到草稿'):guard(edit);st.rerun()
+     if st.button('采用此字段到草稿'):guard(edit);st.rerun()
    can=False
    try:
     proposed=model.proposed_rule_bundle();can=True

@@ -33,8 +33,8 @@ def render_plan(model):
     for x in p['blocked']:st.error(x['reason'])
     def start():
         with st.spinner('按顺序执行原修正事务、读回复查及准确引文定位；不登记正式历史…'):model.rehearse_plan()
-    st.button('预演完整分步计划',on_click=start,type='primary',disabled=bool(p['blocked']) or model.result is not None,width='stretch')
     view=model.rehearsal_view()
+    if not view:st.button('预演完整分步计划',on_click=start,type='primary',disabled=bool(p['blocked']) or model.result is not None,width='stretch')
     if model.rehearsal_error:st.warning(model.rehearsal_error)
     if not view or not model.rehearsal or model.rehearsal.get('kind')!='format_plan':return True
     adopted=model.rehearsal.get('adopted_rounds')
@@ -60,7 +60,7 @@ def render_plan(model):
             ack=st.checkbox('我已核对完整选择、两步父子关系、每步及最终影响，确认采用全部已验证副本',key='plan-ack-'+view['id']+'-'+view['binding'])
             def adopt():
                 with st.spinner('重新验证所有文件、范围、规则和原事务记录，准备全部归档后统一登记…'):model.adopt_plan(view['id'],acknowledged=True)
-            st.button('确认采用完整计划',disabled=not ack,on_click=adopt,width='stretch')
+            st.button('确认采用完整计划',disabled=not ack,on_click=adopt,type='primary',width='stretch')
         st.button('关闭已采用计划说明' if adopted else '取消完整计划预演',on_click=model.cancel_rehearsal,key='cancel-plan-'+view['id'])
         st.caption('返回修改选择会使旧预演失效，须重新预演。计划确认不等于视觉、Word或目录页码验收。')
     return True

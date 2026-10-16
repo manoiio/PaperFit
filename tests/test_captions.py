@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """Stage23 independent permutation/ZIP assertions; safe actions never rewrite numbering."""
 import unittest,json,zipfile,time
 from pathlib import Path
@@ -144,7 +145,7 @@ class CaptionAcceptance(unittest.TestCase):
   s=self.model();s.generate_caption_move(['L05:5:image:p:6']);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=25);app.session_state['workflow']=s;app.run();self.assertFalse(app.exception);self.assertFalse(any('完整性结果异常' in x.value for x in app.error));self.assertTrue(any(x.label=='下载修正版DOCX' for x in app.get('download_button')));self.assertTrue(any('授权题注位置变化' in x.value for x in app.markdown))
  def test_streamlit_completeness_form_commits_both_fields(self):
   from streamlit.testing.v1 import AppTest
-  s=self.model();d=deepcopy(s.caption_draft);d['complete']=d['chapters_complete']=False;s.edit_captions(d);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=25);app.session_state['workflow']=s;app.run();next(x for x in app.checkbox if x.label=='我已核对本次图表题注范围完整').check();next(x for x in app.checkbox if x.label=='我已核对所属章及相关一级标题范围完整').check();next(x for x in app.button if x.label=='采用完整范围声明').click();app.run();self.assertFalse(app.exception);self.assertTrue(s.caption_draft['complete']);self.assertTrue(s.caption_draft['chapters_complete'])
+  s=self.model();d=deepcopy(s.caption_draft);d['complete']=d['chapters_complete']=False;s.edit_captions(d);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=25);app.session_state['workflow']=s;app.run();show(app,2,'caption');next(x for x in app.checkbox if x.label=='我已核对本次图表题注范围完整').check();next(x for x in app.checkbox if x.label=='我已核对所属章及相关一级标题范围完整').check();next(x for x in app.button if x.label=='采用完整范围声明').click();app.run();self.assertFalse(app.exception);self.assertTrue(s.caption_draft['complete']);self.assertTrue(s.caption_draft['chapters_complete'])
  def test_unparsed_caption_remains_review_not_school_violation(self):
   p,m=self.mutation(lambda pkg:setattr(pkg.paragraphs[4].find('w:r/w:t',NS),'text','图一之一 未支持编号形式'));self.assertEqual(self.check(p,m)['captions']['numbers'][0]['status'],'review')
  def test_partial_chapter_range_cannot_prove_mismatch(self):

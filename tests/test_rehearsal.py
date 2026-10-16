@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """Actual transactions plus independent XML/ZIP oracles; entirely portable/offline."""
 from pathlib import Path
 from copy import deepcopy
@@ -135,7 +136,7 @@ class RehearsalTests(TestCase):
   b=self.s.current_bundle();b['impact']['records'][0]['reason']='<script>bad()</script>';html=html_report(portable(b));self.assertNotIn('<script>bad()',html);self.assertIn('&lt;script&gt;',html)
  def test_actual_streamlit_preview_and_ack_adoption(self):
   from streamlit.testing.v1 import AppTest
-  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();self.assertFalse(app.exception)
+  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,4);self.assertFalse(app.exception)
   next(b for b in app.button if b.label=='预演所选修正').click();app.run();self.assertFalse(app.exception);self.assertEqual(self.s.generation_count,0);self.assertTrue(self.s.rehearsal)
   next(c for c in app.checkbox if c.label=='我已核对全部所选修改、关联影响及剩余事项，确认采用这一副本').check();app.run();next(b for b in app.button if b.label=='确认采用此副本').click();app.run();self.assertFalse(app.exception);self.assertEqual(self.s.generation_count,1);self.assertEqual(len(self.s.history),1)
  def test_selected_note_story_only_transaction_is_revalidated(self):

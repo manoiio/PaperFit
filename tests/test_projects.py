@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """Project packages are untrusted data; verify real engine/files rather than UI presence."""
 import unittest,json,zipfile,stat
 from io import BytesIO
@@ -223,16 +224,16 @@ class ProjectAcceptance(unittest.TestCase):
   from streamlit.testing.v1 import AppTest
   s=self.rounds();raw=s.prepare_project();s.stage_project(raw)
   app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=20)
-  app.session_state['workflow']=s;app.run()
+  app.session_state['workflow']=s;app.run();show(app,1)
   self.assertFalse(app.exception)
   first=[x.proto.id for x in app.get('file_uploader') if '项目包' in x.proto.label][0]
   next(x for x in app.checkbox if x.label=='已核对恢复摘要、规则与范围；同意切换当前工作').check();app.run()
   next(x for x in app.button if x.label=='核对并恢复项目').click();app.run()
   self.assertFalse(app.exception);n=app.session_state['workflow'];self.assertEqual(n.current_round,2);self.assertIsNotNone(n.report)
-  second=[x.proto.id for x in app.get('file_uploader') if '项目包' in x.proto.label][0];self.assertNotEqual(first,second)
-  n.stage_project(raw);app.run();ack=next(x for x in app.checkbox if x.label=='已核对恢复摘要、规则与范围；同意切换当前工作');self.assertFalse(ack.value)
+  show(app,1);second=[x.proto.id for x in app.get('file_uploader') if '项目包' in x.proto.label][0];self.assertNotEqual(first,second)
+  n.stage_project(raw);app.run();show(app,1);ack=next(x for x in app.checkbox if x.label=='已核对恢复摘要、规则与范围；同意切换当前工作');self.assertFalse(ack.value)
   ack.check();app.run();next(x for x in app.button if x.label=='核对并恢复项目').click();app.run();self.assertFalse(app.exception);self.assertEqual(app.session_state['workflow'].current_round,2)
-  n=app.session_state['workflow'];current=n.input_path;n.stage_project(raw);pending=n.project_pending;n.project_pending['paths'][pending['manifest']['state']['current']].write_bytes(b'changed');app.run()
+  n=app.session_state['workflow'];current=n.input_path;n.stage_project(raw);pending=n.project_pending;n.project_pending['paths'][pending['manifest']['state']['current']].write_bytes(b'changed');app.run();show(app,1)
   self.assertFalse(app.exception);self.assertEqual(n.input_path,current);self.assertIsNone(n.project_pending);self.assertIsNotNone(n.report)
 
 if __name__=='__main__':unittest.main()

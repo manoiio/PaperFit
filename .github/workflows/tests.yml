@@ -18,3 +18,7 @@ jobs:
         run: |
           python scripts/reproduce_internal_reference_demo.py --output "$RUNNER_TEMP/paperfit-phase32"
           python scripts/verify_internal_reference_output.py samples/phase32/errors.docx "$RUNNER_TEMP/paperfit-phase32/fixed.docx"
+      - name: Stage33 unchanged single and two-step workflows
+        run: |
+          python scripts/reproduce_rehearsal_demo.py --output "$RUNNER_TEMP/paperfit-phase33-single"
+          python scripts/reproduce_plan_demo.py --output "$RUNNER_TEMP/paperfit-phase33-plan"

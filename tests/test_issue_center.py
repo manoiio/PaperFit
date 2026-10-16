@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """第十一阶段投影、状态与离线报告行为；只用合成论文，无外部API。"""
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -135,7 +136,7 @@ class CenterUIAcceptance(unittest.TestCase):
  def test_navigation_and_filters_preserve_selection_and_scope(self):
   from streamlit.testing.v1 import AppTest
   at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=25).run()
-  click=lambda label:next(b for b in at.button if b.label==label).click().run()
+  click=lambda label:ui_click(at,label)
   try:
    click('使用错误样本');click('确认正文范围');click('开始检查');m=at.session_state['workflow'];scope=deepcopy(m.confirmed);count=m.generation_count
    click('先处理纸张与页边距');self.assertEqual(m.selected,[]);self.assertEqual(m.confirmed,scope);self.assertEqual(count,m.generation_count)

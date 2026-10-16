@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """长文纯展示与可控后台替身；替身不作为真实渲染证据。"""
 import unittest,json,time,threading
 from pathlib import Path
@@ -137,5 +138,5 @@ class LongUIAcceptance(unittest.TestCase):
   from streamlit.testing.v1 import AppTest
   at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30).run()
   try:
-   next(x for x in at.button if x.label=='使用错误样本').click().run();next(x for x in at.button if x.label=='核对完成并开始检查').click().run();self.assertEqual(len(at.json),0);next(x for x in at.toggle if x.label.startswith('显示原始完整JSON')).set_value(True).run();self.assertFalse(at.exception);self.assertEqual(json.loads(at.json[0].value)['findings'],at.session_state['workflow'].report['findings'])
+   next(x for x in at.button if x.label=='使用错误样本').click().run();show(at,2,'paragraph');next(x for x in at.button if x.label=='核对完成并开始检查').click().run();self.assertEqual(len(at.json),0);show(at,5);next(x for x in at.toggle if x.label.startswith('显示原始完整JSON')).set_value(True).run();self.assertFalse(at.exception);self.assertEqual(json.loads(at.json[0].value)['findings'],at.session_state['workflow'].report['findings'])
   finally:at.session_state['workflow'].reset()

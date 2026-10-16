@@ -110,18 +110,9 @@ def render_center(model):
             st.info('查看对象：'+(', '.join(model.focus['keys']) or '本轮文件')+'；尚未勾选或执行。')
         if model.operation=='format' and model.result and b['format']['summary']['problem_count']:
             st.button('以本轮修正版继续处理',on_click=model.next_round,type='primary',help='明确把本轮输出设为下一轮输入，其他操作只查看，不切换输入。')
-        st.markdown('[进入当前操作区域](#'+ANCHORS[model.operation]+')')
+        st.caption('格式修正在下方选择；宽度、分页和预览操作在当前页对应区域。')
         with st.expander('导出可阅读报告（离线HTML）',key='reading-export'):
-            st.caption('默认匿名显示名称、无论文原文、无私人路径；完整旧JSON/Markdown仍在高级下载。报告不证明Word或全文合格。')
-            name=st.text_input('报告显示名称（建议脱敏）',value='待检查文档.docx',key='reading-name')
-            excerpts=st.checkbox('包含少量短原文（可能含个人信息，默认关闭）',key='reading-excerpts')
-            if st.button('准备可阅读报告',key='reading-prepare'):
-                try:model.prepare_reading_export(name,excerpts)
-                except Exception as e:st.error(public_error(e))
-            try:downloads=model.reading_downloads()
-            except Exception as e:st.warning(public_error(e));downloads={}
-            for filename,data in downloads.items():
-                st.download_button('下载阅读报告'+filename.removeprefix('report'),data,file_name='论文有格_'+filename,mime={'html':'text/html','md':'text/markdown','json':'application/json'}[filename.split('.')[-1]],on_click='ignore',key='reading-'+filename+'-'+str(model.revision)+'-'+str(model.generation_count))
+            render_reading_export(model)
 
 
 def render_history(model):
@@ -151,3 +142,16 @@ def render_history(model):
                     except Exception as e:model.error=public_error(e)
                 st.button('以历史第'+str(row['round'])+'轮继续处理',disabled=not ack,on_click=continue_saved,key='history-continue-'+identity)
             except Exception as e:st.warning(public_error(e))
+
+
+def render_reading_export(model):
+    st.caption('默认匿名显示名称、无论文原文、无私人路径；完整旧JSON/Markdown仍在高级下载。报告不证明Word或全文合格。')
+    name=st.text_input('报告显示名称（建议脱敏）',value='待检查文档.docx',key='reading-name')
+    excerpts=st.checkbox('包含少量短原文（可能含个人信息，默认关闭）',key='reading-excerpts')
+    if st.button('准备可阅读报告',key='reading-prepare'):
+        try:model.prepare_reading_export(name,excerpts)
+        except Exception as e:st.error(public_error(e))
+    try:downloads=model.reading_downloads()
+    except Exception as e:st.warning(public_error(e));downloads={}
+    for filename,data in downloads.items():
+        st.download_button('下载阅读报告'+filename.removeprefix('report'),data,file_name='论文有格_'+filename,mime={'html':'text/html','md':'text/markdown','json':'application/json'}[filename.split('.')[-1]],on_click='ignore',key='reading-'+filename+'-'+str(model.revision)+'-'+str(model.generation_count))

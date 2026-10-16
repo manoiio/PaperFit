@@ -10,9 +10,9 @@ def render_rehearsal(model):
         if render_plan(model):return
     def start():
         with st.spinner('正在执行所选修正、完整性验证及落盘复查；尚不登记轮次…'):model.rehearse()
-    st.button('预演所选修正',type='primary',disabled=not model.selected or model.result is not None,on_click=start,width='stretch')
-    st.caption('预演会生成本机会话副本，不切换输入、不增加正式轮次；采用前核对关联影响。不会调用AI或生成页面预览。')
     view=model.rehearsal_view()
+    if not view:st.button('预演所选修正',type='primary',disabled=not model.selected or model.result is not None,on_click=start,width='stretch')
+    st.caption('预演会生成本机会话副本，不切换输入、不增加正式轮次；采用前核对关联影响。不会调用AI或生成页面预览。')
     if model.rehearsal_error:st.warning(model.rehearsal_error)
     if not view:return
     adopted=model.rehearsal.get('adopted_round')
@@ -45,7 +45,7 @@ def render_rehearsal(model):
             def adopt():
                 with st.spinner('重新核对文件、配置、范围及原事务白名单，登记已验证副本…'):
                     model.adopt_rehearsal(view['id'],acknowledged=True)
-            st.button('确认采用此副本',disabled=not ack,on_click=adopt,width='stretch')
+            st.button('确认采用此副本',disabled=not ack,on_click=adopt,type='primary',width='stretch')
         st.button('关闭已采用预演说明' if adopted else '取消预演',on_click=model.cancel_rehearsal,key='cancel-'+view['id'])
         if adopted:st.caption('关闭说明不会撤销已经登记的副本或历史。')
         st.caption('返回上方更改选择会使本预演及确认失效，需要重新预演；当前输入保持。')

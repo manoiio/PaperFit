@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """网页的文件/范围/规则绑定、失效、错误、选择过滤及真实Streamlit重运行验收。"""
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -209,11 +210,11 @@ class StreamlitAcceptance(unittest.TestCase):
         self.at.session_state['workflow'].reset()
 
     def click(self, label):
-        next(b for b in self.at.button if b.label==label).click().run()
+        ui_click(self.at,label)
         self.assertFalse(list(self.at.exception))
 
     def checked(self, correct=False):
-        self.click('使用正确对照' if correct else '使用错误样本')
+        self.click('使用正确对照' if correct else '使用错误样本');show(self.at,2,'paragraph')
         self.assertTrue(next(b for b in self.at.button if b.label=='开始检查').disabled)
         self.click('确认正文范围')
         self.click('开始检查')
@@ -233,12 +234,12 @@ class StreamlitAcceptance(unittest.TestCase):
         before=list(m.task_dir.glob('fixed-*.docx'))
         self.at.run()
         self.assertEqual(list(m.task_dir.glob('fixed-*.docx')),before)
-        self.assertTrue(next(b for b in self.at.button if b.label=='生成修正版').disabled)
-        self.assertTrue(any('所选修改的落盘复查全部符合要求' in s.value for s in self.at.success))
+        show(self.at,4);self.assertTrue(next(b for b in self.at.button if b.label=='生成修正版').disabled)
+        show(self.at,5);self.assertTrue(any('所选修改的落盘复查全部符合要求' in s.value for s in self.at.success))
 
     def test_scope_widget_change_removes_report_download_and_confirmation(self):
         m=self.generated()
-        next(c for c in self.at.checkbox if c.label.startswith('段 4 ·')).uncheck().run()
+        show(self.at,2,'paragraph');next(c for c in self.at.checkbox if c.label.startswith('段 4 ·')).uncheck().run()
         self.assertEqual(m.body,[5,6,11,14,15])
         self.assertIsNone(m.confirmed)
         self.assertIsNone(m.report)
@@ -260,16 +261,16 @@ class StreamlitAcceptance(unittest.TestCase):
 
     def test_empty_then_individual_selection_and_error_clears_success(self):
         m=self.checked()
-        self.assertTrue(next(b for b in self.at.button if b.label=='生成修正版').disabled)
+        show(self.at,4);self.assertTrue(next(b for b in self.at.button if b.label=='生成修正版').disabled);show(self.at,3)
         key=next(f['key'] for f in m.eligible() if f['rule_id']=='R05')
-        self.at.multiselect[0].set_value([key]).run()
+        next(x for x in self.at.multiselect if x.label=='逐项选择修正').set_value([key]).run()
         self.click('生成修正版')
         self.assertEqual(len(m.result['changes']),1)
         self.assertEqual(m.result['after']['summary']['problem_count'],10)
         self.click('清空选择')
         self.assertIsNone(m.result)
         self.assertEqual(list(self.at.get('download_button')),[])
-        self.at.multiselect[0].set_value([key]).run()
+        next(x for x in self.at.multiselect if x.label=='逐项选择修正').set_value([key]).run()
         with patch('web.session.fix_document',side_effect=DemoError('验证错误提示')):
             self.click('生成修正版')
         self.assertTrue(any('验证错误提示' in s.value for s in self.at.error))
@@ -285,7 +286,7 @@ class StreamlitAcceptance(unittest.TestCase):
         text='\n'.join(e.value for e in self.at.markdown)
         self.assertIn('主题字体（待复核）',text)
         self.assertTrue(any('覆盖提示独立可见' in s.value for s in self.at.warning))
-        self.assertNotIn(f['key'], self.at.multiselect[0].options)
+        self.assertNotIn(f['key'], next(x for x in self.at.multiselect if x.label=='逐项选择修正').options)
 
 if __name__=='__main__':
     unittest.main(verbosity=2)

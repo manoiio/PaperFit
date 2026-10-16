@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """扩展分类、标题/题注及多轮修正的实际行为验收；不调用付费API。"""
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -286,10 +287,10 @@ class ExtendedUIAcceptance(unittest.TestCase):
         self.at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=20).run()
     def tearDown(self):self.at.session_state['workflow'].reset()
     def click(self,label):
-        next(x for x in self.at.button if x.label==label).click().run();self.assertFalse(list(self.at.exception))
+        ui_click(self.at,label);self.assertFalse(list(self.at.exception))
     def extended(self):
-        next(x for x in self.at.radio if x.label=='检查模式').set_value('正文及标题题注检查').run()
-        self.click('使用扩展错误样本')
+        show(self.at,1);next(x for x in self.at.radio if x.label=='检查模式').set_value('正文及标题题注检查').run()
+        self.click('使用扩展错误样本');show(self.at,2,'paragraph')
     def test_confirm_adjust_and_real_extended_fix_controls(self):
         self.extended();m=self.at.session_state['workflow']
         self.assertTrue(next(b for b in self.at.button if b.label=='开始检查').disabled)
@@ -297,7 +298,7 @@ class ExtendedUIAcceptance(unittest.TestCase):
         self.assertEqual(m.report['summary']['problem_count'],9)
         self.click('选择全部可修正问题');self.click('生成修正版')
         self.assertEqual(m.result['after']['summary']['problem_count'],0)
-        next(s for s in self.at.selectbox if s.label=='调整段落编号').set_value(13).run()
+        show(self.at,2,'paragraph');next(s for s in self.at.selectbox if s.label=='调整段落编号').set_value(13).run()
         next(s for s in self.at.selectbox if s.label=='调整为').set_value('其他').run();self.click('应用分类调整')
         self.assertIsNone(m.result);self.assertIsNone(m.report);self.assertEqual(m.downloads(),{})
     def test_historical_AI_custom_extension_second_round_UI(self):
@@ -306,7 +307,7 @@ class ExtendedUIAcceptance(unittest.TestCase):
         self.click('确认并应用');self.click('确认分类并应用范围');self.click('开始检查')
         self.click('选择全部可修正问题');self.click('生成修正版')
         self.assertEqual(m.result['problem_delta']['new_keys'],['R07:paragraph=14'])
-        self.assertTrue(any('可能影响首行缩进' in x.value for x in self.at.warning))
+        show(self.at,4);self.assertTrue(any('可能影响首行缩进' in x.value for x in self.at.warning))
         self.click('以本轮修正版开始下一轮');self.assertEqual(m.current_round,1)
         self.click('选择全部可修正问题');self.click('生成修正版')
         self.assertEqual(m.result['after']['summary']['problem_count'],0)
@@ -314,13 +315,13 @@ class ExtendedUIAcceptance(unittest.TestCase):
 
     def test_basic_checkbox_state_rebinds_after_classification_body_change(self):
         self.click('使用正确对照')
-        next(x for x in self.at.radio if x.label=='检查模式').set_value('正文及标题题注检查').run()
-        next(s for s in self.at.selectbox if s.label=='调整段落编号').set_value(4).run()
+        show(self.at,1);next(x for x in self.at.radio if x.label=='检查模式').set_value('正文及标题题注检查').run()
+        show(self.at,2,'paragraph');next(s for s in self.at.selectbox if s.label=='调整段落编号').set_value(4).run()
         next(s for s in self.at.selectbox if s.label=='调整为').set_value('其他').run()
         self.click('应用分类调整')
         self.click('确认分类并应用范围')
-        next(x for x in self.at.radio if x.label=='检查模式').set_value('基础检查').run()
-        m=self.at.session_state['workflow']
+        show(self.at,1);next(x for x in self.at.radio if x.label=='检查模式').set_value('基础检查').run()
+        m=self.at.session_state['workflow'];show(self.at,2,'paragraph')
         checked=next(x for x in self.at.checkbox if x.label.startswith('段 4 ·'))
         self.assertFalse(checked.value);self.assertNotIn(4,m.body)
 

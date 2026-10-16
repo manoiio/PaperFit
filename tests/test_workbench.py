@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 import unittest,json,tempfile,zipfile
 from pathlib import Path
 from copy import deepcopy
@@ -125,7 +126,7 @@ class WorkbenchTests(unittest.TestCase):
   draft(self.s);n=make_session(Path(self.tmp.name)/'other');self.assertIsNone(n.workbench['draft']);self.s.apply_workbench(acknowledged=True);self.assertIsNone(n.workbench['active']);self.assertNotEqual(n.task_dir,self.s.task_dir)
  def test_form_edit_uses_submitted_value_and_provenance(self):
   from streamlit.testing.v1 import AppTest
-  draft(self.s);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();self.assertFalse(app.exception)
+  draft(self.s);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,1,rules=True);self.assertFalse(app.exception)
   next(x for x in app.selectbox if x.label=='查看与编辑模块').set_value('front');app.run()
   next(x for x in app.selectbox if x.label=='编辑字段').set_value('cover_title__font_size');app.run()
   next(x for x in app.text_input if x.label.startswith('最终值（')).set_value('24')
@@ -134,7 +135,7 @@ class WorkbenchTests(unittest.TestCase):
   self.assertEqual(self.s.proposed_rule_bundle()['provenance']['front']['cover_title__font_size']['kind'],'user_confirmed')
  def test_front_object_form_keeps_user_selection(self):
   from streamlit.testing.v1 import AppTest
-  self.s.enable_front(True);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run()
+  self.s.enable_front(True);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,2,'front')
   next(x for x in app.selectbox if x.label=='此对象代表的封面字段').set_value('title')
   next(x for x in app.button if x.label=='应用此封面定位草稿').click();app.run();self.assertFalse(app.exception);self.assertEqual(self.s.front_draft['objects'],{'p:1':'title'})
  def test_keep_uses_live_value_and_never_claims_new_ai(self):
@@ -217,7 +218,7 @@ class WorkbenchTests(unittest.TestCase):
  def test_batch_policy_form_requires_ack_and_uses_submitted_strategy(self):
   from streamlit.testing.v1 import AppTest
   self.s.workbench_text(TEXT);self.s.confirm_workbench_excerpt();self.s.parse_workbench(parser=parsed)
-  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run()
+  app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,1,rules=True)
   next(x for x in app.button if x.label=='采用未决定字段策略').click();app.run();self.assertFalse(app.exception);self.assertEqual(self.s.workbench['draft']['fields']['main']['margin_top']['mode'],'choose')
   next(x for x in app.radio if x.label=='这些字段的处理').set_value('disabled');next(x for x in app.checkbox if x.label=='已核对批量影响字段，采用以上策略').check();next(x for x in app.button if x.label=='采用未决定字段策略').click();app.run()
   self.assertFalse(app.exception);self.assertEqual(self.s.workbench['draft']['fields']['main']['margin_top']['mode'],'disabled');self.assertEqual(self.s.workbench['draft']['fields']['main']['font_size']['mode'],'ai');self.assertIsNone(self.s.workbench['active'])

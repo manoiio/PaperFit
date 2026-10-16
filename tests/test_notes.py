@@ -1,3 +1,4 @@
+from tests.ui_navigation import show, click as ui_click
 """Independent OOXML/ZIP oracles for opt-in footnote/endnote transactions."""
 from copy import deepcopy
 from pathlib import Path
@@ -169,7 +170,7 @@ class NotesTests(TestCase):
   s=self.session();old=deepcopy(s.report);inv=deepcopy(s.note_inventory());s.set_selection([f['key'] for f in s.eligible() if f['rule_id']=='R36']);self.assertTrue(s.generate());self.assertEqual(s.report,old);self.assertEqual(s.note_inventory(),inv)
  def test_streamlit_notes_inventory_context_and_downloads(self):
   from streamlit.testing.v1 import AppTest
-  s=self.session();app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=20);app.session_state['workflow']=s;app.run();self.assertFalse(app.exception);self.assertTrue(any(x.label=='启用脚注与尾注检查' and x.value for x in app.checkbox));self.assertTrue(any('复杂' in x.value for x in app.warning));self.assertTrue(any('ID' in getattr(x.value,'columns',[]) for x in app.dataframe))
+  s=self.session();app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=20);app.session_state['workflow']=s;app.run();show(app,2,'note');self.assertFalse(app.exception);self.assertTrue(any(x.label=='启用脚注与尾注检查' and x.value for x in app.checkbox));self.assertTrue(any('复杂' in x.value for x in app.warning));self.assertTrue(any('ID' in getattr(x.value,'columns',[]) for x in app.dataframe))
  def test_combined_main_and_note_transaction_preserves_nonselected_parts(self):
   m=deepcopy(self.m);m['paragraph_types']['2']='body';r=fix_document(self.p,self.d/'combined.docx',None,selected_rules=['R07','R36'],mode='academic',classification_manifest=m);self.assertTrue(any(c['rule_id']=='R36' for c in r['changes']));self.assertEqual(Package(self.p).parts['word/endnotes.xml'],Package(r['output']).parts['word/endnotes.xml'])
  def test_malformed_relationship_xml_becomes_readonly_evidence(self):
