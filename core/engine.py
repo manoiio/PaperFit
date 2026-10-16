@@ -132,40 +132,50 @@ def _check(pkg, body, rules, classification=None):
                         continue
                     ok = ok and actual['orientation'] == 'portrait'
                 add(rule, loc, actual, 'pass' if ok else 'problem')
+    from .text_runs import walk,select_run,executable_run
     checked_runs = 0
     skipped_runs = 0
     for index in body:
         p = pkg.paragraphs[index - 1]
         loc = {'paragraph': index}
         unsafe = paragraph_unsafe(p)
+        linked=walk(pkg,p) if p.find(q('hyperlink')) is not None else None
+        partial=bool(linked and linked['supported_links'] and not linked['context_reason'])
+        if partial:unsafe=None
         try:
             pl = res.layers(p, kind='pPr')
             # Table and numbering styles, list definitions and style cycles are not approximated.
             numbered = any(x.find(q('numPr')) is not None for x in pl)
-            runs = [(i, r, res.layers(p, r)) for i, r in enumerate(p.findall(q('r')), 1)]
+            runs = [(x['locator'],x['node'],res.layers(p,x['node']),x['reason'],x['evidence']) for x in linked['rows']] if partial else [({'run':i},r,res.layers(p,r),None,None) for i,r in enumerate(p.findall(q('r')),1)]
         except Unresolved as e:
             unsafe = str(e)
             runs = []
         if unsafe:
+            if linked and linked['issues']:unsafe+='；'+ '；'.join(x['detail'] for x in linked['issues'])
             for rule in IDS[2:]:
                 add(rule, loc, {'unresolved': unsafe}, 'review', False, unsafe)
             note(loc, unsafe)
             continue
         ordinary, special = [], []
-        for i, r, layers in runs:
-            reason = res.special(r, layers)
+        if partial:
+            note(loc,'仅普通链接及直属文字属性进入检查；链接段落的行距/缩进仍未检查；不访问目标。')
+            for issue in linked['issues']:note({**loc,**issue['locator']},issue['detail'])
+        for segment, r, layers, structure_reason, link_evidence in runs:
+            reason = structure_reason or res.special(r, layers)
+            i=segment.get('run',segment.get('link_run'))
             t = _text(r)
             if reason:
                 skipped_runs += 1
                 special.append(i)
-                note({'paragraph': index, 'run': i}, reason + '：该run未检查、未修正')
+                note({'paragraph':index,**segment}, reason + '：该run未检查、未修正')
                 continue
             if not t.strip():
                 continue
             checked_runs += 1
+            run_finding_start=len(findings)
             ordinary.append((i, r, layers))
             cn, slots, unknown = scripts(t)
-            rl = {'paragraph': index, 'run': i}
+            rl = {'paragraph':index,**segment}
             for rule, wanted, font_slots in [('R03', cn, ['eastAsia']), ('R04', bool(slots), slots)]:
                 if wanted:
                     evidence = {slot: res.font_info(layers, slot, t) for slot in font_slots}
@@ -189,6 +199,11 @@ def _check(pkg, body, rules, classification=None):
             size = res.size(layers)
             add('R05', rl, {'pt': size}, 'review' if size is None else
                 ('pass' if size == rules['rules']['R05']['expected'] else 'problem'))
+            if link_evidence:
+                for f in findings[run_finding_start:]:f['link_evidence']=deepcopy(link_evidence)
+        if partial:
+            for rule in ('R06','R07'):add(rule,loc,{'unresolved':'含链接段落属性仍保护'},'review',False,'普通文字已按受控范围检查；行距和缩进不修正')
+            continue
         if not ordinary:
             for rule in ('R06', 'R07'):
                 add(rule, loc, None, 'review', False, '无可确认的普通正文文字')
@@ -303,6 +318,8 @@ def _check(pkg, body, rules, classification=None):
         for n in sorted({f['locator']['paragraph'] for f in report['findings'] if f['rule_id']=='R33' and f['fixable']}):
             peers=[f['key'] for f in report['findings'] if f['fixable'] and f['rule_id']!='R33' and f['locator'].get('paragraph')==n and 'run' in f['locator']]
             if peers:report['modification_dependencies'].append({'trigger_keys':peers+[f['key'] for f in report['findings'] if f['rule_id']=='R33' and f['locator'].get('paragraph')==n and f['fixable']],'detail':f'段{n}的普通run字体字号修改与引文拆分须分轮选择：先完成普通格式，再修引文上标；不会改变未选字符。'})
+    from .text_runs import annotate
+    annotate(report)
     return report
 
 def _confirmed_scope(pkg, body, mode, classification_manifest):
@@ -398,7 +415,8 @@ def _apply(pkg, f):
     else:
         p = pkg.paragraphs[loc['paragraph'] - 1]
         if rid in ('R03', 'R04', 'R05'):
-            r = p.findall(q('r'))[loc['run'] - 1]
+            from .text_runs import executable_run,select_run
+            r = executable_run(pkg,p,loc) if 'link' in loc else select_run(p,loc)
             rp = _ensure(r, 'rPr')
             if rid == 'R05':
                 _ensure(rp, 'sz').set(q('val'), str(round(f['expected'] * 2)))
@@ -465,7 +483,8 @@ def _preservation(pkg, changes):
         else:
             p = ps[loc['paragraph'] - 1]
             if rid in ('R03', 'R04', 'R05'):
-                r = p.findall(q('r'))[loc['run'] - 1]
+                from .text_runs import select_run
+                r = select_run(p,loc)
                 e = r.find('w:rPr/w:' + ('sz' if rid == 'R05' else 'rFonts'), NS)
                 slots = ['eastAsia'] if rid == 'R03' else list(f['actual']) if rid == 'R04' else []
                 attrs = ['val'] if rid == 'R05' else slots + [s + 'Theme' for s in slots]

@@ -1,0 +1,52 @@
+{
+  "before": {
+    "finding_count": 28,
+    "supported_text_locators": 11,
+    "limits": [
+      "仅已确认正文、参考文献条目、脚注/尾注的安全普通链接文字；不涵盖表格、页眉页脚或其他容器。",
+      "含链接段落的行距、缩进、段距、对齐及样式切换不放宽；R33含链接段落仍只读。",
+      "只解析所在部件自己的关系，不访问链接；目标可达性和实际跳转未验收。",
+      "首版只支持明确http/https外部链接；内部anchor、复杂域/目录缓存、修订与嵌套内容继续待复核。"
+    ]
+  },
+  "after": {
+    "finding_count": 28,
+    "supported_text_locators": 11,
+    "limits": [
+      "仅已确认正文、参考文献条目、脚注/尾注的安全普通链接文字；不涵盖表格、页眉页脚或其他容器。",
+      "含链接段落的行距、缩进、段距、对齐及样式切换不放宽；R33含链接段落仍只读。",
+      "只解析所在部件自己的关系，不访问链接；目标可达性和实际跳转未验收。",
+      "首版只支持明确http/https外部链接；内部anchor、复杂域/目录缓存、修订与嵌套内容继续待复核。"
+    ]
+  },
+  "before_summary": {
+    "rule_count": 26,
+    "problem_count": 24,
+    "review_count": 30,
+    "review_findings": 26,
+    "review_notes": 4,
+    "pass_count": 41,
+    "not_applicable_count": 14,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 14
+  },
+  "after_summary": {
+    "rule_count": 26,
+    "problem_count": 8,
+    "review_count": 30,
+    "review_findings": 26,
+    "review_notes": 4,
+    "pass_count": 57,
+    "not_applicable_count": 14,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 14
+  },
+  "engine_calls": 1,
+  "adoption_fix_calls": 0,
+  "formal_rounds": 1,
+  "preview_seconds": 0.052586124977096915,
+  "adoption_seconds": 0.08440608310047537,
+  "API_calls": 0,
+  "automatic_renders": 0,
+  "control_matches_bytes": true
+}

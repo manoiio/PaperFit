@@ -1,0 +1,61 @@
+{
+  "environment": "macOS arm64 Python 3.14.5",
+  "source_bytes": 41105,
+  "source_top_paragraphs": 13,
+  "qualified_link_text_runs": 11,
+  "new_link_finding_records": 28,
+  "full_summary": {
+    "rule_count": 26,
+    "problem_count": 24,
+    "review_count": 30,
+    "review_findings": 26,
+    "review_notes": 4,
+    "pass_count": 41,
+    "not_applicable_count": 14,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 14
+  },
+  "check_seconds": [
+    0.015980790951289237,
+    0.016007125028409064,
+    0.016136916005052626
+  ],
+  "rehearse_seconds": [
+    0.05427283304743469,
+    0.052872334024868906,
+    0.05350358400028199
+  ],
+  "read_preview_seconds": [
+    0.004119958961382508,
+    0.004327083006501198,
+    0.005037083989009261
+  ],
+  "adopt_with_revalidation_seconds": [
+    0.09269604098517448,
+    0.0711218339856714,
+    0.07608416595030576
+  ],
+  "medians": {
+    "check": 0.016007125028409064,
+    "rehearse": 0.05350358400028199,
+    "view": 0.004327083006501198,
+    "adopt": 0.07608416595030576,
+    "long": 0.11187337501905859
+  },
+  "long_document": {
+    "top_paragraphs": 113,
+    "links": 306,
+    "bytes": 41802,
+    "check_seconds": [
+      0.10871620802208781,
+      0.11187337501905859,
+      0.11265295802149922
+    ],
+    "findings": 1464
+  },
+  "fix_calls_per_preview": 1,
+  "fix_calls_per_adoption": 0,
+  "API_calls": 0,
+  "automatic_renders": 0,
+  "not_a_speedup_or_accuracy_claim": true
+}

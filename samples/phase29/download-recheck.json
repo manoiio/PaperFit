@@ -1,0 +1,23 @@
+{
+  "source_sha256": "8d63783d5fa31a95cc7f520a6963d66ba2f95469f261f0a2a3d383b471e5da37",
+  "output_sha256": "b06e90b884dc8c981cd5e1b3e714f6dd3148174538cea9dc453ad5291cd62bff",
+  "authored_attribute_repairs": 16,
+  "only_selected_attributes_changed": true,
+  "exact_text_whitespace_order": true,
+  "all_relationship_files_byte_equal": true,
+  "hyperlink_nodes_attributes_order_preserved": true,
+  "styles_markers_separators_fields_tables_media_sections_preserved": true,
+  "rPr_precedes_run_content": true,
+  "unselected_parts_byte_equal": true,
+  "original_unchanged": true,
+  "external_targets_not_opened": true,
+  "not_a_reachability_or_visual_verdict": true,
+  "first_round_sha256": "e53b7edac54e9ff9f389e6e4e9ca87f785a4dc70c61e3d3877df40bcb80d04a2",
+  "formal_rounds": 2,
+  "first_round_selected_changes": 1,
+  "second_round_selected_changes": 15,
+  "final_equals_independent_control": true,
+  "browser_real_downloads": true,
+  "API_requests": 0,
+  "automatic_renders": 0
+}

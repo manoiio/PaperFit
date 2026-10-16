@@ -1,0 +1,278 @@
+{
+  "summary": {
+    "rule_count": 26,
+    "problem_count": 8,
+    "review_count": 33,
+    "review_findings": 31,
+    "review_notes": 2,
+    "pass_count": 17,
+    "not_applicable_count": 12,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 14
+  },
+  "qualified_link_findings": 0,
+  "review_reasons": [
+    {
+      "rule": "R03",
+      "locator": {
+        "paragraph": 7
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R04",
+      "locator": {
+        "paragraph": 7
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R05",
+      "locator": {
+        "paragraph": 7
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R06",
+      "locator": {
+        "paragraph": 7
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R07",
+      "locator": {
+        "paragraph": 7
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R03",
+      "locator": {
+        "paragraph": 8
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R04",
+      "locator": {
+        "paragraph": 8
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R05",
+      "locator": {
+        "paragraph": 8
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R06",
+      "locator": {
+        "paragraph": 8
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R07",
+      "locator": {
+        "paragraph": 8
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过"
+    },
+    {
+      "rule": "R20",
+      "locator": {
+        "paragraph": 9,
+        "property": "before"
+      },
+      "reason": "有效继承路径也未设置before间距；未按0处理"
+    },
+    {
+      "rule": "R20",
+      "locator": {
+        "paragraph": 9,
+        "property": "alignment"
+      },
+      "reason": "对齐未设置/未支持或无法可靠继承"
+    },
+    {
+      "rule": "R21",
+      "locator": {
+        "paragraph": 10
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过；分类确认不能绕过保护"
+    },
+    {
+      "rule": "R21",
+      "locator": {
+        "paragraph": 11
+      },
+      "reason": "链接、公式、修订、内容控件或未支持段落结构：整段跳过；分类确认不能绕过保护"
+    },
+    {
+      "rule": "R22",
+      "locator": {
+        "document": 1,
+        "property": "存在_abstract_cn_title"
+      },
+      "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容"
+    },
+    {
+      "rule": "R22",
+      "locator": {
+        "document": 1,
+        "property": "存在_abstract_cn_body"
+      },
+      "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容"
+    },
+    {
+      "rule": "R22",
+      "locator": {
+        "document": 1,
+        "property": "存在_abstract_en_title"
+      },
+      "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容"
+    },
+    {
+      "rule": "R22",
+      "locator": {
+        "document": 1,
+        "property": "存在_abstract_en_body"
+      },
+      "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容"
+    },
+    {
+      "rule": "R22",
+      "locator": {
+        "document": 1,
+        "property": "存在_keywords_cn"
+      },
+      "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容"
+    },
+    {
+      "rule": "R22",
+      "locator": {
+        "document": 1,
+        "property": "存在_keywords_en"
+      },
+      "reason": "只统计确认类型；未发现时须核对分类，不能直接断言文档物理缺少或补写内容"
+    },
+    {
+      "rule": "R22",
+      "locator": {
+        "document": 1,
+        "property": "参考文献其他编号"
+      },
+      "reason": "自动编号、作者年份或其他著录形式的编号序列未判断；不借人工分类宣称通过"
+    },
+    {
+      "rule": "R33",
+      "locator": {
+        "citation": "c:7:21:24",
+        "paragraph": 7,
+        "start": 21,
+        "end": 24
+      },
+      "reason": "超链接文字：只读，不拆链接或改关系"
+    },
+    {
+      "rule": "R34",
+      "locator": {
+        "citation": "c:7:21:24",
+        "paragraph": 7,
+        "start": 21,
+        "end": 24,
+        "property": "correspondence"
+      },
+      "reason": "受保护/不支持引文结构，缓存数字不足以证明对应；超链接文字：只读，不拆链接或改关系"
+    },
+    {
+      "rule": "R34",
+      "locator": {
+        "citation": "c:12:6:9",
+        "paragraph": 12,
+        "start": 6,
+        "end": 9,
+        "property": "correspondence"
+      },
+      "reason": "当前确认范围内未找到，范围/编号不完整，不能判全文缺失"
+    },
+    {
+      "rule": "R34",
+      "locator": {
+        "document": 1,
+        "property": "first_occurrence"
+      },
+      "reason": "仅局部首次顺序；范围或编号不足，未完成全文顺序验收"
+    },
+    {
+      "rule": "R36",
+      "locator": {
+        "note_id": "1",
+        "note_index": 3,
+        "note_kind": "footnote",
+        "note_paragraph": 1,
+        "property": "structure"
+      },
+      "reason": "段落含链接；行距不修，域缓存及复杂对象不检查"
+    },
+    {
+      "rule": "R36",
+      "locator": {
+        "note_id": "1",
+        "note_index": 3,
+        "note_kind": "footnote",
+        "note_paragraph": 1,
+        "property": "line_multiple"
+      },
+      "reason": "段落含链接；行距不修，域缓存及复杂对象不检查"
+    },
+    {
+      "rule": "R37",
+      "locator": {
+        "note_id": "1",
+        "note_index": 3,
+        "note_kind": "endnote",
+        "note_paragraph": 1,
+        "property": "structure"
+      },
+      "reason": "段落含链接；行距不修，域缓存及复杂对象不检查"
+    },
+    {
+      "rule": "R37",
+      "locator": {
+        "note_id": "1",
+        "note_index": 3,
+        "note_kind": "endnote",
+        "note_paragraph": 1,
+        "property": "line_multiple"
+      },
+      "reason": "段落含链接；行距不修，域缓存及复杂对象不检查"
+    },
+    {
+      "rule": "R37",
+      "locator": {
+        "note_id": "3",
+        "note_index": 5,
+        "note_kind": "endnote",
+        "note_paragraph": 1,
+        "property": "structure"
+      },
+      "reason": "段落含链接；行距不修，域缓存及复杂对象不检查"
+    },
+    {
+      "rule": "R37",
+      "locator": {
+        "note_id": "3",
+        "note_index": 5,
+        "note_kind": "endnote",
+        "note_paragraph": 1,
+        "property": "line_multiple"
+      },
+      "reason": "段落含链接；行距不修，域缓存及复杂对象不检查"
+    }
+  ]
+}

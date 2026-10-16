@@ -1,0 +1,55 @@
+{
+  "source": "真实Chrome/Streamlit控件操作与实际下载；非会话状态注入",
+  "first_round": {
+    "source_sha256": "8d63783d5fa31a95cc7f520a6963d66ba2f95469f261f0a2a3d383b471e5da37",
+    "output_sha256": "e53b7edac54e9ff9f389e6e4e9ca87f785a4dc70c61e3d3877df40bcb80d04a2",
+    "authored_attribute_repairs": 1,
+    "only_selected_attributes_changed": true,
+    "exact_text_whitespace_order": true,
+    "all_relationship_files_byte_equal": true,
+    "hyperlink_nodes_attributes_order_preserved": true,
+    "styles_markers_separators_fields_tables_media_sections_preserved": true,
+    "rPr_precedes_run_content": true,
+    "unselected_parts_byte_equal": true,
+    "original_unchanged": true,
+    "external_targets_not_opened": true,
+    "not_a_reachability_or_visual_verdict": true
+  },
+  "final": {
+    "source_sha256": "8d63783d5fa31a95cc7f520a6963d66ba2f95469f261f0a2a3d383b471e5da37",
+    "output_sha256": "b06e90b884dc8c981cd5e1b3e714f6dd3148174538cea9dc453ad5291cd62bff",
+    "authored_attribute_repairs": 16,
+    "only_selected_attributes_changed": true,
+    "exact_text_whitespace_order": true,
+    "all_relationship_files_byte_equal": true,
+    "hyperlink_nodes_attributes_order_preserved": true,
+    "styles_markers_separators_fields_tables_media_sections_preserved": true,
+    "rPr_precedes_run_content": true,
+    "unselected_parts_byte_equal": true,
+    "original_unchanged": true,
+    "external_targets_not_opened": true,
+    "not_a_reachability_or_visual_verdict": true
+  },
+  "selected_counts": [
+    1,
+    15
+  ],
+  "formal_rounds": 2,
+  "restored_current_round": 2,
+  "restored_report": "服务重启后导入实际下载项目，摘要核对后重新检查有效",
+  "restored_preview_authorization": false,
+  "changed_paragraph_8_type": "other",
+  "after_range_edit": {
+    "needs_confirmation": true,
+    "current_issue_center_count": 0,
+    "current_fixed_download_count": 0
+  },
+  "second_session": {
+    "initial_input_empty": true,
+    "own_builtin_correct_loaded": true,
+    "primary_name_or_results_visible": false
+  },
+  "API_requests": 0,
+  "automatic_renders": 0,
+  "same_as_control_bytes": true
+}

@@ -1,0 +1,33 @@
+{
+  "roles": {
+    "1": "other",
+    "2": "other",
+    "3": "other",
+    "4": "other",
+    "5": "other",
+    "6": "other",
+    "7": "body",
+    "8": "body",
+    "9": "reference_title",
+    "10": "reference_item",
+    "11": "reference_item",
+    "12": "body",
+    "13": "other"
+  },
+  "materials": {
+    "13": "合成程序代码；保留文字、空格、制表和换行"
+  },
+  "citation_scan": [
+    7,
+    8,
+    12
+  ],
+  "protected_citation_paragraphs": [
+    7
+  ],
+  "selected_notes": [
+    "footnote:1:3",
+    "endnote:1:3",
+    "endnote:3:5"
+  ]
+}

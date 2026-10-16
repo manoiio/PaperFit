@@ -10,6 +10,9 @@ def short(text, limit=36):
     return text if len(text) <= limit else text[:limit] + '…'
 
 def position(loc):
+    if "link" in loc:
+        base=position({k:v for k,v in loc.items() if k not in ("link","link_run")})
+        return base+f" · 链接{loc['link']}"+(f" · 内部片段{loc['link_run']}" if "link_run" in loc else "")
     if 'note_kind' in loc:return ('脚注' if loc['note_kind']=='footnote' else '尾注')+' ID'+str(loc.get('note_id','关系'))+(' · 注释段'+str(loc['note_paragraph']) if 'note_paragraph' in loc else '')+(' · run'+str(loc['run']) if 'run' in loc else '')+(' · '+{'font_cn':'中文字体','font_size':'字号','line_multiple':'倍数行距','structure':'结构','relationship':'关系','protected_run':'保护片段','protected_marker':'自动标记混合片段'}.get(loc['property'],loc['property']) if loc.get('property') else '')
     if 'toc_object' in loc:return '目录对象 d:'+str(loc['toc_object'])+(' · 顶层段'+str(loc['paragraph']) if 'paragraph' in loc else '')+(' · run'+str(loc['run']) if 'run' in loc else '')+(' · '+str(loc['property']) if 'property' in loc else '')
     if loc.get('story'):return '节'+str(loc.get('section','?'))+' '+loc['story']+(' 段'+str(loc['story_paragraph']) if loc.get('story_paragraph') else '')+(' run'+str(loc['run']) if loc.get('run') else '')

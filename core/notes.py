@@ -80,7 +80,7 @@ def inventory(path):
    elif any(a.tag in {q(t) for t in ('ins','del','sdt','hyperlink','fldSimple')} for a in marks[0].iterancestors()):why.append('内部标记处于复杂包裹或修订中')
    complex_=note.xpath('.//w:tbl|.//w:sdt|.//w:fldChar|.//w:fldSimple|.//w:hyperlink|.//w:ins|.//w:del|.//*[local-name()="oMath"]',namespaces=NS)
    structures=[name for name,tag in [('链接','hyperlink'),('复杂域','fldChar'),('简单域','fldSimple'),('公式','oMath'),('表格','tbl'),('内容控件','sdt'),('插入修订','ins'),('删除修订','del')] if any(isinstance(e.tag,str) and E.QName(e).localname==tag for e in note.iter())]
-   rows.append({'structures':structures,'key':key,'kind':k,'part':member,'note_id':ident,'note_index':idx,'type':typ,'preview':text(note)[:90],'references':links,'paragraphs':len(note.findall(q('p'))),'complex':bool(complex_),'reason':'；'.join(why) or '关系和类型明确；'+('含'+ '、'.join(structures)+'，复杂片段只读；普通run另查' if structures else '普通run可检查，自动编号标记只读'),'safe_relationship':not why})
+   rows.append({'structures':structures,'key':key,'kind':k,'part':member,'note_id':ident,'note_index':idx,'type':typ,'preview':text(note)[:90],'references':links,'paragraphs':len(note.findall(q('p'))),'complex':bool(complex_),'reason':'；'.join(why) or '关系和类型明确；'+('含'+ '、'.join(structures)+'，链接须受控资格校验，其他复杂片段只读；普通文字另查' if structures else '普通run可检查，自动编号标记只读'),'safe_relationship':not why})
   for ref in [x for x in refs if x['kind']==k]:
    if ids[ref['note_id']]!=1:issue(k,'正文引用未唯一对应注释对象',note_id=ref['note_id'],paragraph=ref['paragraph'])
  # A part merely present is not a valid relationship. Never treat it as a safe story.
@@ -99,7 +99,9 @@ def validate_scope(pkg,s,*,confirmed=True):
 def locate(pkg,f):
  part=f['story_part'];root=pkg.story_roots.setdefault(part,parse(pkg.parts[part]));return locate_root(root,f)
 def locate_root(root,f):
- loc=f['locator'];note=list(root)[loc['note_index']-1];p=note.findall(q('p'))[loc['note_paragraph']-1];return p.findall(q('r'))[loc['run']-1] if 'run' in loc else p
+ loc=f['locator'];note=list(root)[loc['note_index']-1];p=note.findall(q('p'))[loc['note_paragraph']-1];
+ from .text_runs import select_run
+ return select_run(p,loc) if 'run' in loc or 'link_run' in loc else p
 
 def line_value(res,layers):
  for layer in layers:
@@ -148,15 +150,20 @@ def append_checks(report,pkg,scope):
      if any(sec.find(q('docGrid')) is not None and sec.find(q('docGrid')).get(q('type')) not in (None,'default') for sec in pkg.sections) and res.value(pl,'snapToGrid','1') not in ('0','false','off'):raise Unresolved('文档网格可能影响注释行距，待复核')
      actual=line_value(res,pl);add(k,loc,'line_multiple',actual,'pass' if actual['multiple']==cfg['values'][k]['line_multiple'] else 'problem',part=part)
     except (Unresolved,ValueError) as exc:add(k,loc,'line_multiple',{'unresolved':str(exc)},'review',str(exc),False)
-   for ri,r in enumerate(p.findall(q('r')),1):
-    rl={**loc,'run':ri}
+   from .text_runs import walk
+   linked=walk(pkg,p,part) if p.find(q('hyperlink')) is not None else None
+   if linked:
+    for issue in linked['issues']:add(k,{**loc,**issue['locator']},'protected_link',None,'review',issue['detail'],False,part=part)
+   segments=linked['rows'] if linked else [{'locator':{'run':i},'node':r,'reason':None,'evidence':None} for i,r in enumerate(p.findall(q('r')),1)]
+   for segment in segments:
+    r=segment['node'];rl={**loc,**segment['locator']}
     if r.find(q(k+'Ref')) is not None:
      if text(r).strip():add(k,rl,'protected_marker',None,'review','编号标记与正文混在同一run；仅此片段不修字体字号，不拆标记',False)
      continue
     if not text(r).strip():continue
     try:
      layers=res.layers(p,r)
-     why='域缓存及边界只读' if field else '修订/未知格式容器' if len(r.findall(q('rPr')))>1 else res.special(r,layers)
+     why='域缓存及边界只读' if field else segment['reason'] or ('修订/未知格式容器' if len(r.findall(q('rPr')))>1 else res.special(r,layers))
      if p.find('w:pPr/w:pPrChange',NS) is not None:why='段落格式修订只读'
      if scripts(text(r))[2]:why='超出普通中文/Latin文字支持的字符，保持原状'
      if why:raise Unresolved(why)
@@ -173,6 +180,7 @@ def append_checks(report,pkg,scope):
        actual=res.size(layers)
        if actual is None:raise Unresolved('字号缺失或无效')
        add(k,rl,prop,{'pt':actual},'pass' if actual==wanted else 'problem',part=part)
+      if segment['evidence']:fs[-1]['link_evidence']=deepcopy(segment['evidence'])
      except Unresolved as exc:add(k,rl,prop,{'unresolved':str(exc)},'review',str(exc),False)
  for i,x in enumerate(inv['issues'],1):add(x['kind'],{'note_kind':x['kind'],'relation_issue':i},'relationship',x,'review',x['reason'],False)
  for k,rid in [('footnote','R36'),('endnote','R37')]:
@@ -186,7 +194,11 @@ def append_checks(report,pkg,scope):
 
 def apply(pkg,f):
  from .engine import _ensure
- e=locate(pkg,f);prop=f['property'];rpr=prop!='line_multiple';container=_ensure(e,'rPr' if rpr else 'pPr')
+ e=locate(pkg,f)
+ if 'link' in f['locator']:
+  from .text_runs import executable_run
+  e=executable_run(pkg,e.getparent().getparent(),f['locator'],f['story_part'])
+ prop=f['property'];rpr=prop!='line_multiple';container=_ensure(e,'rPr' if rpr else 'pPr')
  if prop=='font_cn':rf=_ensure(container,'rFonts');rf.set(q('eastAsia'),f['expected']);rf.attrib.pop(q('eastAsiaTheme'),None)
  elif prop=='font_size':_ensure(container,'sz').set(q('val'),str(round(f['expected']*2)))
  else:sp=_ensure(container,'spacing');sp.set(q('line'),str(round(f['expected']*240)));sp.set(q('lineRule'),'auto')

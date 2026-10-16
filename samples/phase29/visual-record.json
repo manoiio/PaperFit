@@ -1,0 +1,132 @@
+{
+  "renderer_observations": [
+    {
+      "file": "errors.docx",
+      "label": "original",
+      "sha256": "8d63783d5fa31a95cc7f520a6963d66ba2f95469f261f0a2a3d383b471e5da37",
+      "renderer": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "fonts": [
+        {
+          "target": "Arial",
+          "installed_exact": true,
+          "resolved_family": "Arial"
+        },
+        {
+          "target": "Calibri",
+          "installed_exact": true,
+          "resolved_family": "Calibri"
+        },
+        {
+          "target": "Times New Roman",
+          "installed_exact": true,
+          "resolved_family": "Times New Roman"
+        },
+        {
+          "target": "宋体",
+          "installed_exact": true,
+          "resolved_family": "SimSun,宋体"
+        },
+        {
+          "target": "黑体",
+          "installed_exact": true,
+          "resolved_family": "SimHei,黑体"
+        }
+      ],
+      "font_warnings": [
+        "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+      ],
+      "pages": 2,
+      "seconds": 1.9514248330378905,
+      "input_unchanged": true,
+      "explicit_QA_not_product_preview": true,
+      "external_hrefs_not_clicked": true
+    },
+    {
+      "file": "correct.docx",
+      "label": "control",
+      "sha256": "b06e90b884dc8c981cd5e1b3e714f6dd3148174538cea9dc453ad5291cd62bff",
+      "renderer": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "fonts": [
+        {
+          "target": "Arial",
+          "installed_exact": true,
+          "resolved_family": "Arial"
+        },
+        {
+          "target": "Calibri",
+          "installed_exact": true,
+          "resolved_family": "Calibri"
+        },
+        {
+          "target": "Times New Roman",
+          "installed_exact": true,
+          "resolved_family": "Times New Roman"
+        },
+        {
+          "target": "宋体",
+          "installed_exact": true,
+          "resolved_family": "SimSun,宋体"
+        }
+      ],
+      "font_warnings": [
+        "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+      ],
+      "pages": 2,
+      "seconds": 1.4417531670769677,
+      "input_unchanged": true,
+      "explicit_QA_not_product_preview": true,
+      "external_hrefs_not_clicked": true
+    },
+    {
+      "file": "fixed.docx",
+      "label": "final",
+      "sha256": "b06e90b884dc8c981cd5e1b3e714f6dd3148174538cea9dc453ad5291cd62bff",
+      "renderer": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "fonts": [
+        {
+          "target": "Arial",
+          "installed_exact": true,
+          "resolved_family": "Arial"
+        },
+        {
+          "target": "Calibri",
+          "installed_exact": true,
+          "resolved_family": "Calibri"
+        },
+        {
+          "target": "Times New Roman",
+          "installed_exact": true,
+          "resolved_family": "Times New Roman"
+        },
+        {
+          "target": "宋体",
+          "installed_exact": true,
+          "resolved_family": "SimSun,宋体"
+        }
+      ],
+      "font_warnings": [
+        "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+      ],
+      "pages": 2,
+      "seconds": 1.446414208970964,
+      "input_unchanged": true,
+      "explicit_QA_not_product_preview": true,
+      "external_hrefs_not_clicked": true
+    }
+  ],
+  "reviewed_pages": 6,
+  "review_date": "2026-10-16",
+  "observed": "全部六页已查看。正文、参考文献及脚注尾注链接文字完整；选中字号和字体变化可见；未选下划线、样式、代码、图片、表格、分隔线及标记保留，无新裁切。字号改变后代码从原第2页移入第1页，未承诺分页保持。",
+  "renderer_color_boundary": "LibreOffice注释链接预览可能按visited/followed样式显示不同颜色；XML颜色、样式及关系未改。Word中仍显示蓝色，不把渲染状态当属性修正。",
+  "word": {
+    "version": "16.80",
+    "actually_opened_file_sha256": "b06e90b884dc8c981cd5e1b3e714f6dd3148174538cea9dc453ad5291cd62bff",
+    "pages_viewed": 2,
+    "repair_prompt": false,
+    "hyperlink_target_dialog": "实际查看公开Link完整显示文字及https://example.invalid/guide，取消对话框；未打开网站。",
+    "footnote_endnote": "实际查看正文、参考文献、脚注及第2页尾注，自动标记和内容保留。",
+    "closed_without_save": true,
+    "hash_unchanged": true
+  },
+  "product_preview_boundary": "网页原有外部关系拒绝仍保留。仅此明确请求的本地合成QA使用documents渲染器；已逐项限定外部关系为example.invalid普通超链接，无外部图片/模板，无点击目标。不是网页预览能力扩展或目标可达性验收。"
+}

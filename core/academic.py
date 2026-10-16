@@ -43,16 +43,25 @@ def append_checks(report,pkg,manifest,rules,*,generic_only=False):
   if not enabled:continue
   try:pl=res.layers(p,kind='pPr')
   except Unresolved as exc:why=str(exc);pl=[]
+  from .text_runs import walk,select_run,executable_run
+  linked=walk(pkg,p) if typ=='reference_item' and p.find(q('hyperlink')) is not None else None
+  partial=bool(linked and linked['supported_links'] and not linked['context_reason'])
+  if partial:why=None
   if why:
    add(rid,loc,typ,'特殊结构',{'unresolved':why},enabled,'review',why+'；分类确认不能绕过保护',False);continue
-  runs=[];special=False
-  for i,r in enumerate(p.findall(q('r')),1):
+  runs=[];special=partial
+  if partial:
+   notes.append({'locator':loc,'status':'review','detail':'参考文献普通链接文字独立检查；段落属性、编号及引用语义不放宽。'})
+   for issue in linked['issues']:notes.append({'locator':{**loc,**issue['locator']},'status':'review','detail':issue['detail']})
+  segments=linked['rows'] if partial else [{'locator':{'run':i},'node':r,'reason':None,'evidence':None} for i,r in enumerate(p.findall(q('r')),1)]
+  for segment in segments:
+   run_loc=segment['locator'];r=segment['node'];i=run_loc.get('run',run_loc.get('link_run'))
    try:
-    layers=res.layers(p,r);reason=res.special(r,layers)
+    layers=res.layers(p,r);reason=segment['reason'] or res.special(r,layers)
    except Unresolved as exc:layers=[];reason=str(exc)
    if reason:
-    special=True;notes.append({'locator':{'paragraph':n,'run':i},'status':'review','detail':reason+'；前后置章节特殊片段未修改'})
-   elif text(r).strip():runs.append((i,r,layers))
+    special=True;notes.append({'locator':{'paragraph':n,**run_loc},'status':'review','detail':reason+'；前后置章节特殊片段未修改'})
+   elif text(r).strip():runs.append((run_loc,r,layers))
   numbered=any(x.find(q('numPr')) is not None for x in pl)
   for prop in ('before','after','alignment','line_spacing','first_line_indent'):
    wanted=c.get(prop)
@@ -106,7 +115,12 @@ def append_checks(report,pkg,manifest,rules,*,generic_only=False):
      _text_checks(read,add,res,layers,full[start:stop],rid,{'paragraph':n,'start':start,'end':stop,'part':part},typ,props)
     offset=end
   else:
-   for i,r,layers in runs:_text_checks(read,add,res,layers,text(r),rid,{'paragraph':n,'run':i},typ,c)
+   for run_loc,r,layers in runs:_text_checks(read,add,res,layers,text(r),rid,{'paragraph':n,**run_loc},typ,c)
+   if partial:
+    for f in fs:
+     if f['locator'].get('paragraph')==n and 'link' in f['locator']:
+      segment=next(x for x in segments if x['locator']=={k:f['locator'][k] for k in ('link','link_run')})
+      f['link_evidence']=deepcopy(segment['evidence'])
  for rid in ('R13',) if generic_only else tuple(f'R{i:02}' for i in range(13,22))+tuple(r for r in BACK_RULES.values() if r in rules['rules']):
   if rid not in seen:
    f=add(rid,{'document':1},'document','未启用/不适用',None,None,'not_applicable','当前模板未配置或确认范围无该对象，不套正文规则',False)
@@ -192,7 +206,9 @@ def apply(pkg,f):
  if 'start' in loc:
   if not simple_keyword(p) or paragraph_unsafe(p):raise DemoError('关键词片段不能安全拆分')
   targets=isolate(p,loc['start'],loc['end'])
- else:targets=[p.findall(q('r'))[loc['run']-1]] if 'run' in loc else []
+ else:
+  from .text_runs import select_run,executable_run
+  targets=[executable_run(pkg,p,loc) if 'link' in loc else select_run(p,loc)] if 'run' in loc or 'link_run' in loc else []
  if targets:
   for r in targets:
    rp=_ensure(r,'rPr')
@@ -228,7 +244,9 @@ def mask(p,f):
    stop=offset+len(text(r))
    if offset>=loc['start'] and stop<=loc['end']:targets.append(r)
    offset=stop
- else:targets=[p.findall(q('r'))[loc['run']-1]] if 'run' in loc else [p]
+ else:
+  from .text_runs import select_run
+  targets=[select_run(p,loc)] if 'run' in loc or 'link_run' in loc else [p]
  tag,attrs=('rFonts',[prop[5:],prop[5:]+'Theme']) if prop.startswith('font_') else ('sz',['val']) if prop=='size' else ('b',['val']) if prop=='bold' else ('jc',['val']) if prop=='alignment' else ('spacing',[prop,prop+'Lines',prop+'Autospacing']) if prop in ('before','after') else ('spacing',['line','lineRule']) if prop=='line_spacing' else ('ind',['firstLine','firstLineChars','hanging','hangingChars'])
  for obj in targets:
   parent=obj.find(q('rPr' if obj.tag==q('r') else 'pPr'));e=parent.find(q(tag)) if parent is not None else None

@@ -1,0 +1,140 @@
+{
+  "kind": "作者按注入位置独立制定，非程序检查结果",
+  "allowed_repairs": [
+    {
+      "part": "word/document.xml",
+      "paragraph": 7,
+      "run": 1,
+      "property": "font_eastAsia",
+      "value": "宋体"
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 7,
+      "run": 1,
+      "property": "size",
+      "value": 12
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 7,
+      "link": 1,
+      "link_run": 2,
+      "property": "font_eastAsia",
+      "value": "宋体"
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 7,
+      "link": 1,
+      "link_run": 2,
+      "property": "font_ascii",
+      "value": "Times New Roman"
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 7,
+      "link": 1,
+      "link_run": 2,
+      "property": "size",
+      "value": 12
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 7,
+      "run": 2,
+      "property": "font_ascii",
+      "value": "Times New Roman"
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 7,
+      "run": 2,
+      "property": "size",
+      "value": 12
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 8,
+      "link": 1,
+      "link_run": 1,
+      "property": "font_eastAsia",
+      "value": "宋体"
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 8,
+      "link": 1,
+      "link_run": 1,
+      "property": "font_ascii",
+      "value": "Times New Roman"
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 8,
+      "link": 1,
+      "link_run": 1,
+      "property": "size",
+      "value": 12
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 10,
+      "link": 1,
+      "link_run": 1,
+      "property": "font_eastAsia",
+      "value": "宋体"
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 10,
+      "link": 1,
+      "link_run": 1,
+      "property": "size",
+      "value": 12
+    },
+    {
+      "part": "word/footnotes.xml",
+      "note_id": "1",
+      "note_paragraph": 1,
+      "link": 1,
+      "link_run": 1,
+      "property": "font_eastAsia",
+      "value": "宋体"
+    },
+    {
+      "part": "word/footnotes.xml",
+      "note_id": "1",
+      "note_paragraph": 1,
+      "link": 1,
+      "link_run": 1,
+      "property": "size",
+      "value": 12
+    },
+    {
+      "part": "word/endnotes.xml",
+      "note_id": "1",
+      "note_paragraph": 1,
+      "link": 1,
+      "link_run": 1,
+      "property": "font_eastAsia",
+      "value": "宋体"
+    },
+    {
+      "part": "word/endnotes.xml",
+      "note_id": "1",
+      "note_paragraph": 1,
+      "link": 1,
+      "link_run": 1,
+      "property": "size",
+      "value": 12
+    }
+  ],
+  "not_selected": [
+    "正文p12的字号与R33",
+    "所有段落属性",
+    "注释编号、未选注释、西文字体、颜色、下划线、样式",
+    "链接目标及全部关系",
+    "人工排除代码和表格图片"
+  ]
+}
