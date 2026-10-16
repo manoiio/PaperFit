@@ -238,6 +238,10 @@ def render_results():
     try:b.download_button('下载本轮结果包',model.result_package(),file_name=f'论文有格_第{n}轮结果.zip',mime='application/zip',on_click='ignore',width='stretch',key='package-'+str(model.revision)+'-'+str(model.generation_count))
     except Exception as exc:b.warning(public_error(exc))
     st.caption('结果包带走本轮DOCX与报告；保存项目用于中断后继续，包含原稿和历史。')
+    from web.preview_ui import open_reader
+    a,b=st.columns(2)
+    a.button('查看本轮页面',on_click=open_reader,args=(model,'round-'+str(n),False),width='stretch',help='仅进入查看，不生成预览、不切换当前输入。')
+    b.button('与原稿对比',on_click=open_reader,args=(model,'round-'+str(n),True),width='stretch',help='同页号人工对比；不自动渲染或切换输入。')
     st.button('以计划最终副本继续' if result.get('plan') else '以本轮修正版开始下一轮',on_click=model.next_round,width='stretch',help='以此副本继续处理：只有点击才明确切换输入，原稿和前轮保持。')
     with st.expander('更多文件与记录'):
         for label,name,filename,mime in [('下载原稿DOCX','original.docx','论文有格_原稿.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document'),('下载修改记录','changes.md','论文有格_修改记录.md','text/markdown'),('下载复查报告','recheck.md','论文有格_复查报告.md','text/markdown')]:
@@ -419,18 +423,25 @@ elif step==4:
         st.caption('使用同一修正器；无法提前查看实际关联影响。')
         st.button('生成修正版',disabled=not model.selected or model.result is not None,on_click=run_fix,width='stretch')
 elif step==5:
-    st.header('结果与下载')
-    if model.result is None:st.info('尚未生成或采用正式副本。可下载有效检查报告，或返回问题中心选择修正。')
-    render_results()
-    with st.expander('阅读报告与原始检查记录'):
-        from web.center_ui import render_reading_export
-        render_reading_export(model)
-        render_advanced()
-    from web.preview_ui import render_preview_panel
-    render_preview_panel(model)
-    with st.expander('历史与中间副本（查看不会切换输入）'):
-        render_history(model)
-    render_project(model)
+    from web.preview_ui import render_preview_panel,open_reader,view_seed
+    seed=view_seed(model)
+    if st.session_state.get('reader-open-'+seed):
+        a,b=st.columns([3,1]);a.header('文档页面')
+        b.button('返回结果与下载',on_click=lambda:st.session_state.update({'reader-open-'+seed:False}),width='stretch')
+        render_preview_panel(model)
+    else:
+        st.header('结果与下载')
+        if model.result is None:st.info('尚未生成或采用正式副本。可下载有效检查报告，或返回问题中心选择修正。')
+        render_results()
+        if model.result is None:
+            st.button('查看论文页面',on_click=open_reader,args=(model,'input',False),width='stretch')
+        with st.expander('阅读报告与原始检查记录'):
+            from web.center_ui import render_reading_export
+            render_reading_export(model)
+            render_advanced()
+        with st.expander('历史与中间副本（查看不会切换输入）'):
+            render_history(model)
+        render_project(model)
 
 from web.workflow_ui import finish_navigation
 finish_navigation()

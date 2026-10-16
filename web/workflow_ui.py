@@ -5,7 +5,7 @@ import streamlit as st
 STEPS={1:'文档与要求',2:'确认检查范围',3:'查看问题',4:'修正预演',5:'结果与下载'}
 # Explicit editor-only keepalive. Never retain acknowledgements, actions, uploads,
 # data-editor patches or execution authorization. Business drafts remain on model.
-EDITOR_PREFIXES=('class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
+EDITOR_PREFIXES=('reader-mode-','reader-file-','reader-left-','reader-right-','reader-page-number-','reader-section-','class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
  'wb-policy-','wb-name-','wb-text-','tpl-value-','tpl-mode-','template-name-',
  'norm-text-','norm-encoding','center-category-','center-status-','center-order-',
  'problem-detail-','center-range-','center-search-','center-type-','center-page-','object-detail-',

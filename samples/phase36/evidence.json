@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-16",
+  "baseline": "d114176",
+  "original_tests": 1208,
+  "final_tests": 1213,
+  "full_suite_seconds": 185.028,
+  "core_renderer_business_session_schema_changed": false,
+  "api_requests": 0,
+  "automatic_render_requests": 0,
+  "real_renderer": "bundled LibreOffice / Poppler",
+  "new_word_acceptance": false,
+  "viewports": [
+    [
+      1280,
+      720
+    ],
+    [
+      1440,
+      900
+    ]
+  ],
+  "independent_proof": "independent.json",
+  "actual_download_sha256": "82d0c27e5b3ceb2f5c2fa90d756c19e3f6578dc2b9535b28de0b82e33c02597a",
+  "docx_hashes_unchanged_through_preview": true,
+  "download_during_running_job_byte_equal": true,
+  "reader_navigation": {
+    "retained_page": 2,
+    "retained_file": "original",
+    "processing_input_round": 0,
+    "task_folder_measurement": {
+      "task_folders_before": 33,
+      "task_folders_after": 33,
+      "additional_render_tasks": 0
+    }
+  },
+  "long_document": {
+    "fixture": "tests/fixtures/history/phase12/long-400.docx",
+    "body_scope": [
+      2
+    ],
+    "scope_is_partial": true,
+    "explicit_fix": [
+      "R01"
+    ],
+    "original_page_count": 17,
+    "fixed_page_count": 16,
+    "preview_range_both": [
+      1,
+      10
+    ],
+    "viewed_pages": [
+      1,
+      2,
+      10,
+      17
+    ],
+    "page17_original": "outside preview range",
+    "page17_fixed": "does not exist"
+  },
+  "states": {
+    "running": "real render; original valid page remains available; problem view and download responsive",
+    "cancelled": "real running task: stop receiving result, not process termination",
+    "failed": "existing phase29 external-relationship render protection",
+    "queued_isolation_and_invalidated": "existing automated controlled scheduler tests retained"
+  },
+  "auxiliary": {
+    "fixture": "samples/extended-errors.docx",
+    "available_candidates": 7,
+    "default_selected": 0,
+    "selection_required": true,
+    "unselect_disables_submit": true,
+    "original_revision_round_binding_retained": true
+  },
+  "separate_sessions_and_new_document_no_page_reuse": true,
+  "restored_project_preview_not_trusted": true,
+  "limitations": [
+    "first 10 pages only",
+    "same page number is manual comparison, not content alignment",
+    "LibreOffice preview is not Word pagination or jump validation",
+    "no unadopted rehearsal preview target added",
+    "mobile and complex zoom/drag reader not implemented"
+  ],
+  "render_bindings": [
+    {
+      "document_sha256": "387eba6efdf4849459d5f4cd7c6096659f9b62be091eff21c7fe0dc575e6c25c",
+      "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+      "page_count": 2,
+      "preview_range": [
+        1,
+        2
+      ],
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "generated_at": "2026-10-16T15:48:04.440472+00:00"
+    },
+    {
+      "document_sha256": "82d0c27e5b3ceb2f5c2fa90d756c19e3f6578dc2b9535b28de0b82e33c02597a",
+      "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+      "page_count": 2,
+      "preview_range": [
+        1,
+        2
+      ],
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "generated_at": "2026-10-16T15:23:30.686486+00:00"
+    },
+    {
+      "document_sha256": "ccb84cdc85d989444ddf176139a35d266690d6b7d80432df4e1d5767748ba06b",
+      "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+      "page_count": 17,
+      "preview_range": [
+        1,
+        10
+      ],
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "generated_at": "2026-10-16T15:27:44.699396+00:00"
+    },
+    {
+      "document_sha256": "b3460d41a38703f090948353382b2cf5158ce8c6e366287f2d75770996505ca0",
+      "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+      "page_count": 16,
+      "preview_range": [
+        1,
+        10
+      ],
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "generated_at": "2026-10-16T15:27:49.943152+00:00"
+    }
+  ],
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 2745,
+      "sha256": "8fa3b0ba7b326d1334c2c29685eb7d3c39c4068fb87e59fd36f2f83b85bd40db"
+    },
+    {
+      "file": "independent.json",
+      "bytes": 690,
+      "sha256": "43d18ec92d65f33230110cb6a5bb8b5d3276570862fda36357c53fd33b8219dd"
+    },
+    {
+      "file": "screenshots/after-compare-1280.png",
+      "bytes": 114026,
+      "sha256": "38d7691667fae894ded74601a361e64c01009caacb790f0a16df66befe8564dd"
+    },
+    {
+      "file": "screenshots/after-compare-1440.png",
+      "bytes": 147180,
+      "sha256": "ae6840844b81d170fd671bf4ed6fe9a7a2513985cd64b94b8f7fd11ef82ca1da"
+    },
+    {
+      "file": "screenshots/after-output-compare-1440.png",
+      "bytes": 163320,
+      "sha256": "59b336dbd62af31a73fe0d29d5e7e34e7696e1fb8d188a57077207c9d9dc36b6"
+    },
+    {
+      "file": "screenshots/after-single-1280.png",
+      "bytes": 106409,
+      "sha256": "5d51aeb424d88b774b565872179ba9030bc797f0a95e9641311f027cc9258193"
+    },
+    {
+      "file": "screenshots/after-single-1440.png",
+      "bytes": 157984,
+      "sha256": "e4980fa78088de6aceed30338a77086fdeed4c3d029ee8816ede5cad9c84eb57"
+    },
+    {
+      "file": "screenshots/after-task-running.png",
+      "bytes": 152842,
+      "sha256": "63138fb95320556c6122957ea4e1b3e18068ac91021a4aa0e55db3dc54ea8230"
+    },
+    {
+      "file": "screenshots/before-compare-1280.png",
+      "bytes": 121796,
+      "sha256": "df7854e1966c86f96d898608ef21df0e3509c6a9c486a6d966b2582a2a423627"
+    },
+    {
+      "file": "screenshots/before-compare-1440.png",
+      "bytes": 133736,
+      "sha256": "b0fb4c2ce0674e5a6c10d00d08a85b2e372339b0dfc13b49995d584b25236c29"
+    },
+    {
+      "file": "screenshots/cancelled-task.png",
+      "bytes": 126764,
+      "sha256": "d6eeae8d43fef36abef70300828f260aa001aca19d3a6824de1503fd905636fe"
+    },
+    {
+      "file": "screenshots/different-page-counts.png",
+      "bytes": 155421,
+      "sha256": "4efbb40cc07c5728652186c6f7d8fe4727651c1fb60b5a088abdf02a39e7d829"
+    },
+    {
+      "file": "screenshots/failed-preview.png",
+      "bytes": 108263,
+      "sha256": "815fd068fd4b8f19890d001418dc90ad53649e5b47490f6afb64ed9d1529407c"
+    },
+    {
+      "file": "screenshots/layout-separate.png",
+      "bytes": 173983,
+      "sha256": "15dafac4cbbb238d1f3796711ea5d9abd020530f8c312ac3333836c3bd3696fc"
+    }
+  ]
+}

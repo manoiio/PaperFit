@@ -1,0 +1,20 @@
+{
+  "fixture": "samples/errors.docx",
+  "input_sha256": "387eba6efdf4849459d5f4cd7c6096659f9b62be091eff21c7fe0dc575e6c25c",
+  "output_sha256": "82d0c27e5b3ceb2f5c2fa90d756c19e3f6578dc2b9535b28de0b82e33c02597a",
+  "selected": 11,
+  "changes": 11,
+  "input_unchanged": true,
+  "current_input_round": 0,
+  "output_round": 1,
+  "api_requests": 0,
+  "render_requests": 0,
+  "browser_download_equivalence": {
+    "docx_bytes_equal": true,
+    "all_zip_members_equal": true,
+    "sha256": "82d0c27e5b3ceb2f5c2fa90d756c19e3f6578dc2b9535b28de0b82e33c02597a",
+    "bytes": 38754,
+    "zip_members": 18,
+    "scope": "same existing input, rules, scope and explicit choices; website layout only"
+  }
+}

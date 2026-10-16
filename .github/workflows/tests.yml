@@ -24,3 +24,5 @@ jobs:
           python scripts/reproduce_plan_demo.py --output "$RUNNER_TEMP/paperfit-phase33-plan"
       - name: Stage35 form values, scope and independent output verification
         run: python scripts/reproduce_editing_workflow.py --output "$RUNNER_TEMP/paperfit-phase35-editing"
+      - name: Stage36 unchanged legal repair and reader download reference
+        run: python scripts/reproduce_reader_workflow.py --output "$RUNNER_TEMP/paperfit-phase36-reader"
