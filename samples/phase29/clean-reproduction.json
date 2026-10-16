@@ -1,27 +1,27 @@
 {
-  "source_files_byte_verified": 387,
+  "source_files_byte_verified": 390,
   "no_work_outputs_env_git_venv": true,
   "no_API_or_renderer_configuration": true,
   "runs": [
     {
       "command": "python scripts/check_repository.py",
       "exit_code": 0,
-      "seconds": 0.028399291913956404
+      "seconds": 0.0343335410580039
     },
     {
       "command": "python -m unittest discover -s tests",
       "exit_code": 0,
-      "seconds": 143.60534233401995
+      "seconds": 149.8172023750376
     },
     {
       "command": "python scripts/reproduce_hyperlink_demo.py --output <clean>/offline-result",
       "exit_code": 0,
-      "seconds": 0.48903833411168307
+      "seconds": 0.48862399999052286
     },
     {
       "command": "python scripts/verify_hyperlink_output.py samples/phase29/errors.docx <clean>/offline-result/fixed.docx",
       "exit_code": 0,
-      "seconds": 0.04334133304655552
+      "seconds": 0.04661095899064094
     }
   ],
   "scope": "macOS clean source; Ubuntu is a separate current CI run after push"

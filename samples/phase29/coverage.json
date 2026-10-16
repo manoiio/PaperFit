@@ -2,6 +2,7 @@
   "before": {
     "finding_count": 28,
     "supported_text_locators": 11,
+    "protected_records": 1,
     "limits": [
       "仅已确认正文、参考文献条目、脚注/尾注的安全普通链接文字；不涵盖表格、页眉页脚或其他容器。",
       "含链接段落的行距、缩进、段距、对齐及样式切换不放宽；R33含链接段落仍只读。",
@@ -12,6 +13,7 @@
   "after": {
     "finding_count": 28,
     "supported_text_locators": 11,
+    "protected_records": 1,
     "limits": [
       "仅已确认正文、参考文献条目、脚注/尾注的安全普通链接文字；不涵盖表格、页眉页脚或其他容器。",
       "含链接段落的行距、缩进、段距、对齐及样式切换不放宽；R33含链接段落仍只读。",
@@ -44,8 +46,8 @@
   "engine_calls": 1,
   "adoption_fix_calls": 0,
   "formal_rounds": 1,
-  "preview_seconds": 0.052586124977096915,
-  "adoption_seconds": 0.08440608310047537,
+  "preview_seconds": 0.05422966601327062,
+  "adoption_seconds": 0.09126625000499189,
   "API_calls": 0,
   "automatic_renders": 0,
   "control_matches_bytes": true

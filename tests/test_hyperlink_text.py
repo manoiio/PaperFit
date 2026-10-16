@@ -142,3 +142,8 @@ class HyperlinkTests(TestCase):
  def test_independent_whitelist_rejects_unselected_color(self):
   from core.engine import _preservation
   f=next(f for f in self.fs() if f['rule_id']=='R05' and f['locator'].get('link_run')==2);p=Package(S/'errors.docx');r=select_run(p.paragraphs[6],f['locator']);E.SubElement(r.find(q('rPr')),q('color')).set(q('val'),'FF0000');self.assertNotEqual(_preservation(self.p,[f]),_preservation(p,[f]))
+
+ def test_protected_superscript_link_fragment_not_counted_as_supported_text(self):
+  def change(p):
+   part='word/footnotes.xml';root=parse(p.parts[part]);note=next(n for n in root if n.get(q('id'))=='1');r=note.find('w:p/w:hyperlink/w:r',NS);E.SubElement(r.find(q('rPr')),q('vertAlign')).set(q('val'),'superscript');p.parts[part]=E.tostring(root)
+  p=self.edit(change);report=self.check(p);f=next(f for f in report['findings'] if f.get('story_part')=='word/footnotes.xml' and f['locator'].get('link_run')==1 and f.get('property')=='protected_run');self.assertEqual(f['status'],'review');self.assertFalse(f['fixable']);self.assertEqual(f['text_structure'],'受保护链接对象/片段');self.assertNotIn('直属普通run已核对',f['detail']);self.assertEqual(report['coverage']['hyperlink_text']['supported_text_locators'],10);self.assertEqual(report['coverage']['hyperlink_text']['protected_records'],2)

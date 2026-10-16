@@ -94,8 +94,13 @@ def executable_run(pkg,p,loc,part='word/document.xml'):
 def annotate(report):
     fs=[f for f in report['findings'] if 'link' in f['locator']]
     if not fs:return
-    report['coverage']['hyperlink_text']={'finding_count':len(fs),'supported_text_locators':len({(f.get('story_part'),str({k:v for k,v in f['locator'].items() if k!='property'})) for f in fs if 'link_run' in f['locator']}),'limits':LIMITS}
+    def ordinary(f):
+        return 'link_run' in f['locator'] and not str(f.get('property','')).startswith('protected_')
+    identity=lambda f:(f.get('story_part'),str({k:v for k,v in f['locator'].items() if k!='property'}))
+    report['coverage']['hyperlink_text']={'finding_count':len(fs),
+        'supported_text_locators':len({identity(f) for f in fs if ordinary(f)}),
+        'protected_records':sum(not ordinary(f) for f in fs),'limits':LIMITS}
     for f in fs:
-        f['text_structure']='受控普通超链接文字' if 'link_run' in f['locator'] else '受保护链接对象'
-        if 'link_run' in f['locator']:
+        f['text_structure']='受控链接文字（属性状态另列）' if ordinary(f) else '受保护链接对象/片段'
+        if ordinary(f):
             f['detail']=(f.get('detail','')+'；' if f.get('detail') else '')+'所在部件关系及直属普通run已核对；仅检查配置的文字属性，不访问目标，不验证跳转或段落排版。'

@@ -167,7 +167,7 @@ def append_checks(report,pkg,scope):
      if p.find('w:pPr/w:pPrChange',NS) is not None:why='段落格式修订只读'
      if scripts(text(r))[2]:why='超出普通中文/Latin文字支持的字符，保持原状'
      if why:raise Unresolved(why)
-    except Unresolved as exc:add(k,rl,'protected_run',None,'review',str(exc),False);continue
+    except Unresolved as exc:add(k,rl,'protected_run',None,'review',str(exc),False,part=part);continue
     for prop in ('font_cn','font_size'):
      wanted=cfg['values'][k][prop]
      if wanted is None or prop=='font_cn' and not scripts(text(r))[0]:continue

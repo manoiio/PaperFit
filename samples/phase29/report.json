@@ -272,6 +272,7 @@
     "hyperlink_text": {
       "finding_count": 28,
       "supported_text_locators": 11,
+      "protected_records": 1,
       "limits": [
         "仅已确认正文、参考文献条目、脚注/尾注的安全普通链接文字；不涵盖表格、页眉页脚或其他容器。",
         "含链接段落的行距、缩进、段距、对齐及样式切换不放宽；R33含链接段落仍只读。",
@@ -631,7 +632,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -706,7 +707,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -764,7 +765,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -839,7 +840,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -914,7 +915,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -972,7 +973,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -1312,7 +1313,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -1387,7 +1388,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -1445,7 +1446,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -1676,7 +1677,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -1751,7 +1752,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -1809,7 +1810,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -1892,7 +1893,7 @@
           "target_sha256": "9c97aadf0a05c6097a07e9b508b6ecb09537c5ce5db431be73b88cf94dc9a150",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -1975,7 +1976,7 @@
           "target_sha256": "9c97aadf0a05c6097a07e9b508b6ecb09537c5ce5db431be73b88cf94dc9a150",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -2033,7 +2034,7 @@
           "target_sha256": "9c97aadf0a05c6097a07e9b508b6ecb09537c5ce5db431be73b88cf94dc9a150",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -3210,7 +3211,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -3270,7 +3271,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -3626,7 +3627,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -3686,7 +3687,7 @@
           "target_sha256": "00ff274a4aaa4e94593d8ba4073c3ab3995727bfa3cb23eb6c8b083f7099f3ca",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -5194,7 +5195,7 @@
           "target_sha256": "23eaafa53887d1c6dc4e4afcadf917e6e2cf379c332768ac7eb488525dfd445c",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -5263,7 +5264,7 @@
           "target_sha256": "23eaafa53887d1c6dc4e4afcadf917e6e2cf379c332768ac7eb488525dfd445c",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -5349,7 +5350,7 @@
           "target_sha256": "23eaafa53887d1c6dc4e4afcadf917e6e2cf379c332768ac7eb488525dfd445c",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -5418,7 +5419,7 @@
           "target_sha256": "23eaafa53887d1c6dc4e4afcadf917e6e2cf379c332768ac7eb488525dfd445c",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -5876,7 +5877,7 @@
           "target_sha256": "e3e2e7d2a0f147180ce2379f1090b29adbe4b070063b8d15b09de70ced495831",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -5945,7 +5946,7 @@
           "target_sha256": "e3e2e7d2a0f147180ce2379f1090b29adbe4b070063b8d15b09de70ced495831",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -6031,7 +6032,7 @@
           "target_sha256": "e3e2e7d2a0f147180ce2379f1090b29adbe4b070063b8d15b09de70ced495831",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -6100,7 +6101,7 @@
           "target_sha256": "e3e2e7d2a0f147180ce2379f1090b29adbe4b070063b8d15b09de70ced495831",
           "target_opened": false
         },
-        "text_structure": "受控普通超链接文字"
+        "text_structure": "受控链接文字（属性状态另列）"
       }
     },
     {
@@ -6261,7 +6262,7 @@
         "detail": "内部anchor/docLocation首版只读，未核对书签目标",
         "property": "protected_link",
         "story_part": "word/endnotes.xml",
-        "text_structure": "受保护链接对象"
+        "text_structure": "受保护链接对象/片段"
       }
     },
     {
@@ -7387,7 +7388,7 @@
   "word_status": "未验收",
   "history": [
     {
-      "id": "round-records-1c3b91871e3a46b2be6d2bf45d818912/round-1-7d35d1858631403e9dd7d895facd0ea5",
+      "id": "round-records-6cc25541ae684e598ec48c6c29944f31/round-1-82e812d32809455aa07a27bc91c76daa",
       "round": 1,
       "input_round": 0,
       "operation": "格式修正",
@@ -9408,13 +9409,13 @@
     ]
   },
   "rehearsal": {
-    "id": "rehearsal-21d8ab874ccf48a08a26849b62c4140f",
-    "binding": "7f958ada84ec97335fc3b710402fda6481c22d0acf46aae29be9c42cce1633ca",
+    "id": "rehearsal-3ddba1bb35044ea68642c7fa0c4b6942",
+    "binding": "353ec9eb179b307eb84e86515bbad2af15e939191c89a2b8dc960c77bca0239c",
     "execution_version": "format-rehearsal-v1",
-    "execution_sha256": "c3df3f79cc4e443f08b6b5a093c11e8b9f0c2fcd58b6b15d5f4f3abfac3d66bb",
-    "created_at": "2026-10-16T04:29:32.816180+00:00",
-    "adopted_at": "2026-10-16T04:29:32.865607+00:00",
-    "rehearsal_transaction_sha256": "b73712b7ed9ba8022be3eccf3032450bc228f2cb74050471eadffc4d049cda1a",
+    "execution_sha256": "da5b57fe14ca28def67131cebf6b988ba22470c044b6825cb9465fca9bb87453",
+    "created_at": "2026-10-16T04:48:42.428237+00:00",
+    "adopted_at": "2026-10-16T04:48:42.481218+00:00",
+    "rehearsal_transaction_sha256": "10e5125202eb946d86fcd34687520969bc969e8e8011139986defae71863e7a1",
     "validation": {
       "input_sha256": "8d63783d5fa31a95cc7f520a6963d66ba2f95469f261f0a2a3d383b471e5da37",
       "output_sha256": "b06e90b884dc8c981cd5e1b3e714f6dd3148174538cea9dc453ad5291cd62bff",
@@ -9424,7 +9425,7 @@
       "verification": "重新执行原完整性白名单及真实落盘检查；未再次修正"
     },
     "fix_calls_at_adoption": 0,
-    "validation_elapsed_seconds": 0.04509329202119261,
+    "validation_elapsed_seconds": 0.048289458034560084,
     "input_still_current_at_adoption": true,
     "output_auto_switched_at_adoption": false
   }
