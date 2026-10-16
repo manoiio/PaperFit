@@ -234,6 +234,9 @@ if model.mode!='basic':
     from web.citation_ui import render_citations
     st.markdown('<span id="scope-citation"></span>',unsafe_allow_html=True)
     render_citations(model)
+    from web.reference_ui import render_references
+    st.markdown('<span id="scope-reference"></span>',unsafe_allow_html=True)
+    render_references(model)
     from web.note_ui import render_notes
     st.markdown('<span id="scope-note"></span>',unsafe_allow_html=True)
     render_notes(model)

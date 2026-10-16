@@ -10,6 +10,7 @@ def short(text, limit=36):
     return text if len(text) <= limit else text[:limit] + '…'
 
 def position(loc):
+    if 'reference_target' in loc:return '内部引用目标组 '+str(loc['reference_target'])
     if "link" in loc:
         base=position({k:v for k,v in loc.items() if k not in ("link","link_run")})
         return base+f" · 链接{loc['link']}"+(f" · 内部片段{loc['link_run']}" if "link_run" in loc else "")

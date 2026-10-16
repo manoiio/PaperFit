@@ -1,0 +1,35 @@
+{
+  "baseline": {
+    "branch": "main",
+    "commit": "fe441e2",
+    "tests": 1145,
+    "seconds": 161.298,
+    "status": "passed"
+  },
+  "final_clean_suite": {
+    "tests": 1191,
+    "seconds": 163.137,
+    "status": "passed",
+    "python_sources_match_current": true,
+    "excluded": [
+      "work",
+      "outputs",
+      ".env",
+      ".venv",
+      "school PDF",
+      "real papers"
+    ],
+    "renderer_configuration": "nonexistent",
+    "api_key_required": false
+  },
+  "offline_reproduction": {
+    "status": "passed",
+    "selected_size_changes": 5,
+    "direct_control_browser_bytes_equal": true,
+    "api_requests": 0,
+    "automatic_renders": 0
+  },
+  "repository_audit": "links, fixture hashes, no test dependency on local history passed",
+  "privacy_audit": "26 textual/ZIP/DOCX artifacts checked: no personal absolute paths/private keys; screenshots manually inspected",
+  "CI": "verify actual post-push SHA run; not inherited from prior stage"
+}

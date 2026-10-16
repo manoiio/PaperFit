@@ -95,6 +95,8 @@ def _check(pkg, body, rules, classification=None):
     if rules.get('workbench'):
         from .rule_bundle import validate_scope_templates
         validate_scope_templates(rules,classification)
+    from .internal_refs import configure
+    configure(pkg,classification if rules.get('mode')=='academic' else None)
     from .citation_paragraphs import build as citation_paragraph_proofs
     paragraph_proofs=citation_paragraph_proofs(pkg,classification) if rules.get('mode')=='academic' else {}
     res = Resolver(pkg)
@@ -319,6 +321,9 @@ def _check(pkg, body, rules, classification=None):
     if rules.get('workbench'):
         from .rule_bundle import project_checks
         project_checks(report,rules,classification)
+    if classification is not None and rules.get('mode')=='academic':
+        from .internal_refs import append_checks as reference_checks
+        reference_checks(report,pkg,classification)
     from .dependencies import annotate_dependencies
     annotate_dependencies(report)
     if report.get('citations'):
@@ -535,7 +540,7 @@ def fix_document(input_path, output_path, body, selected_rules=(), selected_keys
     if pkg.ambiguous_sections:
         raise DemoError('有嵌套或修订分节，无法可靠确定全部节，不支持修正')
     ids, keys = set(selected_rules), set(selected_keys)
-    if ids - (set(rules["rules"]) | ({"R36","R37"} if mode=="academic" and classification and classification.get("note_scope") else set()) | ({"R33","R34"} if mode=="academic" and classification and classification.get("citation_scope") else set()) | ({"R30","R31","R32"} if mode=="academic" and classification and classification.get("toc_scope") else set()) | (set(__import__('core.front',fromlist=['IDS']).IDS) if mode=='academic' and classification and classification.get('front_scope') else set()) | (({'R23'} | ({'R35'} if classification['table_scope'].get('layout_options',{}).get('outer_edges') else set())) if mode=='academic' and classification and classification.get('table_scope') else set())) or keys - {f['key'] for f in before['findings']}:
+    if ids - (set(rules["rules"]) | ({"R44"} if mode=="academic" and classification and classification.get("reference_scope") else set()) | ({"R36","R37"} if mode=="academic" and classification and classification.get("note_scope") else set()) | ({"R33","R34"} if mode=="academic" and classification and classification.get("citation_scope") else set()) | ({"R30","R31","R32"} if mode=="academic" and classification and classification.get("toc_scope") else set()) | (set(__import__('core.front',fromlist=['IDS']).IDS) if mode=='academic' and classification and classification.get('front_scope') else set()) | (({'R23'} | ({'R35'} if classification['table_scope'].get('layout_options',{}).get('outer_edges') else set())) if mode=='academic' and classification and classification.get('table_scope') else set())) or keys - {f['key'] for f in before['findings']}:
         raise DemoError('选择含未知规则或问题key')
     if not ids and not keys:
         raise DemoError('须显式选择修正规则或问题key')

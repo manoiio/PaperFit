@@ -13,10 +13,10 @@ from core import effective_rules
 from core.classification import validate_classification
 
 AREAS = {'paragraph':'段落分类与材料保护','table':'表格用途与辅助配置','front':'封面对象与分节用途',
-         'toc':'目录范围与层级','citation':'正文引文','note':'脚注与尾注','caption':'题注、章号与关联'}
+         'toc':'目录范围与层级','citation':'正文引文','note':'脚注与尾注','caption':'题注、章号与关联','reference':'内部引用结构与链接文字'}
 METHODS = {'table':'confirm_tables','front':'confirm_front','toc':'confirm_toc',
-           'citation':'confirm_citations','note':'confirm_notes','caption':'confirm_captions'}
-ATTRS = ['confirmed','classification_confirmed','body','error','table_confirmed'] + [a+'_'+b for a in ('front','toc','citation','note','caption') for b in ('draft','confirmed')]
+           'citation':'confirm_citations','note':'confirm_notes','caption':'confirm_captions','reference':'confirm_references'}
+ATTRS = ['confirmed','classification_confirmed','body','error','table_confirmed'] + [a+'_'+b for a in ('front','toc','citation','note','caption','reference') for b in ('draft','confirmed')]
 LIMITS = ['数量按各区域的定位单位分别统计；同一段落可被多个模块引用，不能相加为全文覆盖率。',
           '未发现候选不证明物理上没有对象；文本框、浮动对象、复杂容器和未知结构仍需复核。',
           '实际页码、实际同页与Word显示未由范围确认验证；预览与人工视觉核对另行进行。']
@@ -42,8 +42,9 @@ def report_scope_summary(report, classification=None):
         s=scopes.get(a+'_scope');items=(s or {}).get('objects',{})
         if a=='table':items={n:t for n,t in (s or {}).get('table_types',{}).items() if t=='content'}
         if a=='caption':items={n:t for n,t in (s or {}).get('captions',{}).items() if t not in ('pending','excluded')}
+        if a=='reference':items=report.get('internal_references',{}).get('references',[])
         if a=='citation':items={n:t for n,t in items.items() if t=='citation'}
-        rows.append({'area':a,'name':AREAS[a],'unit':{'table':'顶层表格','front':'封面对象（节另计）','toc':'目录段落对象','citation':'字符范围','note':'独立注释对象','caption':'题注段落'}[a],
+        rows.append({'area':a,'name':AREAS[a],'unit':{'table':'顶层表格','front':'封面对象（节另计）','toc':'目录段落对象','citation':'字符范围','note':'独立注释对象','caption':'题注段落','reference':'内部引用位置（与书签分开）'}[a],
                      'selected':len(items),'participates':s is not None,
                      'scope':'已确认；未配置属性不检查' if s is not None else '未启用或不在本轮确认范围',
                      'declarations':{k:deepcopy(s[k]) for k in ('complete','headings_complete','references_complete','chapters_complete','covered_levels') if k in s} if s else {}})
@@ -61,7 +62,7 @@ class ScopeSession:
     def _scope_snapshot(self):
         # Actual bytes, not mtime/TTL. Does not call mutating _current/sync_rules.
         state={k:deepcopy(getattr(self,k)) for k in ('mode','current_round','body','paragraph_types','material_exclusions','table_enabled','table_types','table_layout_options')}
-        for a in ('front','toc','citation','note','caption'):
+        for a in ('front','toc','citation','note','caption','reference'):
             state[a+'_enabled']=getattr(self,a+'_enabled');state[a+'_draft']=deepcopy(getattr(self,a+'_draft'))
         state['task_id']=self.task_dir.name if self.task_dir else None
         state['display_name']=self.display_name  # hashed locally; never exported in the preflight summary
@@ -119,7 +120,7 @@ class ScopeSession:
         for key in ATTRS:setattr(staged,key,deepcopy(getattr(self,key)))
         staged._current=lambda:None
         scopes={}
-        from core import toc,notes,citations,captions,front,table_text
+        from core import toc,notes,citations,captions,front,table_text,internal_refs
         inventories={}
         for area in METHODS:
             enabled=self.mode=='academic' and getattr(self,area+'_enabled')
@@ -136,6 +137,8 @@ class ScopeSession:
                         inv={'objects':list(front.nodes(pkg)),'sections':front.section_inventory(pkg)};detected=len(inv['objects']);details={'sections':len(inv['sections']),'pending_sections':sum(t=='pending' for t in (draft or {}).get('section_roles',{}).values()),'mixed_sections':sum(t=='mixed' for t in (draft or {}).get('section_roles',{}).values())}
                     elif area=='toc':
                         inv=toc.inventory(pkg);detected=sum(bool(r['candidate'] or r['automatic'] or r['broken']) for r in inv['objects']);details={'supported_objects':len(inv['objects']),'unlisted':len(inv['unlisted_structures']),'automatic':sum(r['automatic'] for r in inv['objects'])}
+                    elif area=='reference':
+                        inv=internal_refs.inventory(pkg);detected=len(inv['references']);details={'bookmarks':len(inv['bookmarks']),'relationship_issues':len(inv['issues']),'inventory_complete':inv['complete'],'unlisted':len(inv['issues'])}
                     elif area=='note':
                         inv=notes.inventory(pkg);detected=len(inv['objects']);details={'system_readonly':len(inv['systems']),'complex':sum(r['complex'] or not r['safe_relationship'] for r in inv['objects']),'relationship_issues':len(inv['issues'])}
                     elif area=='citation':
@@ -147,17 +150,19 @@ class ScopeSession:
                     inventories[area]=inv
                     items=(draft or {}).get('captions' if area=='caption' else 'objects',{})
                     selected=sum(t=='citation' for t in items.values()) if area=='citation' else sum(t not in ('pending','excluded') for t in items.values()) if area=='caption' else len(items)
+                    if area=='reference':selected=detected
                     excluded=sum(t=='excluded' for t in items.values()) if area in ('citation','caption') else 0
-                    pending=sum(t=='pending' for t in items.values())+max(0,detected-len(items)) if area in ('citation','caption') else sum(t=='unknown' for t in items.values()) + max(0,detected-sum(bool(r['candidate'] or r['automatic'] or r['broken']) for r in inv['objects'] if r['id'] in items)) if area=='toc' else max(0,detected-selected) if area=='note' else details['pending_sections']
+                    pending=sum(t=='pending' for t in items.values())+max(0,detected-len(items)) if area in ('citation','caption') else sum(t=='unknown' for t in items.values()) + max(0,detected-sum(bool(r['candidate'] or r['automatic'] or r['broken']) for r in inv['objects'] if r['id'] in items)) if area=='toc' else max(0,detected-selected) if area=='note' else 0 if area=='reference' else details['pending_sections']
                     if draft and area in ('front','toc'):
                         values=draft['template']['values'];configured=any(v is not None for v in values.values())
+                    elif draft and area=='reference':configured=draft['template']['integrity']
                     elif draft and area=='note':configured=any(v is not None for obj in draft['template']['values'].values() for v in obj.values())
                     elif draft:configured=any(draft['template'].get(k) is True for k in (('numbering','position') if area=='caption' else ('superscript','correspondence')))
                     else:
                         active=(self.workbench.get('active') or {}).get('modules',{}).get({'note':'notes'}.get(area,area))
                         configured=bool(active and _has_values(active.get('values',{})))
                     valid=bool(c) and c['rules_hash']==self.rules_hash and c['scope']==draft and draft['input_sha256']==pkg.hash
-                row={'area':area,'name':AREAS[area],'enabled':enabled,'configured':configured,'detected':detected,'selected':selected,'excluded':excluded,'pending':pending,'confirmed':valid,'unit':{'table':'顶层表格','front':'可定位段落/表格内段落；节另计','toc':'目录线索对象（含内容控件）','citation':'扫描范围内字符区间','note':'普通脚注/尾注（系统对象另计）','caption':'分类中的题注段落'}[area], 'declarations':{k:deepcopy(draft[k]) for k in ('complete','references_complete','headings_complete','chapters_complete','covered_levels') if draft and k in draft},'details':details}
+                row={'area':area,'name':AREAS[area],'enabled':enabled,'configured':configured,'detected':detected,'selected':selected,'excluded':excluded,'pending':pending,'confirmed':valid,'unit':{'table':'顶层表格','front':'可定位段落/表格内段落；节另计','toc':'目录线索对象（含内容控件）','citation':'扫描范围内字符区间','note':'普通脚注/尾注（系统对象另计）','caption':'分类中的题注段落','reference':'内部引用位置（书签另计）'}[area], 'declarations':{k:deepcopy(draft[k]) for k in ('complete','references_complete','headings_complete','chapters_complete','covered_levels') if draft and k in draft},'details':details}
                 rows.append(row)
                 if enabled:
                     try:
@@ -208,6 +213,7 @@ class ScopeSession:
             items=self.table_types if a=='table' else d.get('captions' if a=='caption' else 'objects',{})
             if isinstance(items,list):items={n:'纳入检查' for n in items}
             rows.extend({'区域':AREAS[a],'对象':str(n),'草稿用途':t,'附加说明':''} for n,t in items.items())
+            if a=='reference':rows.append({'区域':AREAS[a],'对象':'经验证的故事目标索引','草稿用途':json.dumps(d.get('template',{}),ensure_ascii=False),'附加说明':'只读结构，不确认论文对象；格式修正另依原有范围'})
             if a=='citation':rows.append({'区域':AREAS[a],'对象':', '.join(map(str,d.get('scan',[]))),'草稿用途':'引文扫描段落','附加说明':'扫描不等于确认候选用途'})
             if a=='table' and self.table_layout_options:rows.append({'区域':AREAS[a],'对象':'本轮表格辅助配置','草稿用途':json.dumps(self.table_layout_options,ensure_ascii=False),'附加说明':'L04等辅助仍须另行选择和执行'})
             for name in ('section_roles','chapter_map','associations'):

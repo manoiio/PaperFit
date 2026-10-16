@@ -13,7 +13,14 @@ R='http://schemas.openxmlformats.org/officeDocument/2006/relationships'
 LIMITS=['仅已确认正文、参考文献条目、脚注/尾注的安全普通链接文字；不涵盖表格、页眉页脚或其他容器。','含链接段落的行距、缩进、段距、对齐及样式切换不放宽；R33含链接段落仍只读。','只解析所在部件自己的关系，不访问链接；目标可达性和实际跳转未验收。','首版只支持明确http/https外部链接；内部anchor、复杂域/目录缓存、修订与嵌套内容继续待复核。']
 
 def relationship(pkg,part,link):
-    if link.get(q('anchor')) is not None or link.get(q('docLocation')) is not None:raise DemoError('内部anchor/docLocation首版只读，未核对书签目标')
+    if link.get(q('anchor')) is not None:
+        if not getattr(pkg,'_reference_text_enabled',False):raise DemoError('内部anchor文字支持未明确启用；旧配置仍只读')
+        if set(link.attrib)-{q(t) for t in ('anchor','tooltip','history','tgtFrame')}:raise DemoError('内部链接含关系/docLocation或未知属性，继续保护')
+        from .internal_refs import resolve_target
+        proof=resolve_target(pkg,link.get(q('anchor')))
+        if proof['state']!='pass':raise DemoError('内部目标不可唯一验证：'+proof['reason'])
+        return {'target_mode':'Internal','anchor':link.get(q('anchor')),'target_evidence':proof,'target_opened':False}
+    if link.get(q('docLocation')) is not None:raise DemoError('docLocation目标首版只读')
     allowed={'{'+R+'}id',q('tooltip'),q('history'),q('tgtFrame')}
     if set(link.attrib)-allowed:raise DemoError('链接有未知属性，影响范围无法可靠解释')
     rid=link.get('{'+R+'}id')
@@ -99,8 +106,9 @@ def annotate(report):
     identity=lambda f:(f.get('story_part'),str({k:v for k,v in f['locator'].items() if k!='property'}))
     report['coverage']['hyperlink_text']={'finding_count':len(fs),
         'supported_text_locators':len({identity(f) for f in fs if ordinary(f)}),
-        'protected_records':sum(not ordinary(f) for f in fs),'limits':LIMITS}
+        'protected_records':sum(not ordinary(f) for f in fs),'limits':LIMITS[:-1]+['内部anchor须明确启用且目标唯一、边界有效；复杂结构与自动目录仍保护。'] if report['coverage'].get('reference_scope',{}).get('template',{}).get('internal_text') else LIMITS}
     for f in fs:
         f['text_structure']='受控链接文字（属性状态另列）' if ordinary(f) else '受保护链接对象/片段'
         if ordinary(f):
-            f['detail']=(f.get('detail','')+'；' if f.get('detail') else '')+'所在部件关系及直属普通run已核对；仅检查配置的文字属性，不访问目标，不验证跳转或段落排版。'
+            proof='内部anchor的唯一目标、边界及直属普通run已核对' if f.get('link_evidence',{}).get('target_mode')=='Internal' else '所在部件关系及直属普通run已核对'
+            f['detail']=(f.get('detail','')+'；' if f.get('detail') else '')+proof+'；仅检查配置的文字属性，不访问目标，不验证跳转或段落排版。'

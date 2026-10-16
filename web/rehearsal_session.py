@@ -40,7 +40,7 @@ class RehearsalSession:
         # Drafts, ALL actual confirmations, report, file bytes, dependency bytes,
         # current round and executable source are bound independently of filenames.
         return fingerprint({'scope':scope,'confirmed':self.confirmed,'classification':self.classification_confirmed,
-                            'native_confirmations':{a:deepcopy(getattr(self,a+'_confirmed')) for a in ('table','front','toc','citation','note','caption')},
+                            'native_confirmations':{a:deepcopy(getattr(self,a+'_confirmed')) for a in ('table','front','toc','citation','note','caption','reference')},
                             'selected':self.selected,'report':self.report,'revision':self.report_revision,'generation_count':self.generation_count if generation_count is None else generation_count,
                             'history_outputs':[h['result']['output_body_manifest']['input_sha256'] for h in (self.history if history is None else history)],
                             'rule_dependencies':{p.name:sha256(p.read_bytes()) for p in sorted((ROOT/'rules').glob('*.json'))},

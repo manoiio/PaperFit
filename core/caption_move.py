@@ -16,7 +16,7 @@ def remap_manifest(pkg,m,old_paragraphs,old_toc,new_hash):
  from .toc import nodes
  newps=pkg.root.find(q('body')).findall(q('p'));pmap={str(n):str(newps.index(p)+1) for n,p in enumerate(old_paragraphs,1)}
  nt=nodes(pkg);dmap={'d:'+str(n):'d:'+str(nt.index(p)+1) for n,p in enumerate(old_toc,1)}
- allowed={'input_sha256','paragraph_types','confirmed','confirmation','material_exclusions','table_scope','front_scope','toc_scope','citation_scope','note_scope','caption_scope'}
+ allowed={'input_sha256','paragraph_types','confirmed','confirmation','material_exclusions','table_scope','front_scope','toc_scope','citation_scope','note_scope','reference_scope','caption_scope'}
  if set(m)-allowed:raise DemoError('存在未支持定位范围，禁止移动；请先人工核对其重绑能力')
  out=deepcopy(m);out['input_sha256']=new_hash;out['paragraph_types']={pmap[n]:v for n,v in m['paragraph_types'].items()}
  if m.get('material_exclusions'):out['material_exclusions']={pmap[n]:v for n,v in m['material_exclusions'].items()}

@@ -32,6 +32,8 @@ def markdown(report):
         lines.append('| ' + ' | '.join([f['rule_id']+(' '+f['rule_name'] if f['rule_id'] in ('R33','R34') else ''), _fmt(f['locator']), _fmt(f['actual']), _fmt(f['expected']),
                         LABELS[f['status']] + ('：' + f['detail'] if f['detail'] else ''),
                         '是' if f['fixable'] else '否', basis(src).replace('|', '\\|')]) + ' |')
+    if report.get('internal_references'):
+        r=report['internal_references'];lines += ['', '## 内部引用结构（R44产品检查）',f"书签边界对象 {len(r['bookmarks'])}；引用位置 {len(r['references'])}；目标/解析组 {len(r['groups'])}。数量不可相加为独立缺陷；目录重复呈现共享目标证据。",'域缓存未刷新；目标存在不证明引用内容、真实跳转或实际页码已核对。',_fmt(r),'']
     lines += ['', '## 字体及编号只读解析证据', '', '文档指定字体用于属性检查；本机字体安装与替代由独立预览核对。']
     lines += [f"- {f['key']}："+_fmt({'font':f.get('font_evidence'), 'numbering':f.get('numbering_evidence')}) for f in report['findings'] if f.get('font_evidence') or f.get('numbering_evidence')]
     lines += ['', '## 修改依赖提示', '']

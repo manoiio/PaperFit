@@ -7,10 +7,12 @@ CATEGORIES={'format':'确定的格式问题','width':'宽度风险','pagination'
 STATUS={'problem':'发现问题','risk':'宽度风险','available':'建议待确认','review':'待复核','boundary':'支持边界','pass':'符合','not_applicable':'不适用'}
 
 def locate(loc):
+    if 'reference_target' in loc:return '内部引用目标组 '+str(loc['reference_target'])
     if 'note_kind' in loc:return position(loc)
     return f"表格 {loc['table']}"+(' · 行'+str(loc['row'])+' · 单元格'+str(loc['cell'])+' · 段'+str(loc['cell_paragraph'])+' · run'+str(loc.get('run','—')) if 'row' in loc and 'cell_paragraph' in loc else '') if 'table' in loc else position(loc)
 
 def object_key(loc):
+    if 'reference_target' in loc:return 'reference:'+str(loc['reference_target'])
     if 'note_kind' in loc:return loc['note_kind']+':'+str(loc.get('note_id','关系'))+':'+str(loc.get('note_index',''))
     for key in ('note_kind','citation','toc_object','paragraph','table','section'):
         if key in loc:return key+':'+str(loc[key])
@@ -40,6 +42,7 @@ def field_value(v,rid,loc,expected=False):
         if isinstance(v,dict) and 'multiple' in v:return (str(v['multiple'])+'倍') if v['multiple'] is not None else ('固定' if v['line_rule']=='exact' else '最小')+str(v['pt'])+'磅'
         if loc.get('property')=='line_multiple' and type(v) in (int,float):return str(v)+'倍'
         if loc.get('property')=='font_size' and type(v) in (int,float):return str(v)+'磅'
+    if rid=='R44' and isinstance(v,dict) and 'references' in v:return str(v.get('target') or '无法解释的目标')+'；影响'+str(len(v['references']))+'处引用；'+v['reason']
     prop=loc.get('property')
     if rid in ('R30','R31','R32'):
         if prop=='font_size' and type(v) in (int,float):return f'{v:g}磅'
@@ -90,7 +93,7 @@ def project(format_report,width_report=None,proposals=None,*,inventory=None,cont
         if not proposals['pairs']:boundaries=(*boundaries,'分页辅助：没有适用关联建议（不适用），未检测实际孤行或跨页')
     else:boundaries=(*boundaries,'分页辅助：未检查（基础模式或分类尚未确认）')
     coverage=format_report['coverage']
-    boundaries=(*boundaries,*coverage.get('academic_unchecked_requirements',[]),*coverage.get('note_limits',[]),*coverage.get('caption_limits',[]),*coverage.get('backmatter_limits',[]))
+    boundaries=(*boundaries,*coverage.get('academic_unchecked_requirements',[]),*coverage.get('note_limits',[]),*coverage.get('reference_limits',[]),*coverage.get('caption_limits',[]),*coverage.get('backmatter_limits',[]))
     boundaries=(*boundaries,'规则结论只针对已确认范围；未确认段落不自动套正文/标题/题注格式。','表格内部文字、页眉页脚及注释仅在明确启用且确认的范围内检查；文本框及实际分页仍需另行复核。宽度只覆盖受支持的顶层对象。','预览不是Microsoft Word最终排版，视觉结论必须由人工查看记录。')
     for i,n in enumerate(boundaries):
         add('review','boundary:'+str(i),{},'boundary','支持边界','未覆盖或限定范围','保留人工复核',n,'查看支持范围，不自动执行','本阶段支持范围',{'detail':n})
@@ -130,7 +133,7 @@ def coverage_limits(report):return report['coverage'].get('toc_limits',[])
 
 def type_records(records,coverage,chosen):
     if chosen=='全部':return list(records)
-    if chosen in ('footnote','endnote','table_border','cover_title','cover_field','section_story','toc_title','toc_entry','toc_correspondence','citation','citation_relation'):
+    if chosen in ('footnote','endnote','table_border','cover_title','cover_field','section_story','toc_title','toc_entry','toc_correspondence','citation','citation_relation','internal_reference'):
         return [r for r in records if r['raw'].get('object_type')==chosen]
     typed=coverage.get('paragraph_types',{})
     objects={'paragraph:'+str(n) for n,t in typed.items() if t==chosen}

@@ -1,0 +1,601 @@
+{
+  "bookmarks": [
+    {
+      "end_location": {
+        "paragraph": 2,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 2,
+        "xml_ordinal": 13
+      },
+      "id": "1",
+      "location": {
+        "paragraph": 2,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 2,
+        "xml_ordinal": 10
+      },
+      "name": "_TocTarget",
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "valid_boundary": true
+    },
+    {
+      "end_location": {
+        "paragraph": 5,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 5,
+        "xml_ordinal": 49
+      },
+      "id": "2",
+      "location": {
+        "paragraph": 5,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 5,
+        "xml_ordinal": 46
+      },
+      "name": "TargetTwo",
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "valid_boundary": true
+    },
+    {
+      "end_location": {
+        "part": "word/header1.xml",
+        "story": "header",
+        "story_paragraph": 1,
+        "xml_ordinal": 7
+      },
+      "id": "9",
+      "location": {
+        "part": "word/header1.xml",
+        "story": "header",
+        "story_paragraph": 1,
+        "xml_ordinal": 4
+      },
+      "name": "HeaderTarget",
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "valid_boundary": true
+    },
+    {
+      "end_location": {
+        "part": "word/footnotes.xml",
+        "story": "footnote:1:3",
+        "story_paragraph": 1,
+        "xml_ordinal": 22
+      },
+      "id": "21",
+      "location": {
+        "part": "word/footnotes.xml",
+        "story": "footnote:1:3",
+        "story_paragraph": 1,
+        "xml_ordinal": 4
+      },
+      "name": "NoteTarget",
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "valid_boundary": true
+    }
+  ],
+  "complete": true,
+  "fields": [
+    {
+      "balanced": true,
+      "cached_result_present": true,
+      "instruction": " PAGEREF MissingTarget \\h ",
+      "kind": "PAGEREF",
+      "location": {
+        "field": 1,
+        "paragraph": 7,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 7
+      },
+      "nested": false,
+      "parse_reason": null,
+      "positions": [
+        {
+          "paragraph": 7,
+          "part": "word/document.xml",
+          "story": "document",
+          "story_paragraph": 7
+        }
+      ],
+      "representation": "simple",
+      "target": "MissingTarget"
+    },
+    {
+      "balanced": true,
+      "cached_result_present": true,
+      "instruction": " REF _TocTarget \\h ",
+      "kind": "REF",
+      "location": {
+        "field": 2,
+        "paragraph": 8,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 8
+      },
+      "nested": false,
+      "parse_reason": null,
+      "positions": [
+        {
+          "paragraph": 8,
+          "part": "word/document.xml",
+          "story": "document",
+          "story_paragraph": 8
+        }
+      ],
+      "representation": "complex",
+      "target": "_TocTarget"
+    },
+    {
+      "balanced": true,
+      "cached_result_present": true,
+      "instruction": "PAGE",
+      "kind": "PAGE",
+      "location": {
+        "field": 3,
+        "paragraph": 9,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 9
+      },
+      "nested": false,
+      "parse_reason": "非书签引用指令，未作为REF/PAGEREF判断",
+      "positions": [
+        {
+          "paragraph": 9,
+          "part": "word/document.xml",
+          "story": "document",
+          "story_paragraph": 9
+        }
+      ],
+      "representation": "simple",
+      "target": null
+    },
+    {
+      "balanced": true,
+      "cached_result_present": true,
+      "instruction": "SEQ Figure",
+      "kind": "SEQ",
+      "location": {
+        "field": 4,
+        "paragraph": 9,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 9
+      },
+      "nested": false,
+      "parse_reason": "非书签引用指令，未作为REF/PAGEREF判断",
+      "positions": [
+        {
+          "paragraph": 9,
+          "part": "word/document.xml",
+          "story": "document",
+          "story_paragraph": 9
+        }
+      ],
+      "representation": "simple",
+      "target": null
+    },
+    {
+      "balanced": true,
+      "cached_result_present": true,
+      "instruction": "STYLEREF 1",
+      "kind": "STYLEREF",
+      "location": {
+        "field": 5,
+        "paragraph": 9,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 9
+      },
+      "nested": false,
+      "parse_reason": "非书签引用指令，未作为REF/PAGEREF判断",
+      "positions": [
+        {
+          "paragraph": 9,
+          "part": "word/document.xml",
+          "story": "document",
+          "story_paragraph": 9
+        }
+      ],
+      "representation": "simple",
+      "target": null
+    }
+  ],
+  "groups": [
+    {
+      "key": "target:c54837013b3fca93bfb4",
+      "reason": "唯一名称、有效边界的已解析目标",
+      "references": [
+        "ref:1",
+        "ref:2",
+        "ref:6",
+        "ref:8",
+        "ref:9",
+        "ref:11"
+      ],
+      "status": "pass",
+      "target": "_TocTarget"
+    },
+    {
+      "key": "target:5083450c2ffcb731af11",
+      "reason": "唯一名称、有效边界的已解析目标",
+      "references": [
+        "ref:3"
+      ],
+      "status": "pass",
+      "target": "TargetTwo"
+    },
+    {
+      "key": "target:995768e6654d01f668c8",
+      "reason": "已验证故事清单中目标未找到",
+      "references": [
+        "ref:4",
+        "ref:5",
+        "ref:7"
+      ],
+      "status": "problem",
+      "target": "MissingTarget"
+    },
+    {
+      "key": "target:4bbac87fe55ca3248f6e",
+      "reason": "唯一名称、有效边界的已解析目标",
+      "references": [
+        "ref:10",
+        "ref:12"
+      ],
+      "status": "pass",
+      "target": "NoteTarget"
+    }
+  ],
+  "input_sha256": "f98bbe20ed3b686699f2820ef192132f4effbdfb0412a2719fd414732e22b1b0",
+  "issues": [],
+  "limits": [
+    "R44为可选产品结构检查，不是学校格式规则；全部只读，不创建书签、不修改目标、域或缓存。",
+    "名称精确匹配；大小写近似、特殊名称、表格列书签及复杂边界不猜测。",
+    "目标存在不等于缓存新鲜、引用内容正确、实际页码或真实跳转已经验收。",
+    "只读索引可覆盖已验证主文档、页眉页脚和注释；文字修正仅明确启用后的已确认正文、参考文献、脚注/尾注普通链接。",
+    "自动目录、域、修订、SDT和链接段落属性仍保护；表格及页眉页脚链接文字未开放修正。"
+  ],
+  "references": [
+    {
+      "cached_result_present": true,
+      "fault_key": "target:c54837013b3fca93bfb4",
+      "id": "ref:1",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "paragraph": 3,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 3,
+        "xml_ordinal": 17
+      },
+      "parse_reason": null,
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "target": "_TocTarget",
+      "target_location": {
+        "paragraph": 2,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 2,
+        "xml_ordinal": 10
+      }
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:c54837013b3fca93bfb4",
+      "id": "ref:2",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "paragraph": 4,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 4,
+        "xml_ordinal": 32
+      },
+      "parse_reason": null,
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "target": "_TocTarget",
+      "target_location": {
+        "paragraph": 2,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 2,
+        "xml_ordinal": 10
+      }
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:5083450c2ffcb731af11",
+      "id": "ref:3",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "paragraph": 4,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 4,
+        "xml_ordinal": 40
+      },
+      "parse_reason": null,
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "target": "TargetTwo",
+      "target_location": {
+        "paragraph": 5,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 5,
+        "xml_ordinal": 46
+      }
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:995768e6654d01f668c8",
+      "id": "ref:4",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "paragraph": 6,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 6,
+        "xml_ordinal": 53
+      },
+      "parse_reason": null,
+      "reason": "已验证故事清单中目标未找到",
+      "state": "problem",
+      "target": "MissingTarget",
+      "target_location": null
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:995768e6654d01f668c8",
+      "id": "ref:5",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "paragraph": 6,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 6,
+        "xml_ordinal": 60
+      },
+      "parse_reason": null,
+      "reason": "已验证故事清单中目标未找到",
+      "state": "problem",
+      "target": "MissingTarget",
+      "target_location": null
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:c54837013b3fca93bfb4",
+      "id": "ref:6",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "paragraph": 10,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 10,
+        "xml_ordinal": 109
+      },
+      "parse_reason": null,
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "target": "_TocTarget",
+      "target_location": {
+        "paragraph": 2,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 2,
+        "xml_ordinal": 10
+      }
+    },
+    {
+      "balanced": true,
+      "cached_result_present": true,
+      "fault_key": "target:995768e6654d01f668c8",
+      "id": "ref:7",
+      "instruction": " PAGEREF MissingTarget \\h ",
+      "kind": "PAGEREF",
+      "location": {
+        "field": 1,
+        "paragraph": 7,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 7
+      },
+      "nested": false,
+      "parse_reason": null,
+      "positions": [
+        {
+          "paragraph": 7,
+          "part": "word/document.xml",
+          "story": "document",
+          "story_paragraph": 7
+        }
+      ],
+      "reason": "已验证故事清单中目标未找到",
+      "representation": "simple",
+      "state": "problem",
+      "target": "MissingTarget",
+      "target_location": null
+    },
+    {
+      "balanced": true,
+      "cached_result_present": true,
+      "fault_key": "target:c54837013b3fca93bfb4",
+      "id": "ref:8",
+      "instruction": " REF _TocTarget \\h ",
+      "kind": "REF",
+      "location": {
+        "field": 2,
+        "paragraph": 8,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 8
+      },
+      "nested": false,
+      "parse_reason": null,
+      "positions": [
+        {
+          "paragraph": 8,
+          "part": "word/document.xml",
+          "story": "document",
+          "story_paragraph": 8
+        }
+      ],
+      "reason": "唯一名称、有效边界的已解析目标",
+      "representation": "complex",
+      "state": "pass",
+      "target": "_TocTarget",
+      "target_location": {
+        "paragraph": 2,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 2,
+        "xml_ordinal": 10
+      }
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:c54837013b3fca93bfb4",
+      "id": "ref:9",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "part": "word/footnotes.xml",
+        "story": "footnote:1:3",
+        "story_paragraph": 1,
+        "xml_ordinal": 11
+      },
+      "parse_reason": null,
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "target": "_TocTarget",
+      "target_location": {
+        "paragraph": 2,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 2,
+        "xml_ordinal": 10
+      }
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:4bbac87fe55ca3248f6e",
+      "id": "ref:10",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "part": "word/footnotes.xml",
+        "story": "footnote:1:3",
+        "story_paragraph": 1,
+        "xml_ordinal": 17
+      },
+      "parse_reason": null,
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "target": "NoteTarget",
+      "target_location": {
+        "part": "word/footnotes.xml",
+        "story": "footnote:1:3",
+        "story_paragraph": 1,
+        "xml_ordinal": 4
+      }
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:c54837013b3fca93bfb4",
+      "id": "ref:11",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "part": "word/endnotes.xml",
+        "story": "endnote:1:3",
+        "story_paragraph": 1,
+        "xml_ordinal": 10
+      },
+      "parse_reason": null,
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "target": "_TocTarget",
+      "target_location": {
+        "paragraph": 2,
+        "part": "word/document.xml",
+        "story": "document",
+        "story_paragraph": 2,
+        "xml_ordinal": 10
+      }
+    },
+    {
+      "cached_result_present": true,
+      "fault_key": "target:4bbac87fe55ca3248f6e",
+      "id": "ref:12",
+      "instruction": null,
+      "kind": "hyperlink",
+      "location": {
+        "part": "word/endnotes.xml",
+        "story": "endnote:1:3",
+        "story_paragraph": 1,
+        "xml_ordinal": 16
+      },
+      "parse_reason": null,
+      "reason": "唯一名称、有效边界的已解析目标",
+      "state": "pass",
+      "target": "NoteTarget",
+      "target_location": {
+        "part": "word/footnotes.xml",
+        "story": "footnote:1:3",
+        "story_paragraph": 1,
+        "xml_ordinal": 4
+      }
+    }
+  ],
+  "stories": [
+    {
+      "part": "word/document.xml",
+      "story": "document"
+    },
+    {
+      "part": "word/header1.xml",
+      "story": "header"
+    },
+    {
+      "part": "word/footnotes.xml",
+      "story": "footnote:-1:1"
+    },
+    {
+      "part": "word/footnotes.xml",
+      "story": "footnote:0:2"
+    },
+    {
+      "part": "word/footnotes.xml",
+      "story": "footnote:1:3"
+    },
+    {
+      "part": "word/endnotes.xml",
+      "story": "endnote:-1:1"
+    },
+    {
+      "part": "word/endnotes.xml",
+      "story": "endnote:0:2"
+    },
+    {
+      "part": "word/endnotes.xml",
+      "story": "endnote:1:3"
+    }
+  ]
+}

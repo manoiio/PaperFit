@@ -137,6 +137,8 @@ class EfficiencySession:
             if self.result['after']['coverage'].get('caption_scope'):
                 members['caption-supplement.json']=encoded(self.result['after']['coverage']['caption_scope']['template'])
             if self.result.get('range_mapping'):members['range-mapping.json']=encoded(self.result['range_mapping'])
+            if self.result['after']['coverage'].get('reference_scope'):
+                members['reference-supplement.json']=encoded(self.result['after']['coverage']['reference_scope']['template'])
             if self.result['after']['coverage'].get('note_scope'):
                 members['note-supplement.json']=encoded(self.result['after']['coverage']['note_scope']['template'])
             if self.result['after']['coverage'].get('citation_scope'):

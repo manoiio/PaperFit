@@ -1,0 +1,8 @@
+{
+  "structure_version": 1,
+  "kind": "paper-grid-internal-reference-supplement",
+  "name": "内部引用产品检查",
+  "integrity": true,
+  "internal_text": true,
+  "source": "product_structure"
+}

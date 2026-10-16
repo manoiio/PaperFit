@@ -1,0 +1,57 @@
+{
+  "environment": {
+    "os": "Darwin",
+    "python": "3.14.5"
+  },
+  "measurements": [
+    {
+      "kind": "small",
+      "bytes": 39409,
+      "paragraphs": 12,
+      "bookmarks": 4,
+      "reference_positions": 12,
+      "trials": [
+        {
+          "index_seconds": 0.0020426659611985087,
+          "10000_lookup_seconds": 0.012255624984391034
+        },
+        {
+          "index_seconds": 0.00120133301243186,
+          "10000_lookup_seconds": 0.01278587500564754
+        },
+        {
+          "index_seconds": 0.0011496249353513122,
+          "10000_lookup_seconds": 0.012603166978806257
+        }
+      ],
+      "median_index_seconds": 0.00120133301243186,
+      "median_10000_lookup_seconds": 0.012603166978806257
+    },
+    {
+      "kind": "1000_extra_targets",
+      "bytes": 52121,
+      "paragraphs": 1012,
+      "bookmarks": 1004,
+      "reference_positions": 1012,
+      "trials": [
+        {
+          "index_seconds": 0.049819333013147116,
+          "10000_lookup_seconds": 0.012640333035960793
+        },
+        {
+          "index_seconds": 0.049401332973502576,
+          "10000_lookup_seconds": 0.013101959018968046
+        },
+        {
+          "index_seconds": 0.048153333947993815,
+          "10000_lookup_seconds": 0.012582959025166929
+        }
+      ],
+      "median_index_seconds": 0.049401332973502576,
+      "median_10000_lookup_seconds": 0.012640333035960793
+    }
+  ],
+  "scope": "本地函数，不是浏览器等待；每组3次，首次索引与重复查询分别计时",
+  "api_requests": 0,
+  "automatic_renders": 0
+}

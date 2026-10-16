@@ -17,22 +17,26 @@ def nodes(pkg):
  return [p for p in pkg.root.find(q('body')).iter(q('p')) if not any(a.tag in (q('tc'),q('txbxContent')) for a in p.iterancestors())]
 def ordered_text(p):
  return ''.join((e.text or '') if e.tag==q('t') else '\t' if e.tag==q('tab') else '' for e in p.iter())
-def parse_fields(pkg):
+def parse_fields(pkg, *, paragraphs=None, detailed=False):
  """Field stack across paragraphs; nested saved result contributes to enclosing TOC."""
- ps=nodes(pkg);pids={id(p):'d:'+str(i) for i,p in enumerate(ps,1)};stack=[];out=[];broken=[]
+ ps=nodes(pkg) if paragraphs is None else paragraphs;pids={id(p):'d:'+str(i) for i,p in enumerate(ps,1)};stack=[];out=[];broken=[]
  for p in ps:
   pid=pids[id(p)]
   for f in stack:
    if pid not in f['objects']:f['objects'].append(pid)
   for e in p.iter():
    if e.tag==q('fldSimple'):
-    instr=e.get(q('instr'),'');out.append({'instruction':instr,'result':ordered_text(e),'objects':[pid],'balanced':True,'representation':'simple'})
+    instr=e.get(q('instr'),'');out.append({'instruction':instr,'result':ordered_text(e),'objects':[pid],'balanced':True,'representation':'simple',**({'nested':bool(e.xpath('.//w:fldChar|.//w:fldSimple',namespaces=NS)), 'reliable':not bool(e.xpath('.//w:fldChar|.//w:fldSimple',namespaces=NS))} if detailed else {})})
    elif e.tag==q('fldChar'):
     typ=e.get(q('fldCharType'))
-    if typ=='begin':stack.append({'instruction':'','result':'','objects':[pid],'balanced':True,'representation':'complex','phase':'instruction'})
+    if typ=='begin':
+     if detailed and stack and stack[-1]['phase']=='instruction':stack[-1]['reliable']=False
+     stack.append({'instruction':'','result':'','objects':[pid],'balanced':True,'representation':'complex','phase':'instruction',**({'nested':bool(stack),'reliable':not any(a.tag==q('fldSimple') for a in e.iterancestors()),'separated':False} if detailed else {})})
     elif typ=='separate':
      if not stack or stack[-1]['phase']!='instruction':broken.append(pid)
-     else:stack[-1]['phase']='result'
+     else:
+      stack[-1]['phase']='result'
+      if detailed:stack[-1]['separated']=True
     elif typ=='end':
      if not stack:broken.append(pid)
      else:
@@ -48,6 +52,9 @@ def parse_fields(pkg):
     if pid not in f['objects']:f['objects'].append(pid)
  for f in stack:
   f.pop('phase');f['balanced']=False;out.append(f);broken.extend(f['objects'])
+ if detailed:
+  for f in out:
+   if set(f['objects']) & set(broken):f['reliable']=False
  return out,sorted(set(broken))
 def inventory(path):
  pkg=path if isinstance(path,Package) else Package(path);res=Resolver(pkg);fields,broken=parse_fields(pkg)
@@ -122,7 +129,15 @@ def correspond(pkg,s,classification,inv):
   anchors=list(dict.fromkeys(anchors));reason='';evidence='确认范围内文字精确匹配（仅空白归一）';status='review';candidates=[]
   if anchors:
    evidence='内部目标 '+', '.join(anchors)
-   if len(anchors)!=1 or anchors[0] in duplicates:reason='多个/重复书签目标，无法唯一对应'
+   if getattr(pkg,'_reference_integrity_enabled',False) and len(anchors)==1:
+    from .internal_refs import resolve_target
+    proof=resolve_target(pkg,anchors[0]);evidence+='；共用R44目标证据（重复展示不另计目标故障）'
+    if proof['state']!='pass':reason=proof['reason']
+    else:
+     target=proof['target_location']
+     candidates=[h for h in heads if target['part']=='word/document.xml' and h['paragraph']==target.get('paragraph')]
+     if not candidates:reason='有效内部目标不在已确认主文档标题范围，无法判断'
+   elif len(anchors)!=1 or anchors[0] in duplicates:reason='多个/重复书签目标，无法唯一对应'
    elif anchors[0] not in bookmarks:reason='链接/PAGEREF目标缺失'
    elif anchors[0] in invalid_bookmarks:reason='书签边界缺失/重复/次序异常，不能证明内部目标有效'
    else:

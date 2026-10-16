@@ -1,0 +1,80 @@
+{
+  "errors": {
+    "document_sha256": "9e946b67979e2358a54c5dd98e4c66aec781ea7d6a4d16ed9d7d33ff84936aac",
+    "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+    "generated_at": "2026-10-16T11:56:54.082105+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "page_count": 1,
+    "preview_range": [
+      1,
+      1
+    ],
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "input_bytes_unchanged": true,
+    "pages": [
+      "pages/errors-1.png"
+    ],
+    "observed": "全部页面目视；所选链接字号变化，颜色/下划线、正文前后、脚注尾注与标记保持；无新增裁切或丢字。"
+  },
+  "correct": {
+    "document_sha256": "f98bbe20ed3b686699f2820ef192132f4effbdfb0412a2719fd414732e22b1b0",
+    "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+    "generated_at": "2026-10-16T11:56:58.061203+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "page_count": 1,
+    "preview_range": [
+      1,
+      1
+    ],
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "input_bytes_unchanged": true,
+    "pages": [
+      "pages/correct-1.png"
+    ],
+    "observed": "全部页面目视；所选链接字号变化，颜色/下划线、正文前后、脚注尾注与标记保持；无新增裁切或丢字。"
+  },
+  "final": {
+    "document_sha256": "f98bbe20ed3b686699f2820ef192132f4effbdfb0412a2719fd414732e22b1b0",
+    "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+    "generated_at": "2026-10-16T12:06:12.521380+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "page_count": 1,
+    "preview_range": [
+      1,
+      1
+    ],
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "input_bytes_unchanged": true,
+    "pages": [
+      "pages/final-1.png"
+    ],
+    "observed": "全部页面目视；所选链接字号变化，颜色/下划线、正文前后、脚注尾注与标记保持；无新增裁切或丢字。"
+  },
+  "renderer_difference": "LibreOffice显示缺失PAGEREF为Error: Reference source not found，并重新求值REF/PAGE/SEQ/STYLEREF；Word16.80本轮保留原缓存7/合成目标标题/1。未覆盖保存正式DOCX，R44使用原始XML，不依赖错误文本或物理页序号。",
+  "word": {
+    "version": "16.80",
+    "file": "browser-final.docx",
+    "opened": true,
+    "repair_prompt": false,
+    "viewed": "本轮实际查看整页正文、参考文献、脚注和尾注；链接格式与原下划线保持。",
+    "internal_jump": {
+      "action": "实际点击参考文献的内部链接",
+      "anchor": "_TocTarget",
+      "observed_selection": "1 合成目标标题",
+      "also_navigated_bookmark": "TargetTwo"
+    },
+    "external_targets_opened": false,
+    "closed_without_saving": true,
+    "sha256_unchanged": true,
+    "limits": "只验收合成最终文件的已知跳转；不证明所有目标、实际页码或跨软件分页一致。"
+  }
+}

@@ -27,7 +27,7 @@ def portable(bundle,*,display_name='待检查文档.docx',include_excerpts=False
         if include_excerpts and r['status'] not in ('pass','not_applicable') and (r['object'] in seen or len(seen)<20):
             row['excerpt']=r['excerpt'];seen.add(r['object'])
         rows.append(row)
-    out={'structure_version':1,'display_name':name,'context':bundle['context'],'rules':{k:bundle['format']['rules'][k] for k in ('name','version','sha256','kind','template_structure_version','compatibility','front_supplement','toc_supplement','citation_supplement','note_supplement','caption_supplement','table_layout_supplement','backmatter_sha256','backmatter_version','workbench') if k in bundle['format']['rules']},
+    out={'structure_version':1,'display_name':name,'context':bundle['context'],'rules':{k:bundle['format']['rules'][k] for k in ('name','version','sha256','kind','template_structure_version','compatibility','front_supplement','toc_supplement','citation_supplement','note_supplement','reference_supplement','caption_supplement','table_layout_supplement','backmatter_sha256','backmatter_version','workbench') if k in bundle['format']['rules']},
          'scope':p['coverage'],'format_summary':p['format_summary'],'width_summary':p['width_summary'],'pagination_summary':p['pagination_summary'],
          'records':rows,'preservation':bundle.get('preservation'),'changes':bundle.get('changes',[]),'delta':bundle.get('delta'),'pagination_applied':bundle.get('pagination_applied'),'pagination_history':bundle.get('pagination_history',[]),
          'preview':bundle.get('preview',{'status':'未生成预览'}),'visual':bundle.get('visual',{'status':'未记录人工视觉复核'}),'word_status':'未验收',
@@ -37,6 +37,8 @@ def portable(bundle,*,display_name='待检查文档.docx',include_excerpts=False
         wb=bundle['format']['rules']['workbench'];cov=bundle['format']['coverage'];out['workbench_modules']=[{'module':m,'configured':v['configured'],'version':v.get('version',6 if m=='main' else 1),'participates':m=='main' or {'front':'front_scope','toc':'toc_scope','notes':'note_scope'}.get(m) in cov} for m,v in wb['modules'].items()]
     if bundle['format'].get('captions'):
         c=bundle['format']['captions'];out['caption_summary']={k:c[k] for k in ('enabled','summary','scope_complete','sequences','actual_pagination','limits')}
+    if bundle['format'].get('internal_references'):
+        r=bundle['format']['internal_references'];out['internal_references']={'bookmarks':len(r['bookmarks']),'reference_positions':len(r['references']),'target_groups':len(r['groups']),'fault_groups':sum(g['status']!='pass' for g in r['groups']),'inventory_complete':r['complete'],'issues':r['issues'],'limits':r['limits'],'cache_status':'未刷新；保存结果不证明新鲜','jump_status':'未验收','page_status':'未核对'}
     if bundle['format'].get('notes'):
         n=bundle['format']['notes'];out['note_summary']={'selected_count':len(n['selected']),'automatic_markers_preserved':n['automatic_markers_preserved'],'system_objects_readonly':n['system_objects_readonly'],'limits':n['limits'],'reference_positions':[{'kind':x['kind'],'note_id':x['note_id'],'paragraph':x['paragraph']} for x in n['inventory']['references']],'relationship_issues':n['inventory']['issues']}
     if bundle['format'].get('citations'):
@@ -102,6 +104,8 @@ def html_report(data):
     parts+=['<h2>结果统计（分别计数，不相加为合格分数）</h2>',table(['启用规则','实际适用规则','格式问题','格式待复核'],[[s['rule_count'],s['applicable_rule_count'],s['problem_count'],s['review_count']]]),'<p>格式待复核包含规则记录与覆盖提示；宽度按对象计数，分页是建议，边界说明不是新增问题。</p>',table(['宽度风险/待复核/范围内','分页建议/待复核'],[[f"风险{data['width_summary']['risks']} / 待复核{data['width_summary']['reviews']} / 范围内{data['width_summary']['passes']}" if data['width_summary'] else '未检查',f"建议{data['pagination_summary']['suggestions']} / 待复核{data['pagination_summary']['reviews']}" if data['pagination_summary'] else '未检查']])]
     if data.get('caption_summary'):
         t=data['caption_summary'];n=t['summary'];parts+=['<h2>题注编号、结构位置与实际分页</h2>',table(['编号只读问题','结构位置问题','复杂对象/范围待复核','实际同页'],[[n['numbering_problems'] if n['numbering_problems'] is not None else '未启用',n['position_problems'] if n['position_problems'] is not None else '未启用',n['complex_or_scope_reviews'],n['actual_pagination']]]),'<p>'+esc(t['actual_pagination'])+'</p>','<p>'+esc('；'.join(t['limits']))+'</p>']
+    if data.get('internal_references'):
+        r=data['internal_references'];parts+=['<h2>内部引用结构（R44产品检查）</h2>',table(['书签边界对象','引用位置','目标/解析组','非通过组','清单覆盖充分'],[[r['bookmarks'],r['reference_positions'],r['target_groups'],r['fault_groups'],r['inventory_complete']]]),'<p>'+esc('；'.join(r['limits']))+'</p>','<p>目标与引用位置分别计数；目录重复展示不另加为独立故障。域缓存未刷新；真实跳转与实际页码未验收。</p>']
     if data.get('note_summary'):
         n=data['note_summary'];parts+=['<h2>脚注与尾注检查范围</h2>',table(['确认注释数','保留的内部自动标记','只读系统对象'],[[n['selected_count'],n['automatic_markers_preserved'],n['system_objects_readonly']]]),'<p>'+esc('；'.join(n['limits']))+'</p>']
     if data.get('toc_summary'):

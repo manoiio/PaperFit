@@ -44,6 +44,8 @@ def render_center(model):
                 if st.button(step['title'],key=f'guide-{model.task_dir.name}-{model.revision}-{model.generation_count}-{i}'):
                     model.focus_operation(step['area'],b['target'],step['keys']);st.rerun()
                 st.caption(step['reason']+(' 本轮仍有格式问题，需点击“以本轮修正版继续处理”绑定新的输入。' if step['requires_next_round'] else ''))
+        if b['format'].get('internal_references'):
+            ir=b['format']['internal_references'];st.caption('上述启用规则记录含R44产品结构检查（非学校格式）：'+str(sum(g['status']=="problem" for g in ir['groups']))+'个确定目标故障组，'+str(len(ir['references']))+'处引用位置；目录可重复展示同一目标，不能相加为独立故障。域缓存、实际跳转与页码另行核对。')
         from .report_pages import object_page,selection_counts
         from core.package import sha256
         cols=st.columns(3)
@@ -55,7 +57,7 @@ def render_center(model):
         paragraph_range=range_col.text_input('段落编号筛选（如8或8-20）',key='center-range-'+str(model.revision))
         keyword=search_col.text_input('关键词筛选',key='center-search-'+str(model.revision))
         from core.classification import TYPES as PARAGRAPH_TYPES
-        TYPES={**PARAGRAPH_TYPES,'footnote':'脚注','endnote':'尾注','table_content':'论文内容表格','table_border':'表格左右外侧边框','cover_title':'封面论文标题','cover_field':'封面字段','section_story':'节与页眉页脚','toc_title':'目录标题','toc_entry':'目录条目','toc_correspondence':'目录对应核对','caption_number':'题注编号','caption_position':'题注结构位置','citation':'正文引文','citation_relation':'引文对应/顺序'}
+        TYPES={**PARAGRAPH_TYPES,'footnote':'脚注','endnote':'尾注','table_content':'论文内容表格','table_border':'表格左右外侧边框','cover_title':'封面论文标题','cover_field':'封面字段','section_story':'节与页眉页脚','toc_title':'目录标题','toc_entry':'目录条目','toc_correspondence':'目录对应核对','caption_number':'题注编号','caption_position':'题注结构位置','citation':'正文引文','citation_relation':'引文对应/顺序','internal_reference':'内部引用结构（R44只读）'}
         chosen_type=st.selectbox('确认对象类型筛选',['全部']+list(TYPES),format_func=lambda v:TYPES.get(v,v),key='center-type-'+str(model.revision))
         from .issues import type_records
         records=type_records(p['records'],b['format']['coverage'],chosen_type)

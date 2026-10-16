@@ -39,6 +39,7 @@ from .front_session import FrontSession
 from .toc_session import TocSession
 from .citation_session import CitationSession
 from .note_session import NoteSession
+from .reference_session import ReferenceSession
 from .caption_session import CaptionSession
 from .material_session import MaterialSession
 from .workbench_session import WorkbenchSession
@@ -46,7 +47,7 @@ from .scope_session import ScopeSession
 from .rehearsal_session import RehearsalSession
 from .plan_session import PlanSession
 
-class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, EfficiencySession, AsyncPreviewSession, ProjectSession, AcademicSession, TableSession, FrontSession, TocSession, CitationSession, NoteSession, CaptionSession, MaterialSession, WorkbenchSession, ScopeSession, RehearsalSession, PlanSession):
+class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, EfficiencySession, AsyncPreviewSession, ProjectSession, AcademicSession, TableSession, FrontSession, TocSession, CitationSession, NoteSession, ReferenceSession, CaptionSession, MaterialSession, WorkbenchSession, ScopeSession, RehearsalSession, PlanSession):
     def __init__(self, work_root, rules_path=DEFAULT_RULES):
         self.work_root = Path(work_root).resolve()
         self.rules_path = Path(rules_path).resolve()
@@ -99,6 +100,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         self.init_toc()
         self.init_citations()
         self.init_notes()
+        self.init_references()
         self.init_captions()
         self.material_exclusions={}
 
@@ -110,6 +112,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
             self.toc_confirmed = None
             self.citation_confirmed = None
             self.note_confirmed = None
+            self.reference_confirmed = None
             self.caption_confirmed = None
         self.invalidate_preview_jobs()
         self.init_efficiency()
@@ -170,6 +173,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         self.init_toc()
         self.init_citations()
         self.init_notes()
+        self.init_references()
         self.init_captions()
         self.material_exclusions={}
         self.body = []
@@ -448,6 +452,8 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         if table_scope is not None:manifest['table_scope']=table_scope
         caption_scope=self.caption_manifest()
         if caption_scope is not None:manifest['caption_scope']=caption_scope
+        reference_scope=self.reference_manifest()
+        if reference_scope is not None:manifest['reference_scope']=reference_scope
         note_scope=self.note_manifest()
         if note_scope is not None:manifest['note_scope']=note_scope
         citation_scope=self.citation_manifest()
@@ -463,9 +469,11 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         return binding(self.mode,self.paragraph_types,(self.active_template or {}).get('structure_version'))
 
     def _history_binding(self):
-        return (self.mode,self.rules_hash,tuple(sorted(self.paragraph_types.items())) if self.mode!='basic' else tuple(self.body))+((tuple(sorted(self.table_types.items())),) if self.mode=='academic' and self.table_enabled else ())+((digest(json.dumps({k:self.front_draft[k] for k in ('objects','section_roles','template')},ensure_ascii=False,sort_keys=True).encode()),) if self.mode=='academic' and self.front_enabled else ())+((digest(json.dumps({k:self.toc_draft[k] for k in ('objects','covered_levels','complete','headings_complete','template')},ensure_ascii=False,sort_keys=True).encode()),) if self.mode=='academic' and self.toc_enabled else ())+self.citation_binding()+self.note_binding()+self.caption_binding()+((digest(json.dumps(self.table_layout_options,ensure_ascii=False,sort_keys=True).encode()),) if self.mode=='academic' and self.table_enabled and self.table_layout_options else ())+((digest(json.dumps(self.material_exclusions,ensure_ascii=False,sort_keys=True).encode()),) if self.material_exclusions else ())+self.backmatter_binding()
+        return (self.mode,self.rules_hash,tuple(sorted(self.paragraph_types.items())) if self.mode!='basic' else tuple(self.body))+((tuple(sorted(self.table_types.items())),) if self.mode=='academic' and self.table_enabled else ())+((digest(json.dumps({k:self.front_draft[k] for k in ('objects','section_roles','template')},ensure_ascii=False,sort_keys=True).encode()),) if self.mode=='academic' and self.front_enabled else ())+((digest(json.dumps({k:self.toc_draft[k] for k in ('objects','covered_levels','complete','headings_complete','template')},ensure_ascii=False,sort_keys=True).encode()),) if self.mode=='academic' and self.toc_enabled else ())+self.citation_binding()+self.note_binding()+self.reference_binding()+self.caption_binding()+((digest(json.dumps(self.table_layout_options,ensure_ascii=False,sort_keys=True).encode()),) if self.mode=='academic' and self.table_enabled and self.table_layout_options else ())+((digest(json.dumps(self.material_exclusions,ensure_ascii=False,sort_keys=True).encode()),) if self.material_exclusions else ())+self.backmatter_binding()
 
     def _archive_round(self,result):
+        if result['after']['rules'].get('reference_supplement'):
+            result['round']['reference_supplement_sha256']=result['after']['rules']['reference_supplement']['sha256']
         if result['after']['rules'].get('note_supplement'):
             result['round']['note_supplement_sha256']=result['after']['rules']['note_supplement']['sha256']
         if result['after']['rules'].get('backmatter_sha256'):result['round']['backmatter_sha256']=result['after']['rules']['backmatter_sha256']
@@ -506,6 +514,8 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
                 sc=self.classification_confirmed['table_scope'];self.table_types=deepcopy(sc['table_types']);self.table_enabled=True;self.table_layout_options=deepcopy(sc.get('layout_options'))
                 from core.table_text import PATH
                 self.table_confirmed={'scope':deepcopy(sc),'rules_hash':self.rules_hash,'policy_hash':digest(PATH.read_bytes())}
+            if self.classification_confirmed and self.classification_confirmed.get('reference_scope'):
+                self.adopt_reference_scope(self.classification_confirmed['reference_scope'],confirmed=True)
             if self.classification_confirmed and self.classification_confirmed.get('note_scope'):
                 self.adopt_note_scope(self.classification_confirmed['note_scope'],confirmed=True)
             if self.classification_confirmed and self.classification_confirmed.get('citation_scope'):

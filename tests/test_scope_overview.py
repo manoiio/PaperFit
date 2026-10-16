@@ -17,7 +17,7 @@ class ScopeOverviewTests(unittest.TestCase):
   p=self.s.scope_preflight();a={r['area']:r for r in p['areas']}
   self.assertEqual([a[k]['detected'] for k in ('paragraph','table','note','caption','citation')],[19,1,6,2,1]);self.assertEqual(a['note']['selected'],6)
   self.assertEqual(a['paragraph']['excluded'],1);self.assertEqual(a['paragraph']['details']['protected_paragraphs'],['13']);self.assertEqual(a['caption']['details']['associations'],self.s.caption_draft['associations'])
-  self.assertTrue(all(r['enabled'] and not r['confirmed'] for r in p['areas']));self.commit();self.assertTrue(all(r['confirmed'] for r in self.s.scope_preflight()['areas']))
+  self.assertTrue(all(r['enabled'] and not r['confirmed'] for r in p['areas'] if r['area']!='reference'));self.commit();self.assertTrue(all(r['confirmed'] for r in self.s.scope_preflight()['areas'] if r['enabled']));self.assertFalse(a['reference']['enabled']);self.assertFalse(a['reference']['confirmed'])
  def test_preflight_no_side_effects_or_implicit_actions(self):
   self.commit();self.s.set_selection([self.s.eligible()[0]['key']]);before=deepcopy(self.s.__dict__);files={str(p):p.read_bytes() for p in self.s.task_dir.rglob('*') if p.is_file()}
   with patch.object(self.s,'_current',side_effect=AssertionError('mutating _current')),patch.object(self.s,'check',side_effect=AssertionError('check')),patch.object(self.s,'invalidate',side_effect=AssertionError('invalidate')),patch.object(self.s,'sync_rules',side_effect=AssertionError('sync')):

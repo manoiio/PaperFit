@@ -27,6 +27,7 @@ def manifest_scope(model, report=None, file_hash=None):
             **({'backmatter_policy_sha256':report['rules']['backmatter_sha256']} if report and report['rules'].get('backmatter_sha256') else {'backmatter_policy_sha256':model.backmatter_binding()[0]} if cov is None and model.backmatter_binding() else {}),
             **({'material_exclusions':deepcopy(cov.get('material_exclusions',{}))} if cov and cov.get('material_exclusions') else {'material_exclusions':deepcopy(model.material_exclusions)} if cov is None and model.material_exclusions else {}),
             **({'caption_scope':deepcopy(cov['caption_scope'])} if cov and cov.get('caption_scope') else {'caption_scope':deepcopy(model.caption_draft)} if cov is None and model.caption_enabled else {}),
+            **({'reference_scope':deepcopy(cov['reference_scope'])} if cov and cov.get('reference_scope') else {'reference_scope':deepcopy(model.reference_draft)} if cov is None and model.reference_enabled else {}),
             **({'note_scope':deepcopy(cov['note_scope'])} if cov and cov.get('note_scope') else {'note_scope':deepcopy(model.note_draft)} if cov is None and model.note_enabled else {}),
             **({'citation_scope':deepcopy(cov['citation_scope'])} if cov and cov.get('citation_scope') else {'citation_scope':deepcopy(model.citation_draft)} if cov is None and model.citation_enabled else {}),
             **({'toc_scope':deepcopy(cov['toc_scope'])} if cov and cov.get('toc_scope') else {'toc_scope':deepcopy(model.toc_draft)} if cov is None and model.toc_enabled else {}),
@@ -35,7 +36,7 @@ def manifest_scope(model, report=None, file_hash=None):
 
 def rule_args(path,kind,mode,sc):
     return {('custom_rules_path' if kind=='custom' else 'rules_path'):path,'mode':mode,
-            **({'classification_manifest':{'input_sha256':sc['file_sha256'],'paragraph_types':sc['types'],'confirmed':True,'confirmation':'本次恢复用户核对',**({'material_exclusions':deepcopy(sc['material_exclusions'])} if sc.get('material_exclusions') else {}),**({'caption_scope':{**deepcopy(sc['caption_scope']),'input_sha256':sc['file_sha256']}} if sc.get('caption_scope') and sc['caption_scope']['confirmed'] else {}),**({'note_scope':{**deepcopy(sc['note_scope']),'input_sha256':sc['file_sha256']}} if sc.get('note_scope') and sc['note_scope']['confirmed'] else {}),**({'citation_scope':{**deepcopy(sc['citation_scope']),'input_sha256':sc['file_sha256']}} if sc.get('citation_scope') and sc['citation_scope']['confirmed'] else {}),**({'toc_scope':{**deepcopy(sc['toc_scope']),'input_sha256':sc['file_sha256']}} if sc.get('toc_scope') and sc['toc_scope']['confirmed'] else {}),**({'front_scope':{**deepcopy(sc['front_scope']),'input_sha256':sc['file_sha256']}} if sc.get('front_scope') and sc['front_scope']['confirmed'] else {}),**({'table_scope':{**sc['table_scope'],'input_sha256':sc['file_sha256']}} if sc.get('table_scope') and sc['table_scope']['confirmed'] else {})}} if mode!='basic' else {})}
+            **({'classification_manifest':{'input_sha256':sc['file_sha256'],'paragraph_types':sc['types'],'confirmed':True,'confirmation':'本次恢复用户核对',**({'material_exclusions':deepcopy(sc['material_exclusions'])} if sc.get('material_exclusions') else {}),**({'caption_scope':{**deepcopy(sc['caption_scope']),'input_sha256':sc['file_sha256']}} if sc.get('caption_scope') and sc['caption_scope']['confirmed'] else {}),**({'reference_scope':{**deepcopy(sc['reference_scope']),'input_sha256':sc['file_sha256']}} if sc.get('reference_scope') and sc['reference_scope']['confirmed'] else {}),**({'note_scope':{**deepcopy(sc['note_scope']),'input_sha256':sc['file_sha256']}} if sc.get('note_scope') and sc['note_scope']['confirmed'] else {}),**({'citation_scope':{**deepcopy(sc['citation_scope']),'input_sha256':sc['file_sha256']}} if sc.get('citation_scope') and sc['citation_scope']['confirmed'] else {}),**({'toc_scope':{**deepcopy(sc['toc_scope']),'input_sha256':sc['file_sha256']}} if sc.get('toc_scope') and sc['toc_scope']['confirmed'] else {}),**({'front_scope':{**deepcopy(sc['front_scope']),'input_sha256':sc['file_sha256']}} if sc.get('front_scope') and sc['front_scope']['confirmed'] else {}),**({'table_scope':{**sc['table_scope'],'input_sha256':sc['file_sha256']}} if sc.get('table_scope') and sc['table_scope']['confirmed'] else {})}} if mode!='basic' else {})}
 
 class ProjectSession:
     def init_project(self):
@@ -164,6 +165,8 @@ class ProjectSession:
         if s['scope'].get('caption_scope'):
             cs=s['scope']['caption_scope'];rules.append({'规则':'R42/R43题注补充配置','要求':cs['template']['name']+'；编号只读，L05必须另行授权，恢复实际重新检查'})
             rows += [{'编号':'题注段落'+key,'类型':kind,'简短文本':'按文件哈希和XML对象重绑；当前页码未核对','正文已选':False} for key,kind in cs['captions'].items()]
+        if s['scope'].get('reference_scope'):
+            rules.append({'规则':'R44产品结构检查','要求':str(s['scope']['reference_scope']['template'])+'；导入后重新核对目标，不恢复跳转或缓存结论'})
         if s['scope'].get('note_scope'):
             ns=s['scope']['note_scope']
             from core.notes import KINDS,FIELDS
@@ -217,6 +220,7 @@ class ProjectSession:
             new.table_enabled=True;new.table_types=deepcopy(state['scope']['table_scope']['table_types']);new.table_layout_options=deepcopy(state['scope']['table_scope'].get('layout_options'))
         new.material_exclusions=deepcopy(state['scope'].get('material_exclusions',{}))
         if state['scope'].get('caption_scope'):new.adopt_caption_scope(state['scope']['caption_scope'],confirmed=False)
+        if state['scope'].get('reference_scope'):new.adopt_reference_scope(state['scope']['reference_scope'],confirmed=False)
         if state['scope'].get('note_scope'):new.adopt_note_scope(state['scope']['note_scope'],confirmed=False)
         if state['scope'].get('citation_scope'):new.adopt_citation_scope(state['scope']['citation_scope'],confirmed=False)
         if state['scope'].get('toc_scope'):new.adopt_toc_scope(state['scope']['toc_scope'],confirmed=False)
@@ -247,7 +251,7 @@ class ProjectSession:
             if saved['kind']=='caption_position':r['input_classification_manifest']=rule_args(rulepath,kinds[saved['rule']],saved['mode'],inputscope)['classification_manifest']
             for change in r['changes']:
                 change['verification']='review';change['restoration_note']='保存时修改记录；本次未验证该操作'
-            if saved['mode']!='basic':r['output_classification_manifest']={'input_sha256':oh,'paragraph_types':sc['types'],'confirmed':True,'confirmation':'保存时分类（导入校验）',**({'material_exclusions':deepcopy(sc['material_exclusions'])} if sc.get('material_exclusions') else {}),**({'caption_scope':deepcopy(sc['caption_scope'])} if sc.get('caption_scope') and sc['caption_scope']['confirmed'] else {}),**({'note_scope':deepcopy(sc['note_scope'])} if sc.get('note_scope') and sc['note_scope']['confirmed'] else {}),**({'citation_scope':deepcopy(sc['citation_scope'])} if sc.get('citation_scope') and sc['citation_scope']['confirmed'] else {}),**({'toc_scope':deepcopy(sc['toc_scope'])} if sc.get('toc_scope') and sc['toc_scope']['confirmed'] else {}),**({'front_scope':deepcopy(sc['front_scope'])} if sc.get('front_scope') and sc['front_scope']['confirmed'] else {}),**({'table_scope':deepcopy(sc['table_scope'])} if sc.get('table_scope') and sc['table_scope']['confirmed'] else {})}
+            if saved['mode']!='basic':r['output_classification_manifest']={'input_sha256':oh,'paragraph_types':sc['types'],'confirmed':True,'confirmation':'保存时分类（导入校验）',**({'material_exclusions':deepcopy(sc['material_exclusions'])} if sc.get('material_exclusions') else {}),**({'caption_scope':deepcopy(sc['caption_scope'])} if sc.get('caption_scope') and sc['caption_scope']['confirmed'] else {}),**({'reference_scope':deepcopy(sc['reference_scope'])} if sc.get('reference_scope') and sc['reference_scope']['confirmed'] else {}),**({'note_scope':deepcopy(sc['note_scope'])} if sc.get('note_scope') and sc['note_scope']['confirmed'] else {}),**({'citation_scope':deepcopy(sc['citation_scope'])} if sc.get('citation_scope') and sc['citation_scope']['confirmed'] else {}),**({'toc_scope':deepcopy(sc['toc_scope'])} if sc.get('toc_scope') and sc['toc_scope']['confirmed'] else {}),**({'front_scope':deepcopy(sc['front_scope'])} if sc.get('front_scope') and sc['front_scope']['confirmed'] else {}),**({'table_scope':deepcopy(sc['table_scope'])} if sc.get('table_scope') and sc['table_scope']['confirmed'] else {})}
             stem='restored-round-'+str(saved['number'])+'-'+uuid4().hex
             binding=(saved['mode'],after['rules']['sha256'],tuple(sorted(sc['types'].items())) if saved['mode']!='basic' else tuple(sc['body']))+((tuple(sorted(sc['table_scope']['table_types'].items())),) if sc.get('table_scope') and sc['table_scope']['confirmed'] else ())
             if sc.get('front_scope'):
@@ -260,6 +264,9 @@ class ProjectSession:
             if sc.get('note_scope'):
                 from core.notes import digest as nd
                 binding+=(nd({k:sc['note_scope'][k] for k in ('objects','template')}),)
+            if sc.get('reference_scope'):
+                from core.internal_refs import digest as rd
+                binding+=(rd(sc['reference_scope']['template']),)
             if sc.get('caption_scope'):
                 from core.captions import digest as cd
                 binding+=(cd({k:sc['caption_scope'][k] for k in ('captions','chapter_map','associations','complete','chapters_complete','template')}),)
@@ -280,6 +287,7 @@ class ProjectSession:
         if state['scope']['saved_confirmed']:
             if new.table_enabled and state['scope']['table_scope']['confirmed']:new.confirm_tables()
             if new.caption_enabled and state['scope']['caption_scope']['confirmed']:new.confirm_captions()
+            if new.reference_enabled and state['scope']['reference_scope']['confirmed']:new.confirm_references()
             if new.note_enabled and state['scope']['note_scope']['confirmed']:new.confirm_notes()
             if new.citation_enabled and state['scope']['citation_scope']['confirmed']:new.confirm_citations()
             if new.toc_enabled and state['scope']['toc_scope']['confirmed']:new.confirm_toc()
@@ -321,6 +329,8 @@ class ProjectSession:
             self.table_types=deepcopy(sc['table_scope']['table_types']);self.table_layout_options=deepcopy(sc['table_scope'].get('layout_options'));self.confirm_tables()
         self.caption_enabled=bool(sc.get('caption_scope'))
         if self.caption_enabled:self.adopt_caption_scope(sc['caption_scope'],confirmed=True)
+        self.reference_enabled=bool(sc.get('reference_scope'))
+        if self.reference_enabled:self.adopt_reference_scope(sc['reference_scope'],confirmed=True)
         self.note_enabled=bool(sc.get('note_scope'))
         if self.note_enabled:self.adopt_note_scope(sc['note_scope'],confirmed=True)
         self.citation_enabled=bool(sc.get('citation_scope'))

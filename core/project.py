@@ -27,7 +27,7 @@ def hash_value(value):
     return value
 
 def scope(pkg, data):
-    require(type(data) is dict and set(data)-{'table_scope','front_scope','toc_scope','citation_scope','note_scope','caption_scope','material_exclusions','backmatter_policy_sha256'}=={'file_sha256','body','types','saved_confirmed'},'范围字段或结构无效')
+    require(type(data) is dict and set(data)-{'table_scope','front_scope','toc_scope','citation_scope','note_scope','reference_scope','caption_scope','material_exclusions','backmatter_policy_sha256'}=={'file_sha256','body','types','saved_confirmed'},'范围字段或结构无效')
     require(data['file_sha256']==pkg.hash, '范围与DOCX哈希不匹配')
     require(type(data['saved_confirmed']) is bool, '确认状态无效')
     body=data['body']; types=data['types']
@@ -42,6 +42,9 @@ def scope(pkg, data):
     if data.get('caption_scope') is not None:
         from .captions import validate_scope as vcapt
         vcapt(pkg,data['caption_scope'],{'paragraph_types':types},confirmed=False)
+    if data.get('reference_scope') is not None:
+        from .internal_refs import validate_scope as vr
+        vr(pkg,data['reference_scope'],confirmed=False)
     if data.get('note_scope') is not None:
         from .notes import validate_scope as vn
         vn(pkg,data['note_scope'],confirmed=False)
@@ -147,6 +150,7 @@ def stage(raw, work_root):
                 inputscope['toc_scope']={**inputscope['toc_scope'],'input_sha256':r['input']}
             if inputscope.get('front_scope'):
                 inputscope['front_scope']={**inputscope['front_scope'],'input_sha256':r['input']}
+            if inputscope.get('reference_scope'):inputscope['reference_scope']={**inputscope['reference_scope'],'input_sha256':r['input']}
             if inputscope.get('note_scope'):inputscope['note_scope']={**inputscope['note_scope'],'input_sha256':r['input']}
             if inputscope.get('citation_scope'):inputscope['citation_scope']={**inputscope['citation_scope'],'input_sha256':r['input']}
             if inputscope.get('caption_scope'):inputscope['caption_scope']={**inputscope['caption_scope'],'input_sha256':r['input']}

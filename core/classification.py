@@ -19,7 +19,7 @@ def validate_classification(pkg, manifest):
     if isinstance(manifest,(str,Path)):
         try:manifest=json.loads(Path(manifest).read_text(encoding='utf-8'))
         except (ValueError,OSError):raise DemoError('分类清单不可读取') from None
-    if not isinstance(manifest,dict) or set(manifest)-{'table_scope','front_scope','toc_scope','citation_scope','note_scope','caption_scope','material_exclusions'}!={'input_sha256','paragraph_types','confirmed','confirmation'}:
+    if not isinstance(manifest,dict) or set(manifest)-{'table_scope','front_scope','toc_scope','citation_scope','note_scope','reference_scope','caption_scope','material_exclusions'}!={'input_sha256','paragraph_types','confirmed','confirmation'}:
         raise DemoError('须提供完整、人工确认的分类清单')
     if manifest['input_sha256']!=pkg.hash:raise DemoError('分类清单哈希不匹配，请重新确认')
     if manifest['confirmed'] is not True or not isinstance(manifest['confirmation'],str) or not manifest['confirmation'].strip():
@@ -54,6 +54,9 @@ def validate_classification(pkg, manifest):
     if manifest.get('citation_scope'):
         from .citations import validate_scope
         validate_scope(pkg,manifest['citation_scope'],manifest)
+    if manifest.get('reference_scope'):
+        from .internal_refs import validate_scope
+        validate_scope(pkg,manifest['reference_scope'])
     if manifest.get('note_scope'):
         from .notes import validate_scope
         validate_scope(pkg,manifest['note_scope'])

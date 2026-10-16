@@ -1,0 +1,75 @@
+{
+  "roles": {
+    "1": "other",
+    "2": "other",
+    "3": "body",
+    "4": "body",
+    "5": "body",
+    "6": "body",
+    "7": "body",
+    "8": "body",
+    "9": "body",
+    "10": "reference_item",
+    "11": "other",
+    "12": "other"
+  },
+  "selected_notes": [
+    "footnote:1:3",
+    "endnote:1:3"
+  ],
+  "repairs": [
+    {
+      "part": "word/document.xml",
+      "paragraph": 3,
+      "link": 1,
+      "link_run": 2,
+      "pt": 12
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 4,
+      "link": 1,
+      "link_run": 1,
+      "pt": 12
+    },
+    {
+      "part": "word/document.xml",
+      "paragraph": 10,
+      "link": 1,
+      "link_run": 1,
+      "pt": 12
+    },
+    {
+      "part": "word/footnotes.xml",
+      "note_id": "1",
+      "note_paragraph": 1,
+      "link": 1,
+      "link_run": 1,
+      "pt": 12
+    },
+    {
+      "part": "word/endnotes.xml",
+      "note_id": "1",
+      "note_paragraph": 1,
+      "link": 1,
+      "link_run": 1,
+      "pt": 12
+    }
+  ],
+  "targets": {
+    "_TocTarget": "valid",
+    "TargetTwo": "valid",
+    "HeaderTarget": "valid",
+    "NoteTarget": "valid",
+    "MissingTarget": "missing"
+  },
+  "missing_reference_positions": 3,
+  "protected_material": {
+    "12": "合成代码：不检查、不改写空白"
+  },
+  "not_selected": [
+    "全部段落属性",
+    "未选链接run",
+    "书签/字段/缓存/颜色/下划线/字符样式/关系"
+  ]
+}

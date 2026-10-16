@@ -1,0 +1,36 @@
+{
+  "kind": "真实Chrome与本机Streamlit操作；无私有状态注入",
+  "original_input": "errors.docx",
+  "draft_import": "draft-project.zip",
+  "workflow": [
+    "网页导入合成草稿项目并核对恢复；原稿/分类/代码排除/注释范围仍为草稿",
+    "明确关闭再启用R44，核对内部链接文字支持开关",
+    "筛选MissingTarget，查看3处受影响位置及缓存存在事实；筛选_TocTarget查看唯一目标证据",
+    "统一范围明确确认并实际检查",
+    "筛选段3，逐项只选R05链接1内部片段2，真实预演、明确采用第1轮、网页下载",
+    "独立XML验证只改一个字号；明确进入第1轮输入",
+    "按字号筛选，明确选择4项：正文p4、参考文献p10、脚注及尾注，各1属性；实际预演/采用第2轮、下载",
+    "最终网页DOCX与离线/作者对照逐字节一致，缺失目标和未选问题保留",
+    "明确以第2轮继续，网页保存项目并下载",
+    "仅核对本项目8501命令和cwd后重启；网页重新导入browser-project.zip、核对恢复、实际重新检查",
+    "恢复第2轮、25条启用规则、3问题/44待复核；未恢复预演或有效页图",
+    "修改内部链接支持开关后确认/报告/当前下载失效",
+    "独立Chrome会话初始无第一会话文件，载入内置正确对照；未启用R44或内部文字支持，第一会话范围不变"
+  ],
+  "formal_rounds": 2,
+  "selected_attributes_per_round": [
+    1,
+    4
+  ],
+  "independent_output": "browser-independent.json",
+  "api_requests": 0,
+  "automatic_renders": 0,
+  "failures": "首次对裁剪隐藏checkbox使用check()超时；改用可见标签真实点击后完成。几次筛选重运行关闭下拉菜单，读取新状态后重开；未计为通过或速度证据。",
+  "screenshots": [
+    "screenshots/missing-target.png",
+    "screenshots/valid-target.png",
+    "screenshots/one-attribute-rehearsal.png",
+    "screenshots/restored-current.png",
+    "screenshots/config-invalidated.png"
+  ]
+}

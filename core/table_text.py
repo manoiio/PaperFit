@@ -51,6 +51,7 @@ def rebind(manifest,hash_):
  if manifest and manifest.get('table_scope'):manifest['table_scope']['input_sha256']=hash_
  if manifest and manifest.get('front_scope'):manifest['front_scope']['input_sha256']=hash_
  if manifest and manifest.get('toc_scope'):manifest['toc_scope']['input_sha256']=hash_
+ if manifest and manifest.get('reference_scope'):manifest['reference_scope']['input_sha256']=hash_
  if manifest and manifest.get('note_scope'):manifest['note_scope']['input_sha256']=hash_
  if manifest and manifest.get('citation_scope'):manifest['citation_scope']['input_sha256']=hash_
  return manifest
