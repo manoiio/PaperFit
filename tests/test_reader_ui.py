@@ -52,6 +52,9 @@ class ReaderUIAcceptance(TestCase):
   self.click('查看本轮页面');self.assertFalse(any(x.label=='本次辅助输入' for x in self.at.selectbox));self.assertFalse(any(x.label=='刷新预览环境' for x in self.at.button))
   next(r for r in self.at.radio if r.label=='预览工作区').set_value('排版辅助').run();self.assertTrue(any('基础模式未启用' in x.value for x in self.at.info))
   next(r for r in self.at.radio if r.label=='预览工作区').set_value('预览详情与人工观察记录').run();self.assertFalse(self.at.exception);self.assertTrue(any(x.label=='刷新预览环境' for x in self.at.button));self.assertFalse(self.s.visual_reviews)
+  self.s.display_name='<img src="invalid" onerror="alert(1)">.docx';self.at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);self.at.session_state.workflow=self.s;self.at.run();show(self.at,5);self.click('查看本轮页面')
+  next(r for r in self.at.radio if r.label=='预览工作区').set_value('预览详情与人工观察记录').run();self.assertFalse(self.at.exception)
+  titles=[x.proto.body for x in self.at.get('html') if '<strong>' in x.proto.body];self.assertTrue(titles);self.assertTrue(all('&lt;img' in x and '<img' not in x for x in titles))
  def test_auxiliary_confirmation_does_not_survive_a_generated_round(self):
   s=WebSession(Path(self.tmp.name)/'aux');s.set_mode('extended');s.load((ROOT/'samples/extended-errors.docx').read_bytes(),'既有扩展合成样本.docx');s.set_types(json.loads((ROOT/'samples/extended-errors.types.json').read_text())['paragraph_types']);s.confirm();self.assertTrue(s.check())
   self.s=s;self.at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);self.at.session_state.workflow=s;self.at.run();show(self.at,5);self.click('查看论文页面')

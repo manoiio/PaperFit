@@ -3,7 +3,7 @@
   "baseline": "d114176",
   "original_tests": 1208,
   "final_tests": 1213,
-  "full_suite_seconds": 185.028,
+  "full_suite_seconds": 185.839,
   "core_renderer_business_session_schema_changed": false,
   "api_requests": 0,
   "automatic_render_requests": 0,
@@ -201,5 +201,7 @@
       "bytes": 173983,
       "sha256": "15dafac4cbbb238d1f3796711ea5d9abd020530f8c312ac3333836c3bd3696fc"
     }
-  ]
+  ],
+  "completed_local_date": "2026-10-17",
+  "literal_filename_titles_escaped": true
 }

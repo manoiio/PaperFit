@@ -157,7 +157,7 @@ def render_details(model,targets,selected,previews,seed,label):
         try:model.refresh_preview_environment();st.info('环境已核对，请返回页面查看；未自动渲染。')
         except Exception as exc:st.warning(public_error(exc))
     for key in dict.fromkeys(selected):
-        st.markdown('**'+label(key)+'**');meta=previews[key]
+        st.html('<strong>'+escape(target_label(model,targets,key,True))+'</strong>');meta=previews[key]
         matches=[i for i,r in model.preview_jobs.items() if r['key']==key and r['epoch']==model.preview_epoch]
         if matches and (not meta or model.active_preview_job(key)):task_status(model,matches[-1],'details')
         if not meta:st.info('没有当前绑定的有效页图；可返回页面查看并明确请求生成。');continue
