@@ -3,7 +3,7 @@ import streamlit as st
 from .session import public_error
 
 def render_project(model):
-    with st.expander('保存项目 / 恢复项目（用于继续工作）',key='project-panel'):
+    with st.expander('保存项目 / 恢复项目（用于继续工作）',key='project-panel',on_change='rerun'):
         st.caption('项目包包含论文原稿、当前输入和所选历史副本，仅点击保存后在本机下载。与“本轮结果包”不同：项目包用于中断后继续工作；不含密钥、调用日志、运行任务和页面图片。')
         save,restore=st.columns(2)
         with save:

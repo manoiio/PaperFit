@@ -8,7 +8,7 @@ STEPS={1:'文档与要求',2:'确认检查范围',3:'查看问题',4:'修正预�
 EDITOR_PREFIXES=('workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
  'wb-policy-','wb-name-','wb-text-','tpl-value-','tpl-mode-','template-name-',
  'norm-text-','norm-encoding','center-category-','center-status-','center-order-',
- 'center-range-','center-search-','center-type-','center-page-','object-detail-',
+ 'problem-detail-','center-range-','center-search-','center-type-','center-page-','object-detail-',
  'batch-filter-','batch-numbers-','batch-range-','batch-target-','batch-ambiguity-',
  'front-object-','front-type-','front-section-','front-role-','front-value-','front-prop-enabled-',
  'note-kind-','note-word-','note-selected-','note-mode-','note-value-',
@@ -36,23 +36,41 @@ def availability(model):
 
 CSS='''<style>
 .stApp {background:#f4f6f9;color:#182b41;}
-.block-container {max-width:1200px;padding-top:4.5rem;padding-bottom:3rem;}
-h1 {font-size:1.65rem !important;font-weight:700;color:#183650;}
-h2 {font-size:1.4rem !important;color:#183650;}
+.block-container {max-width:1200px;padding-top:3.7rem;padding-bottom:3rem;}
+h1 {font-size:1.3rem !important;font-weight:700;color:#183650;}
+h2 {font-size:1.2rem !important;color:#183650;}
 h3 {font-size:1.12rem !important;}
 [data-testid="stVerticalBlockBorderWrapper"] {border-radius:12px;background:white;}
 [data-testid="stExpander"] {background:white;border-radius:10px;}
 [data-testid="stMetricValue"] {font-size:1.8rem;color:#204c79;}
 [data-testid="stCaptionContainer"] {font-size:.88rem;color:#536477;}
-.st-key-workspace-nav button {min-height:50px;border-radius:9px;font-size:.92rem;}
-.st-key-file-summary {padding:.85rem 1rem;border:1px solid #dce3eb;border-radius:10px;background:white;margin-bottom:.8rem;}
+.st-key-workspace-nav button {min-height:36px;border-radius:9px;font-size:.92rem;}
+.st-key-file-summary {padding:.35rem .7rem;border:1px solid #dce3eb;border-radius:10px;background:white;margin-bottom:.2rem;}
 .st-key-document-card {background:white;border-radius:12px;}
-.st-key-workspace-nav {margin:.3rem 0 1rem;}
+.st-key-workspace-nav {margin:0 0 .2rem;}
 .report-scroll {overflow-x:auto;}
 .report-table {border-collapse:collapse;width:100%;font-size:14px;line-height:1.6;}
 .report-table td,.report-table th {padding:9px;border-bottom:1px solid #e1e7ee;text-align:left;overflow-wrap:anywhere;}
 .report-table th {background:#edf2f7;color:#183650;}
 [id^="scope-"] {scroll-margin-top:80px;}
+
+.st-key-workspace-header {gap:.25rem;}
+.st-key-workspace-header h1 {padding:0;margin:0;line-height:1.6;}
+.st-key-workspace-header [data-testid="stHorizontalBlock"] {align-items:center;}
+.compact-file {display:flex;gap:1rem;align-items:center;flex-wrap:wrap;font-size:14px;}
+.compact-file .file-state {font-weight:600;color:#234f75;}
+.compact-stats {display:flex;gap:1.2rem;justify-content:space-between;padding:.5rem .75rem;background:white;border:1px solid #dce3eb;border-radius:9px;margin:.2rem 0 .35rem;}
+.compact-stats div {display:flex;gap:.45rem;align-items:baseline;}
+.compact-stats span {font-size:14px;color:#3b5065;}
+.compact-stats strong {font-size:21px;color:#204c79;}
+.comparison-card {border:1px solid #dce3eb;border-radius:9px;padding:.65rem .8rem;background:white;font-size:15px;overflow-wrap:anywhere;}
+.comparison-card > p {margin:.4rem 0 0;}
+.comparison-card header {display:flex;justify-content:space-between;gap:.5rem;margin-bottom:.4rem;}
+.comparison-card header span {font-size:13px;color:#4e6478;}
+.value-pair {display:grid;grid-template-columns:1fr 22px 1fr;gap:.4rem;align-items:center;}
+.value-pair p {margin:.15rem 0;font-weight:600;color:#183650;}
+.value-pair small {color:#405970;font-size:13px;}
+.change-reason {margin:.4rem 0;color:#2e4357;font-size:14px;}
 </style>'''
 
 def shell(model,restart):
@@ -72,17 +90,28 @@ def shell(model,restart):
     ready=availability(model)
     step=st.session_state.get('workspace-step',1)
     if not ready.get(step):step=2 if model.inventory else 1;go(step)
-    title,reset=st.columns([8,1])
-    title.title('论文有格')
-    reset.button('重新开始',on_click=restart,width='stretch')
-    with st.container(key='file-summary'):
+    with st.container(key='workspace-header'):
+        title,details,project,reset=st.columns([5,1,1.4,1.2])
+        title.title('论文有格')
+        with details.popover('文件详情',width='stretch'):
+            st.text(model.display_name if model.inventory else '尚未载入文件')
+            if model.inventory:
+                st.write(f"{len(model.inventory['paragraphs'])} 个顶层段落 · {model.inventory['section_count']} 节 · {len(model.input_bytes)/1024:.1f} KB")
+                st.write(model.current_rule_bundle()['name'] if model.mode=='academic' else model.active_template['name'] if model.active_template else '华工本科工理类2015演示规则')
+                st.caption('完整规则、版本和来源见第1步；哈希和范围见完整报告。')
+        def project_entry():
+            go(1);st.session_state['project-panel']=True
+        project.button('保存 / 恢复',on_click=project_entry,width='stretch')
+        reset.button('重新开始',on_click=restart,width='stretch')
         if model.inventory:
             current='原稿' if model.current_round==0 else f'第{model.current_round}轮副本'
-            rule=model.current_rule_bundle()['name'] if model.mode=='academic' else model.active_template['name'] if model.active_template else '华工本科工理类2015演示规则'
-            st.markdown('**'+escape(model.display_name)+'** · 当前输入：'+current)
-            state=f"；另有第{model.result['round']['number']}轮输出，尚未切换" if model.result else '；预演待采用，正式轮次保持' if model.rehearsal else ''
-            st.caption(f"{len(model.inventory['paragraphs'])} 个顶层段落 · {model.inventory['section_count']} 节 · {len(model.input_bytes)/1024:.1f} KB · 规则：{rule}{state}")
-        else:st.write('本地处理 Word 论文 · 先选文档，再核对要求与范围')
+            rule=model.current_rule_bundle()['name'] if model.mode=='academic' else model.active_template['name'] if model.active_template else '2015学校演示规则'
+            name=model.display_name if len(model.display_name)<=38 else model.display_name[:35]+'…'
+            rule_short=rule if len(rule)<=22 else rule[:21]+'…'
+            state='检查有效' if model.report and model.confirmed else '范围待核对 / 旧检查已失效'
+            output=f" · 另有第{model.result['round']['number']}轮输出，尚未切换" if model.result else ' · 有预演副本，未采用' if model.rehearsal else ''
+            st.html('<div class="compact-file"><b title="'+escape(model.display_name,quote=True)+'">'+escape(name)+'</b><span>当前输入：'+escape(current)+'</span><span title="'+escape(rule,quote=True)+'">规则：'+escape(rule_short)+'</span><span class="file-state">'+escape(state+output)+'</span></div>')
+        else:st.caption('本地处理 Word 论文 · 文档 → 范围 → 问题 → 预演 → 结果')
     with st.container(key='workspace-nav'):
         for col,(n,label) in zip(st.columns(5),STEPS.items()):
             status='当前' if n==step else '暂不可用' if not ready[n] else '已检查' if n==2 and model.report else '已有结果' if n==5 and model.result else '可查看' if n<step else '待处理'

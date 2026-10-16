@@ -1,0 +1,8 @@
+{
+  "docx_bytes_equal": true,
+  "all_zip_members_equal": true,
+  "sha256": "81c592a9d22599fcbc87ed0baf1cb1a51886f874e591608bd9b6b7fda4c2a484",
+  "bytes": 38201,
+  "zip_members": 18,
+  "scope": "same existing input, rules, scope and explicit choices; website layout only"
+}

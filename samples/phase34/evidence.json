@@ -1,0 +1,189 @@
+{
+  "date": "2026-10-16",
+  "baseline": "afb84af",
+  "baseline_tests": 1198,
+  "final_tests": 1204,
+  "full_suite_seconds": 175.183,
+  "clean_source_copy": true,
+  "historical_work_outputs_not_required": true,
+  "runtime_work_generated_by_tests": true,
+  "added_ui_tests": 6,
+  "core_or_business_session_changes": false,
+  "api_requests": 0,
+  "automatic_renders": 0,
+  "viewports": [
+    [
+      1280,
+      720
+    ],
+    [
+      1440,
+      900
+    ]
+  ],
+  "basic_selected": 11,
+  "complex_before": {
+    "problem": 8,
+    "fixable": 6,
+    "read_only": 2,
+    "review": 44
+  },
+  "complex_partial_after": {
+    "changes": 1,
+    "problem": 7,
+    "review": 44
+  },
+  "long": {
+    "paragraphs": 400,
+    "body": 390,
+    "headings": 10,
+    "findings": 2015,
+    "selected_across_two_pages": 119,
+    "outside_size_filter": 80,
+    "page_retained": 2
+  },
+  "plan": {
+    "selected": 10,
+    "steps": 2,
+    "adopted_rounds": [
+      3,
+      4
+    ],
+    "remaining_problem": 10,
+    "review": 26,
+    "new_problem": 1,
+    "unaligned": 4
+  },
+  "byte_equivalence": [
+    "equivalence.json",
+    "partial-equivalence.json",
+    "plan-equivalence.json"
+  ],
+  "word_or_new_docx_rendering": "not repeated; actual download bytes equal original accepted legal paths",
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 3162,
+      "sha256": "e2d5dc701e0e76a96bd27f5f4f3964ab3b13f1bd072f9153f639ff190fe90192"
+    },
+    {
+      "file": "equivalence.json",
+      "bytes": 273,
+      "sha256": "4b51c2879cd1df0888f74d4c2c79cdeb2528dd7c657c67485921718f3e91f1f5"
+    },
+    {
+      "file": "partial-equivalence.json",
+      "bytes": 353,
+      "sha256": "3273cda5af259f3cea3b705502ba0920dd9370f70a2051b096461f7bb20544bd"
+    },
+    {
+      "file": "plan-equivalence.json",
+      "bytes": 273,
+      "sha256": "341c9758eecfcf428e386cc30d1e936a571b61caf3fd124f4675aef84f40658d"
+    },
+    {
+      "file": "screenshots/after-problems-1280.png",
+      "bytes": 117310,
+      "sha256": "30687d38db3608261ac46551b9da9238199673948c08f2a5f0cbb2467b883a5c"
+    },
+    {
+      "file": "screenshots/after-problems-1440.png",
+      "bytes": 130571,
+      "sha256": "a5703fd72e1ed1f2d76fed669a6aadc1f52bdd1626bb3d4774a4be36f8133b6c"
+    },
+    {
+      "file": "screenshots/after-rehearsal-1280.png",
+      "bytes": 98499,
+      "sha256": "dd90d3ca028637033ba3736d6038e1c00a804aa19209c90c106507975ed67da0"
+    },
+    {
+      "file": "screenshots/after-rehearsal-1440.png",
+      "bytes": 134480,
+      "sha256": "a3050ecf201531d5e06904b89e21a65294f4ff0260812e467c8d11c6ecea82a4"
+    },
+    {
+      "file": "screenshots/after-results-1280.png",
+      "bytes": 96480,
+      "sha256": "133788ff69d7679d50b305158027ab7ad4dc185a7bb2a6f88a92b2256a62f003"
+    },
+    {
+      "file": "screenshots/after-results-1440.png",
+      "bytes": 127404,
+      "sha256": "3d061ca4616f7646e0e8f166eeb42c2928b094c1b178d7c5865d5a6bd3255666"
+    },
+    {
+      "file": "screenshots/before-problems-1280.png",
+      "bytes": 89634,
+      "sha256": "7391e7476bc641ae0f98b297ba54f18e346fa4ef472556fbacdf9fa6c937069d"
+    },
+    {
+      "file": "screenshots/before-problems-1440.png",
+      "bytes": 126571,
+      "sha256": "1ec88480ab16266a346303bc6a05fca7e007c24b1749127df123ca555fcd8466"
+    },
+    {
+      "file": "screenshots/before-rehearsal-1280.png",
+      "bytes": 79378,
+      "sha256": "ca9b964b28c67a0cca56f9a99a8d1a74ca65c7160b116ce8793fffa313e31b0d"
+    },
+    {
+      "file": "screenshots/before-rehearsal-1440.png",
+      "bytes": 101159,
+      "sha256": "c5ff92fc315f50d9378b93e2b450a21b12108ed6cc97a74ec5d70bd60b5cb81e"
+    },
+    {
+      "file": "screenshots/before-results-1280.png",
+      "bytes": 81412,
+      "sha256": "935f0d78a61a43546bc63838f3976a0052fcf8889c647fe31223ede8899c1a55"
+    },
+    {
+      "file": "screenshots/before-results-1440.png",
+      "bytes": 133029,
+      "sha256": "69050259f15570f36b67c4218727832302f8d3285ad9fbbd127b9d203ea0de93"
+    },
+    {
+      "file": "screenshots/complex-problems-1440.png",
+      "bytes": 129356,
+      "sha256": "14dcd3280eb9583dbbb2876151c26447bfd8db40707fce05eb7f28dd6c216aac"
+    },
+    {
+      "file": "screenshots/long-selection-retained.png",
+      "bytes": 154626,
+      "sha256": "d884a7ad2c92f750ff6ebb0fcfe70c010593efe6c4d504de586ff82debb9d7d2"
+    },
+    {
+      "file": "screenshots/partial-results-1280.png",
+      "bytes": 104861,
+      "sha256": "b5e7de8e1d3b3925ccf233f7b47850433dc043b77a866e3458a04103b0ea7b31"
+    },
+    {
+      "file": "screenshots/restored-project.png",
+      "bytes": 153661,
+      "sha256": "f2647ba8295e3180f59c7029c9c6a229dde9d48d73a1125cc046395e2f11fc42"
+    },
+    {
+      "file": "screenshots/scope-invalidated.png",
+      "bytes": 175057,
+      "sha256": "d56d930fb503aff852901de8658ef665f8d6a6a78995efb511b932141f196f4a"
+    },
+    {
+      "file": "screenshots/two-step-rehearsal.png",
+      "bytes": 158642,
+      "sha256": "feeabc3d76c039f25a7dfece20ab555fceda9bbbbed750130e9f279e8e6bb2b5"
+    },
+    {
+      "file": "screenshots/two-step-results.png",
+      "bytes": 124938,
+      "sha256": "598e9d5d05c36e6d2ed2a7ae9ed24e7dfdc157b0a5d53571cbf84dbf7be3372e"
+    }
+  ],
+  "project_restart_restore": {
+    "current_round": 4,
+    "problem": 10,
+    "review": 26,
+    "selected": 0,
+    "fresh_check": true,
+    "restored_rehearsal_authorization": false
+  },
+  "independent_sessions": "correct baseline input round 0 vs restored plan input round 4"
+}

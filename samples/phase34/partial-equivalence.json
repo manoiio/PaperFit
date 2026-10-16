@@ -1,0 +1,9 @@
+{
+  "docx_bytes_equal": true,
+  "all_zip_members_equal": true,
+  "sha256": "376a4e75212a4650eafdb2d4ced081f7acfbe30cc9ef86ac8ed4000aeafc2585",
+  "bytes": 39413,
+  "zip_members": 20,
+  "scope": "same existing input, rules, scope and explicit choices; website layout only",
+  "case": "existing stage32 internal-link body size, exactly one explicit key"
+}

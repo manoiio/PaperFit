@@ -170,8 +170,7 @@ def render_selection():
     eligible = model.eligible()
     if eligible and model.operation=='format':
         with st.container(key='selection'):
-            st.subheader('4 选择要修正的问题')
-            st.caption('默认不修正。仅允许选择“发现问题”且可修正的记录；每次从上方明确显示的当前输入生成新副本，不覆盖任何一轮文件。')
+            st.subheader('选择修正')
             from web.report_pages import object_page,merge_page_selection,selection_counts
             lookup={f['key']:f for f in eligible}
             view=getattr(model,'center_selection_view',None)
@@ -203,119 +202,119 @@ def render_selection():
                 st.warning(f"关联提示 {len(warnings)} 项："+'；'.join(warnings[:3]))
                 if st.toggle('查看全部关联提示'):st.dataframe([{'提示':w} for w in warnings],hide_index=True,width='stretch')
             if model.selected:
-                with st.expander(f'执行确认摘要：全部 {len(model.selected)} 项明确选择',expanded=True):
+                with st.expander(f'执行确认摘要：全部 {len(model.selected)} 项明确选择'):
                     st.caption('生成将执行下面全部选择，包括其他页和当前筛选外的项；不会自动加入待复核记录。')
                     st.dataframe([{'key':k,'位置':position(lookup[k]['locator']),'规则':lookup[k]['rule_id'],'实际':field_value(lookup[k]['actual'],lookup[k]['rule_id'],lookup[k]['locator']),'要求':field_value(lookup[k]['expected'],lookup[k]['rule_id'],lookup[k]['locator'],True)} for k in model.selected],hide_index=True,width='stretch',height=240)
-            st.button('前往修正预演',type='primary',disabled=not model.selected,on_click=go,args=(4,),width='stretch')
     elif not eligible:
         st.info('当前没有可自动修正项；待复核仍须人工核对。')
 
 def render_results():
-    if model.result is not None:
-        # Validate download binding before showing any success/download controls.
-        try:
-            files = model.downloads()
-        except Exception as exc:
-            model.result = model.result_signature = None
-            model.error = public_error(exc)
-            st.error('结果不可用：' + model.error)
+    if model.result is None:return
+    try:files=model.downloads()
+    except Exception as exc:
+        model.result=model.result_signature=None;model.error=public_error(exc);st.error('结果不可用：'+model.error);return
+    if not files:return
+    result,after=model.result,model.result['after']
+    checks=result['preservation']
+    required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
+    if not all(checks.get(k) is True for k in required) or not checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal')):
+        st.error('完整性结果异常，请重新开始。');return
+    from web.decision_ui import compact_stats
+    summary=after['summary'];n=result['round']['number']
+    st.subheader(f'第{n}轮副本已生成')
+    compact_stats([('实际修改',len(result['changes'])),('剩余问题',summary['problem_count']),('待复核',summary['review_count'])],'result-summary')
+    verified=all(c['verification']=='pass' for c in result['changes'])
+    if verified:
+        message=f"所选修改的落盘复查全部符合要求 · 已保存{len(result['changes'])}项修改；仅代表所选属性。"
+        if summary['problem_count'] or summary['review_count']:st.write(message)
+        else:st.success(message)
+    else:st.warning('部分修改的复查状态需要核对，请查看完整修改记录。')
+    if summary['problem_count'] or summary['review_count']:
+        st.warning(f"仍有 {summary['problem_count']} 个问题、{summary['review_count']} 项待复核。副本已生成，不代表全文合格。")
+    current='原稿' if model.current_round==0 else f'第{model.current_round}轮副本'
+    st.write(f'当前处理输入仍为 **{current}**；第{n}轮输出尚未自动设为输入。')
+    a,b=st.columns(2)
+    a.download_button('下载修正版DOCX',files['fixed.docx'],file_name='论文有格_修正版.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document',on_click='ignore',type='primary',width='stretch',key=f'download-{model.task_dir.name}-{Path(result["output"]).stem}-fixed.docx')
+    try:b.download_button('下载本轮结果包',model.result_package(),file_name=f'论文有格_第{n}轮结果.zip',mime='application/zip',on_click='ignore',width='stretch',key='package-'+str(model.revision)+'-'+str(model.generation_count))
+    except Exception as exc:b.warning(public_error(exc))
+    st.caption('结果包带走本轮DOCX与报告；保存项目用于中断后继续，包含原稿和历史。')
+    st.button('以计划最终副本继续' if result.get('plan') else '以本轮修正版开始下一轮',on_click=model.next_round,width='stretch',help='以此副本继续处理：只有点击才明确切换输入，原稿和前轮保持。')
+    with st.expander('更多文件与记录'):
+        for label,name,filename,mime in [('下载原稿DOCX','original.docx','论文有格_原稿.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document'),('下载修改记录','changes.md','论文有格_修改记录.md','text/markdown'),('下载复查报告','recheck.md','论文有格_复查报告.md','text/markdown')]:
+            st.download_button(label,files[name],file_name=filename,mime=mime,on_click='ignore',key=f'download-{model.task_dir.name}-{Path(result["output"]).stem}-{name}')
+        if result.get('plan'):
+            for i,item in enumerate(model.plan_step_downloads(),1):st.download_button(f'下载计划第{i}步DOCX',item['fixed.docx'],file_name=f'计划第{i}步.docx',on_click='ignore',key='result-step-'+str(i))
+    with st.expander('完整变更、保护及落盘复查'):
+        if result.get('layout'):
+            st.info(result['layout']['message']);st.warning(result['layout']['limitation'])
+        if result.get('widths'):
+            st.info(result['widths']['message']);st.warning(result['widths']['limitation'])
+        if any(c['rule_id'] in ('R36','R37') for c in result['changes']):st.info('仅所选注释普通文字属性已修改。正文引用、内部自动编号、系统分隔线和未选部件保持。注释字体字号或行距可能改变分页，请主动预览；格式通过不代表注释内容正确。')
+        if any(c['rule_id']=='R35' for c in result['changes']):st.info('仅所选左右外侧边框已修正；内部竖线及未选侧保留。0边框问题不代表表格整体合格。')
+        if any(c['rule_id']=='L04' for c in result['changes']):st.info('已设置重复表头属性，不补续表题注、编号或（续）；请主动预览并核对第二页及之后的实际结果。')
+        if any(c['rule_id']=='R33' for c in result['changes']):st.info('引文上标已按所选字符设置，字体字号与前后文字保持。通用正文继续保护上标run，会新增未检查覆盖提示；必要拆分可改变run编号/问题key及记录数，不代表未选格式被改变或全文通过。')
+        delta=result['problem_delta']
+        if result.get('impact'):
+            ic=result['impact']['counts']
+            st.write(f"稳定对应已解决 {ic['selected_resolved']+ic['natural_resolved']} 条 · 新出现问题 {ic['new_problem']} 条 · 转待复核 {ic['problem_to_review']} 条 · 无法可靠对齐 {ic['unaligned']} 条")
+        else:
+            st.write(f"已解决 {len(delta['resolved_keys'])} 个 · 原有剩余 {len(delta['remaining_keys'])} 个 · 新出现 {len(delta['new_keys'])} 个")
+        if delta.get('unresolved_review_keys'):
+            st.warning(f"另有 {len(delta['unresolved_review_keys'])} 个原有问题转为待复核，尚未验证解决。")
+        for cause in delta['new_problem_causes']:st.warning(cause['detail'])
+        st.caption('部分修正允许保留未选问题；下面显示新文件的实际剩余问题与待复核数。')
+        metrics(after, remaining=True)
+        checks = result['preservation']
+        st.markdown('**完整性检查通过**')
+        if result.get('kind')=='caption_position':
+            st.write('原稿保持不变 · 仅授权题注位置变化 · 所有对象子树与未选部件逐字节核对通过；实际同页未核对')
+            st.info('段落编号已按XML对象映射重绑；旧选择、布局计划及不匹配预览失效。原稿仅提供渲染预览，不套用移动后的段号。')
+            with st.expander('范围映射与失效详情'):st.json(result['range_mapping'])
+        else:st.write('原稿保持不变 · 未选格式与文档内容保留核对通过 · 未选包部件字节核对通过；选中故事部件只改格式')
+        required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
+        if not all(checks.get(k) is True for k in required) or not checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal')):
+            st.error('完整性结果异常，请重新开始。')
             st.stop()
-        if files:
-            result, after = model.result, model.result['after']
-            with st.container(key='result'):
-                if any(c['rule_id'] in ('R36','R37') for c in result['changes']):st.info('仅所选注释普通文字属性已修改。正文引用、内部自动编号、系统分隔线和未选部件保持。注释字体字号或行距可能改变分页，请主动预览；格式通过不代表注释内容正确。')
-                if any(c['rule_id']=='R35' for c in result['changes']):st.info('仅所选左右外侧边框已修正；内部竖线及未选侧保留。0边框问题不代表表格整体合格。')
-                if any(c['rule_id']=='L04' for c in result['changes']):st.info('已设置重复表头属性，不补续表题注、编号或（续）；请主动预览并核对第二页及之后的实际结果。')
-                if any(c['rule_id']=='R33' for c in result['changes']):st.info('引文上标已按所选字符设置，字体字号与前后文字保持。通用正文继续保护上标run，会新增未检查覆盖提示；必要拆分可改变run编号/问题key及记录数，不代表未选格式被改变或全文通过。')
-                if result.get('kind') in ('figure_layout','pagination_layout'):
-                    st.success(result['layout']['message']+'，并从落盘副本核对。')
-                    st.warning(result['layout']['limitation'])
-                elif result.get('kind')=='width_adaptation':
-                    st.success(result['widths']['message']+'；不是可见排版验收。')
-                    st.warning(result['widths']['limitation'])
-                else:
-                    st.success(f"已生成新DOCX：{len(result['changes'])} 项修改已保存，所选修改的落盘复查全部符合要求。")
-                st.caption(f"第{result['round']['number']}轮输出；输入为"+('原稿' if result['round']['input_round']==0 else f"第{result['round']['input_round']}轮修正版"))
-                st.markdown('**下载文件与记录**')
-                try:
-                    package=model.result_package()
-                    st.download_button('下载本轮结果包',package,file_name='论文有格_第'+str(result['round']['number'])+'轮结果.zip',mime='application/zip',on_click='ignore',key='package-'+str(model.revision)+'-'+str(model.generation_count),width='stretch')
-                except Exception as exc:st.warning(public_error(exc))
-                d1, d2, d3, d4 = st.columns(4)
-                for col, label_text, name, download_name, mime in [
-                    (d1,'下载修正版DOCX','fixed.docx','论文有格_修正版.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
-                    (d2,'下载原稿DOCX','original.docx','论文有格_原稿.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
-                    (d3,'下载修改记录','changes.md','论文有格_修改记录.md','text/markdown'),
-                    (d4,'下载复查报告','recheck.md','论文有格_复查报告.md','text/markdown')]:
-                    col.download_button(label_text, files[name], file_name=download_name, mime=mime,
-                                        on_click='ignore', key=f'download-{model.task_dir.name}-{Path(result["output"]).stem}-{name}', type='primary' if name=='fixed.docx' else 'secondary', width='stretch')
-                st.caption('下载原稿用于保留原文件；未实现逐项撤销。')
-                st.caption('本轮结果包包含修正版、修改/复查与离线阅读报告、规则及范围；默认不含原稿、页图、日志或论文摘录。单文件下载仍保留。')
-                delta=result['problem_delta']
-                if result.get('impact'):
-                    ic=result['impact']['counts']
-                    st.write(f"稳定对应已解决 {ic['selected_resolved']+ic['natural_resolved']} 条 · 新出现问题 {ic['new_problem']} 条 · 转待复核 {ic['problem_to_review']} 条 · 无法可靠对齐 {ic['unaligned']} 条")
-                else:
-                    st.write(f"已解决 {len(delta['resolved_keys'])} 个 · 原有剩余 {len(delta['remaining_keys'])} 个 · 新出现 {len(delta['new_keys'])} 个")
-                if delta.get('unresolved_review_keys'):
-                    st.warning(f"另有 {len(delta['unresolved_review_keys'])} 个原有问题转为待复核，尚未验证解决。")
-                for cause in delta['new_problem_causes']:st.warning(cause['detail'])
-                st.caption('部分修正允许保留未选问题；下面显示新文件的实际剩余问题与待复核数。')
-                metrics(after, remaining=True)
-                checks = result['preservation']
-                st.markdown('**完整性检查通过**')
-                if result.get('kind')=='caption_position':
-                    st.write('原稿保持不变 · 仅授权题注位置变化 · 所有对象子树与未选部件逐字节核对通过；实际同页未核对')
-                    st.info('段落编号已按XML对象映射重绑；旧选择、布局计划及不匹配预览失效。原稿仅提供渲染预览，不套用移动后的段号。')
-                    with st.expander('范围映射与失效详情'):st.json(result['range_mapping'])
-                else:st.write('原稿保持不变 · 未选格式与文档内容保留核对通过 · 未选包部件字节核对通过；选中故事部件只改格式')
-                required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
-                if not all(checks.get(k) is True for k in required) or not checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal')):
-                    st.error('完整性结果异常，请重新开始。')
-                    st.stop()
-                changes = [{'规则': c['rule_id'], '位置': position(c['locator']), '修改前': field_value(c['before'], c['rule_id'], c['locator']),
-                            '修改后': field_value(c['after'], c['rule_id'], c['locator']), '落盘复查': '符合' if c['verification'] == 'pass' else c['verification'],
-                            **({'分页属性':{'keepNext':'所选段落与后续对象相连','keepLines':'所选段落段内不拆分','tblHeader':'所选连续表头行在后续页重复（实际显示须预览）'}[c['property']]} if c.get('property') in ('keepNext','keepLines','tblHeader') else {})}
-                           for c in result['changes']]
-                with st.expander(f"查看 {len(changes)} 项修改前后值与复查结果"):
-                    st.dataframe(changes, hide_index=True, width='stretch', height=min(600, 36 * len(changes) + 38))
-                if after['rules'].get('kind'):
-                    st.caption('复查使用：'+after['rules']['name']+'；结构版本'+str(after['rules'].get('template_structure_version',2))+'；标题题注仅在扩展模式按该轮确认模板执行，R11固定。' if after['rules']['kind']=='user_confirmed_template' else '复查使用：用户确认的演示规则；此兼容配置只自定义R05/R06，其余规则仍逐项检查。')
-            with st.container(key='report-after'):
-                st.subheader('保存后复查')
-                st.caption(f"第{result['round']['number']}轮输出的落盘复查")
-                st.caption('以下结果由core在新文件保存后重新读取产生，不是内存中的预期格式。')
-                if after['rules'].get('kind'):
-                    sizes=sorted({fmt(f['actual'],'R05') for f in after['findings'] if f['rule_id']=='R05' and f['status']!='not_applicable'})
-                    lines=sorted({fmt(f['actual'],'R06') for f in after['findings'] if f['rule_id']=='R06' and f['status']!='not_applicable'})
-                    st.write('已覆盖普通文字的落盘字号：'+'、'.join(sizes)+'；已覆盖正文的落盘行距：'+'、'.join(lines))
-                if after['rules'].get('kind')=='user_confirmed_template':
-                    with st.expander('查看正文及页面模板落盘实际值'):
-                        rows=[]
-                        for rid in ('R01','R02','R03','R04','R05','R06','R07'):
-                            records=[f for f in after['findings'] if f['rule_id']==rid and f['status']!='not_applicable']
-                            rows.append({'规则':rid,'落盘实际值':'、'.join(sorted({fmt(f['actual'],rid) for f in records})) or '无适用记录','复查状态':'、'.join(sorted({{'pass':'符合','problem':'发现问题','review':'待复核'}[f['status']] for f in records})) or '不适用'})
-                        st.dataframe(rows,hide_index=True,width='stretch')
-                if after['rules'].get('mode')=='extended':
-                    with st.expander('查看标题、图题和表题落盘实际值'):
-                        rows=[]
-                        types=after['coverage']['paragraph_types']
-                        for obj,label in [('heading1','一级标题'),('heading2','二级标题'),('heading3','三级标题'),('figure_caption','图题'),('table_caption','表题')]:
-                            fs=[f for f in after['findings'] if types.get(str(f['locator'].get('paragraph')))==obj]
-                            def actual(prop):
-                                values=[fmt(f['actual'],f['rule_id']) for f in fs if f['locator'].get('property')==prop]
-                                return '、'.join(sorted(set(values))) or '无适用记录'
-                            review_notes=any(types.get(str(n['locator'].get('paragraph')))==obj for n in after['coverage_notes'])
-                            statuses=sorted({{'pass':'符合','problem':'发现问题','review':'待复核','not_applicable':'不适用'}[f['status']] for f in fs}|({'待复核（覆盖提示）'} if review_notes else set()))
-                            rows.append({'对象':label,'中文字体':actual('font_eastAsia'),'字号':actual('size'),'对齐':actual('alignment') if obj.startswith('heading') else '不检查','行距':actual('line') if obj.startswith('heading') else '不检查','属性记录状态':'、'.join(statuses) or '不适用'})
-                        st.caption('取自本轮落盘文件的实际属性；标题/题注西文槽位及具体原因仍在完整报告中，不能据此推导可见版面通过。')
-                        st.dataframe(rows,hide_index=True,width='stretch')
-                with st.expander('保存后全部格式及覆盖详情'):
-                    report_view(after, model.inventory)
-                if result.get('output'):
-                    st.button('以计划最终副本继续' if model.result.get('plan') else '以本轮修正版开始下一轮',on_click=model.next_round,type='primary',width='stretch',
-                              help='明确切换输入，沿用结构保留核对通过且绑定新文件哈希的清单；原稿和各轮文件均保留。')
-
+        changes = [{'规则': c['rule_id'], '位置': position(c['locator']), '修改前': field_value(c['before'], c['rule_id'], c['locator']),
+                    '修改后': field_value(c['after'], c['rule_id'], c['locator']), '落盘复查': '符合' if c['verification'] == 'pass' else c['verification'],
+                    **({'分页属性':{'keepNext':'所选段落与后续对象相连','keepLines':'所选段落段内不拆分','tblHeader':'所选连续表头行在后续页重复（实际显示须预览）'}[c['property']]} if c.get('property') in ('keepNext','keepLines','tblHeader') else {})}
+                   for c in result['changes']]
+        with st.expander(f"查看 {len(changes)} 项修改前后值与复查结果"):
+            st.dataframe(changes, hide_index=True, width='stretch', height=min(600, 36 * len(changes) + 38))
+        if after['rules'].get('kind'):
+            st.caption('复查使用：'+after['rules']['name']+'；结构版本'+str(after['rules'].get('template_structure_version',2))+'；标题题注仅在扩展模式按该轮确认模板执行，R11固定。' if after['rules']['kind']=='user_confirmed_template' else '复查使用：用户确认的演示规则；此兼容配置只自定义R05/R06，其余规则仍逐项检查。')
+    with st.expander('保存后复查 · 详细有效格式'):
+        with st.container(key='report-after'):
+            st.subheader('保存后复查')
+            st.caption(f"第{result['round']['number']}轮输出的落盘复查")
+            st.caption('以下结果由core在新文件保存后重新读取产生，不是内存中的预期格式。')
+            if after['rules'].get('kind'):
+                sizes=sorted({fmt(f['actual'],'R05') for f in after['findings'] if f['rule_id']=='R05' and f['status']!='not_applicable'})
+                lines=sorted({fmt(f['actual'],'R06') for f in after['findings'] if f['rule_id']=='R06' and f['status']!='not_applicable'})
+                st.write('已覆盖普通文字的落盘字号：'+'、'.join(sizes)+'；已覆盖正文的落盘行距：'+'、'.join(lines))
+            if after['rules'].get('kind')=='user_confirmed_template':
+                with st.expander('查看正文及页面模板落盘实际值'):
+                    rows=[]
+                    for rid in ('R01','R02','R03','R04','R05','R06','R07'):
+                        records=[f for f in after['findings'] if f['rule_id']==rid and f['status']!='not_applicable']
+                        rows.append({'规则':rid,'落盘实际值':'、'.join(sorted({fmt(f['actual'],rid) for f in records})) or '无适用记录','复查状态':'、'.join(sorted({{'pass':'符合','problem':'发现问题','review':'待复核'}[f['status']] for f in records})) or '不适用'})
+                    st.dataframe(rows,hide_index=True,width='stretch')
+            if after['rules'].get('mode')=='extended':
+                with st.expander('查看标题、图题和表题落盘实际值'):
+                    rows=[]
+                    types=after['coverage']['paragraph_types']
+                    for obj,label in [('heading1','一级标题'),('heading2','二级标题'),('heading3','三级标题'),('figure_caption','图题'),('table_caption','表题')]:
+                        fs=[f for f in after['findings'] if types.get(str(f['locator'].get('paragraph')))==obj]
+                        def actual(prop):
+                            values=[fmt(f['actual'],f['rule_id']) for f in fs if f['locator'].get('property')==prop]
+                            return '、'.join(sorted(set(values))) or '无适用记录'
+                        review_notes=any(types.get(str(n['locator'].get('paragraph')))==obj for n in after['coverage_notes'])
+                        statuses=sorted({{'pass':'符合','problem':'发现问题','review':'待复核','not_applicable':'不适用'}[f['status']] for f in fs}|({'待复核（覆盖提示）'} if review_notes else set()))
+                        rows.append({'对象':label,'中文字体':actual('font_eastAsia'),'字号':actual('size'),'对齐':actual('alignment') if obj.startswith('heading') else '不检查','行距':actual('line') if obj.startswith('heading') else '不检查','属性记录状态':'、'.join(statuses) or '不适用'})
+                    st.caption('取自本轮落盘文件的实际属性；标题/题注西文槽位及具体原因仍在完整报告中，不能据此推导可见版面通过。')
+                    st.dataframe(rows,hide_index=True,width='stretch')
+            with st.expander('保存后全部格式及覆盖详情'):
+                report_view(after, model.inventory)
 
 def render_advanced():
     files=model.downloads() if model.result else {}
@@ -378,13 +377,7 @@ elif step==2:
     if model.report:st.button('前往查看问题',on_click=go,args=(3,),type='primary',width='stretch')
 elif step==3:
     st.header('查看问题')
-    summary=model.report['summary']
-    cols=st.columns(3)
-    for c,l,v in zip(cols,['发现格式问题','其中可修正项','待复核（含覆盖提示）'],[summary['problem_count'],len(model.eligible()),summary['review_count']]):c.metric(l,v)
-    st.caption('以上为当前处理输入的格式规则结果；宽度风险、分页建议分别列示，不合并为合格分数。')
-    st.button('前往修正预演',on_click=go,args=(4,),disabled=not model.selected,key='problems-to-preview',type='primary')
-    render_center(model)
-    render_selection()
+    render_center(model,render_selection)
     with st.expander('格式覆盖、题注、引文及目录的完整明细'):
         report_view(model.report,model.inventory)
         from web.caption_ui import render_caption_report
@@ -410,16 +403,16 @@ elif step==4:
     st.header('修正预演')
     st.write(f"当前输入：{'原稿' if model.current_round==0 else '第'+str(model.current_round)+'轮'} → 明确选择 {len(model.selected)} 项 → 预演副本（采用后才成为正式轮次）")
     st.button('返回问题与修改选择',on_click=go,args=(3,))
-    if model.selected:
-        with st.expander(f'本次明确选择：全部 {len(model.selected)} 项（含筛选外）',expanded=True):
-            lookup={f['key']:f for f in model.eligible()}
-            st.dataframe([{'位置':position(lookup[k]['locator']),'规则':lookup[k]['rule_id'],'将修改的属性及要求':field_value(lookup[k]['expected'],lookup[k]['rule_id'],lookup[k]['locator'],True)} for k in model.selected if k in lookup],hide_index=True,width='stretch',height=180)
-        for warning in model.report.get('modification_dependencies',[]):
-            if set(warning['trigger_keys']) & set(model.selected):st.warning(warning['detail'])
     if not model.selected:st.info('请先在问题中心明确选择可修正项。不会默认全选或追加依赖项。')
     else:
         from web.rehearsal_ui import render_rehearsal
         render_rehearsal(model)
+    if model.selected:
+        with st.expander(f'本次明确选择：全部 {len(model.selected)} 项（含筛选外）',expanded=False):
+            lookup={f['key']:f for f in model.eligible()}
+            st.dataframe([{'位置':position(lookup[k]['locator']),'规则':lookup[k]['rule_id'],'将修改的属性及要求':field_value(lookup[k]['expected'],lookup[k]['rule_id'],lookup[k]['locator'],True)} for k in model.selected if k in lookup],hide_index=True,width='stretch',height=180)
+        for warning in model.report.get('modification_dependencies',[]):
+            if set(warning['trigger_keys']) & set(model.selected):st.warning(warning['detail'])
     with st.expander('高级兼容：不经预演直接生成'):
         st.caption('使用同一修正器；无法提前查看实际关联影响。')
         st.button('生成修正版',disabled=not model.selected or model.result is not None,on_click=run_fix,width='stretch')
@@ -435,9 +428,6 @@ elif step==5:
     render_preview_panel(model)
     with st.expander('历史与中间副本（查看不会切换输入）'):
         render_history(model)
-        if model.result and model.result.get('plan'):
-            for i,item in enumerate(model.plan_step_downloads(),1):
-                st.download_button(f'下载计划第{i}步DOCX',item['fixed.docx'],file_name=f'计划第{i}步.docx',on_click='ignore',key='result-step-'+str(i))
     render_project(model)
 
 from web.workflow_ui import finish_navigation
