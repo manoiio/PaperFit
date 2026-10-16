@@ -18,6 +18,7 @@
 | [result.zip](result.zip) | 正式结果包：最终DOCX、真实报告、配置和范围，不含原稿/页图 |
 | [project.zip](project.zip) / [draft-project.zip](draft-project.zip) | 单轮已确认项目与未确认草稿，用于恢复重新检查；包含合成论文 |
 | [browser-project.zip](browser-project.zip) | 网页两轮项目，实际重启导入恢复验证；旧页图和预演授权不恢复 |
+| [clean-reproduction.json](clean-reproduction.json) | 最终干净目录1192项、源码绑定与离线复现记录 |
 | [efficiency.json](efficiency.json) / [measurements.json](measurements.json) | 原始计时、3次索引/重复查询测量；不是用户等待或提速百分比 |
 | [browser-acceptance.json](browser-acceptance.json) / [visual-record.json](visual-record.json) | 真实浏览器及本轮Word/LibreOffice观察，分别报告 |
 | [pages/errors-1.png](pages/errors-1.png) / [pages/correct-1.png](pages/correct-1.png) / [pages/final-1.png](pages/final-1.png) | 真实DOCX渲染的全部页面，非手绘或网页HTML表格 |

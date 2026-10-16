@@ -130,17 +130,20 @@ def _build(pkg):
   # Unknown containers can conceal targets. Do not turn not-found into a proved absence.
   if root.xpath('.//w:txbxContent|.//w:altChunk|.//w:subDoc|.//w:ins|.//w:del|.//w:moveFrom|.//w:moveTo',namespaces=NS):issues.append({'part':part,'reason':'文本框、修订或外部内容未完整解释，缺失目标仅待复核'})
   if root.xpath('.//mc:AlternateContent',namespaces={'mc':'http://schemas.openxmlformats.org/markup-compatibility/2006'}):issues.append({'part':part,'reason':'兼容条件分支尚未选择，不能证明目标清单完整或授权内部链接文字修正'})
+  canonical_id=re.compile(r'(?:0|[1-9][0-9]{0,9})\Z')
+  if any(not canonical_id.fullmatch(e.get(q('id'),'')) for e in ordered if e.tag in (q('bookmarkStart'),q('bookmarkEnd'))):issues.append({'part':part,'reason':'书签ID含非规范ASCII整数形式；可能存在数字别名，首版不证明边界唯一'})
   starts=defaultdict(list);ends=defaultdict(list)
   for e in root.iter(q('bookmarkStart')):starts[e.get(q('id'))].append(e)
   for e in root.iter(q('bookmarkEnd')):ends[e.get(q('id'))].append(e)
   for ident,es in starts.items():
    for e in es:
     name=e.get(q('name'));reason=None;matches=ends[ident]
-    if ident is None or not re.fullmatch(r'\d{1,10}',ident) or len(es)!=1 or len(matches)!=1:reason='书签ID或开始/结束边界缺失、重复'
+    if ident is None or not canonical_id.fullmatch(ident) or len(es)!=1 or len(matches)!=1:reason='书签ID或开始/结束边界缺失、重复'
     elif order[e]>=order[matches[0]]:reason='结束边界未位于开始之后'
     elif any(e.get(q(x)) is not None for x in ('colFirst','colLast')):reason='表格列/非连续书签首版待复核'
     elif root.tag in (q('footnote'),q('endnote')) and root.get(q('type'),'normal')!='normal':reason='系统注释分隔对象中的书签不作为普通跳转目标'
     elif (part,owner) in unsafe_stories:reason='注释故事引用关系异常，目标待复核'
+    elif set(e.attrib)-{q('id'),q('name')} or set(matches[0].attrib)-{q('id')}:reason='书签边界含未解释属性，不推测位移或其他语义'
     elif not name or not NAME.fullmatch(name):reason='名称不在首版明确ASCII名称范围（不猜测匹配）'
     elif any(a.tag in {q(x) for x in ('txbxContent','ins','del','moveFrom','moveTo')} for el in (e,matches[0]) for a in el.iterancestors()):reason='书签边界位于未解释复杂结构'
     bookmarks.append({'name':name,'id':ident,'location':loc(e),'end_location':loc(matches[0]) if len(matches)==1 else None,'valid_boundary':reason is None,'reason':reason or '同一故事内按ID唯一配对，边界顺序有效'})

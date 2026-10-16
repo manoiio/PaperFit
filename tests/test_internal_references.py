@@ -54,6 +54,15 @@ class InternalReferenceTests(TestCase):
   def fn(p):
    para=p.paragraphs[1];end=para.find(q('bookmarkEnd'));para.remove(end);para.insert(0,end)
   p=self.altered(fn);self.assertEqual(resolve_target(p,'_TocTarget')['state'],'review')
+  # Lexically distinct IDs can be numeric aliases. Never use raw string uniqueness
+  # to authorize a target in such a document; non-ASCII forms also stay review.
+  for ident in ('01','١'):
+   def alias(p):
+    bookmark(p.paragraphs[4],'NumericAlias',5)
+    for e in p.paragraphs[4]:
+     if e.tag in (q('bookmarkStart'),q('bookmarkEnd')) and e.get(q('id'))=='5':e.set(q('id'),ident)
+   p=self.altered(alias);self.assertFalse(inventory(p)['complete']);self.assertEqual(resolve_target(p,'_TocTarget')['state'],'review');self.assertEqual(resolve_target(p,'NumericAlias')['state'],'review')
+  p=self.altered(lambda p:p.paragraphs[1].find(q('bookmarkStart')).set(q('displacedByCustomXml'),'next'));self.assertEqual(resolve_target(p,'_TocTarget')['state'],'review')
  def test_case_not_guessed_and_underscore_not_filtered(self):
   self.assertEqual(resolve_target(self.pkg,'_toctarget')['state'],'review');self.assertEqual(resolve_target(self.pkg,'_TocTarget')['state'],'pass')
  def test_unknown_name_and_table_column_bounds_review(self):

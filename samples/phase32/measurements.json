@@ -12,20 +12,20 @@
       "reference_positions": 12,
       "trials": [
         {
-          "index_seconds": 0.0020426659611985087,
-          "10000_lookup_seconds": 0.012255624984391034
+          "index_seconds": 0.0022162500536069274,
+          "10000_lookup_seconds": 0.01303208398167044
         },
         {
-          "index_seconds": 0.00120133301243186,
-          "10000_lookup_seconds": 0.01278587500564754
+          "index_seconds": 0.001271083950996399,
+          "10000_lookup_seconds": 0.013520041946321726
         },
         {
-          "index_seconds": 0.0011496249353513122,
-          "10000_lookup_seconds": 0.012603166978806257
+          "index_seconds": 0.0012613340513780713,
+          "10000_lookup_seconds": 0.013277666992507875
         }
       ],
-      "median_index_seconds": 0.00120133301243186,
-      "median_10000_lookup_seconds": 0.012603166978806257
+      "median_index_seconds": 0.001271083950996399,
+      "median_10000_lookup_seconds": 0.013277666992507875
     },
     {
       "kind": "1000_extra_targets",
@@ -35,20 +35,20 @@
       "reference_positions": 1012,
       "trials": [
         {
-          "index_seconds": 0.049819333013147116,
-          "10000_lookup_seconds": 0.012640333035960793
+          "index_seconds": 0.05314420803915709,
+          "10000_lookup_seconds": 0.013596792006865144
         },
         {
-          "index_seconds": 0.049401332973502576,
-          "10000_lookup_seconds": 0.013101959018968046
+          "index_seconds": 0.054421417065896094,
+          "10000_lookup_seconds": 0.013763915980234742
         },
         {
-          "index_seconds": 0.048153333947993815,
-          "10000_lookup_seconds": 0.012582959025166929
+          "index_seconds": 0.05441712494939566,
+          "10000_lookup_seconds": 0.013642958947457373
         }
       ],
-      "median_index_seconds": 0.049401332973502576,
-      "median_10000_lookup_seconds": 0.012640333035960793
+      "median_index_seconds": 0.05441712494939566,
+      "median_10000_lookup_seconds": 0.013642958947457373
     }
   ],
   "scope": "本地函数，不是浏览器等待；每组3次，首次索引与重复查询分别计时",

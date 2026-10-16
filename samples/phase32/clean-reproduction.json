@@ -8,7 +8,7 @@
   },
   "final_clean_suite": {
     "tests": 1192,
-    "seconds": 164.339,
+    "seconds": 164.37,
     "status": "passed",
     "python_sources_match_current": true,
     "excluded": [
@@ -37,5 +37,11 @@
     "seconds": 163.137,
     "status": "passed"
   },
-  "conditional_branch_regression": "未选择的mc:AlternateContent不证明目标完整或授权修正"
+  "conditional_branch_regression": "未选择的mc:AlternateContent不证明目标完整或授权修正",
+  "previous_clean_suite_1192": {
+    "tests": 1192,
+    "seconds": 164.339,
+    "status": "passed"
+  },
+  "boundary_subcases": "数字别名/非ASCII ID词法及未知边界属性保持待复核"
 }
