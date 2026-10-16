@@ -1,0 +1,25 @@
+{
+  "docx_bytes_equal": true,
+  "all_zip_members_equal": true,
+  "sha256": "067698266f34941b74036484bf9fd2554b1a184394fd821a0f5907c616968be2",
+  "bytes": 38735,
+  "zip_members": 18,
+  "scope": "same existing input, rules, scope and explicit choices; website layout only",
+  "selected": [
+    "R05:paragraph=4:run=2"
+  ],
+  "changes": 1,
+  "remaining": {
+    "rule_count": 7,
+    "problem_count": 10,
+    "review_count": 0,
+    "review_findings": 0,
+    "review_notes": 0,
+    "pass_count": 23,
+    "not_applicable_count": 7,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 7
+  },
+  "api_requests": 0,
+  "render_requests": 0
+}

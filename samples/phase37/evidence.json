@@ -1,0 +1,95 @@
+{
+  "baseline": "53ce2d2",
+  "regression_baseline": 1213,
+  "initial_full_suite": {
+    "tests": 1217,
+    "seconds": 182.06,
+    "result": "passed"
+  },
+  "intermediate_clean_suite": {
+    "tests": 1217,
+    "seconds": 182.557,
+    "result": "passed"
+  },
+  "final_clean_suite": {
+    "tests": 1217,
+    "seconds": 183.864,
+    "result": "passed",
+    "no_historical_work_outputs": true
+  },
+  "ui_tests": {
+    "tests": 25,
+    "seconds": 12.135,
+    "result": "passed"
+  },
+  "api_requests": 0,
+  "render_requests": 0,
+  "environment": {
+    "os": "Darwin",
+    "os_version": "27.0.1",
+    "python": "3.14.5",
+    "streamlit": "1.65.0"
+  },
+  "portable_reproductions": {
+    "reader_workflow": "passed",
+    "rehearsal_demo": "passed",
+    "plan_demo": "passed",
+    "editing_workflow": "passed"
+  },
+  "browser": {
+    "tool": "real Chrome through Playwright CLI; no private session_state injection",
+    "viewports": [
+      [
+        1280,
+        720
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "page_level_horizontal_overflow": false,
+    "fresh_input_never_mislabels_invalidation": true,
+    "actual_single_fix_rehearsal_adopt_download": true,
+    "actual_11_fix_rehearsal_adopt_download": true,
+    "filter_outside_selection_retained": 11,
+    "scope_edit_invalidates_old_check_and_rehearsal": true,
+    "explicit_continue_changes_input": true,
+    "history_view_never_switches_input": true,
+    "zero_format_problems_with_review_count": 3,
+    "empty_selection_never_runs_fix": true,
+    "two_independent_contexts": true,
+    "project_saved_then_service_restarted_then_restored_and_rechecked": true,
+    "restored_report_problem_count": 11,
+    "restored_adoption_authorization_count": 0,
+    "historical_restore_note_after_new_file_explicitly_labelled": true
+  },
+  "final_executable_sha256": {
+    "app.py": "e4e9fa735fe6a717b130e8f2982195f905d47a517cf7b124b6cb6424354def03",
+    "web/workflow_ui.py": "23133e6d00836daf249e1c0798112e4d68cd2f1372d040f838975959d15296c2",
+    "web/workspace_status.py": "07829dcc6e9615e782d8153377583ba3fe050b1fbd0e34fbc3c13d0c4fdf0a45",
+    "web/center_ui.py": "44d68828f7e65bcee1fbeb0e136c34ee47ae995adb010ef62c3a2e5d4e441a30",
+    "web/scope_ui.py": "3f0accfe4cc13d09d9c75a3ec1351ca0a17a94ddbcfbe67c1b832a4b27ab6e39",
+    "web/rehearsal_ui.py": "fae256cd79bd8de82be368b13efd683e2e08995f110668899ea2ac5cda84b18f",
+    "web/preview_ui.py": "ea4ba817dd8f088c5b378417a029010068283b44df1a3a38e6fcd73b7ad2639d",
+    "web/project_ui.py": "d95e032a28ac05c9e2265ff6f9004bce7b200566359e0ca6d73dc91f15123998",
+    "tests/test_workspace_status.py": "65beb11a2008d5ae7de2ab2d4720860e11febaf2d568d547c9b24ac503b258c2"
+  },
+  "screenshots": {
+    "screens/after-empty-1280.png": "a7818995981242b3c61ecc3829e36937166faef31ef31ea544d7c6d5528b5fd0",
+    "screens/after-empty-1440.png": "a39190e7b3ef2bb56db2fa8aceeda12741f5054a864cdaffaf5f03bbcdd90865",
+    "screens/after-loaded-1280.png": "e3e59105951dab0911e239996a456f11bec4dcd552b5614dbd3717306fdcece1",
+    "screens/after-output-1280.png": "32fa2086dedacb30f01f12161234a8538a6c022ecaf4586a87d5cd4c82c06972",
+    "screens/after-output-1440.png": "800096dbde368b0312d08d67e4cea705b446f6a43cf7a64e6c723caa3b9eac08",
+    "screens/after-problems-1280.png": "7f8410d2627436a3c8eeb98cae585b7cfc976904b503d9aef54fa6922118888b",
+    "screens/after-rehearsal-1280.png": "ca8008260d44d194c41c232557f78c0aebdcadcfa67b882fa745c0496b1515fa",
+    "screens/after-rehearsal-1440.png": "57e7d8a7e527f2a8ed4f409b1993ec9030fdf0adacb18e55c142e59f610f4d3f",
+    "screens/before-empty-1280.png": "bf358810ccc15a80fc78517fa92100720d7c8a0926fd0c6501183d479f23f399",
+    "screens/before-loaded-1280.png": "1aebb7b8417a26d68b443079f01ae613a1c6568b135d34c5b989f719432914e3",
+    "screens/before-output-1280.png": "6c964da31829a920f7d293ddae1eabd7837637f26d9610ca279cf1699b1709f6",
+    "screens/before-problems-1280.png": "77e310309957f54863d2ed5987278f7b7bf88854998313ed43a42f61ccc83bfc",
+    "screens/before-rehearsal-1280.png": "0b34963cacad6958337c3ca0c597c7e06847f85d7166e633a5e9a3b10710f6aa",
+    "screens/invalidated-1280.png": "ca31544f32d404929928c1454fdcabfbe483804e843e65ff52eb67497bab6e97",
+    "screens/zero-problems-review-1440.png": "28d1bf0c97b98b7d705df23a5ed6601ba019686d532e940964ed852e2b5d3bb4"
+  }
+}

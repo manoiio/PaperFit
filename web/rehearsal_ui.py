@@ -26,7 +26,10 @@ def render_rehearsal(model):
         imp=view['impact'];counts=imp['counts']
         render_impact_summary(imp,len(view['selected']),imp['change_record_count'],'single-impact')
         quick_changes(view['changes'])
-        if adopted:st.success(f'此预演已登记为第{adopted}轮，当前输入尚未自动切换。')
+        if adopted:
+            from .workspace_status import output_relation
+            st.success(f'此预演已登记为第{adopted}轮。')
+            st.write(output_relation(model,adopted))
         else:
             st.caption('采用授权涵盖全部明确选择。请同时核对下方完整清单、风险及原始记录；不是视觉验收。')
             ack=st.checkbox('我已核对全部所选修改、关联影响及剩余事项，确认采用这一副本',key='rehearsal-ack-'+view['id']+'-'+view['binding'])

@@ -141,7 +141,10 @@ def render_preview_panel(model):
                 anchor=' id="preview-operations"' if side in ('single','left') else ''
                 st.html('<div'+anchor+' class="reader-label" title="'+escape(target_label(model,targets,key,True),quote=True)+'">'+escape(label(key))+f' · 第{page}页</div>')
                 absence=page_absence(previews[key],page)
-                if absence:st.info(absence)
+                if absence and not previews[key]:
+                    from .workflow_ui import empty_state
+                    empty_state('尚未生成此文件的有效预览', '点击上方生成页面预览后再查看。切换文件不会自动渲染；LibreOffice页图不等于Word分页验收。')
+                elif absence:st.info(absence)
                 else:st.image(previews[key]['pages'][page-1],width='stretch')
     st.caption('正在查看的文件独立于当前处理输入；生成页图不代表已完成视觉验收。字体替代、环境和人工记录见“预览详情与人工观察记录”。')
     others=[i for i,r in model.preview_jobs.items() if r['epoch']==model.preview_epoch and r['key'] not in selected and not r['accepted'] and model.preview_job_status(i)['state'] in ('queued','running','succeeded')]

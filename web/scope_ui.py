@@ -17,7 +17,7 @@ def render_scope_overview(model, compact=False):
                 for col,r in zip(st.columns(2),shown[i:i+2]):
                     with col.container(border=True):
                         st.markdown('**'+r['name']+'**')
-                        st.write(('已启用' if r['enabled'] else '未启用')+' · '+('有可用要求' if r['configured'] else '格式未配置')+' · '+('确认有效' if r['confirmed'] else '待核对 / 已失效'))
+                        st.write(('已启用' if r['enabled'] else '未启用')+' · '+('有可用要求' if r['configured'] else '格式未配置')+' · '+('确认有效' if r['confirmed'] else '尚需核对确认'))
                         st.caption(f"草稿纳入 {r['selected']} · 排除/保护 {r['excluded']} · 待核对 {r['pending']} · {r['unit']}")
                         if r['blocked']:st.error('存在预检阻止项')
                         def enter(area=r['area']):
@@ -27,11 +27,11 @@ def render_scope_overview(model, compact=False):
             with st.expander('检测数量、对象口径与完整状态表'):
                 st.dataframe([{'区域':r['name'],'启用':'是' if r['enabled'] else '否','格式要求':'有可用要求' if r['configured'] else '未配置',
                                '检测数量':str(r['detected']) if r['detected'] is not None else '未知','数量口径':r['unit'],'草稿纳入':r['selected'],'排除/保护':r['excluded'],
-                               '待核对':str(r['pending']) if r['pending'] is not None else '未知','当前确认':'有效' if r['confirmed'] else '未确认或已失效','预检':r['status']} for r in pre['areas']],hide_index=True,width='stretch')
+                               '待核对':str(r['pending']) if r['pending'] is not None else '未知','当前确认':'有效' if r['confirmed'] else '当前未确认','预检':r['status']} for r in pre['areas']],hide_index=True,width='stretch')
         else:
             st.dataframe([{'区域':r['name'],'启用':'是' if r['enabled'] else '否','格式要求':'有可用要求' if r['configured'] else '未配置',
                            '检测数量':str(r['detected']) if r['detected'] is not None else '未知','数量口径':r['unit'],'草稿纳入':r['selected'],'排除/保护':r['excluded'],
-                           '待核对':str(r['pending']) if r['pending'] is not None else '未知','当前确认':'有效' if r['confirmed'] else '未确认或已失效','预检':r['status']} for r in pre['areas']],hide_index=True,width='stretch')
+                           '待核对':str(r['pending']) if r['pending'] is not None else '未知','当前确认':'有效' if r['confirmed'] else '当前未确认','预检':r['status']} for r in pre['areas']],hide_index=True,width='stretch')
         st.caption('检测数量是本模块清单/线索数量：封面是可定位对象而非已填写字段；目录是候选线索而非确认条目；引文只扫描当前草稿正文。不同口径不能相加，也不是覆盖率。')
         if pre['blockers']:
             st.error(f"预检发现{len(pre['blockers'])}项阻止记录，请先修改草稿；尚未执行格式检查。")

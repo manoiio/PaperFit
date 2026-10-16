@@ -1,11 +1,12 @@
 """Presentation-only five-step navigation. No engine, scope or adoption decisions."""
 from html import escape
+from .workspace_status import check_status, input_label, latest_output, pending_rehearsal, view_label
 import streamlit as st
 
 STEPS={1:'文档与要求',2:'确认检查范围',3:'查看问题',4:'修正预演',5:'结果与下载'}
 # Explicit editor-only keepalive. Never retain acknowledgements, actions, uploads,
 # data-editor patches or execution authorization. Business drafts remain on model.
-EDITOR_PREFIXES=('reader-mode-','reader-file-','reader-left-','reader-right-','reader-page-number-','reader-section-','class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
+EDITOR_PREFIXES=('history-object-','history-view-','reader-mode-','reader-file-','reader-left-','reader-right-','reader-page-number-','reader-section-','class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
  'wb-policy-','wb-name-','wb-text-','tpl-value-','tpl-mode-','template-name-',
  'norm-text-','norm-encoding','center-category-','center-status-','center-order-',
  'problem-detail-','center-range-','center-search-','center-type-','center-page-','object-detail-',
@@ -35,43 +36,56 @@ def availability(model):
             4:model.report is not None,5:model.report is not None or bool(model.history)}
 
 CSS='''<style>
-.stApp {background:#f4f6f9;color:#182b41;}
-.block-container {max-width:1200px;padding-top:3.7rem;padding-bottom:3rem;}
-h1 {font-size:1.3rem !important;font-weight:700;color:#183650;}
-h2 {font-size:1.2rem !important;color:#183650;}
-h3 {font-size:1.12rem !important;}
-[data-testid="stVerticalBlockBorderWrapper"] {border-radius:12px;background:white;}
-[data-testid="stExpander"] {background:white;border-radius:10px;}
-[data-testid="stMetricValue"] {font-size:1.8rem;color:#204c79;}
-[data-testid="stCaptionContainer"] {font-size:.88rem;color:#536477;}
-.st-key-workspace-nav button {min-height:36px;border-radius:9px;font-size:.92rem;}
-.st-key-file-summary {padding:.35rem .7rem;border:1px solid #dce3eb;border-radius:10px;background:white;margin-bottom:.2rem;}
-.st-key-document-card {background:white;border-radius:12px;}
-.st-key-workspace-nav {margin:0 0 .2rem;}
+:root {--pf-ink:#182e45;--pf-muted:#4c6073;--pf-blue:#204c79;--pf-line:#d9e2ec;--pf-surface:#fff;--pf-radius:10px;}
+.stApp {background:#f3f5f8;color:var(--pf-ink);}
+.block-container {max-width:1200px;padding-top:3.5rem;padding-bottom:3rem;}
+h1 {font-size:1.35rem !important;font-weight:750;color:var(--pf-ink);}
+h2 {font-size:1.3rem !important;font-weight:700;color:var(--pf-ink);letter-spacing:.01em;}
+h3 {font-size:1.08rem !important;color:var(--pf-ink);}
+[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p {font-size:.9rem;color:var(--pf-muted);line-height:1.6;}
+[data-testid="stVerticalBlockBorderWrapper"], [data-testid="stExpander"] {border-radius:var(--pf-radius);background:var(--pf-surface);border-color:var(--pf-line);}
+[data-testid="stButton"] button, [data-testid="stDownloadButton"] button, [data-testid="stPopover"] button {min-height:40px;border-radius:8px;}
+[data-testid="stBaseButton-primary"] {background:var(--pf-blue);border-color:var(--pf-blue);color:white;}
+[data-testid="stMetricValue"] {font-size:1.8rem;color:var(--pf-blue);}
+.st-key-workspace-nav button {min-height:38px;border-radius:8px;font-size:.9rem;}
+.st-key-workspace-nav {margin:0 0 .3rem;}
+.st-key-workspace-header {gap:.35rem;}
+.st-key-workspace-header h1 {padding:0;margin:0;line-height:1.7;}
+.st-key-workspace-header h1::before {content:"▤";display:inline-block;color:var(--pf-blue);margin-right:.5rem;font-size:1.25rem;}
+.st-key-workspace-header [data-testid="stHorizontalBlock"] {align-items:center;}
+.compact-file {display:flex;gap:.35rem 1rem;align-items:center;flex-wrap:wrap;font-size:14px;line-height:1.6;}
+.compact-file .file-state {font-weight:650;border-radius:5px;padding:.1rem .45rem;background:#eaf0f7;color:#204c79;}
+.compact-file .attention {color:#874b12;background:#fff1dc;}
+.compact-file .neutral {color:#354c61;background:#e9edf2;}
+.file-identities {font-size:14px;color:var(--pf-muted);display:flex;gap:.3rem 1rem;flex-wrap:wrap;}
+.workspace-hint {font-size:14px;color:#344d65;padding:.35rem .6rem;border-left:3px solid #8ca8c4;background:#ecf1f7;line-height:1.5;}
+.empty-state {border:1px solid var(--pf-line);border-left:3px solid #8ca8c4;border-radius:var(--pf-radius);background:white;padding:.85rem 1rem;margin:.15rem 0 .5rem;}
+.empty-state strong {font-size:1rem;color:var(--pf-ink);}
+.empty-state p {margin:.3rem 0 0;color:var(--pf-muted);line-height:1.65;font-size:.95rem;overflow-wrap:anywhere;}
 .report-scroll {overflow-x:auto;}
 .report-table {border-collapse:collapse;width:100%;font-size:14px;line-height:1.6;}
-.report-table td,.report-table th {padding:9px;border-bottom:1px solid #e1e7ee;text-align:left;overflow-wrap:anywhere;}
-.report-table th {background:#edf2f7;color:#183650;}
+.report-table td,.report-table th {padding:9px;border-bottom:1px solid var(--pf-line);text-align:left;overflow-wrap:anywhere;}
+.report-table th {background:#edf2f7;color:var(--pf-ink);}
 [id^="scope-"] {scroll-margin-top:80px;}
-
-.st-key-workspace-header {gap:.25rem;}
-.st-key-workspace-header h1 {padding:0;margin:0;line-height:1.6;}
-.st-key-workspace-header [data-testid="stHorizontalBlock"] {align-items:center;}
-.compact-file {display:flex;gap:1rem;align-items:center;flex-wrap:wrap;font-size:14px;}
-.compact-file .file-state {font-weight:600;color:#234f75;}
-.compact-stats {display:flex;gap:1.2rem;justify-content:space-between;padding:.5rem .75rem;background:white;border:1px solid #dce3eb;border-radius:9px;margin:.2rem 0 .35rem;}
+.compact-stats {display:flex;gap:.5rem 1.2rem;flex-wrap:wrap;justify-content:space-between;padding:.55rem .8rem;background:white;border:1px solid var(--pf-line);border-radius:var(--pf-radius);margin:.2rem 0 .35rem;}
 .compact-stats div {display:flex;gap:.45rem;align-items:baseline;}
 .compact-stats span {font-size:14px;color:#3b5065;}
-.compact-stats strong {font-size:21px;color:#204c79;}
-.comparison-card {border:1px solid #dce3eb;border-radius:9px;padding:.65rem .8rem;background:white;font-size:15px;overflow-wrap:anywhere;}
+.compact-stats strong {font-size:21px;color:var(--pf-blue);}
+.comparison-card {border:1px solid var(--pf-line);border-radius:var(--pf-radius);padding:.75rem .9rem;background:white;font-size:15px;overflow-wrap:anywhere;}
 .comparison-card > p {margin:.4rem 0 0;}
 .comparison-card header {display:flex;justify-content:space-between;gap:.5rem;margin-bottom:.4rem;}
-.comparison-card header span {font-size:13px;color:#4e6478;}
+.comparison-card header span {font-size:14px;color:var(--pf-muted);}
 .value-pair {display:grid;grid-template-columns:1fr 22px 1fr;gap:.4rem;align-items:center;}
-.value-pair p {margin:.15rem 0;font-weight:600;color:#183650;}
-.value-pair small {color:#405970;font-size:13px;}
+.value-pair p {margin:.15rem 0;font-weight:600;color:var(--pf-ink);}
+.value-pair small {color:var(--pf-muted);font-size:13px;}
 .change-reason {margin:.4rem 0;color:#2e4357;font-size:14px;}
 </style>'''
+
+
+def empty_state(title, detail):
+    """Untrusted text stays text; no business action or implicit completion."""
+    st.html('<div class="empty-state"><strong>'+escape(title)+'</strong><p>'+escape(detail)+'</p></div>')
+
 
 def shell(model,restart):
     st.markdown(CSS,unsafe_allow_html=True)
@@ -90,6 +104,14 @@ def shell(model,restart):
     ready=availability(model)
     step=st.session_state.get('workspace-step',1)
     if not ready.get(step):step=2 if model.inventory else 1;go(step)
+    # Observed UI history never grants authority. New task/input/round starts unseen.
+    seen_key=(str(model.task_dir),(model.inventory or {}).get('input_sha256'),model.current_round)
+    if st.session_state.get('workspace-observed-input')!=seen_key:
+        st.session_state['workspace-observed-input']=seen_key
+        st.session_state['workspace-observed-check']=False
+    if model.report is not None and model.confirmed is not None:
+        st.session_state['workspace-observed-check']=True
+    state,tone=check_status(model,st.session_state.get('workspace-observed-check',False))
     with st.container(key='workspace-header'):
         title,details,project,reset=st.columns([5,1,1.4,1.2])
         title.title('论文有格')
@@ -104,18 +126,24 @@ def shell(model,restart):
         project.button('保存 / 恢复',on_click=project_entry,width='stretch')
         reset.button('重新开始',on_click=restart,width='stretch')
         if model.inventory:
-            current='原稿' if model.current_round==0 else f'第{model.current_round}轮副本'
+            current=input_label(model)
             rule=model.current_rule_bundle()['name'] if model.mode=='academic' else model.active_template['name'] if model.active_template else '2015学校演示规则'
             name=model.display_name if len(model.display_name)<=38 else model.display_name[:35]+'…'
             rule_short=rule if len(rule)<=22 else rule[:21]+'…'
-            state='检查有效' if model.report and model.confirmed else '范围待核对 / 旧检查已失效'
-            output=f" · 另有第{model.result['round']['number']}轮输出，尚未切换" if model.result else ' · 有预演副本，未采用' if model.rehearsal else ''
-            st.html('<div class="compact-file"><b title="'+escape(model.display_name,quote=True)+'">'+escape(name)+'</b><span>当前输入：'+escape(current)+'</span><span title="'+escape(rule,quote=True)+'">规则：'+escape(rule_short)+'</span><span class="file-state">'+escape(state+output)+'</span></div>')
-        else:st.caption('本地处理 Word 论文 · 文档 → 范围 → 问题 → 预演 → 结果')
+            st.html('<div class="compact-file"><b title="'+escape(model.display_name,quote=True)+'">'+escape(name)+'</b><span>当前输入：'+escape(current)+'</span><span title="'+escape(rule,quote=True)+'">规则：'+escape(rule_short)+'</span><span class="file-state '+tone+'">'+escape(state)+'</span></div>')
+            output=latest_output(model)
+            viewed=view_label(model,step,st.session_state)
+            labels=([output['label']] if output else [])+(['查看目标：'+viewed] if viewed else [])
+            if pending_rehearsal(model) and step!=4:labels.append('已有预演记录 · 尚未采用，采用前仍须核对')
+            if labels:st.html('<div class="file-identities">'+''.join('<span>'+escape(label)+'</span>' for label in labels)+'</div>')
+        else:st.caption('本地检查与选择修正 Word 格式 · 当前尚未载入文件')
     with st.container(key='workspace-nav'):
         for col,(n,label) in zip(st.columns(5),STEPS.items()):
-            status='当前' if n==step else '暂不可用' if not ready[n] else '已检查' if n==2 and model.report else '已有结果' if n==5 and model.result else '可查看' if n<step else '待处理'
-            col.button(f'{n} {label} · {status}',key=f'workspace-nav-{n}',disabled=not ready[n],type='primary' if step==n else 'secondary',on_click=go,args=(n,),width='stretch')
+            status='当前' if n==step else ('需载入' if n==2 else '需检查' if n in (3,4) else '需记录') if not ready[n] else '已确认' if n==2 and model.confirmed else '有记录' if n==3 and model.report else '有记录' if n==5 and model.history else '可进入'
+            missing='先载入DOCX。' if n==2 else '先核对范围并完成检查。' if n in (3,4) else '先完成检查，或恢复含历史的项目。'
+            col.button(f'{n} {label} · {status}',key=f'workspace-nav-{n}',disabled=not ready[n],help=missing if not ready[n] else '仅切换查看区域，不确认、不执行、不切换输入。',type='primary' if step==n else 'secondary',on_click=go,args=(n,),width='stretch')
+    if st.session_state.get('workspace-observed-check') and model.inventory and model.report is None:
+        st.html('<div class="workspace-hint">下一步：核对当前要求与范围，再明确确认并重新检查。旧记录不用于当前操作。</div>')
     return step
 
 def render_rules(model,root):

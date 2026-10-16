@@ -45,6 +45,8 @@ def render_center(model,selection_renderer=None):
         c=b['context'];p=b['projection'];fs=p['format_summary'];w=p['width_summary'];a=p['pagination_summary']
         fixable=sum(f['status']=='problem' and f['fixable'] for f in b['format']['findings'])
         compact_stats([('发现问题',fs['problem_count']),('其中可修正',fixable),('只读问题',fs['problem_count']-fixable),('待复核',fs['review_count'])],'issues')
+        if fs['problem_count']==0:
+            st.write(f"已检查范围内未发现格式问题；仍有{fs['review_count']}项待复核。未配置、未检查及实际分页不据此通过。")
         cols=st.columns([1,1.3,.9,1.5])
         states=['需要处理','全部状态']+list(STATUS)
         status=cols[0].selectbox('状态筛选',states,format_func=lambda k:STATUS.get(k,k),key='center-status-'+str(model.revision))
@@ -115,7 +117,8 @@ def render_center(model,selection_renderer=None):
                     if actionable and st.button('查看此对象的'+OPERATIONS[area]+'步骤',key='detail-guide-'+area+'-'+detail_key):
                         model.focus_operation(area,b['target'],[r['record_key'] for r in actionable]);st.rerun()
         else:
-            st.info('当前筛选没有记录；不表示没有问题或全文合格。')
+            from .workflow_ui import empty_state
+            empty_state('当前筛选没有记录', '可清除筛选查看其他对象。此处为空不表示文档没有问题或全文合格；筛选外的明确选择仍保留。')
             st.button('清除筛选',on_click=reset_filters,args=(model,))
         if selection_renderer:selection_renderer()
         with st.expander('建议下一步与其他操作（不自动执行）'):
@@ -148,11 +151,12 @@ def render_history(model):
         st.subheader('处理历史 · 查看不会切换当前输入')
         st.dataframe([{'输入 → 输出':('原稿' if r.get('input_round')==0 else '第'+str(r.get('input_round','—'))+'轮')+' → 第'+str(r['round'])+'轮','操作':r['operation'],'状态':r['status'],'结果':'；'.join(f'{k} {v}' for k,v in r['counts'].items())} for r in rows],hide_index=True,width='stretch')
         if st.toggle('查看某轮详情与下载',key='history-view-'+str(model.revision)):
-            lookup={r['id']:r for r in rows};identity=st.selectbox('查看历史轮次',list(lookup),format_func=lambda k:f"第{lookup[k]['round']}轮 · {lookup[k]['operation']} · {lookup[k]['status']}")
+            lookup={r['id']:r for r in rows};identity=st.selectbox('查看历史轮次',list(lookup),key='history-object-'+model.task_dir.name,format_func=lambda k:f"第{lookup[k]['round']}轮 · {lookup[k]['operation']} · {lookup[k]['status']}")
             row=lookup[identity]
             if not row['downloadable']:st.warning(row['status']);return
             try:
                 b=model.history_bundle(identity);data=model.history_reading_downloads(identity)
+                st.write(f"正在查看：历史第{row['round']}轮记录；当前输入仍为"+('原稿' if model.current_round==0 else f'第{model.current_round}轮副本'))
                 st.caption('历史配置：'+b['format']['rules']['name']+' v'+b['format']['rules']['version']+'；'+row['status'])
                 st.write(f"历史格式剩余 {b['format']['summary']['problem_count']}，待复核 {b['format']['summary']['review_count']}；不是当前输入报告。")
                 if b.get('saved_record'):

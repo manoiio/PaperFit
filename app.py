@@ -21,7 +21,7 @@ if 'upload_generation' not in st.session_state:
     st.session_state.upload_generation = 0
 model = st.session_state.workflow
 model.sync_rules()
-from web.workflow_ui import go, shell, preserve_editors, render_rules, render_scope_editors
+from web.workflow_ui import go, shell, preserve_editors, render_rules, render_scope_editors, empty_state
 preserve_editors()
 
 
@@ -231,8 +231,8 @@ def render_results():
     else:st.warning('部分修改的复查状态需要核对，请查看完整修改记录。')
     if summary['problem_count'] or summary['review_count']:
         st.warning(f"仍有 {summary['problem_count']} 个问题、{summary['review_count']} 项待复核。副本已生成，不代表全文合格。")
-    current='原稿' if model.current_round==0 else f'第{model.current_round}轮副本'
-    st.write(f'当前处理输入仍为 **{current}**；第{n}轮输出尚未自动设为输入。')
+    from web.workspace_status import output_relation
+    st.write(output_relation(model,n))
     a,b=st.columns(2)
     a.download_button('下载修正版DOCX',files['fixed.docx'],file_name='论文有格_修正版.docx',mime='application/vnd.openxmlformats-officedocument.wordprocessingml.document',on_click='ignore',type='primary',width='stretch',key=f'download-{model.task_dir.name}-{Path(result["output"]).stem}-fixed.docx')
     try:b.download_button('下载本轮结果包',model.result_package(),file_name=f'论文有格_第{n}轮结果.zip',mime='application/zip',on_click='ignore',width='stretch',key='package-'+str(model.revision)+'-'+str(model.generation_count))
@@ -342,7 +342,10 @@ step=shell(model,restart)
 if model.error:st.error('处理未完成：'+model.error)
 if step==1:
     st.header('文档与要求')
-    st.write('先选择论文，再核对本次使用的格式要求。')
+    if model.inventory is None:
+        st.write('检查已有论文的格式，明确选择后另存修正版。先上传DOCX，或使用合成样本体验。')
+        st.caption('确认要求和范围 → 检查 → 选择修正与预演 → 复查下载。复杂对象、实际分页仍需人工核对。')
+    else:st.write('当前文件已载入。可沿用生效要求，或编辑草稿后明确应用；然后核对检查范围。')
     with st.expander('更换文档或选择内置样本',expanded=model.inventory is None,key='doc-loader-'+(model.task_dir.name if model.task_dir else 'empty')):
         with st.container(border=True,key='document-card'):
             a,b=st.columns([1.4,1])
@@ -409,7 +412,7 @@ elif step==4:
     st.header('修正预演')
     st.write(f"当前输入：{'原稿' if model.current_round==0 else '第'+str(model.current_round)+'轮'} → 明确选择 {len(model.selected)} 项 → 预演副本（采用后才成为正式轮次）")
     st.button('返回问题与修改选择',on_click=go,args=(3,))
-    if not model.selected:st.info('请先在问题中心明确选择可修正项。不会默认全选或追加依赖项。')
+    if not model.selected:empty_state('尚未选择修正', '返回问题中心查看实际值与要求，再明确选择可修正项；不会默认全选或追加依赖项。')
     else:
         from web.rehearsal_ui import render_rehearsal
         render_rehearsal(model)
@@ -431,7 +434,7 @@ elif step==5:
         render_preview_panel(model)
     else:
         st.header('结果与下载')
-        if model.result is None:st.info('尚未生成或采用正式副本。可下载有效检查报告，或返回问题中心选择修正。')
+        if model.result is None:empty_state('当前没有可用的本轮正式输出', '可下载有效检查报告，查看历史，或返回问题中心选择修正。已有历史不会自动变成当前输入。')
         render_results()
         if model.result is None:
             st.button('查看论文页面',on_click=open_reader,args=(model,'input',False),width='stretch')

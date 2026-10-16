@@ -50,4 +50,4 @@ def render_project(model):
                     except Exception as exc:st.error(public_error(exc))
                 if st.button('取消恢复，保留当前工作',width='stretch'):
                     model.cancel_project_import();st.rerun()
-    if model.project_notice:st.info(model.project_notice)
+    if model.project_notice:st.info('此前项目恢复记录（不代表当前文件来源或范围确认）：'+model.project_notice)
