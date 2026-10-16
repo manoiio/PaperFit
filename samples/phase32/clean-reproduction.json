@@ -7,8 +7,8 @@
     "status": "passed"
   },
   "final_clean_suite": {
-    "tests": 1191,
-    "seconds": 163.137,
+    "tests": 1192,
+    "seconds": 164.339,
     "status": "passed",
     "python_sources_match_current": true,
     "excluded": [
@@ -31,5 +31,11 @@
   },
   "repository_audit": "links, fixture hashes, no test dependency on local history passed",
   "privacy_audit": "26 textual/ZIP/DOCX artifacts checked: no personal absolute paths/private keys; screenshots manually inspected",
-  "CI": "verify actual post-push SHA run; not inherited from prior stage"
+  "CI": "verify actual post-push SHA run; not inherited from prior stage",
+  "previous_clean_suite": {
+    "tests": 1191,
+    "seconds": 163.137,
+    "status": "passed"
+  },
+  "conditional_branch_regression": "未选择的mc:AlternateContent不证明目标完整或授权修正"
 }

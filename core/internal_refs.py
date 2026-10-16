@@ -129,6 +129,7 @@ def _build(pkg):
    return {'part':part,'story':owner,'story_paragraph':pmap.get(p),'xml_ordinal':order[e],**({'paragraph':top[p]} if p in top else {})}
   # Unknown containers can conceal targets. Do not turn not-found into a proved absence.
   if root.xpath('.//w:txbxContent|.//w:altChunk|.//w:subDoc|.//w:ins|.//w:del|.//w:moveFrom|.//w:moveTo',namespaces=NS):issues.append({'part':part,'reason':'文本框、修订或外部内容未完整解释，缺失目标仅待复核'})
+  if root.xpath('.//mc:AlternateContent',namespaces={'mc':'http://schemas.openxmlformats.org/markup-compatibility/2006'}):issues.append({'part':part,'reason':'兼容条件分支尚未选择，不能证明目标清单完整或授权内部链接文字修正'})
   starts=defaultdict(list);ends=defaultdict(list)
   for e in root.iter(q('bookmarkStart')):starts[e.get(q('id'))].append(e)
   for e in root.iter(q('bookmarkEnd')):ends[e.get(q('id'))].append(e)

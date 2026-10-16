@@ -163,3 +163,7 @@ class InternalReferenceTests(TestCase):
   p=self.altered(lambda p:E.SubElement(p.paragraphs[-1],q('txbxContent')));self.assertEqual(resolve_target(p,'_TocTarget')['state'],'review');r=self.report(p);self.assertFalse(any(f['fixable'] and f['locator'].get('paragraph')==3 and f['locator'].get('link_run') for f in r['findings']))
  def test_capacity_is_explicit_rejection_not_partial_success(self):
   with mock.patch('core.internal_refs.MAX_OBJECTS',2),self.assertRaisesRegex(DemoError,'上限'):inventory(Package(S/'errors.docx'))
+ def test_unresolved_compatibility_branch_not_valid_target_or_missing(self):
+  def fn(p):
+   mc='http://schemas.openxmlformats.org/markup-compatibility/2006';a=E.Element('{'+mc+'}AlternateContent',nsmap={'mc':mc,'demo':'urn:unsupported-feature'});c=E.SubElement(a,'{'+mc+'}Choice',Requires='demo');par=E.SubElement(c,q('p'));r=E.SubElement(par,q('r'));E.SubElement(r,q('t')).text='条件分支内容';bookmark(par,'ChoiceOnly',98);E.SubElement(a,'{'+mc+'}Fallback');p.root.find(q('body')).insert(1,a)
+  p=self.altered(fn);self.assertEqual(resolve_target(p,'ChoiceOnly')['state'],'review');self.assertEqual(resolve_target(p,'MissingTarget')['state'],'review');self.assertEqual(resolve_target(p,'_TocTarget')['state'],'review');self.assertFalse(inventory(p)['complete'])

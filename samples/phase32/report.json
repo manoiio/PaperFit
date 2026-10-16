@@ -6745,7 +6745,7 @@
   "word_status": "未验收",
   "history": [
     {
-      "id": "round-records-7d9c7ab43d6c41cea383c037cc84c25a/round-1-fef6db980a4a41b6aa38f06e6b1c9f3a",
+      "id": "round-records-f50e2e24eec748269094a5c8cf4ae886/round-1-e83152178b5e4d60ada9b590b61ffb63",
       "round": 1,
       "input_round": 0,
       "operation": "格式修正",
@@ -8386,13 +8386,13 @@
     ]
   },
   "rehearsal": {
-    "id": "rehearsal-d2fbd6bd43d54c0299ca7f7b6d70dca1",
-    "binding": "cc5e695d5cea2315822c3ba570fe6bf7b8268efad27c0729fdbb6e96a1d111a5",
+    "id": "rehearsal-6fbd33dfb1a1445c92f950233a72375e",
+    "binding": "4d3acd36b5fc74883f18446f63bbc2393bcd105714059322ebc813107d9e0690",
     "execution_version": "format-rehearsal-v1",
-    "execution_sha256": "ae6b2a31a82fcc411010620d93a3a40da1b836fd6ef07eb0328e2bd4e2796390",
-    "created_at": "2026-10-16T12:10:03.073070+00:00",
-    "adopted_at": "2026-10-16T12:10:03.114666+00:00",
-    "rehearsal_transaction_sha256": "dc91581b70116e2d3661e1adbdccdfb7fd187577a5a741f126030217ed4456b9",
+    "execution_sha256": "53172b7029cd3e3a3016397bf5b93944a4bf606f22a8a5b3c6efebc4dc6bb01d",
+    "created_at": "2026-10-16T12:21:12.641695+00:00",
+    "adopted_at": "2026-10-16T12:21:12.686050+00:00",
+    "rehearsal_transaction_sha256": "73f1776389e1046e3bdda0a9de7e5a40b4b57470d79d11bdae9546296793b843",
     "validation": {
       "input_sha256": "9e946b67979e2358a54c5dd98e4c66aec781ea7d6a4d16ed9d7d33ff84936aac",
       "output_sha256": "f98bbe20ed3b686699f2820ef192132f4effbdfb0412a2719fd414732e22b1b0",
@@ -8402,7 +8402,7 @@
       "verification": "重新执行原完整性白名单及真实落盘检查；未再次修正"
     },
     "fix_calls_at_adoption": 0,
-    "validation_elapsed_seconds": 0.03724958305247128,
+    "validation_elapsed_seconds": 0.03974029200617224,
     "input_still_current_at_adoption": true,
     "output_auto_switched_at_adoption": false
   }
