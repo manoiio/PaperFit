@@ -128,9 +128,11 @@ class WorkbenchTests(unittest.TestCase):
   from streamlit.testing.v1 import AppTest
   draft(self.s);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,1,rules=True);self.assertFalse(app.exception)
   next(x for x in app.selectbox if x.label=='查看与编辑模块').set_value('front');app.run()
+  next(x for x in app.selectbox if x.label=='选择格式对象').set_value('封面论文标题');app.run()
   next(x for x in app.selectbox if x.label=='编辑字段').set_value('cover_title__font_size');app.run()
-  next(x for x in app.text_input if x.label.startswith('最终值（')).set_value('24')
-  next(x for x in app.button if x.label=='采用此字段到草稿').click();app.run();self.assertFalse(app.exception)
+  next(x for x in app.selectbox if x.label=='此字段采用方式').set_value('manual');app.run()
+  next(x for x in app.number_input if x.label=='字号（磅 / pt）').set_value(24.)
+  next(x for x in app.button if x.label=='保存本字段到草稿').click();app.run();self.assertFalse(app.exception)
   self.assertEqual(self.s.workbench['draft']['fields']['front']['cover_title__font_size']['value'],24)
   self.assertEqual(self.s.proposed_rule_bundle()['provenance']['front']['cover_title__font_size']['kind'],'user_confirmed')
  def test_front_object_form_keeps_user_selection(self):

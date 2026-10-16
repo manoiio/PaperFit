@@ -1,0 +1,189 @@
+{
+  "date": "2026-10-16",
+  "baseline": "1a552be",
+  "baseline_tests": 1204,
+  "final_tests": 1208,
+  "full_suite_seconds": 182.24,
+  "historical_work_outputs_required": false,
+  "core_or_business_session_or_schema_changes": false,
+  "api_requests": 0,
+  "automatic_renders": 0,
+  "viewports": [
+    [
+      1280,
+      720
+    ],
+    [
+      1440,
+      900
+    ]
+  ],
+  "controls_verified": [
+    "number pt",
+    "font enum in Chinese",
+    "spacing value and lines unit",
+    "unsaved persistence across fields and steps",
+    "explicit field save",
+    "whole draft confirmation and application"
+  ],
+  "rule_change_invalidated_report_selection_and_rehearsal": true,
+  "restart_restore": {
+    "unapplied_draft_preserved": true,
+    "not_automatically_applied": true,
+    "saved_manual_fields": {
+      "font_cn": "楷体",
+      "font_size": 13,
+      "body__before": {
+        "value": 0.5,
+        "unit": "lines"
+      }
+    }
+  },
+  "classification": {
+    "single_paragraph": 3,
+    "temporary_type": "other",
+    "selected_count_before": 8,
+    "selected_count_after_single": 7,
+    "batch_selected": [
+      3,
+      4,
+      12
+    ],
+    "target": "body",
+    "protected": [
+      12
+    ],
+    "final_scope_restored_to_author_plan": true,
+    "filter_and_return_preserved": true
+  },
+  "actual_before": {
+    "problem": 25,
+    "fixable": 23,
+    "read_only": 2,
+    "review": 51
+  },
+  "actual_after": {
+    "modified": 1,
+    "problem": 24,
+    "review": 51,
+    "current_input_round": 0,
+    "output_round": 1
+  },
+  "independent_session": {
+    "fixture": "correct.docx",
+    "mode": "basic",
+    "problem": 0,
+    "review": 0,
+    "no_custom_rule_inheritance": true
+  },
+  "temporary_previews": {
+    "old_rules_before_application": "invalidated, not adopted",
+    "font_selection_attempt": "cancelled, not adopted",
+    "intended_size_15_to_13": "adopted as round 1"
+  },
+  "output_equality": "independent.json",
+  "new_word_or_docx_render_acceptance": false,
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 2806,
+      "sha256": "92d0fc923346567bfebe630014fdb846f578b1fa90dad933934fa54729a1c61d"
+    },
+    {
+      "file": "independent.json",
+      "bytes": 1556,
+      "sha256": "2763b7aef947593d2690e721651b13a26ff93de8cb56f1dda62af1515afa1fd4"
+    },
+    {
+      "file": "screenshots/actual-result.png",
+      "bytes": 125157,
+      "sha256": "b0fa8fbaeb93f5931d53f40461211ae3ae3199b261d41c7a993a72b1bf66e010"
+    },
+    {
+      "file": "screenshots/after-classification-1280.png",
+      "bytes": 112778,
+      "sha256": "fad18cf17bac7994bfcc476bf1a7dc9bca7889c171606d7008dfc8e51bc84558"
+    },
+    {
+      "file": "screenshots/after-classification-1440.png",
+      "bytes": 147167,
+      "sha256": "dd2f2ed777871de5e592e804a8d9e26becc4227bc3bb47194f937c218b58607a"
+    },
+    {
+      "file": "screenshots/after-field-1280.png",
+      "bytes": 56521,
+      "sha256": "2e9f6f877e25c61c76f14312688ecfb34d2b4a2316e78b6e585d0684e00bd642"
+    },
+    {
+      "file": "screenshots/after-field-1440.png",
+      "bytes": 92582,
+      "sha256": "2dd1c40e7d96a5bee754c3228b9c8017b377dba6799e03405eb1edf9a4f187de"
+    },
+    {
+      "file": "screenshots/after-rules-1280.png",
+      "bytes": 108963,
+      "sha256": "55b834add9c6f18e8c94839e545ef4807828da44974c80122f99e64b9c57021e"
+    },
+    {
+      "file": "screenshots/after-rules-1440.png",
+      "bytes": 146571,
+      "sha256": "847eff7fa7489326635fa508fe99f63fe89633194549fe10dfbf35df968ce8b2"
+    },
+    {
+      "file": "screenshots/before-classification-1280.png",
+      "bytes": 109628,
+      "sha256": "cb355cdfaba7a2a1db039eb796c3abb23fb7f01718cd2972ce6701470e696ca4"
+    },
+    {
+      "file": "screenshots/before-classification-1440.png",
+      "bytes": 179789,
+      "sha256": "09b9c884be831e8c53a69f458d46ca243f28eae271462c97f78a0f9bb4f63b7b"
+    },
+    {
+      "file": "screenshots/before-field-1280.png",
+      "bytes": 51620,
+      "sha256": "ba58b8a02124b9c86f65a469541c44f80366e0bfb1c3d4ba4a26a059450c4aea"
+    },
+    {
+      "file": "screenshots/before-field-1440.png",
+      "bytes": 73613,
+      "sha256": "700daae77b2e5e857a1c5362e59afd61141e15cdf89b724e9795250470fd5568"
+    },
+    {
+      "file": "screenshots/before-rules-1280.png",
+      "bytes": 107365,
+      "sha256": "a9cd0799d1add684275d5a701952324d36b6969b6d2c1dec80d2a25f39190892"
+    },
+    {
+      "file": "screenshots/before-rules-1440.png",
+      "bytes": 134337,
+      "sha256": "d32a1fe244ef86508e94fe15a762783a4928740f18a652892fc352eb3c57386c"
+    },
+    {
+      "file": "screenshots/classification-batch-filtered.png",
+      "bytes": 133288,
+      "sha256": "5f94e6d9ef490c7d604e014c4bf4a88b366e2bc606abc03a042ca5beb3b840d1"
+    },
+    {
+      "file": "screenshots/protected-editable-list.png",
+      "bytes": 147351,
+      "sha256": "51336b861b3585f7b88e85f01ab7faa0553977a7c35bc7c814d245bcb9c192fa"
+    },
+    {
+      "file": "screenshots/protected-material.png",
+      "bytes": 146647,
+      "sha256": "19991919c98c3a48f254a4f82a332fb986e649eba0f372a28db79b273d3975cb"
+    },
+    {
+      "file": "screenshots/restored-draft-before-apply.png",
+      "bytes": 91741,
+      "sha256": "5827f6a9293d507036c2e280fdf75ce36580060b638d44d2f8a538315e93b4cf"
+    },
+    {
+      "file": "screenshots/spacing-draft.png",
+      "bytes": 95108,
+      "sha256": "274f18548e31e588a3e3c9030693e8fae6e5f5aabfe753bfae3d74b610e52643"
+    }
+  ],
+  "application_ack_bound_to_document_task_and_draft": true
+}

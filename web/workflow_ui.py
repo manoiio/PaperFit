@@ -5,7 +5,7 @@ import streamlit as st
 STEPS={1:'文档与要求',2:'确认检查范围',3:'查看问题',4:'修正预演',5:'结果与下载'}
 # Explicit editor-only keepalive. Never retain acknowledgements, actions, uploads,
 # data-editor patches or execution authorization. Business drafts remain on model.
-EDITOR_PREFIXES=('workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
+EDITOR_PREFIXES=('class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
  'wb-policy-','wb-name-','wb-text-','tpl-value-','tpl-mode-','template-name-',
  'norm-text-','norm-encoding','center-category-','center-status-','center-order-',
  'problem-detail-','center-range-','center-search-','center-type-','center-page-','object-detail-',
@@ -139,7 +139,9 @@ def render_scope_editors(model,run_check):
     selected=st.session_state.get('workspace-scope-area','paragraph')
     if selected not in options:selected='paragraph'
     st.session_state['workspace-scope-area']=selected
-    area=st.selectbox('进入核对区域',options,format_func=AREAS.get,key='workspace-scope-area')
+    a,b=st.columns([2,1])
+    area=a.selectbox('进入核对区域',options,format_func=AREAS.get,key='workspace-scope-area')
+    b.button('返回范围总览',on_click=lambda:st.session_state.update({'workspace-scope-editor':False}),help='保留已保存草稿；不确认范围、不开始检查。',width='stretch')
     st.markdown('<span id="scope-'+area+'"></span>',unsafe_allow_html=True)
     with st.container(border=True,key='scope-editor'):
         if area=='paragraph':

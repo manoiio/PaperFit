@@ -35,7 +35,13 @@ def render_scope_overview(model, compact=False):
         st.caption('检测数量是本模块清单/线索数量：封面是可定位对象而非已填写字段；目录是候选线索而非确认条目；引文只扫描当前草稿正文。不同口径不能相加，也不是覆盖率。')
         if pre['blockers']:
             st.error(f"预检发现{len(pre['blockers'])}项阻止记录，请先修改草稿；尚未执行格式检查。")
-            st.dataframe([{'区域':p['entry'],'原因':p['reason'],'代码':p['code']} for p in pre['blockers']],hide_index=True,width='stretch')
+            for i,p in enumerate(pre['blockers']):
+                st.write('**'+p['entry']+'** · '+p['reason'])
+                if p['area'] in AREAS:
+                    def enter_blocked(area=p['area']):
+                        st.session_state['workspace-scope-area']=area;st.session_state['workspace-scope-editor']=True
+                    st.button('处理：'+p['entry'],key='scope-blocker-'+str(i),on_click=enter_blocked)
+            with st.expander('预检技术代码'):st.dataframe(pre['blockers'],hide_index=True,width='stretch')
         else:st.info('预检未发现阻止项。请核对下方范围摘要后明确确认；未纳入、未配置和复杂对象不会因此变成通过。')
         with st.expander(f"范围摘要、提醒与支持边界（提醒{len(pre['warnings'])}项）",expanded=True):
             st.caption('未纳入区域：'+'、'.join(r['name'] for r in pre['areas'] if not r['enabled']))

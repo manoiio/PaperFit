@@ -339,16 +339,17 @@ if model.error:st.error('处理未完成：'+model.error)
 if step==1:
     st.header('文档与要求')
     st.write('先选择论文，再核对本次使用的格式要求。')
-    with st.container(border=True,key='document-card'):
-        a,b=st.columns([1.4,1])
-        with a:
-            upload_key=f'upload-{st.session_state.upload_generation}'
-            st.file_uploader('上传自己的DOCX（最大10MB）',type=['docx'],max_upload_size=10,key=upload_key,on_change=upload_changed,args=(upload_key,))
-        with b:
-            st.markdown('**或使用内置合成样本**')
-            st.button('使用错误样本',on_click=load_builtin,args=('errors',),width='stretch')
-            st.button('使用正确对照',on_click=load_builtin,args=('correct',),width='stretch')
-        st.caption('检查和修正在本机完成；只有明确解析公开规范时才调用DeepSeek。')
+    with st.expander('更换文档或选择内置样本',expanded=model.inventory is None,key='doc-loader-'+(model.task_dir.name if model.task_dir else 'empty')):
+        with st.container(border=True,key='document-card'):
+            a,b=st.columns([1.4,1])
+            with a:
+                upload_key=f'upload-{st.session_state.upload_generation}'
+                st.file_uploader('上传自己的DOCX（最大10MB）',type=['docx'],max_upload_size=10,key=upload_key,on_change=upload_changed,args=(upload_key,))
+            with b:
+                st.markdown('**或使用内置合成样本**')
+                st.button('使用错误样本',on_click=load_builtin,args=('errors',),width='stretch')
+                st.button('使用正确对照',on_click=load_builtin,args=('correct',),width='stretch')
+            st.caption('检查和修正在本机完成；只有明确解析公开规范时才调用DeepSeek。')
     render_project(model)
     with st.expander('检查模式与更多内置样本'):
         def mode_changed():
@@ -366,12 +367,13 @@ if step==1:
     st.button('下一步：核对检查范围',on_click=go,args=(2,),disabled=model.inventory is None,type='primary',width='stretch')
 elif step==2:
     st.header('确认检查范围')
-    st.write('先进入需要调整的区域，再返回范围摘要统一确认。建议和筛选都不代表确认。')
     if st.session_state.get('workspace-scope-editor',False):
-        st.button('返回范围总览与统一确认',on_click=lambda:st.session_state.update({'workspace-scope-editor':False}),type='primary',width='stretch')
-        if model.mode=='basic':render_basic_scope()
+        if model.mode=='basic':
+            st.button('返回范围总览（保留已保存草稿，不确认范围）',on_click=lambda:st.session_state.update({'workspace-scope-editor':False}),width='stretch')
+            render_basic_scope()
         else:render_scope_editors(model,run_check)
     else:
+        st.caption('先进入需要调整的区域，再返回范围摘要统一确认。建议和筛选都不代表确认。')
         from web.scope_ui import render_scope_overview
         render_scope_overview(model,compact=True)
     if model.report:st.button('前往查看问题',on_click=go,args=(3,),type='primary',width='stretch')

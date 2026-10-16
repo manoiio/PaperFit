@@ -46,8 +46,10 @@ class WorkflowAcceptance(unittest.TestCase):
   self.s.set_mode('academic');self.app.run();self.click('使用错误样本');nav(self.app,1)
   self.app.radio(key='workspace-rule-entry').set_value('导入规则包 / 编辑规则').run();self.click('从当前配置建立编辑草稿（不调用AI）')
   next(x for x in self.app.checkbox if x.label=='编辑未提及或保留字段').check().run()
-  value=next(x for x in self.app.text_input if x.label.startswith('最终值'))
-  value.set_value('14').run();rules=self.s.rules_hash
+  next(x for x in self.app.selectbox if x.label=='选择格式对象').set_value('正文').run()
+  next(x for x in self.app.selectbox if x.label=='编辑字段').set_value('font_size').run()
+  value=next(x for x in self.app.number_input if x.label=='普通文字字号（磅 / pt）')
+  value.set_value(14.).run();rules=self.s.rules_hash
   nav(self.app,2);nav(self.app,1)
-  self.assertEqual(next(x for x in self.app.text_input if x.label.startswith('最终值')).value,'14')
+  self.assertEqual(next(x for x in self.app.number_input if x.label=='普通文字字号（磅 / pt）').value,14.)
   self.assertEqual(self.s.rules_hash,rules)

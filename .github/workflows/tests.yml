@@ -22,3 +22,5 @@ jobs:
         run: |
           python scripts/reproduce_rehearsal_demo.py --output "$RUNNER_TEMP/paperfit-phase33-single"
           python scripts/reproduce_plan_demo.py --output "$RUNNER_TEMP/paperfit-phase33-plan"
+      - name: Stage35 form values, scope and independent output verification
+        run: python scripts/reproduce_editing_workflow.py --output "$RUNNER_TEMP/paperfit-phase35-editing"

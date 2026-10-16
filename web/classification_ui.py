@@ -23,20 +23,24 @@ def render_classification(model, run_check, unified=False):
     with st.container(key='classification'):
         st.subheader('2 核对段落分类')
         st.caption('编号是主文档顶层段落编号，含空段和图片段，不是页码；表格内段落不在此清单中。')
-        st.info('当前分类已经人工确认并应用范围。调整后旧报告与下载失效；待确认项仍跳过。' if model.classification_confirmed else
-                '以下是确定性建议，尚未自动应用。只有用户确认后的分类决定检查与修正范围；待确认项跳过并报告。没有概率置信度。')
+        st.caption('范围已确认；修改分类后须重新核对，旧检查与下载失效。' if model.classification_confirmed else '分类建议 / 编辑草稿，尚未确认检查范围。保存草稿不会开始检查。')
         suggestions={p['index']:p for p in model.suggestions['paragraphs']}
+        from .classification_detail_ui import render_detail
+        render_detail(model,prefix,suggestions)
         all_rows=st.toggle('查看全部段落',key='all-types-'+prefix)
         rows=[];numbers=[]
         for p in model.inventory['paragraphs']:
             n=p['index'];s=suggestions[n];typ=model.paragraph_types[str(n)]
+            if str(n) in model.material_exclusions:continue  # Read-only in context/material list, never an editable row.
             if not all_rows and not (s['ambiguous'] or typ!=s['suggested_type'] or typ.startswith('heading') or typ.endswith('_caption') or (model.mode=='academic' and typ in ('abstract_cn_title','abstract_cn_body','abstract_en_title','abstract_en_body','keywords_cn','keywords_en','reference_title','reference_item','appendix_title','appendix_text','ack_title','ack_text'))):continue
             rows.append({'编号':n,'简短文本':short(p['text'],48),'当前样式':p['style_id'] or '默认',
                          '建议类型':TYPES[s['suggested_type']],'核对类型':TYPES[typ],
                          '建议理由':s['reason'],'歧义':'需核对' if s['ambiguous'] else '未发现冲突'})
             numbers.append(n)
         key='classification-editor-'+prefix+'-'+str(model.revision)
-        st.data_editor(rows,hide_index=True,width='stretch',height=min(650,max(170,len(rows)*36+40)),
+        with st.expander('简洁分类列表（可编辑；编号不随排序变化）'):
+         if model.material_exclusions:st.caption('受保护材料仅在完整文本与材料清单查看，不放入可编辑行。')
+         st.data_editor(rows,hide_index=True,width='stretch',height=min(650,max(170,len(rows)*36+40)),
                        disabled=['编号','简短文本','当前样式','建议类型','建议理由','歧义'],
                        column_config={'核对类型':st.column_config.SelectboxColumn('核对类型',options=list(TYPES.values()),required=True,width='small')},
                        key=key,on_change=edited,args=(key,numbers))
@@ -57,21 +61,26 @@ def render_classification(model, run_check, unified=False):
             except Exception as exc:st.warning(public_error(exc));numbers=[]
             st.write(f'待修改 {len(numbers)} 个段落；仅更新分类草稿，仍需核对确认。')
             if numbers:st.dataframe([{'编号':n,'短文本':short(model.inventory['paragraphs'][n-1]['text'],40),'当前类型':TYPES[model.paragraph_types[str(n)]]} for n in numbers],hide_index=True,width='stretch')
+            protected=[n for n in numbers if str(n) in model.material_exclusions]
+            if protected:st.warning('以下材料保持保护，不会被批量分类纳入普通文字：'+', '.join(map(str,protected)))
             target=st.selectbox('批量目标类型',list(TYPES),index=None,format_func=TYPES.get,key='batch-target-'+prefix)
             if st.button('应用到明确选中的段落',disabled=not numbers or target is None):
-                try:model.batch_types(numbers,target);st.rerun()
+                try:
+                    model.batch_types(numbers,target);st.session_state['classification-feedback-'+prefix]=f'已保存批量分类草稿：明确选择{len(numbers)}段；其中{len(protected)}段材料保护保持。仍需最终范围确认。';st.rerun()
                 except Exception as exc:st.error(public_error(exc))
             adjustments=model.initial_adjustments()
             st.caption('恢复将覆盖人工调整编号：'+(', '.join(map(str,adjustments)) or '无'))
             restore=st.checkbox('已核对上述覆盖范围，确认恢复初始建议',key='restore-types-'+prefix+'-'+str(model.revision))
             if st.button('恢复当前文件的初始建议',disabled=not restore or not adjustments):
                 model.restore_types(confirmed=True);st.rerun()
+        if model.material_exclusions:st.warning(f'已有 {len(model.material_exclusions)} 段材料排除保护；逐项与批量分类均不能覆盖。可在下方查看或明确解除。')
         from .material_ui import render_materials
         render_materials(model)
         pending=[n for n,t in model.paragraph_types.items() if t=='pending']
         if pending:st.warning('仍为待确认的段落：'+', '.join(pending)+'；确认后这些段落也不会自动套格式。')
         ambiguous=[str(p['index']) for p in model.suggestions['paragraphs'] if p['ambiguous']]
-        if ambiguous:st.caption('请特别核对原建议有歧义的段落：'+', '.join(ambiguous)+'。点击确认表示已核对整份当前分类。')
+        if ambiguous:
+            with st.expander(f'原建议有歧义的段落 · {len(ambiguous)}段'):st.write(', '.join(ambiguous)+'。只有最终核对确认才成为本轮范围。')
         st.caption('已确认分类，绑定当前文件与规则。' if model.classification_confirmed else '分类尚未确认；改分类、文件或模式后需重新确认。')
         with st.expander('高级：原分区域确认与独立检查'):
             st.caption('快捷按钮表示本人已核对整份当前分类，包括歧义与待确认项；这些提示不会因此变成通过。')
