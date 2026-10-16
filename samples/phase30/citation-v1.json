@@ -1,0 +1,13 @@
+{
+  "structure_version": 1,
+  "kind": "paper-grid-citation-supplement",
+  "name": "用户确认的引文演示检查",
+  "superscript": true,
+  "correspondence": true,
+  "source": {
+    "file": "00-全员必看/本科毕业设计论文.pdf",
+    "physical_page": 18,
+    "quote": "正文中应按顺序在引用参考文献处的文字右上角用[]标明，[]中序号应与参考文献中序号一致。",
+    "label": "2015学校演示材料，非现行通用规范"
+  }
+}

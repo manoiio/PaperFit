@@ -1,0 +1,29 @@
+{
+  "environment": "Chrome + local Streamlit 127.0.0.1:8501",
+  "fixture": "errors.docx，未确认v1草稿项目导入后使用真实控件操作；无私有session_state注入",
+  "steps": [
+    "旧v1显示组合只读，显式核对并升级v2",
+    "明确选6组为引文、数组[8]及域候选排除；主动声明两项完整范围",
+    "统一摘要一次确认检查，查看逐成员与首次位置组证据",
+    "仅选段3第一组R33，预演并采用第1轮；真实下载独立核对",
+    "明确进入下一轮，选择段3–5共12个可修正项；8普通格式及4引文，完整两步预演后采用第2/3轮",
+    "各步DOCX及成果包真实下载；与同输入/选择的合法路径同字节",
+    "以最终副本继续后保存项目；切回v1，报告和当前下载立即失效",
+    "仅重启确认属于本项目的服务；实际下载项目导入、摘要核对恢复；v2/排除/三轮关系保留，重新检查、无旧预演授权",
+    "独立浏览器会话未见第一会话文件，另选内置正确对照互不串用"
+  ],
+  "downloaded_files": [
+    "browser-partial.docx",
+    "browser-middle.docx",
+    "browser-final.docx",
+    "browser-result.zip"
+  ],
+  "independent_proof": "browser-independent.json",
+  "API_requests": 0,
+  "automatic_renders": 0,
+  "attempt_limitations": [
+    "部分自动操作在Streamlit重运行或折叠控件未展开时超时；重读真实页面后完成，不计入成功耗时。",
+    "重启后一次页面访问过早导致连接拒绝；确认服务启动后导入成功。"
+  ],
+  "scope": "浏览器验证上述流程，不推导通用准确率、引用真实性或全部排版合格"
+}

@@ -140,7 +140,7 @@ class ScopeSession:
                     elif area=='citation':
                         scan=(draft or {}).get('scan',[int(n) for n,t in self.paragraph_types.items() if t=='body'])
                         if any(type(n) is not int or not 1<=n<=len(pkg.paragraphs) for n in scan):raise DemoError('引文扫描段落定位失效')
-                        inv=citations.inventory(pkg,scan);detected=len(inv['objects']);details={'scan_paragraphs':deepcopy(scan),'complex':sum(not r['safe_structure'] for r in inv['objects'])}
+                        inv=citations.inventory(pkg,scan,draft['template'] if draft else None);detected=len(inv['objects']);details={'scan_paragraphs':deepcopy(scan),'complex':sum(not r['safe_structure'] for r in inv['objects'])}
                     else:
                         inv=captions.inventory(pkg,base);detected=len(inv['captions']);details={'objects':len(inv['objects']),'chapter_map':deepcopy((draft or {}).get('chapter_map',{})),'associations':deepcopy((draft or {}).get('associations',{}))}
                     inventories[area]=inv

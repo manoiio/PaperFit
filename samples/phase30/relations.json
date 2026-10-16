@@ -1,0 +1,971 @@
+{
+  "enabled": {
+    "superscript": true,
+    "correspondence": true
+  },
+  "rows": [
+    {
+      "id": "c:3:2:7",
+      "paragraph": 3,
+      "start": 2,
+      "end": 7,
+      "text": "[1,3]",
+      "syntax": "ascii-groups-v2",
+      "parsed": {
+        "raw": "[1,3]",
+        "syntax": "ascii-groups-v2",
+        "supported": true,
+        "members": [
+          {
+            "raw": "1",
+            "start": 1,
+            "end": 2,
+            "kind": "integer",
+            "first": 1,
+            "last": 1,
+            "separator": null
+          },
+          {
+            "raw": "3",
+            "start": 3,
+            "end": 4,
+            "kind": "integer",
+            "first": 3,
+            "last": 3,
+            "separator": null
+          }
+        ],
+        "numbers": [
+          1,
+          3
+        ],
+        "unique_numbers": [
+          1,
+          3
+        ],
+        "notices": [],
+        "reason": null
+      },
+      "unique_numbers": [
+        1,
+        3
+      ],
+      "context": "组合[1,3]与重复[1,3]。",
+      "numbers": [
+        1,
+        3
+      ],
+      "vertical": "superscript",
+      "evidence": [
+        {
+          "run": 2,
+          "start": 2,
+          "end": 7,
+          "value": "superscript",
+          "source": "直接格式"
+        }
+      ],
+      "structure": "普通文字",
+      "safe_structure": true,
+      "fixable": true,
+      "reason": "仅候选，可能是数组或其他标记，须人工确认用途",
+      "members": [
+        {
+          "number": 1,
+          "references": [
+            {
+              "paragraph": 8,
+              "number": 1,
+              "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        },
+        {
+          "number": 3,
+          "references": [
+            {
+              "paragraph": 10,
+              "number": 3,
+              "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        }
+      ],
+      "references": [
+        {
+          "paragraph": 8,
+          "number": 1,
+          "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        },
+        {
+          "paragraph": 10,
+          "number": 3,
+          "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        }
+      ],
+      "status": "pass",
+      "relation": "逐唯一成员核对；引文组状态汇总，不以第一个编号代表整组。重复成员/重叠仅提示。"
+    },
+    {
+      "id": "c:3:10:15",
+      "paragraph": 3,
+      "start": 10,
+      "end": 15,
+      "text": "[1,3]",
+      "syntax": "ascii-groups-v2",
+      "parsed": {
+        "raw": "[1,3]",
+        "syntax": "ascii-groups-v2",
+        "supported": true,
+        "members": [
+          {
+            "raw": "1",
+            "start": 1,
+            "end": 2,
+            "kind": "integer",
+            "first": 1,
+            "last": 1,
+            "separator": null
+          },
+          {
+            "raw": "3",
+            "start": 3,
+            "end": 4,
+            "kind": "integer",
+            "first": 3,
+            "last": 3,
+            "separator": null
+          }
+        ],
+        "numbers": [
+          1,
+          3
+        ],
+        "unique_numbers": [
+          1,
+          3
+        ],
+        "notices": [],
+        "reason": null
+      },
+      "unique_numbers": [
+        1,
+        3
+      ],
+      "context": "组合[1,3]与重复[1,3]。",
+      "numbers": [
+        1,
+        3
+      ],
+      "vertical": "superscript",
+      "evidence": [
+        {
+          "run": 4,
+          "start": 10,
+          "end": 15,
+          "value": "superscript",
+          "source": "直接格式"
+        }
+      ],
+      "structure": "普通文字",
+      "safe_structure": true,
+      "fixable": true,
+      "reason": "仅候选，可能是数组或其他标记，须人工确认用途",
+      "members": [
+        {
+          "number": 1,
+          "references": [
+            {
+              "paragraph": 8,
+              "number": 1,
+              "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        },
+        {
+          "number": 3,
+          "references": [
+            {
+              "paragraph": 10,
+              "number": 3,
+              "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        }
+      ],
+      "references": [
+        {
+          "paragraph": 8,
+          "number": 1,
+          "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        },
+        {
+          "paragraph": 10,
+          "number": 3,
+          "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        }
+      ],
+      "status": "pass",
+      "relation": "逐唯一成员核对；引文组状态汇总，不以第一个编号代表整组。重复成员/重叠仅提示。"
+    },
+    {
+      "id": "c:4:2:7",
+      "paragraph": 4,
+      "start": 2,
+      "end": 7,
+      "text": "[1–3]",
+      "syntax": "ascii-groups-v2",
+      "parsed": {
+        "raw": "[1–3]",
+        "syntax": "ascii-groups-v2",
+        "supported": true,
+        "members": [
+          {
+            "raw": "1–3",
+            "start": 1,
+            "end": 4,
+            "kind": "range",
+            "first": 1,
+            "last": 3,
+            "separator": "–"
+          }
+        ],
+        "numbers": [
+          1,
+          2,
+          3
+        ],
+        "unique_numbers": [
+          1,
+          2,
+          3
+        ],
+        "notices": [],
+        "reason": null
+      },
+      "unique_numbers": [
+        1,
+        2,
+        3
+      ],
+      "context": "区间[1–3]和混合[1-3,5]结束。",
+      "numbers": [
+        1,
+        2,
+        3
+      ],
+      "vertical": "superscript",
+      "evidence": [
+        {
+          "run": 2,
+          "start": 2,
+          "end": 3,
+          "value": "superscript",
+          "source": "直接格式"
+        },
+        {
+          "run": 3,
+          "start": 3,
+          "end": 5,
+          "value": "superscript",
+          "source": "直接格式"
+        },
+        {
+          "run": 4,
+          "start": 5,
+          "end": 7,
+          "value": "superscript",
+          "source": "直接格式"
+        }
+      ],
+      "structure": "普通文字",
+      "safe_structure": true,
+      "fixable": true,
+      "reason": "仅候选，可能是数组或其他标记，须人工确认用途",
+      "members": [
+        {
+          "number": 1,
+          "references": [
+            {
+              "paragraph": 8,
+              "number": 1,
+              "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        },
+        {
+          "number": 2,
+          "references": [
+            {
+              "paragraph": 9,
+              "number": 2,
+              "preview": "[2] 软件演示资料2，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        },
+        {
+          "number": 3,
+          "references": [
+            {
+              "paragraph": 10,
+              "number": 3,
+              "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        }
+      ],
+      "references": [
+        {
+          "paragraph": 8,
+          "number": 1,
+          "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        },
+        {
+          "paragraph": 9,
+          "number": 2,
+          "preview": "[2] 软件演示资料2，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        },
+        {
+          "paragraph": 10,
+          "number": 3,
+          "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        }
+      ],
+      "status": "pass",
+      "relation": "逐唯一成员核对；引文组状态汇总，不以第一个编号代表整组。重复成员/重叠仅提示。"
+    },
+    {
+      "id": "c:4:10:17",
+      "paragraph": 4,
+      "start": 10,
+      "end": 17,
+      "text": "[1-3,5]",
+      "syntax": "ascii-groups-v2",
+      "parsed": {
+        "raw": "[1-3,5]",
+        "syntax": "ascii-groups-v2",
+        "supported": true,
+        "members": [
+          {
+            "raw": "1-3",
+            "start": 1,
+            "end": 4,
+            "kind": "range",
+            "first": 1,
+            "last": 3,
+            "separator": "-"
+          },
+          {
+            "raw": "5",
+            "start": 5,
+            "end": 6,
+            "kind": "integer",
+            "first": 5,
+            "last": 5,
+            "separator": null
+          }
+        ],
+        "numbers": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "unique_numbers": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "notices": [],
+        "reason": null
+      },
+      "unique_numbers": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "context": "区间[1–3]和混合[1-3,5]结束。",
+      "numbers": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "vertical": "superscript",
+      "evidence": [
+        {
+          "run": 6,
+          "start": 10,
+          "end": 17,
+          "value": "superscript",
+          "source": "直接格式"
+        }
+      ],
+      "structure": "普通文字",
+      "safe_structure": true,
+      "fixable": true,
+      "reason": "仅候选，可能是数组或其他标记，须人工确认用途",
+      "members": [
+        {
+          "number": 1,
+          "references": [
+            {
+              "paragraph": 8,
+              "number": 1,
+              "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        },
+        {
+          "number": 2,
+          "references": [
+            {
+              "paragraph": 9,
+              "number": 2,
+              "preview": "[2] 软件演示资料2，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        },
+        {
+          "number": 3,
+          "references": [
+            {
+              "paragraph": 10,
+              "number": 3,
+              "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        },
+        {
+          "number": 5,
+          "references": [
+            {
+              "paragraph": 12,
+              "number": 5,
+              "preview": "[5] 软件演示资料5，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        }
+      ],
+      "references": [
+        {
+          "paragraph": 8,
+          "number": 1,
+          "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        },
+        {
+          "paragraph": 9,
+          "number": 2,
+          "preview": "[2] 软件演示资料2，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        },
+        {
+          "paragraph": 10,
+          "number": 3,
+          "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        },
+        {
+          "paragraph": 12,
+          "number": 5,
+          "preview": "[5] 软件演示资料5，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        }
+      ],
+      "status": "pass",
+      "relation": "逐唯一成员核对；引文组状态汇总，不以第一个编号代表整组。重复成员/重叠仅提示。"
+    },
+    {
+      "id": "c:5:3:8",
+      "paragraph": 5,
+      "start": 3,
+      "end": 8,
+      "text": "[2,1]",
+      "syntax": "ascii-groups-v2",
+      "parsed": {
+        "raw": "[2,1]",
+        "syntax": "ascii-groups-v2",
+        "supported": true,
+        "members": [
+          {
+            "raw": "2",
+            "start": 1,
+            "end": 2,
+            "kind": "integer",
+            "first": 2,
+            "last": 2,
+            "separator": null
+          },
+          {
+            "raw": "1",
+            "start": 3,
+            "end": 4,
+            "kind": "integer",
+            "first": 1,
+            "last": 1,
+            "separator": null
+          }
+        ],
+        "numbers": [
+          2,
+          1
+        ],
+        "unique_numbers": [
+          2,
+          1
+        ],
+        "notices": [],
+        "reason": null
+      },
+      "unique_numbers": [
+        2,
+        1
+      ],
+      "context": "已上标[2,1]与单引[4]。数组[8]。",
+      "numbers": [
+        2,
+        1
+      ],
+      "vertical": "superscript",
+      "evidence": [
+        {
+          "run": 2,
+          "start": 3,
+          "end": 8,
+          "value": "superscript",
+          "source": "直接格式"
+        }
+      ],
+      "structure": "普通文字",
+      "safe_structure": true,
+      "fixable": true,
+      "reason": "仅候选，可能是数组或其他标记，须人工确认用途",
+      "members": [
+        {
+          "number": 2,
+          "references": [
+            {
+              "paragraph": 9,
+              "number": 2,
+              "preview": "[2] 软件演示资料2，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        },
+        {
+          "number": 1,
+          "references": [
+            {
+              "paragraph": 8,
+              "number": 1,
+              "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        }
+      ],
+      "references": [
+        {
+          "paragraph": 9,
+          "number": 2,
+          "preview": "[2] 软件演示资料2，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        },
+        {
+          "paragraph": 8,
+          "number": 1,
+          "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        }
+      ],
+      "status": "pass",
+      "relation": "逐唯一成员核对；引文组状态汇总，不以第一个编号代表整组。重复成员/重叠仅提示。"
+    },
+    {
+      "id": "c:5:11:14",
+      "paragraph": 5,
+      "start": 11,
+      "end": 14,
+      "text": "[4]",
+      "syntax": "ascii-groups-v2",
+      "parsed": {
+        "raw": "[4]",
+        "syntax": "ascii-groups-v2",
+        "supported": true,
+        "members": [
+          {
+            "raw": "4",
+            "start": 1,
+            "end": 2,
+            "kind": "integer",
+            "first": 4,
+            "last": 4,
+            "separator": null
+          }
+        ],
+        "numbers": [
+          4
+        ],
+        "unique_numbers": [
+          4
+        ],
+        "notices": [],
+        "reason": null
+      },
+      "unique_numbers": [
+        4
+      ],
+      "context": "已上标[2,1]与单引[4]。数组[8]。",
+      "numbers": [
+        4
+      ],
+      "vertical": "superscript",
+      "evidence": [
+        {
+          "run": 4,
+          "start": 11,
+          "end": 14,
+          "value": "superscript",
+          "source": "直接格式"
+        }
+      ],
+      "structure": "普通文字",
+      "safe_structure": true,
+      "fixable": true,
+      "reason": "仅候选，可能是数组或其他标记，须人工确认用途",
+      "members": [
+        {
+          "number": 4,
+          "references": [
+            {
+              "paragraph": 11,
+              "number": 4,
+              "preview": "[4] 软件演示资料4，合成出版信息，2026。",
+              "reason": "手工方括号编号（复用R22证据）"
+            }
+          ],
+          "status": "pass",
+          "reason": "对应唯一确认条目（不证明真实性或引用准确）"
+        }
+      ],
+      "references": [
+        {
+          "paragraph": 11,
+          "number": 4,
+          "preview": "[4] 软件演示资料4，合成出版信息，2026。",
+          "reason": "手工方括号编号（复用R22证据）"
+        }
+      ],
+      "status": "pass",
+      "relation": "逐唯一成员核对；引文组状态汇总，不以第一个编号代表整组。重复成员/重叠仅提示。"
+    }
+  ],
+  "references": [
+    {
+      "paragraph": 8,
+      "number": 1,
+      "preview": "[1] 软件演示资料1，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 9,
+      "number": 2,
+      "preview": "[2] 软件演示资料2，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 10,
+      "number": 3,
+      "preview": "[3] 软件演示资料3，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 11,
+      "number": 4,
+      "preview": "[4] 软件演示资料4，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 12,
+      "number": 5,
+      "preview": "[5] 软件演示资料5，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 13,
+      "number": 6,
+      "preview": "[6] 软件演示资料6，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 14,
+      "number": 7,
+      "preview": "[7] 软件演示资料7，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 15,
+      "number": 8,
+      "preview": "[8] 软件演示资料8，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 16,
+      "number": 9,
+      "preview": "[9] 软件演示资料9，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 17,
+      "number": 10,
+      "preview": "[10] 软件演示资料10，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    }
+  ],
+  "unreferenced": [
+    {
+      "paragraph": 13,
+      "number": 6,
+      "preview": "[6] 软件演示资料6，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 14,
+      "number": 7,
+      "preview": "[7] 软件演示资料7，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 15,
+      "number": 8,
+      "preview": "[8] 软件演示资料8，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 16,
+      "number": 9,
+      "preview": "[9] 软件演示资料9，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    },
+    {
+      "paragraph": 17,
+      "number": 10,
+      "preview": "[10] 软件演示资料10，合成出版信息，2026。",
+      "reason": "手工方括号编号（复用R22证据）"
+    }
+  ],
+  "undecided": [],
+  "scope_state": "已声明完整且解析覆盖足够",
+  "order": [
+    1,
+    3,
+    2,
+    5,
+    4
+  ],
+  "limits": [
+    "仅人工确认正文扫描范围；候选不是引用，确认不授权修正。",
+    "v2产品语法：ASCII方括号，逗号列表、-或–区间、普通空格；1–99999；单组最多512字符、累计100成员（含重复/重叠）。不转换原文；非学校明示语法。",
+    "对应与首次顺序均只读；不核验文献真实性或论据，不改编号、不补删条目。",
+    "复杂段落（含域、链接、书签、修订、公式等）整体不拆run；其他安全段落仍可修正。",
+    "上标后通用正文规则继续保护特殊run；新增覆盖提示不是全文通过或格式回退。"
+  ],
+  "unreferenced_state": "确认范围内未找到已解析引文，仅核对提示；复杂/未确认引文可能遗漏，无自动删除或违规结论",
+  "r22_link": "文献手工编号证据复用R22，重复编号仅造成关系待复核，不另计同一编号错误",
+  "syntax": "ascii-groups-v2",
+  "order_groups": [
+    {
+      "citation": "c:3:2:7",
+      "paragraph": 3,
+      "start": 2,
+      "end": 7,
+      "raw": "[1,3]",
+      "raw_numbers": [
+        1,
+        3
+      ],
+      "first_numbers": [
+        1,
+        3
+      ],
+      "previous_numbers": [],
+      "missing_prefix_count": 1,
+      "first_missing": 2,
+      "earlier_higher_number": 3,
+      "risk": true,
+      "reason": "同一组不区分内部首次先后；累计首次编号集合有缺口，较大编号先于缺口编号出现"
+    },
+    {
+      "citation": "c:3:10:15",
+      "paragraph": 3,
+      "start": 10,
+      "end": 15,
+      "raw": "[1,3]",
+      "raw_numbers": [
+        1,
+        3
+      ],
+      "first_numbers": [],
+      "previous_numbers": [
+        1,
+        3
+      ],
+      "missing_prefix_count": 1,
+      "first_missing": 2,
+      "earlier_higher_number": 3,
+      "risk": false,
+      "reason": "本位置无新增顺序风险"
+    },
+    {
+      "citation": "c:4:2:7",
+      "paragraph": 4,
+      "start": 2,
+      "end": 7,
+      "raw": "[1–3]",
+      "raw_numbers": [
+        1,
+        2,
+        3
+      ],
+      "first_numbers": [
+        2
+      ],
+      "previous_numbers": [
+        1,
+        3
+      ],
+      "missing_prefix_count": 0,
+      "first_missing": null,
+      "earlier_higher_number": null,
+      "risk": false,
+      "reason": "本位置无新增顺序风险"
+    },
+    {
+      "citation": "c:4:10:17",
+      "paragraph": 4,
+      "start": 10,
+      "end": 17,
+      "raw": "[1-3,5]",
+      "raw_numbers": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "first_numbers": [
+        5
+      ],
+      "previous_numbers": [
+        1,
+        2,
+        3
+      ],
+      "missing_prefix_count": 1,
+      "first_missing": 4,
+      "earlier_higher_number": 5,
+      "risk": true,
+      "reason": "同一组不区分内部首次先后；累计首次编号集合有缺口，较大编号先于缺口编号出现"
+    },
+    {
+      "citation": "c:5:3:8",
+      "paragraph": 5,
+      "start": 3,
+      "end": 8,
+      "raw": "[2,1]",
+      "raw_numbers": [
+        2,
+        1
+      ],
+      "first_numbers": [],
+      "previous_numbers": [
+        2,
+        1
+      ],
+      "missing_prefix_count": 1,
+      "first_missing": 4,
+      "earlier_higher_number": 5,
+      "risk": false,
+      "reason": "本位置无新增顺序风险"
+    },
+    {
+      "citation": "c:5:11:14",
+      "paragraph": 5,
+      "start": 11,
+      "end": 14,
+      "raw": "[4]",
+      "raw_numbers": [
+        4
+      ],
+      "first_numbers": [
+        4
+      ],
+      "previous_numbers": [],
+      "missing_prefix_count": 0,
+      "first_missing": null,
+      "earlier_higher_number": null,
+      "risk": false,
+      "reason": "本位置无新增顺序风险"
+    }
+  ],
+  "order_semantics": "order为原始成员顺序中的首次编号；顺序结论仅依据位置组，不把内部排列当作跨位置先后",
+  "counts": {
+    "groups": 6,
+    "expanded_members": 14,
+    "unique_numbers": 5,
+    "member_problems": 0,
+    "member_reviews": 0
+  },
+  "summary": {
+    "superscript_problems": 0,
+    "correspondence_problems": 0,
+    "order_problems": 1,
+    "review_records": 0
+  }
+}

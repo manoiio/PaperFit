@@ -2,7 +2,8 @@
 from copy import deepcopy
 import json
 import streamlit as st
-from core.citations import template
+from core.citations import template,upgrade_template,CONFIG
+from core.citation_syntax import GROUPS
 from .session import public_error
 from .presentation import fmt,LABELS as STATES
 LABELS={'citation':'确认引文','excluded':'排除（数组/其他标记）','pending':'待确认'}
@@ -17,6 +18,17 @@ def render_citations(model):
   st.checkbox('启用正文引文检查',value=model.citation_enabled,key=k,on_change=lambda:guard(lambda:model.enable_citations(st.session_state[k])))
   if not model.citation_enabled:return
   d=model.citation_draft;inv=model.citation_inventory();token=model.task_dir.name+'-'+str(model.revision)
+  v2=d['template']['structure_version']==2
+  st.info('当前语法：v2组合/区间（产品支持，非学校明示语法）' if v2 else '当前语法：v1单整数；组合与区间仍只读。升级不会确认候选或授权修正。')
+  with st.expander('明确切换引文语法版本'):
+   st.caption('v1 → v2新增 [1,3]、[1-3]、[1–3]、[1-3,5] 和普通空格。最多512字符、累计100成员。保留原开关、用途及完整声明；切换后须重新核对，旧报告与预演失效。')
+   ack=st.checkbox('已核对语法版本变化',key='citation-upgrade-ack-'+token)
+   def change_syntax():
+    s=deepcopy(d)
+    if v2:s['template'].pop('syntax');s['template']['structure_version']=1
+    else:s['template']=upgrade_template(s['template'])
+    model.edit_citations(s)
+   st.button('恢复v1单整数语法' if v2 else '明确升级至v2组合与区间语法',disabled=not ack,on_click=lambda:guard(change_syntax))
   body=sorted(int(n) for n,t in model.paragraph_types.items() if t=='body')
   st.caption('当前扫描正文段：'+', '.join(map(str,d['scan']))+'。段落编号是顶层XML编号，不是页码。')
   def rescan():
@@ -32,7 +44,7 @@ def render_citations(model):
   page=st.number_input('引文候选页',min_value=1,max_value=max(1,(len(rows)+19)//20),value=1,key='citation-page-'+token+'-'+role+'-'+word+'-'+str(len(rows)))
   shown=rows[(page-1)*20:page*20]
   st.caption(f'筛选{len(rows)}项；每页20；确认用途不等于授权修正。筛选不会自动选中。')
-  st.dataframe([{'对象':r['id'],'段落':r['paragraph'],'字符范围':str(r['start'])+'–'+str(r['end']),'局部上下文':r['context'],'原始引文':r['text'],'编号':str(r['numbers']),'上标状态':fmt(r['vertical'],'R33'),'结构':r['structure'],'安全修正':r['fixable'],'用途':LABELS[d['objects'].get(r['id'],'pending')],'原因':r['reason']} for r in shown],hide_index=True,width='stretch',height=260)
+  st.dataframe([{'对象':r['id'],'段落':r['paragraph'],'字符范围':str(r['start'])+'–'+str(r['end']),'局部上下文':r['context'],'原始引文':r['text'][:120],'编号':str(r['numbers']),'上标状态':fmt(r['vertical'],'R33'),'结构':r['structure'],'安全修正':r['fixable'],'用途':LABELS[d['objects'].get(r['id'],'pending')],'原因':r['reason']} for r in shown],hide_index=True,width='stretch',height=260)
   ids=st.multiselect('明确选择引文候选',[r['id'] for r in shown],format_func=lambda x:x+' · '+next(r['context'] for r in shown if r['id']==x),key='citation-ids-'+token+'-'+str(page)+'-'+role+'-'+word)
   target=st.selectbox('所选候选用途',list(LABELS),format_func=lambda x:LABELS[x],key='citation-target-'+token)
   def decide():
@@ -40,7 +52,7 @@ def render_citations(model):
    for oid in ids:s['objects'][oid]=target
    model.edit_citations(s)
   st.button('应用所选引文用途草稿',disabled=not ids,on_click=lambda:guard(decide))
-  st.caption('批量确认只作用于上方明确选中的稳定字符对象；数组标记请设为排除。组合/区间/全角编号只读。')
+  st.caption('批量确认只作用于上方明确选中的稳定字符对象；数组标记请设为排除。当前语法版本决定组合/区间资格；全角编号仍只读。')
   complete=st.checkbox('已核对全部正文引文及排除项（否则为部分范围）',value=d['complete'],key='citation-full-'+token)
   refs=st.checkbox('已核对全部参考文献条目范围（否则不判全文缺失）',value=d['references_complete'],key='citation-refs-'+token)
   sup=st.checkbox('检查引文上标R33',value=d['template']['superscript'],key='citation-sup-'+token)
@@ -67,6 +79,9 @@ def render_citation_report(report):
   if not c['enabled']['superscript']:st.info('R33未启用：上标未检查，数字0不代表通过。')
   if not c['enabled']['correspondence']:st.info('R34未启用：对应与首次顺序未检查。')
   sm=c['summary'];st.caption(f"上标问题{sm['superscript_problems']} · 对应问题{sm['correspondence_problems']} · 首次顺序问题{sm['order_problems']} · 引文相关待复核记录{sm['review_records']}（是总检查记录的子集，不另相加）")
+  if c.get('counts'):
+   counts=c['counts'];st.caption(f"引文组{counts['groups']} · 展开成员{counts['expanded_members']}（含重复） · 唯一编号{counts['unique_numbers']} · 成员问题{counts['member_problems']} / 待复核{counts['member_reviews']}。组记录与成员数量不相加。")
+   st.caption(c['order_semantics'])
   status=st.selectbox('引文对应状态',['all','pass','problem','review'],format_func=lambda x:{'all':'全部','pass':'唯一对应','problem':'完整范围内未找到','review':'待复核'}[x],key='citation-status-'+report['input_sha256'])
   number=st.text_input('引文编号筛选（精确数字，可留空）',key='citation-report-word-'+report['input_sha256'])
   paragraph=st.text_input('引文段落筛选（精确编号，可留空）',key='citation-report-paragraph-'+report['input_sha256'])
@@ -74,6 +89,15 @@ def render_citation_report(report):
   p=st.number_input('引文对应页',min_value=1,max_value=max(1,(len(rows)+19)//20),value=1,key='citation-report-page-'+report['input_sha256']+'-'+str(len(rows)))
   st.caption(f'筛选{len(rows)}条；当前页{p}；完整报告保留全部。首次编号顺序：'+str(c['order']))
   st.dataframe([{'引文对象':r['id'],'原文':r['text'],'段落':r['paragraph'],'编号':str(r['numbers']),'参考文献位置':'、'.join(str(x['paragraph']) for x in r['references']) or '未找到唯一条目','条目短预览':'；'.join(x['preview'] for x in r['references']),'状态':STATES[r['status']],'原因':r['relation']} for r in rows[(p-1)*20:p*20]],hide_index=True,width='stretch')
+  shown=rows[(p-1)*20:p*20]
+  if c.get('syntax')==GROUPS:
+   st.dataframe([{'引文对象':r['id'],'成员编号':m['number'],'状态':STATES[m['status']],'参考文献段落':str([x['paragraph'] for x in m['references']]),'原因':m['reason']} for r in shown for m in r.get('members',[])],hide_index=True,width='stretch')
+   with st.expander('首次出现位置组证据（产品顺序解释）'):
+    gp=st.number_input('首次位置证据页',min_value=1,max_value=max(1,(len(c['order_groups'])+19)//20),key='citation-order-page-'+report['input_sha256'])
+    st.dataframe([{'对象':g['citation'],'原文':g['raw'][:120],'本组首次':str(g['first_numbers']),'此前已出现':str(g['previous_numbers']),'最早缺口':g['first_missing'],'先出现的较大编号':g['earlier_higher_number'],'风险证据':g['reason']} for g in c['order_groups'][(gp-1)*20:gp*20]],hide_index=True,width='stretch')
+   with st.expander('重复成员及区间重叠（仅提示）'):
+    for r in shown:
+     for notice in r['parsed']['notices']:st.caption(r['id']+' · '+str(notice['numbers'])+' · '+notice['reason'])
   st.info(c['unreferenced_state']+'：'+str([r['number'] for r in c['unreferenced']]))
   if c['undecided']:st.warning(f"尚有{len(c['undecided'])}个用途待确认；部分确认不等于全文对应验收。")
   st.caption('编号对应不证明文献真实、引用准确或全文排版合格。合法引文上标仍由通用正文的特殊run保护保留，相关未检查范围会继续显示。')

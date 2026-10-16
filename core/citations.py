@@ -1,19 +1,29 @@
 """Opt-in R33/R34. Local candidates are not confirmed citations.
-Only ASCII [positive integer] is executable; other bracket forms stay read-only.
+v1 remains single-integer; explicit v2 adds bounded ASCII groups.
 """
 from copy import deepcopy
 import json,re
 from lxml import etree as E
 from .package import Package,DemoError,q,NS,sha256
 from .formats import Resolver,Unresolved,paragraph_unsafe
+from .citation_syntax import parse,SINGLE,GROUPS,position_groups,spans
 QUOTE='正文中应按顺序在引用参考文献处的文字右上角用[]标明，[]中序号应与参考文献中序号一致。'
 SOURCE={'file':'00-全员必看/本科毕业设计论文.pdf','physical_page':18,'quote':QUOTE,'label':'2015学校演示材料，非现行通用规范'}
 LIMITS=['仅人工确认正文扫描范围；候选不是引用，确认不授权修正。','仅ASCII [1]单个正整数（1–99999）可执行；组合、区间、全角及异常数字只读，不转换文字。','对应与首次顺序均只读；不核验文献真实性或论据，不改编号、不补删条目。','复杂段落（含域、链接、书签、修订、公式等）整体不拆run；其他安全段落仍可修正。','上标后通用正文规则继续保护特殊run；新增覆盖提示不是全文通过或格式回退。']
 CONFIG={'structure_version':1,'kind':'paper-grid-citation-supplement','name':'用户确认的引文演示检查','superscript':True,'correspondence':True,'source':SOURCE}
 
 def template(value):
- if type(value) is not dict or set(value)!=set(CONFIG) or type(value['structure_version']) is not int or value['structure_version']!=1 or value['kind']!=CONFIG['kind'] or type(value['name']) is not str or not 0<len(value['name'])<=80 or any(type(value[k]) is not bool for k in ('superscript','correspondence')) or value['source']!=SOURCE:raise DemoError('引文补充配置版本、字段或来源无效')
+ if type(value) is not dict:raise DemoError('引文配置必须为对象')
+ version=value.get('structure_version');keys=set(CONFIG)|({'syntax'} if type(version) is int and version==2 else set())
+ if set(value)!=keys or type(version) is not int or version not in (1,2) or version==2 and value.get('syntax')!=GROUPS or value['kind']!=CONFIG['kind'] or type(value['name']) is not str or not 0<len(value['name'])<=80 or any(type(value[k]) is not bool for k in ('superscript','correspondence')) or value['source']!=SOURCE:raise DemoError('引文补充配置版本、字段或来源无效')
  return deepcopy(value)
+def syntax_mode(value):return GROUPS if template(value)['structure_version']==2 else SINGLE
+def upgrade_template(value):
+ out=template(value);out.update(structure_version=2,syntax=GROUPS);return template(out)
+def limits(value):
+ out=deepcopy(LIMITS)
+ if syntax_mode(value)==GROUPS:out[1]='v2产品语法：ASCII方括号，逗号列表、-或–区间、普通空格；1–99999；单组最多512字符、累计100成员（含重复/重叠）。不转换原文；非学校明示语法。'
+ return out
 def text(p):return ''.join(p.xpath('.//w:t/text()',namespaces=NS))
 def field_paragraphs(pkg):
  # Reuse the existing cross-paragraph field stack; a cache paragraph need not contain fldChar.
@@ -72,21 +82,19 @@ def states(p,start,end,res):
  if not values:raise Unresolved('没有可靠的普通文字范围')
  return values
 
-def inventory(path,scan):
- pkg=path if isinstance(path,Package) else Package(path);res=Resolver(pkg);rows=[];field_ps=field_paragraphs(pkg)
+def inventory(path,scan,config=None):
+ pkg=path if isinstance(path,Package) else Package(path);res=Resolver(pkg);rows=[];field_ps=field_paragraphs(pkg);cfg=template(CONFIG if config is None else config);mode=syntax_mode(cfg)
  for n in sorted(scan):
   p=pkg.paragraphs[n-1];tx=text(p);why='域/跨段域缓存：只读，不改指令、缓存或边界' if n in field_ps else safe(p,res)
-  for m in re.finditer(r'[\[［][^\[\]［］\r\n]*[\]］]',tx):
-   raw=m[0]
+  for start,end,raw in spans(tx,mode):
    if not re.search(r'\d',raw):continue
-   normal=re.fullmatch(r'\[([1-9][0-9]{0,4})\]',raw)
-   numbers=[int(normal[1])] if normal else [];reason=why or (None if normal else '不支持的组合/区间/全角或异常编号语法；只读待复核')
+   parsed=parse(raw,mode);numbers=parsed['numbers'];reason=why or parsed['reason']
    try:
     if why:raise Unresolved(why)
-    vs=states(p,m.start(),m.end(),res);current='superscript' if all(v['value']=='superscript' for v in vs) else 'mixed' if len(set(v['value'] for v in vs))>1 else vs[0]['value']
+    vs=states(p,start,end,res);current='superscript' if all(v['value']=='superscript' for v in vs) else 'mixed' if len(set(v['value'] for v in vs))>1 else vs[0]['value']
    except Unresolved as e:vs=[];current='unresolved';reason=reason or str(e)
-   rows.append({'id':f'c:{n}:{m.start()}:{m.end()}','paragraph':n,'start':m.start(),'end':m.end(),'text':raw[:100],'context':tx[max(0,m.start()-15):min(len(tx),m.end()+15)][:100],'numbers':numbers,'vertical':current,'evidence':vs,'structure':'普通文字' if not why else '域或跨段域缓存' if n in field_ps else '超链接' if '超链接' in why else '书签边界' if '书签' in why else '受保护结构','safe_structure':not reason,'fixable':not reason and not pkg.signed and not pkg.ambiguous_sections,'reason':reason or '仅候选，可能是数组或其他标记，须人工确认用途'})
- return {'input_sha256':pkg.hash,'objects':rows,'limits':LIMITS}
+   rows.append({'id':f'c:{n}:{start}:{end}','paragraph':n,'start':start,'end':end,'text':raw,'syntax':mode,'parsed':parsed,'unique_numbers':parsed['unique_numbers'],'context':tx[max(0,start-15):min(len(tx),end+15)][:100],'numbers':numbers,'vertical':current,'evidence':vs,'structure':'普通文字' if not why else '域或跨段域缓存' if n in field_ps else '超链接' if '超链接' in why else '书签边界' if '书签' in why else '受保护结构','safe_structure':not reason,'fixable':not reason and not pkg.signed and not pkg.ambiguous_sections,'reason':reason or '仅候选，可能是数组或其他标记，须人工确认用途'})
+ return {'input_sha256':pkg.hash,'objects':rows,'limits':limits(cfg),'syntax':mode}
 
 def make_scope(pkg,scan):
  return {'input_sha256':pkg.hash,'scan':sorted(scan),'objects':{},'complete':False,'references_complete':False,'confirmed':False,'confirmation':'候选尚未人工核对','template':deepcopy(CONFIG)}
@@ -96,12 +104,12 @@ def validate_scope(pkg,s,classification=None,*,confirmed=True):
  if type(s['scan']) is not list or any(type(n) is not int or not 1<=n<=len(pkg.paragraphs) for n in s['scan']) or len(set(s['scan']))!=len(s['scan']):raise DemoError('引文扫描段落无效')
  if any(type(s[k]) is not bool for k in ('complete','references_complete','confirmed')) or confirmed and not s['confirmed'] or type(s['confirmation']) is not str or not 0<len(s['confirmation'])<=200:raise DemoError('引文范围和用途须人工确认')
  if classification and any(classification['paragraph_types'].get(str(n))!='body' for n in s['scan']):raise DemoError('引文只能扫描已确认正文，不能覆盖目录/参考文献/封面')
- inv=inventory(pkg,s['scan']);ids={r['id'] for r in inv['objects']}
+ template(s['template']);inv=inventory(pkg,s['scan'],s['template']);ids={r['id'] for r in inv['objects']}
  if type(s['objects']) is not dict or any(type(k) is not str or k not in ids or type(v) is not str or v not in ('citation','excluded','pending') for k,v in s['objects'].items()):raise DemoError('引文准确字符范围或用途失效，请重新核对')
  template(s['template']);return deepcopy(s)
 
 def append_checks(report,pkg,s,classification):
- s=validate_scope(pkg,s,classification);inv=inventory(pkg,s['scan']);res=Resolver(pkg);fs=report['findings'];selected=[r for r in inv['objects'] if s['objects'].get(r['id'])=='citation'];refs=reference_evidence(pkg,sorted(int(n) for n,t in classification['paragraph_types'].items() if t=='reference_item'));by={}
+ s=validate_scope(pkg,s,classification);inv=inventory(pkg,s['scan'],s['template']);v2=syntax_mode(s['template'])==GROUPS;res=Resolver(pkg);fs=report['findings'];selected=[r for r in inv['objects'] if s['objects'].get(r['id'])=='citation'];refs=reference_evidence(pkg,sorted(int(n) for n,t in classification['paragraph_types'].items() if t=='reference_item'));by={}
  for r in refs:
   if r['number'] is not None:by.setdefault(r['number'],[]).append(r)
  undecided=[r['id'] for r in inv['objects'] if s['objects'].get(r['id'],'pending')=='pending'];unknown=any(r['number'] is None for r in refs) or any(not r['numbers'] or not r['safe_structure'] for r in selected)
@@ -113,10 +121,23 @@ def append_checks(report,pkg,s,classification):
   loc={'citation':r['id'],'paragraph':r['paragraph'],'start':r['start'],'end':r['end']}
   if s['template']['superscript']:
    status='review' if not r['safe_structure'] else 'pass' if r['vertical']=='superscript' else 'problem'
-   f=add('R33',loc,r['vertical'],'superscript',status,r['reason'] if status=='review' else '仅改变此引文vertAlign；不缩小字号。跨run按原始字符快照拆分，前后文字保留。',r['fixable'],r['text']);f['vertical_evidence']=r['evidence']
+   f=add('R33',loc,r['vertical'],'superscript',status,r['reason'] if status=='review' else '仅改变此引文vertAlign；不缩小字号。跨run按原始字符快照拆分，前后文字保留。',r['fixable'],r['text']);f['vertical_evidence']=r['evidence'];f['citation_target']={'raw':r['text'],'syntax':r['syntax']}
   if s['template']['correspondence']:
    if not r['numbers']:
-    add('R34',{**loc,'property':'correspondence'},None,'唯一手工编号条目','review','组合/区间或异常编号语法未解释；不展开或猜测');rows.append({**r,'references':[],'status':'review','relation':'编号无法确定'});continue
+    add('R34',{**loc,'property':'correspondence'},None,'唯一手工编号条目','review',r['reason'] if v2 else '组合/区间或异常编号语法未解释；不展开或猜测');rows.append({**r,'references':[],'status':'review','relation':'编号无法确定'});continue
+   if v2:
+    members=[]
+    for number in r['unique_numbers']:
+     matches=by.get(number,[]);used.add(number)
+     status='review' if not r['safe_structure'] else 'pass' if len(matches)==1 else 'review' if len(matches)>1 or not full else 'problem'
+     why='对应唯一确认条目（不证明真实性或引用准确）' if len(matches)==1 else '重复参考文献编号，复用R22证据；关系待复核' if matches else '完整且可解析的确认范围内未找到对应条目' if full else '当前范围内未找到，不能判全文缺失'
+     if not r['safe_structure']:why='结构受保护：'+r['reason']
+     members.append({'number':number,'references':matches,'status':status,'reason':why})
+    status='problem' if any(m['status']=='problem' for m in members) else 'review' if any(m['status']=='review' for m in members) else 'pass'
+    why='逐唯一成员核对；引文组状态汇总，不以第一个编号代表整组。重复成员/重叠仅提示。'
+    f=add('R34',{**loc,'property':'correspondence'},members,'组内每个唯一编号对应唯一条目',status,why);f['member_details']=deepcopy(members)
+    rows.append({**r,'members':members,'references':[ref for m in members for ref in m['references']],'status':status,'relation':why})
+    continue
    number=r['numbers'][0];matches=by.get(number,[]);used.add(number)
    status='review' if not r['safe_structure'] else 'pass' if len(matches)==1 else 'review' if len(matches)>1 or not full else 'problem'
    why='对应唯一确认条目（不证明真实性或引用准确）' if len(matches)==1 else '重复参考文献编号，关联R22手工编号证据，不重复新增缺号结论' if matches else '完整且可解析的确认范围内未找到对应条目' if full else '当前确认范围内未找到，范围/编号不完整，不能判全文缺失'
@@ -125,15 +146,24 @@ def append_checks(report,pkg,s,classification):
    rows.append({**r,'references':matches,'status':status,'relation':why})
    if r['safe_structure'] and number not in seen:order.append(number);seen.add(number)
  if s['template']['correspondence']:
-  ok=order==sorted(order) and (not order or order[0]==1) and order==list(range(1,len(order)+1))
-  add('R34',{'document':1,'property':'first_occurrence'},order,'首次引用从1顺序出现；重复引用不重复计入','pass' if full and ok else 'problem' if full and not ok else 'review','完整确认范围内的首次顺序只读核对' if full else '仅局部首次顺序；范围或编号不足，未完成全文顺序验收')
+  order_groups=[]
+  if v2:
+   order,order_groups=position_groups([r for r in selected if r['safe_structure']])
+   ok=not any(g['risk'] for g in order_groups)
+   order_full=full and all(len(v)==1 for v in by.values())
+   add('R34',{'document':1,'property':'first_occurrence'},order_groups,'按首次出现位置组：累计首次编号集合连续（产品解释）；组内不判先后','pass' if order_full and ok else 'problem' if order_full and not ok else 'review','原始组内排列保留；缺口与较大编号首次位置作为风险证据；不是组内排序要求。'+('完整确认范围' if order_full else '部分/不确定范围，未完成全文顺序验收'))
+  else:
+   ok=order==sorted(order) and (not order or order[0]==1) and order==list(range(1,len(order)+1))
+   add('R34',{'document':1,'property':'first_occurrence'},order,'首次引用从1顺序出现；重复引用不重复计入','pass' if full and ok else 'problem' if full and not ok else 'review','完整确认范围内的首次顺序只读核对' if full else '仅局部首次顺序；范围或编号不足，未完成全文顺序验收')
   if not selected:add('R34',{'document':1,'property':'scope'},0,None,'review','未确认引文；不能声称全文无引用或对应通过')
  if s['template']['superscript'] and not selected:add('R33',{'document':1,'property':'scope'},0,None,'not_applicable','当前未确认引文，不代表全文无引文或全文上标通过')
  unreferenced=[r for r in refs if r['number'] is not None and r['number'] not in used] if s['template']['correspondence'] else []
- report['citations']={'enabled':{k:s['template'][k] for k in ('superscript','correspondence')},'rows':rows,'references':refs,'unreferenced':unreferenced,'undecided':undecided,'scope_state':'未启用R34，对应与顺序未检查' if not s['template']['correspondence'] else '已声明完整且解析覆盖足够' if full else '部分/不确定范围，不能判全文缺失或顺序通过','order':order,'limits':LIMITS,'unreferenced_state':'确认范围内未找到已解析引文，仅核对提示；复杂/未确认引文可能遗漏，无自动删除或违规结论','r22_link':'文献手工编号证据复用R22，重复编号仅造成关系待复核，不另计同一编号错误'}
+ report['citations']={'enabled':{k:s['template'][k] for k in ('superscript','correspondence')},'rows':rows,'references':refs,'unreferenced':unreferenced,'undecided':undecided,'scope_state':'未启用R34，对应与顺序未检查' if not s['template']['correspondence'] else '已声明完整且解析覆盖足够' if full else '部分/不确定范围，不能判全文缺失或顺序通过','order':order,'limits':limits(s['template']),'unreferenced_state':'确认范围内未找到已解析引文，仅核对提示；复杂/未确认引文可能遗漏，无自动删除或违规结论','r22_link':'文献手工编号证据复用R22，重复编号仅造成关系待复核，不另计同一编号错误'}
+ if v2:
+  report['citations'].update(syntax=GROUPS,order_groups=order_groups if s['template']['correspondence'] else [],order_semantics='order为原始成员顺序中的首次编号；顺序结论仅依据位置组，不把内部排列当作跨位置先后',counts={'groups':len(selected),'expanded_members':sum(len(r['numbers']) for r in selected),'unique_numbers':len({n for r in selected for n in r['numbers']}),'member_problems':sum(m['status']=='problem' for r in rows for m in r.get('members',[])),'member_reviews':sum(m['status']=='review' for r in rows for m in r.get('members',[]))})
  report['citations']['summary']={'superscript_problems':sum(f['rule_id']=='R33' and f['status']=='problem' for f in fs),'correspondence_problems':sum(f['rule_id']=='R34' and f['locator'].get('property')=='correspondence' and f['status']=='problem' for f in fs),'order_problems':sum(f['rule_id']=='R34' and f['locator'].get('property')=='first_occurrence' and f['status']=='problem' for f in fs),'review_records':sum(f['rule_id'] in ('R33','R34') and f['status']=='review' for f in fs)}
  report['coverage']['citation_scope']=deepcopy(s)
- raw=json.dumps(template(s['template']),ensure_ascii=False,sort_keys=True).encode();report['rules']['citation_supplement']={'name':s['template']['name'],'version':1,'sha256':sha256(raw),'values':deepcopy(s['template']),'source':SOURCE}
+ raw=json.dumps(template(s['template']),ensure_ascii=False,sort_keys=True).encode();report['rules']['citation_supplement']={'name':s['template']['name'],'version':s['template']['structure_version'],'sha256':sha256(raw),'values':deepcopy(s['template']),'source':SOURCE}
  for status,name in [('problem','problem_count'),('pass','pass_count'),('not_applicable','not_applicable_count'),('review','review_findings')]:report['summary'][name]=sum(f['status']==status for f in fs)
  report['summary']['rule_count']+=int(s['template']['superscript'])+int(s['template']['correspondence']);report['summary']['review_count']=report['summary']['review_findings']+len(report['coverage_notes']);report['summary']['applicable_rule_count']=len({f['rule_id'] for f in fs if f['status']!='not_applicable'});report['summary']['conclusion']='已覆盖检查发现问题' if report['summary']['problem_count'] else '已覆盖检查未发现问题' 
 
@@ -142,6 +172,8 @@ def apply(pkg,f):
  from .engine import _ensure
  loc=f['locator'];p=pkg.paragraphs[loc['paragraph']-1]
  if safe(p,Resolver(pkg)):raise DemoError('引文结构不能安全拆分')
+ target=f.get('citation_target');raw=text(p)[loc['start']:loc['end']]
+ if not target or raw!=target['raw'] or not parse(raw,target['syntax'])['supported']:raise DemoError('引文完整原文或语法绑定失效')
  for r in isolate(p,loc['start'],loc['end']):_ensure(_ensure(r,'rPr'),'vertAlign').set(q('val'),'superscript')
 def mask(p,f):
  offset=0;loc=f['locator']

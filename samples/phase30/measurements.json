@@ -1,0 +1,145 @@
+{
+  "python": "3.14.5",
+  "platform": "Darwin",
+  "repeats": 3,
+  "unit": "seconds",
+  "API_requests": 0,
+  "cases": {
+    "ordinary": {
+      "characters": 7,
+      "supported": true,
+      "expanded_members": 4,
+      "runs": [
+        2.116500050760806e-06,
+        2.0264999475330115e-06,
+        2.0236660493537783e-06
+      ],
+      "median": 2.0264999475330115e-06,
+      "reason": null
+    },
+    "limit100": {
+      "characters": 7,
+      "supported": true,
+      "expanded_members": 100,
+      "runs": [
+        5.9843165916390716e-05,
+        5.906854104250669e-05,
+        5.929166707210243e-05
+      ],
+      "median": 5.929166707210243e-05,
+      "reason": null
+    },
+    "overlap_rejected": {
+      "characters": 11,
+      "supported": false,
+      "expanded_members": 0,
+      "runs": [
+        1.5307499561458825e-06,
+        1.5597499441355466e-06,
+        1.5509999357163905e-06
+      ],
+      "median": 1.5509999357163905e-06,
+      "reason": "累计展开超过100成员（重复和重叠也计入），未展开"
+    },
+    "huge_rejected": {
+      "characters": 100002,
+      "supported": false,
+      "expanded_members": 0,
+      "runs": [
+        3.5070802550762894e-07,
+        3.491670358926058e-07,
+        3.4974992740899326e-07
+      ],
+      "median": 3.4974992740899326e-07,
+      "reason": "单组超过512字符，未展开"
+    },
+    "descending": {
+      "characters": 9,
+      "supported": false,
+      "expanded_members": 0,
+      "runs": [
+        7.56374909542501e-07,
+        7.527499692514539e-07,
+        7.500830106437206e-07
+      ],
+      "median": 7.527499692514539e-07,
+      "reason": "倒序区间不展开"
+    }
+  },
+  "full_synthetic_check": {
+    "runs": [
+      0.016988332965411246,
+      0.016799499979242682,
+      0.017279625055380166
+    ],
+    "median": 0.016988332965411246,
+    "groups": {
+      "groups": 6,
+      "expanded_members": 14,
+      "unique_numbers": 5,
+      "member_problems": 0,
+      "member_reviews": 0
+    }
+  },
+  "group_checks": {
+    "ordinary": {
+      "runs": [
+        0.014258999959565699,
+        0.014162249979563057,
+        0.014359458931721747
+      ],
+      "median": 0.014258999959565699,
+      "counts": {
+        "groups": 1,
+        "expanded_members": 4,
+        "unique_numbers": 4,
+        "member_problems": 0,
+        "member_reviews": 0
+      },
+      "scope": "单组局部范围，对应不完整则待复核"
+    },
+    "limit100": {
+      "runs": [
+        0.014904707903042436,
+        0.014729290967807174,
+        0.01454533392097801
+      ],
+      "median": 0.014729290967807174,
+      "counts": {
+        "groups": 1,
+        "expanded_members": 100,
+        "unique_numbers": 100,
+        "member_problems": 0,
+        "member_reviews": 90
+      },
+      "scope": "单组局部范围，对应不完整则待复核"
+    },
+    "rejected": {
+      "runs": [
+        0.014761499944142997,
+        0.014396832906641066,
+        0.014161291997879744
+      ],
+      "median": 0.014396832906641066,
+      "counts": {
+        "groups": 1,
+        "expanded_members": 0,
+        "unique_numbers": 0,
+        "member_problems": 0,
+        "member_reviews": 0
+      },
+      "scope": "单组局部范围，对应不完整则待复核"
+    }
+  },
+  "500_limit_groups_inventory": {
+    "runs": [
+      0.05145108397118747,
+      0.05181437497958541,
+      0.051315292017534375
+    ],
+    "median": 0.05145108397118747,
+    "groups": 500,
+    "expanded_members": 50000,
+    "note": "库存/有效格式读取耗时，不是浏览器整页响应；每组上限不因重复绕过"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "input_sha256": "4b81de246a1d011f1a4cefd1b52825d139bd030af73a7e0ae040ac259e1ba79f",
+  "middle_sha256": "efdf56157a4059fcd3499ce3f90dcaa9e6bc9da3356354d83f5addc34ab1f789",
+  "final_sha256": "b1d44d2fab85b7954226f27c7264a94033dc5a937fe9437b3a72e58e182d8031",
+  "ordinary_exact_authorized_attributes": 6,
+  "selected_whole_spans_superscript_only": true,
+  "necessary_run_boundaries_only": true,
+  "all_text_objects_and_unselected_parts_preserved": true,
+  "literal_group_count": 6,
+  "literal_expected_numbers": [
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      1,
+      2,
+      3,
+      5
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      4
+    ]
+  ],
+  "not_visual_or_Word_acceptance": true
+}

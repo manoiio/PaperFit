@@ -1,0 +1,220 @@
+{
+  "rendered": {
+    "original": {
+      "document_sha256": "4b81de246a1d011f1a4cefd1b52825d139bd030af73a7e0ae040ac259e1ba79f",
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "page_count": 2,
+      "preview_range": [
+        1,
+        2
+      ],
+      "font_notes": [
+        "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+      ],
+      "fonts": [
+        {
+          "target": "Calibri",
+          "installed_exact": true,
+          "resolved_family": "Calibri"
+        },
+        {
+          "target": "Times New Roman",
+          "installed_exact": true,
+          "resolved_family": "Times New Roman"
+        },
+        {
+          "target": "宋体",
+          "installed_exact": true,
+          "resolved_family": "SimSun,宋体"
+        },
+        {
+          "target": "黑体",
+          "installed_exact": true,
+          "resolved_family": "SimHei,黑体"
+        }
+      ],
+      "input_bytes_unchanged": true,
+      "pages": [
+        "previews/original-1.png",
+        "previews/original-2.png"
+      ]
+    },
+    "control": {
+      "document_sha256": "c929c971d2c9e0f602fdefa81afa28f2380672072ffb4e7e9e62188b1ee5f12c",
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "page_count": 2,
+      "preview_range": [
+        1,
+        2
+      ],
+      "font_notes": [
+        "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+      ],
+      "fonts": [
+        {
+          "target": "Calibri",
+          "installed_exact": true,
+          "resolved_family": "Calibri"
+        },
+        {
+          "target": "Times New Roman",
+          "installed_exact": true,
+          "resolved_family": "Times New Roman"
+        },
+        {
+          "target": "宋体",
+          "installed_exact": true,
+          "resolved_family": "SimSun,宋体"
+        }
+      ],
+      "input_bytes_unchanged": true,
+      "pages": [
+        "previews/control-1.png",
+        "previews/control-2.png"
+      ]
+    },
+    "middle": {
+      "document_sha256": "efdf56157a4059fcd3499ce3f90dcaa9e6bc9da3356354d83f5addc34ab1f789",
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "page_count": 2,
+      "preview_range": [
+        1,
+        2
+      ],
+      "font_notes": [
+        "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+      ],
+      "fonts": [
+        {
+          "target": "Calibri",
+          "installed_exact": true,
+          "resolved_family": "Calibri"
+        },
+        {
+          "target": "Times New Roman",
+          "installed_exact": true,
+          "resolved_family": "Times New Roman"
+        },
+        {
+          "target": "宋体",
+          "installed_exact": true,
+          "resolved_family": "SimSun,宋体"
+        },
+        {
+          "target": "黑体",
+          "installed_exact": true,
+          "resolved_family": "SimHei,黑体"
+        }
+      ],
+      "input_bytes_unchanged": true,
+      "pages": [
+        "previews/middle-1.png",
+        "previews/middle-2.png"
+      ]
+    },
+    "final": {
+      "document_sha256": "b1d44d2fab85b7954226f27c7264a94033dc5a937fe9437b3a72e58e182d8031",
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "page_count": 2,
+      "preview_range": [
+        1,
+        2
+      ],
+      "font_notes": [
+        "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+      ],
+      "fonts": [
+        {
+          "target": "Calibri",
+          "installed_exact": true,
+          "resolved_family": "Calibri"
+        },
+        {
+          "target": "Times New Roman",
+          "installed_exact": true,
+          "resolved_family": "Times New Roman"
+        },
+        {
+          "target": "宋体",
+          "installed_exact": true,
+          "resolved_family": "SimSun,宋体"
+        },
+        {
+          "target": "黑体",
+          "installed_exact": true,
+          "resolved_family": "SimHei,黑体"
+        }
+      ],
+      "input_bytes_unchanged": true,
+      "pages": [
+        "previews/final-1.png",
+        "previews/final-2.png"
+      ]
+    },
+    "browser-final": {
+      "document_sha256": "67dc4bbbf12ff3efc032e594582b40ba833fed491f82cbdbe42a833a798bb44a",
+      "renderer": "Codex bundled LibreOffice / Poppler",
+      "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+      "page_count": 2,
+      "preview_range": [
+        1,
+        2
+      ],
+      "font_notes": [
+        "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+      ],
+      "fonts": [
+        {
+          "target": "Calibri",
+          "installed_exact": true,
+          "resolved_family": "Calibri"
+        },
+        {
+          "target": "Times New Roman",
+          "installed_exact": true,
+          "resolved_family": "Times New Roman"
+        },
+        {
+          "target": "宋体",
+          "installed_exact": true,
+          "resolved_family": "SimSun,宋体"
+        },
+        {
+          "target": "黑体",
+          "installed_exact": true,
+          "resolved_family": "SimHei,黑体"
+        }
+      ],
+      "input_bytes_unchanged": true,
+      "pages": [
+        "previews/browser-final-1.png",
+        "previews/browser-final-2.png"
+      ]
+    }
+  },
+  "observations": [
+    "原稿、对照、中间、最终及浏览器最终均两页；全部页图逐页查看。",
+    "列表、-与–区间、混合组及重复组整组上标；数组标记保持基线。",
+    "相邻文字、代码、图表保留；分页和原有布局不因此声称合格。",
+    "LibreOffice将保护的无目标REF缓存重新求值为Error: Reference source not found；正式DOCX原域与缓存字节未被改写。",
+    "Word16.80实际只读打开主复现step-2两页，查看整组上标、数组、代码、表格与图片，无修复提示；显示原REF缓存[1]，与LibreOffice不同。关闭未保存，哈希不变。",
+    "浏览器三轮最终与主两轮最终字节不同：已先上标的第一组继续受普通正文保护，保留其14pt/黑体；没有追求数字清零。浏览器最终另行渲染两页，未单独做Word打开。"
+  ],
+  "Word": {
+    "version": "16.80",
+    "file": "step-2.docx",
+    "actually_opened": true,
+    "pages_looked": [
+      1,
+      2
+    ],
+    "repair_prompt": false,
+    "saved": false,
+    "hash_unchanged": true
+  },
+  "scope": "合成文档本轮真实渲染和Word观察，非实际页码、引用真实性或全文合格验收"
+}

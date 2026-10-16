@@ -1,0 +1,60 @@
+{
+  "main": {
+    "document_sha256": "b1d44d2fab85b7954226f27c7264a94033dc5a937fe9437b3a72e58e182d8031",
+    "summary": {
+      "rule_count": 24,
+      "problem_count": 10,
+      "review_count": 30,
+      "review_findings": 21,
+      "review_notes": 9,
+      "pass_count": 68,
+      "not_applicable_count": 17,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 15
+    },
+    "citation_summary": {
+      "superscript_problems": 0,
+      "correspondence_problems": 0,
+      "order_problems": 1,
+      "review_records": 0
+    },
+    "counts": {
+      "groups": 6,
+      "expanded_members": 14,
+      "unique_numbers": 5,
+      "member_problems": 0,
+      "member_reviews": 0
+    },
+    "all_R33_selected_safe_pass": true,
+    "syntax": "ascii-groups-v2"
+  },
+  "browser": {
+    "document_sha256": "67dc4bbbf12ff3efc032e594582b40ba833fed491f82cbdbe42a833a798bb44a",
+    "summary": {
+      "rule_count": 24,
+      "problem_count": 10,
+      "review_count": 30,
+      "review_findings": 21,
+      "review_notes": 9,
+      "pass_count": 68,
+      "not_applicable_count": 17,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 15
+    },
+    "citation_summary": {
+      "superscript_problems": 0,
+      "correspondence_problems": 0,
+      "order_problems": 1,
+      "review_records": 0
+    },
+    "counts": {
+      "groups": 6,
+      "expanded_members": 14,
+      "unique_numbers": 5,
+      "member_problems": 0,
+      "member_reviews": 0
+    },
+    "all_R33_selected_safe_pass": true,
+    "syntax": "ascii-groups-v2"
+  }
+}

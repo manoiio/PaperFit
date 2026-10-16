@@ -41,6 +41,8 @@ def portable(bundle,*,display_name='待检查文档.docx',include_excerpts=False
         n=bundle['format']['notes'];out['note_summary']={'selected_count':len(n['selected']),'automatic_markers_preserved':n['automatic_markers_preserved'],'system_objects_readonly':n['system_objects_readonly'],'limits':n['limits'],'reference_positions':[{'kind':x['kind'],'note_id':x['note_id'],'paragraph':x['paragraph']} for x in n['inventory']['references']],'relationship_issues':n['inventory']['issues']}
     if bundle['format'].get('citations'):
         c=bundle['format']['citations'];out['citation_summary']={k:c[k] for k in ('enabled','summary','scope_state','order','limits','unreferenced_state','r22_link','undecided')};out['citation_summary']['unreferenced_numbers']=[r['number'] for r in c['unreferenced']]
+        if c.get('syntax'):
+            out['citation_summary'].update(syntax=c['syntax'],counts=c['counts'],order_semantics=c['order_semantics'],order_groups=[{k:v for k,v in g.items() if k!='raw'} for g in c['order_groups']],member_details=[{'citation':r['id'],'members':[{**m,'references':[{'paragraph':x['paragraph'],'number':x['number']} for x in m['references']]} for m in r.get('members',[])]} for r in c['rows']])
     if bundle['format'].get('toc'):
         t=bundle['format']['toc'];out['toc_summary']={k:t[k] for k in ('scope_state','page_status','risk_count','review_count','normalization','hierarchy_notes','missing_candidates')}
     # Caption proposal labels contain document text; mask these by default as well as excerpt fields.
@@ -54,6 +56,14 @@ def portable(bundle,*,display_name='待检查文档.docx',include_excerpts=False
                         if isinstance(val.get('actual'),dict) and val['actual'].get('parsed'):val['actual']['parsed'].pop('title',None)
                 row['actual']='编号与章号证据见详细报告；原题注标题默认省略'
             if row['raw'].get('object_type') in ('citation','citation_relation','table_border','footnote','endnote'):row['raw'].pop('excerpt',None)
+            if row['raw'].get('object_type')=='citation_relation':
+                def redact(value):
+                    if isinstance(value,dict):return {k:redact(v) for k,v in value.items() if k not in ('preview','raw')}
+                    if isinstance(value,list):return [redact(v) for v in value]
+                    return value
+                row['raw']=redact(row['raw'])
+                # actual is already presentation text; the raw numeric evidence remains below.
+                if isinstance(row['raw'].get('actual'),list) and row['raw'].get('locator',{}).get('property')=='correspondence':row['actual']='逐成员编号、状态及位置见下方明细（条目原文省略）'
             if row['record_key'].startswith('toc-match:'):
                 row['actual']='目录标题文字（默认省略，按目录对象定位）'
                 row['basis']='内部链接或确认范围内精确文字；详见本机对应表'
@@ -97,6 +107,8 @@ def html_report(data):
         t=data['toc_summary'];parts += ['<h2>目录对应风险与页码未核对</h2>',table(['对应风险','对应待复核','确认范围','实际页码'],[[t['risk_count'],t['review_count'],t['scope_state'],t['page_status']]]),'<p>目录格式通过不等于页码正确。修改可能改变分页，需人工更新目录后作为新输入检查。</p>']
     if data.get('citation_summary'):
         c=data['citation_summary'];parts+=['<h2>引文对应与顺序边界</h2>', '<p>'+esc(('R33上标未检查；' if not c['enabled']['superscript'] else '')+c['scope_state']+'；'+c['unreferenced_state']+'；编号对应不证明文献真实或引用准确')+'</p>',table(['首次出现顺序','尚未引用的编号'],[[c['order'],c['unreferenced_numbers']]])]
+        if c.get('counts'):
+            parts+=['<h3>组合引文逐成员对应</h3>','<p>'+esc(c['counts'])+'；'+esc(c['order_semantics'])+'</p>',table(['引文对象','成员','状态','条目位置','依据'],[[r['citation'],m['number'],STATUS[m['status']],str([x['paragraph'] for x in m['references']]),m['reason']] for r in c['member_details'] for m in r['members']]),'<h3>首次位置组证据</h3>',table(['位置','原始成员顺序','本组首次','之前已出现','缺口','风险'],[[g['citation'],g['raw_numbers'],g['first_numbers'],g['previous_numbers'],g['first_missing'],g['risk']] for g in c['order_groups']])]
     parts+=['<h2>建议下一步</h2>','<ul>'+''.join('<li>'+esc(x['title']+'：'+x['reason'])+'</li>' for x in data['next_steps'])+'</ul>']
     if data.get('scope_summary'):
         sc=data['scope_summary']
@@ -135,6 +147,7 @@ def markdown_report(data):
     if data.get('impact'):out+=['预演与正式采用影响：'+json.dumps(data['impact'],ensure_ascii=False),'采用绑定核对：'+json.dumps(data['rehearsal'],ensure_ascii=False)]
     if data.get('plan'):out+=['分步计划及父子关系：'+json.dumps(data['plan'],ensure_ascii=False)]
     if data.get('scope_summary'):out+=['范围状态摘要：'+json.dumps(data['scope_summary'],ensure_ascii=False)]
+    if data.get('citation_summary'):out+=['引文逐成员与首次位置证据：'+json.dumps(data['citation_summary'],ensure_ascii=False)]
     if data.get('caption_summary'):out+=['题注编号/结构位置/实际分页：'+json.dumps(data['caption_summary'],ensure_ascii=False)]
     for r in data['records']:out.append('- '+CATEGORIES[r['category']]+' · '+r['record_key']+' · '+r['position']+' · '+STATUS[r['status']]+'：'+r['actual']+' → '+r['expected']+'；'+r['reason'])
     out+=['','本轮修改：'+json.dumps(data['changes'],ensure_ascii=False),'预览/视觉：'+json.dumps({'preview':data['preview'],'visual':data['visual']},ensure_ascii=False)]

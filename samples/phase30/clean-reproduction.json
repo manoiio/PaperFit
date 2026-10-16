@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "source_files_copied": 444,
+  "file_copy_byte_verification": true,
+  "excluded": [
+    "work",
+    "outputs",
+    ".env",
+    ".git",
+    ".venv"
+  ],
+  "API_configuration_removed": true,
+  "renderer_configuration_unavailable": true,
+  "tests": 1118,
+  "clean_test_seconds": 151.348,
+  "local_test_seconds": 151.54,
+  "reproduction": "scripts/reproduce_citation_groups_demo.py --output NEW_DIRECTORY",
+  "independent_verification": "scripts/verify_citation_groups_output.py errors.docx step-1.docx step-2.docx",
+  "repository_audit": "passed",
+  "manual_path_byte_equal": true,
+  "scope": "本机干净目录与离线复现，不代替远端Ubuntu当前提交CI；测试输出仅临时目录"
+}

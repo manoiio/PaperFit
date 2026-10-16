@@ -1,0 +1,12 @@
+{
+  "manual_seconds": 0.09429604199249297,
+  "rehearsal_seconds": 0.14130162494257092,
+  "adoption_seconds": 0.25139091699384153,
+  "engine_calls": 2,
+  "adoption_engine_calls": 0,
+  "formal_rounds": 2,
+  "API_requests": 0,
+  "automatic_renders": 0,
+  "remaining_temporary_directories": 0,
+  "byte_equal_to_manual": true
+}

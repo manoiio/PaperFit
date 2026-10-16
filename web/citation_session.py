@@ -13,7 +13,7 @@ class CitationSession:
    if not self.citation_draft or self.citation_draft['input_sha256']!=self.inventory['input_sha256']:self.citation_draft=make_scope(Package(self.input_path),[int(n) for n,t in self.paragraph_types.items() if t=='body'])
    self.invalidate()
  def citation_inventory(self):
-  self._current();return self.cached_data(('citations',self.inventory['input_sha256'],tuple(self.citation_draft['scan'])),lambda:inventory(self.input_path,self.citation_draft['scan']))
+  self._current();return self.cached_data(('citations',self.inventory['input_sha256'],tuple(self.citation_draft['scan']),json.dumps(self.citation_draft['template'],sort_keys=True)),lambda:inventory(self.input_path,self.citation_draft['scan'],self.citation_draft['template']))
  def edit_citations(self,s):
   self._current();validate_scope(Package(self.input_path),s,{'paragraph_types':self.paragraph_types},confirmed=False)
   if self.citation_draft!=s:self.citation_draft=deepcopy(s);self.invalidate()

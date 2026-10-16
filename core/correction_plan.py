@@ -3,7 +3,7 @@ from copy import deepcopy
 from .package import Package,DemoError,sha256,NS
 from .citations import inventory,text,validate_scope
 
-VERSION='known-format-citation-plan-v1'
+VERSION='known-format-citation-plan-v2'
 
 def draft(report,selected,pkg,classification):
     by={f['key']:f for f in report['findings']};items=[];blocked=[]
@@ -21,12 +21,12 @@ def draft(report,selected,pkg,classification):
         try:
             if not classification or not classification.get('citation_scope'):raise DemoError('引文范围尚未确认')
             scope=validate_scope(pkg,classification['citation_scope'],classification)
-            rows=inventory(pkg,scope['scan'])['objects']
+            rows=inventory(pkg,scope['scan'],scope['template'])['objects']
             for f in citations:
                 loc=f['locator'];matches=[r for r in rows if (r['paragraph'],r['start'],r['end'])==(loc['paragraph'],loc['start'],loc['end'])]
                 if len(matches)!=1 or not matches[0]['fixable'] or scope['objects'].get(matches[0]['id'])!='citation':raise DemoError('所选引文不在已确认安全范围中')
                 row=matches[0]
-                targets.append({'origin_key':f['key'],'paragraph':loc['paragraph'],'start':loc['start'],'end':loc['end'],'text':row['text'],
+                targets.append({'origin_key':f['key'],'paragraph':loc['paragraph'],'start':loc['start'],'end':loc['end'],'text':row['text'],'syntax':row['syntax'],
                                 'paragraph_sha256':sha256(text(pkg.paragraphs[loc['paragraph']-1]).encode())})
         except DemoError as exc:blocked.append({'key':'R33','reason':str(exc)})
     groups=[ordinary,citations] if two else [items]
@@ -48,7 +48,7 @@ def handoff(original,intermediate,scope):
 def resolve_targets(pkg,classification,targets,report):
     """No old key/run reuse or text search; exact identity+offset+content proof."""
     scope=validate_scope(pkg,classification['citation_scope'],classification)
-    rows=inventory(pkg,scope['scan'])['objects'];out=[]
+    rows=inventory(pkg,scope['scan'],scope['template'])['objects'];out=[]
     for t in targets:
         n=t['paragraph']
         if not 1<=n<=len(pkg.paragraphs) or sha256(text(pkg.paragraphs[n-1]).encode())!=t['paragraph_sha256']:
@@ -56,7 +56,7 @@ def resolve_targets(pkg,classification,targets,report):
         matches=[r for r in rows if (r['paragraph'],r['start'],r['end'])==(n,t['start'],t['end'])]
         if len(matches)!=1:raise DemoError('引文准确字符范围不能唯一定位，停止计划')
         r=matches[0]
-        if r['text']!=t['text'] or scope['objects'].get(r['id'])!='citation' or not r['safe_structure']:
+        if r['text']!=t['text'] or r['syntax']!=t.get('syntax') or scope['objects'].get(r['id'])!='citation' or not r['safe_structure']:
             raise DemoError('引文文字、用途或安全结构变化，停止计划')
         fs=[f for f in report['findings'] if f['rule_id']=='R33' and (f['locator'].get('paragraph'),f['locator'].get('start'),f['locator'].get('end'))==(n,t['start'],t['end'])]
         if len(fs)!=1:raise DemoError('新检查没有唯一引文格式记录，停止计划')
