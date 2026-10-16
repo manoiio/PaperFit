@@ -50,6 +50,7 @@ def report_scope_summary(report, classification=None):
     return {'file_sha256':report['input_sha256'],'rules_sha256':report['rules']['sha256'],
             'scope_sha256':fingerprint(classification or coverage),'areas':rows,'limits':deepcopy(LIMITS),
             'coverage_note_count':len(report.get('coverage_notes',[])),
+            'citation_paragraph_properties':[{k:p[k] for k in ('paragraph','structurally_safe','allowed_properties','property_blockers','blockers')} for p in coverage.get('citation_paragraph_evidence',[])],
             'unconfirmed_top_level_paragraphs':deepcopy(coverage.get('unconfirmed_paragraphs',[])),
             'review_record_keys':[f['key'] for f in report['findings'] if f['status']=='review'],
             'review_counts':{'rule_records':report['summary']['review_findings'],'coverage_notes':report['summary']['review_notes']},

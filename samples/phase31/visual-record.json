@@ -1,0 +1,167 @@
+{
+  "original": {
+    "document_sha256": "10e81d577934827d3890e9e0eb7370376cff3dcd587c832a33b09e570b2a13f3",
+    "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+    "generated_at": "2026-10-16T06:08:03.663008+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "bundle": "26.1013.11914",
+    "page_count": 2,
+    "preview_range": [
+      1,
+      2
+    ],
+    "fonts": [
+      {
+        "target": "Calibri",
+        "installed_exact": true,
+        "resolved_family": "Calibri"
+      },
+      {
+        "target": "Times New Roman",
+        "installed_exact": true,
+        "resolved_family": "Times New Roman"
+      },
+      {
+        "target": "宋体",
+        "installed_exact": true,
+        "resolved_family": "SimSun,宋体"
+      }
+    ],
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "context": {
+      "stage": 31,
+      "label": "original"
+    },
+    "fallback_odt": false,
+    "input_bytes_unchanged": true,
+    "limitation": "不是Microsoft Word验收；分页可能不同。格式属性通过与可见排版复核分别记录。",
+    "pages": [
+      "pages/original-1.png",
+      "pages/original-2.png"
+    ],
+    "artifact_sha256": {
+      "page-1.png": "7ea10e8a420310d84c411b0415aa45d2b01a6e3331dfb7c3e685352dbef867fb",
+      "page-2.png": "fa8490c3efe20e30d584a5814f3cb608f0527240b869d601e0db52328dd57407",
+      "source.pdf": "b23ae4c92e722829be4e5577b667aa8f17968208a4bba5f9ae6fb97104f8974d"
+    },
+    "visual_review": "全部页面已查看；引文上标保持，行距/缩进/段距变化可见，代码、表格、媒体保持，未发现新裁切或丢字。"
+  },
+  "control": {
+    "document_sha256": "c88e6f541542122101ddbe71d20e303b343928b45c2cd8bf23d0d7b092edf709",
+    "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+    "generated_at": "2026-10-16T06:08:07.687909+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "bundle": "26.1013.11914",
+    "page_count": 2,
+    "preview_range": [
+      1,
+      2
+    ],
+    "fonts": [
+      {
+        "target": "Calibri",
+        "installed_exact": true,
+        "resolved_family": "Calibri"
+      },
+      {
+        "target": "Times New Roman",
+        "installed_exact": true,
+        "resolved_family": "Times New Roman"
+      },
+      {
+        "target": "宋体",
+        "installed_exact": true,
+        "resolved_family": "SimSun,宋体"
+      }
+    ],
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "context": {
+      "stage": 31,
+      "label": "control"
+    },
+    "fallback_odt": false,
+    "input_bytes_unchanged": true,
+    "limitation": "不是Microsoft Word验收；分页可能不同。格式属性通过与可见排版复核分别记录。",
+    "pages": [
+      "pages/control-1.png",
+      "pages/control-2.png"
+    ],
+    "artifact_sha256": {
+      "page-1.png": "9e017f7e3e93307cf854fd916902c22c86fb3383c4cdecd147f9685088f1fe41",
+      "page-2.png": "682d8878466c449e6267fa69b02b4bf6931b3278c22950552a3b9f0c45964fa2",
+      "source.pdf": "f9ec5aca3c78c1819da33387e1c9bb841471b9bb704578685d291543a2eaa870"
+    },
+    "visual_review": "全部页面已查看；引文上标保持，行距/缩进/段距变化可见，代码、表格、媒体保持，未发现新裁切或丢字。"
+  },
+  "final": {
+    "document_sha256": "0bfdb4bde938d9e01abe5ba6e4ed7e9f1d21a5185a5f3b010419f480cd0e4e8b",
+    "render_config_sha256": "d2014a4c68e2a14ed71b439d7a5b606223429dde1f0d32f91dbf1ef5a01e3c46",
+    "generated_at": "2026-10-16T06:08:11.669185+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "bundle": "26.1013.11914",
+    "page_count": 2,
+    "preview_range": [
+      1,
+      2
+    ],
+    "fonts": [
+      {
+        "target": "Calibri",
+        "installed_exact": true,
+        "resolved_family": "Calibri"
+      },
+      {
+        "target": "Times New Roman",
+        "installed_exact": true,
+        "resolved_family": "Times New Roman"
+      },
+      {
+        "target": "宋体",
+        "installed_exact": true,
+        "resolved_family": "SimSun,宋体"
+      }
+    ],
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "context": {
+      "stage": 31,
+      "label": "final"
+    },
+    "fallback_odt": false,
+    "input_bytes_unchanged": true,
+    "limitation": "不是Microsoft Word验收；分页可能不同。格式属性通过与可见排版复核分别记录。",
+    "pages": [
+      "pages/final-1.png",
+      "pages/final-2.png"
+    ],
+    "artifact_sha256": {
+      "page-1.png": "9e017f7e3e93307cf854fd916902c22c86fb3383c4cdecd147f9685088f1fe41",
+      "page-2.png": "682d8878466c449e6267fa69b02b4bf6931b3278c22950552a3b9f0c45964fa2",
+      "source.pdf": "95c9f87fa3bd7da6ef5ac103a8db6e3b4f6d836a74924d634240c42f2b92ad8b"
+    },
+    "visual_review": "全部页面已查看；引文上标保持，行距/缩进/段距变化可见，代码、表格、媒体保持，未发现新裁切或丢字。"
+  },
+  "Word": {
+    "version": "16.80",
+    "document": "fixed.docx",
+    "document_sha256": "0bfdb4bde938d9e01abe5ba6e4ed7e9f1d21a5185a5f3b010419f480cd0e4e8b",
+    "actual_opened": true,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "repair_prompt": false,
+    "closed_without_saving": true,
+    "hash_unchanged": true,
+    "observations": "引文上标和相邻文字保持；段落变化可见，代码/表格/图片保留；不是像素间距、目录页码或全文合格证明。",
+    "note": "第二页通过原生滚动查看；部分键盘/滚动尝试未导航成功，未记为成功。Word沿用现有可见格式标记及字体显示，未改全局设置。"
+  }
+}

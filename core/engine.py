@@ -95,6 +95,8 @@ def _check(pkg, body, rules, classification=None):
     if rules.get('workbench'):
         from .rule_bundle import validate_scope_templates
         validate_scope_templates(rules,classification)
+    from .citation_paragraphs import build as citation_paragraph_proofs
+    paragraph_proofs=citation_paragraph_proofs(pkg,classification) if rules.get('mode')=='academic' else {}
     res = Resolver(pkg)
     findings, notes = [], []
     def add(rule, loc, actual, status, fixable=True, detail=''):
@@ -157,6 +159,8 @@ def _check(pkg, body, rules, classification=None):
             note(loc, unsafe)
             continue
         ordinary, special = [], []
+        proof=paragraph_proofs.get(index,{})
+        recognized={r['run'] for r in proof.get('recognized_superscript',[])} if proof.get('structurally_safe') else set()
         if partial:
             note(loc,'仅普通链接及直属文字属性进入检查；链接段落的行距/缩进仍未检查；不访问目标。')
             for issue in linked['issues']:note({**loc,**issue['locator']},issue['detail'])
@@ -167,7 +171,7 @@ def _check(pkg, body, rules, classification=None):
             if reason:
                 skipped_runs += 1
                 special.append(i)
-                note({'paragraph':index,**segment}, reason + '：该run未检查、未修正')
+                note({'paragraph':index,**segment}, reason + '：该run未检查、未修正'+('；已精确确认引文上标，行内字体/字号继续保护，指定段落属性另有独立证据' if i in recognized else ''))
                 continue
             if not t.strip():
                 continue
@@ -204,7 +208,8 @@ def _check(pkg, body, rules, classification=None):
         if partial:
             for rule in ('R06','R07'):add(rule,loc,{'unresolved':'含链接段落属性仍保护'},'review',False,'普通文字已按受控范围检查；行距和缩进不修正')
             continue
-        if not ordinary:
+        paragraph_special=bool(special) and not proof.get('structurally_safe',False)
+        if not ordinary and not proof.get('structurally_safe',False):
             for rule in ('R06', 'R07'):
                 add(rule, loc, None, 'review', False, '无可确认的普通正文文字')
             continue
@@ -215,7 +220,7 @@ def _check(pkg, body, rules, classification=None):
         # snapToGrid can make the actual 1.5 line layout uncertain. The XML value alone is not enough.
         grid = any(s.find(q('docGrid')) is not None and s.find(q('docGrid')).get(q('type')) in
                    ('lines', 'linesAndChars', 'snapToChars') for s in pkg.sections)
-        pending = bool(special) or mode not in ('auto', 'exact', 'atLeast') or (line is not None and line <= 0) or (
+        pending = (proof.get('structurally_safe') and spacing.get('line') is not None and line is None) or paragraph_special or mode not in ('auto', 'exact', 'atLeast') or (line is not None and line <= 0) or (
             grid and res.value(pl, 'snapToGrid', '1') not in ('0', 'false', 'off'))
         if pending:
             add('R06', loc, actual, 'review', False, '混有特殊run或文档网格，段落行距不自动修正')
@@ -224,10 +229,11 @@ def _check(pkg, body, rules, classification=None):
             actual['multiple'] = 1 if line is None else actual['multiple']
             add('R06', loc, actual, 'pass' if mode == 'auto' and actual['multiple'] == rules['rules']['R06']['expected'] else 'problem')
         ind = res.attrs(pl, 'ind')
-        sizes = {res.size(layers) for _, _, layers in ordinary}
+        basis=[r for r in ordinary if r[0] in proof.get('ordinary_basis_runs',[])] if proof.get('structurally_safe') else ordinary
+        sizes = {res.size(layers) for _, _, layers in basis}
         one_size = next(iter(sizes)) if len(sizes) == 1 and None not in sizes else None
         width_changed = any(res.value(l, 'w', '100') != '100' or res.value(l, 'spacing', '0') != '0'
-                            for _, _, l in ordinary)
+                            for _, _, l in basis)
         chars = _number(ind.get('firstLineChars'))
         wanted_chars = rules['rules']['R07']['expected']
         pt = _number(ind.get('firstLine'))
@@ -239,7 +245,7 @@ def _check(pkg, body, rules, classification=None):
         actual = {'first_line_chars': chars / 100 if chars is not None else None, 'first_line_pt': pt,
                   'hanging': ind.get('hanging'), 'hanging_chars': ind.get('hangingChars'),
                   'uniform_size_pt': one_size}
-        if special or numbered or malformed or inherited_hanging:
+        if paragraph_special or numbered or malformed or inherited_hanging:
             add('R07', loc, actual, 'review', False, '特殊run、编号、异常属性或继承悬挂缩进：不改段落缩进')
         elif hanging:
             add('R07', loc, actual, 'problem', detail='存在悬挂属性，与正文首行缩进冲突（包括零值）')
@@ -248,7 +254,7 @@ def _check(pkg, body, rules, classification=None):
                 add('R07', loc, actual, 'problem')
             elif wanted_chars == 0 and pt not in (None, 0):
                 add('R07', loc, actual, 'problem', detail='零字符缩进与非零点值冲突')
-            elif pt not in (None, 0) and (one_size is None or width_changed):
+            elif pt not in (None, 0) and (one_size is None or width_changed or proof.get('structurally_safe') and proof.get('grid_active')):
                 add('R07', loc, actual, 'review', False, '字符和点值并存，但无法核对等效关系')
             elif pt not in (None, 0) and abs(pt - wanted_chars * one_size) > 0.05:
                 add('R07', loc, actual, 'problem', detail='字符和点值缩进冲突，修正时清除冲突')
@@ -258,7 +264,7 @@ def _check(pkg, body, rules, classification=None):
             add('R07', loc, actual, 'pass' if wanted_chars == 0 else 'problem')
         elif wanted_chars == 0:
             add('R07', loc, actual, 'problem')
-        elif one_size is None or width_changed or not any(scripts(_text(r))[0] for _, r, _ in ordinary):
+        elif one_size is None or width_changed or (proof.get('structurally_safe') and proof.get('grid_active')) or not any(scripts(_text(r))[0] for _, r, _ in basis):
             add('R07', loc, actual, 'review', False, '点值缩进无法可靠换算为要求的字符数')
         else:
             add('R07', loc, actual, 'pass' if abs(pt - wanted_chars * one_size) <= 0.05 else 'problem')
@@ -269,7 +275,8 @@ def _check(pkg, body, rules, classification=None):
              'unconfirmed_paragraphs': [i for i in range(1, len(pkg.paragraphs) + 1) if i not in body],
              'ordinary_runs_checked': checked_runs, 'special_runs_skipped': skipped_runs,
              'section_count': len(pkg.sections), 'excluded': '标题/题注/未确认段落、表格格式、页眉页脚、脚注/文本框等不适用正文规则；不验证全文合格。'}
-    report = {'engine_version':'demo-9.0', 'schema_version': 1, 'input': str(pkg.path), 'input_sha256': pkg.hash,
+    if paragraph_proofs:scope['citation_paragraph_evidence']=list(paragraph_proofs.values())
+    report = {'engine_version':'demo-10.0', 'schema_version': 1, 'input': str(pkg.path), 'input_sha256': pkg.hash,
             'rules': {'name': rules['name'], 'version': rules['version'], 'sha256': rules['sha256'],
                       **({'kind': rules['kind'], 'base_sha256': rules['base_sha256'],
                           'sources': {i: deepcopy(rules['rules'][i]['source']) for i,cfg in rules['rules'].items() if 'source' in cfg}} if 'kind' in rules else {})},
@@ -320,6 +327,8 @@ def _check(pkg, body, rules, classification=None):
             if peers:report['modification_dependencies'].append({'trigger_keys':peers+[f['key'] for f in report['findings'] if f['rule_id']=='R33' and f['locator'].get('paragraph')==n and f['fixable']],'detail':f'段{n}的普通run字体字号修改与引文拆分须分轮选择：先完成普通格式，再修引文上标；不会改变未选字符。'})
     from .text_runs import annotate
     annotate(report)
+    from .citation_paragraphs import finalize as finalize_paragraph_evidence
+    finalize_paragraph_evidence(report)
     return report
 
 def _confirmed_scope(pkg, body, mode, classification_manifest):

@@ -1,0 +1,57 @@
+{
+  "kind": "real Chrome / local Streamlit UI",
+  "stage": 31,
+  "date": "2026-10-16",
+  "API_requests": 0,
+  "automatic_renders": 0,
+  "flow_A": {
+    "input": "errors.docx",
+    "uploaded_unconfirmed_synthetic_project": true,
+    "actual_scope_confirmation_and_check": true,
+    "first_selected": [
+      "R06 paragraph3"
+    ],
+    "first_rehearsal_adopt_download": true,
+    "explicit_next_round": true,
+    "second_selected_safe_pPr_records": 13,
+    "second_rehearsal_adopt_download_DOCX_ZIP": true,
+    "download_independent_check": "browser-independent.json",
+    "current_input_explicitly_switched_to_round": 2,
+    "final_problem_count": 0,
+    "final_review_count": 37
+  },
+  "flow_B": {
+    "independent_session_initially_empty": true,
+    "input": "phase28/errors.docx",
+    "restored_selection_intent_count": 10,
+    "restoration_rechecks": true,
+    "actual_two_step_rehearsal_adoption_download": true,
+    "explicit_final_continue": true,
+    "unselected_R07_after_R33": "problem /28pt remains /12pt body /24pt equivalent",
+    "independent_check": "plan-independent.json",
+    "same_bytes_as_prior_accepted_legal_path": true
+  },
+  "restart_restore": {
+    "saved_via_browser": true,
+    "only_verified_project_service_restarted": true,
+    "loaded_through_browser_controls": true,
+    "current_round": 2,
+    "report_regenerated": true,
+    "problem_count": 0,
+    "review_count": 37,
+    "no_old_rehearsal_authorization_or_preview": true
+  },
+  "range_change": {
+    "paragraph": 3,
+    "candidate": "c:3:6:9",
+    "purpose": "pending",
+    "old_confirmation_invalidated": true,
+    "current_output_download_removed": true,
+    "reconfirmation_and_actual_recheck": true,
+    "paragraph_exception_blocked": true,
+    "complete_remains_false": true
+  },
+  "isolation": "Two independent Chrome sessions with different tasks/files/history; no shared document/report. Service restart clears in-memory sessions, explicit project import restores only target.",
+  "failures": "Some automation attempts timed out during rerun, hidden checkbox or open dropdown; actual UI reread then completed. Failed attempts not successful timing. No private state injection.",
+  "limits": "Only synthetic data; UI actions are not Word/page proof; downloads independently inspected."
+}

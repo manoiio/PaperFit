@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "source_files_byte_verified": 494,
+  "no_history_env_keys_or_renderer_dependencies": true,
+  "copied_from_staged_source_list": true,
+  "records": [
+    {
+      "operation": "scripts/check_repository.py",
+      "returncode": 0,
+      "seconds": 0.029669083072803915,
+      "test_summary": []
+    },
+    {
+      "operation": "unittest discover",
+      "returncode": 0,
+      "seconds": 163.8198244589148,
+      "test_summary": [
+        "Ran 1145 tests in 163.195s\n\nOK"
+      ]
+    },
+    {
+      "operation": "scripts/reproduce_citation_paragraph_demo.py",
+      "returncode": 0,
+      "seconds": 1.1323284999234602,
+      "test_summary": []
+    },
+    {
+      "operation": "scripts/verify_citation_paragraph_output.py",
+      "returncode": 0,
+      "seconds": 0.044672208023257554,
+      "test_summary": []
+    },
+    {
+      "operation": "scripts/verify_citation_paragraph_output.py",
+      "returncode": 0,
+      "seconds": 0.043259707977995276,
+      "test_summary": []
+    }
+  ],
+  "independent_verification": {
+    "input_sha256": "10e81d577934827d3890e9e0eb7370376cff3dcd587c832a33b09e570b2a13f3",
+    "output_sha256": "0bfdb4bde938d9e01abe5ba6e4ed7e9f1d21a5185a5f3b010419f480cd0e4e8b",
+    "authorized_pPr_attributes": {
+      "3": [
+        "spacing.line",
+        "spacing.lineRule",
+        "spacing.before",
+        "spacing.beforeAutospacing",
+        "spacing.after",
+        "spacing.afterLines",
+        "spacing.afterAutospacing",
+        "jc.val",
+        "ind.firstLineChars",
+        "ind.firstLine"
+      ],
+      "4": [
+        "spacing.line",
+        "spacing.lineRule",
+        "spacing.before",
+        "spacing.beforeAutospacing",
+        "spacing.after",
+        "spacing.afterLines",
+        "spacing.afterAutospacing",
+        "jc.val",
+        "ind.firstLineChars",
+        "ind.firstLine"
+      ],
+      "7": [
+        "spacing.line",
+        "spacing.lineRule",
+        "spacing.before",
+        "spacing.beforeAutospacing",
+        "spacing.after",
+        "spacing.afterLines",
+        "spacing.afterAutospacing",
+        "jc.val"
+      ]
+    },
+    "all_run_subtrees_byte_equivalent": true,
+    "all_text_whitespace_and_order_preserved": true,
+    "all_unselected_parts_byte_equal": true,
+    "fields_tables_media_numbering_sections_preserved": true,
+    "no_inline_or_citation_format_changes": true,
+    "not_visual_or_Word_acceptance": true
+  },
+  "generated_final_matches_committed_sample": true,
+  "note": "Temporary directory path and environment values not exported; local Python dependencies reused, project source/fixtures clean."
+}

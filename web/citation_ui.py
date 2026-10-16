@@ -74,6 +74,7 @@ def render_citations(model):
 def render_citation_report(report):
  c=report.get('citations')
  if not c:return
+ render_citation_paragraphs(report)
  with st.expander('正文引文与参考文献对应 · 只读',expanded=True):
   st.caption(c['scope_state']+'。'+c['r22_link'])
   if not c['enabled']['superscript']:st.info('R33未启用：上标未检查，数字0不代表通过。')
@@ -101,3 +102,17 @@ def render_citation_report(report):
   st.info(c['unreferenced_state']+'：'+str([r['number'] for r in c['unreferenced']]))
   if c['undecided']:st.warning(f"尚有{len(c['undecided'])}个用途待确认；部分确认不等于全文对应验收。")
   st.caption('编号对应不证明文献真实、引用准确或全文排版合格。合法引文上标仍由通用正文的特殊run保护保留，相关未检查范围会继续显示。')
+
+def render_citation_paragraphs(report):
+ proofs=report['coverage'].get('citation_paragraph_evidence',[])
+ if not proofs:return
+ with st.expander('已确认引文上标 · 段落属性判定证据',expanded=True):
+  st.caption('仅有限解除确认引文上标的阻止；行内字体/字号仍保护。候选、区间外上标、下标或复杂对象不能豁免。部分范围也可局部核对，不自动声明完整。')
+  word=st.text_input('引文段落证据编号筛选（可留空）',key='citation-paragraph-filter-'+report['input_sha256'])
+  rows=[p for p in proofs if not word or str(p['paragraph'])==word.strip()]
+  page=st.number_input('引文段落证据页',min_value=1,max_value=max(1,(len(rows)+19)//20),key='citation-paragraph-page-'+report['input_sha256']+'-'+str(len(rows)))
+  shown=rows[(page-1)*20:page*20]
+  st.dataframe([{'段落':p['paragraph'],'语法':p['syntax'],'确认引文区间':str([(r['start'],r['end']) for r in p['verified_citations']]),'正文依据run':str(p['ordinary_basis_runs']),'可检查属性':'、'.join(p.get('allowed_properties',[])) or '仍按原保护','结构阻止':'；'.join(p['blockers']) or '上标已逐区间核对','属性待复核':str(p.get('property_blockers',[]))} for p in shown],hide_index=True,width='stretch')
+  with st.expander('查看本页精确区间、继承与未检查原因'):
+   st.json(shown)
+  st.caption('基线空白不作点值换算依据；引文外上标空白也阻止。只读取XML声明，不证明实际行高、分页或全文合格。')

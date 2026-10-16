@@ -1,0 +1,258 @@
+{
+  "baseline_commit": "d08d16b",
+  "same_input_sha256": "10e81d577934827d3890e9e0eb7370376cff3dcd587c832a33b09e570b2a13f3",
+  "same_rules_sha256": "4f6dc9a02f45187ab95e22daa177df6cb856024c931e59493e669b22ae5a3bb9",
+  "same_classification_sha256": "94296dc055f2ad2d8f36747a06ad6af328f1889e07acea81900bee0a9f019626",
+  "before": {
+    "rule_count": 24,
+    "problem_count": 0,
+    "review_count": 51,
+    "review_findings": 33,
+    "review_notes": 18,
+    "pass_count": 69,
+    "not_applicable_count": 20,
+    "conclusion": "已覆盖检查未发现问题",
+    "applicable_rule_count": 12
+  },
+  "after": {
+    "rule_count": 24,
+    "problem_count": 14,
+    "review_count": 37,
+    "review_findings": 19,
+    "review_notes": 18,
+    "pass_count": 69,
+    "not_applicable_count": 20,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 12
+  },
+  "coverage_note_counts": [
+    18,
+    18
+  ],
+  "changes": [
+    {
+      "key": "R06:paragraph=3",
+      "paragraph": 3,
+      "rule_id": "R06",
+      "property": null,
+      "before_status": "review",
+      "old_reason": "混有特殊run或文档网格，段落行距不自动修正",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 3,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R07:paragraph=3",
+      "paragraph": 3,
+      "rule_id": "R07",
+      "property": null,
+      "before_status": "review",
+      "old_reason": "特殊run、编号、异常属性或继承悬挂缩进：不改段落缩进",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 3,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R06:paragraph=4",
+      "paragraph": 4,
+      "rule_id": "R06",
+      "property": null,
+      "before_status": "review",
+      "old_reason": "混有特殊run或文档网格，段落行距不自动修正",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 4,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R07:paragraph=4",
+      "paragraph": 4,
+      "rule_id": "R07",
+      "property": null,
+      "before_status": "review",
+      "old_reason": "特殊run、编号、异常属性或继承悬挂缩进：不改段落缩进",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 4,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R06:paragraph=7",
+      "paragraph": 7,
+      "rule_id": "R06",
+      "property": null,
+      "before_status": "review",
+      "old_reason": "无可确认的普通正文文字",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 7,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=3:property=before",
+      "paragraph": 3,
+      "rule_id": "R13",
+      "property": "before",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 3,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=3:property=after",
+      "paragraph": 3,
+      "rule_id": "R13",
+      "property": "after",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 3,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=3:property=alignment",
+      "paragraph": 3,
+      "rule_id": "R13",
+      "property": "alignment",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 3,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=4:property=before",
+      "paragraph": 4,
+      "rule_id": "R13",
+      "property": "before",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 4,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=4:property=after",
+      "paragraph": 4,
+      "rule_id": "R13",
+      "property": "after",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 4,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=4:property=alignment",
+      "paragraph": 4,
+      "rule_id": "R13",
+      "property": "alignment",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 4,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=7:property=before",
+      "paragraph": 7,
+      "rule_id": "R13",
+      "property": "before",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 7,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=7:property=after",
+      "paragraph": 7,
+      "rule_id": "R13",
+      "property": "after",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 7,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    },
+    {
+      "key": "R13:paragraph=7:property=alignment",
+      "paragraph": 7,
+      "rule_id": "R13",
+      "property": "alignment",
+      "before_status": "review",
+      "old_reason": "普通文字仍独立检查；不改段落或编号定义",
+      "after_status": "problem",
+      "new_reason": "上标仅位于精确确认引文内；本项独立读取段落属性，引文行内格式仍保护。",
+      "evidence": {
+        "paragraph": 7,
+        "scope_sha256": "ac8a7c6a4af6b8d5c76574a21ab09042b6d1b80f13aa710d50ca3f9b0d9f0b2e",
+        "structurally_safe": true,
+        "syntax": "ascii-groups-v2"
+      }
+    }
+  ]
+}

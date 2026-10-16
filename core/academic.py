@@ -21,6 +21,7 @@ def source(rules,obj,prop):
  return {'file':school()['source_file'],'physical_page':s['page'],'quote':s['quote'],'label':'2015演示规则原文/范例；不宣称现行标准'}
 
 def append_checks(report,pkg,manifest,rules,*,generic_only=False):
+ proofs={p['paragraph']:p for p in report['coverage'].get('citation_paragraph_evidence',[])}
  res=Resolver(pkg);seen=set();fs=report['findings'];notes=report['coverage_notes'];cfg=rules['academic_objects']
  report['coverage']['disabled_academic_properties']={t:[p for _,o,p in {**FIELDS,**BACK_FIELDS}.values() if o==t and c.get(p) is None] for t,c in cfg.items()}
  report['coverage']['academic_unchecked_requirements']=['外文参考文献2篇以上及主要文献身份、指导教师例外未自动判断（学校PDF物理页16）；需人工核对。','中英文摘要/关键词的语义一致性、关键词层次及著录真实性未检查；不生成或改写内容。']
@@ -67,11 +68,16 @@ def append_checks(report,pkg,manifest,rules,*,generic_only=False):
    wanted=c.get(prop)
    if wanted is None:continue
    location={**loc,'property':prop}
-   if special or numbered:
+   limited=typ=='body' and rid=='R13' and prop in ('before','after','alignment') and proofs.get(n,{}).get('structurally_safe',False)
+   if (special and not limited) or numbered:
     add(rid,location,typ,prop,{'unresolved':'特殊片段/自动编号段落属性依赖'},wanted,'review','普通文字仍独立检查；不改段落或编号定义',False);continue
    if prop in ('before','after'):
     ok,reason=space_fixable(res,pl,prop,wanted)
-    f=read(rid,location,typ,prop,lambda:space(res,pl,prop),wanted,spacing_equal,ok)
+    def read_space():
+     value=space(res,pl,prop)
+     if limited and proofs[n].get('grid_active') and ('lines' in (value['unit'],wanted['unit'])):raise Unresolved('文档网格/吸附影响行单位段距，未将声明值当作可见间距通过')
+     return value
+    f=read(rid,location,typ,prop,read_space,wanted,spacing_equal,ok)
     if reason:f['detail']=reason
     if f['fixable']:f['dependency_note']='只更改'+prop+'间距属性，清理/中和相同行单位、磅值、自动间距冲突；保留行距/另一侧间距/缩进/分页'
    elif prop=='alignment':read(rid,location,typ,prop,lambda:alignment(res,pl),wanted)

@@ -43,6 +43,7 @@ def portable(bundle,*,display_name='待检查文档.docx',include_excerpts=False
         c=bundle['format']['citations'];out['citation_summary']={k:c[k] for k in ('enabled','summary','scope_state','order','limits','unreferenced_state','r22_link','undecided')};out['citation_summary']['unreferenced_numbers']=[r['number'] for r in c['unreferenced']]
         if c.get('syntax'):
             out['citation_summary'].update(syntax=c['syntax'],counts=c['counts'],order_semantics=c['order_semantics'],order_groups=[{k:v for k,v in g.items() if k!='raw'} for g in c['order_groups']],member_details=[{'citation':r['id'],'members':[{**m,'references':[{'paragraph':x['paragraph'],'number':x['number']} for x in m['references']]} for m in r.get('members',[])]} for r in c['rows']])
+    if bundle['format']['coverage'].get('citation_paragraph_evidence'):out['citation_paragraphs']=bundle['format']['coverage']['citation_paragraph_evidence']
     if bundle['format'].get('toc'):
         t=bundle['format']['toc'];out['toc_summary']={k:t[k] for k in ('scope_state','page_status','risk_count','review_count','normalization','hierarchy_notes','missing_candidates')}
     # Caption proposal labels contain document text; mask these by default as well as excerpt fields.
@@ -109,6 +110,8 @@ def html_report(data):
         c=data['citation_summary'];parts+=['<h2>引文对应与顺序边界</h2>', '<p>'+esc(('R33上标未检查；' if not c['enabled']['superscript'] else '')+c['scope_state']+'；'+c['unreferenced_state']+'；编号对应不证明文献真实或引用准确')+'</p>',table(['首次出现顺序','尚未引用的编号'],[[c['order'],c['unreferenced_numbers']]])]
         if c.get('counts'):
             parts+=['<h3>组合引文逐成员对应</h3>','<p>'+esc(c['counts'])+'；'+esc(c['order_semantics'])+'</p>',table(['引文对象','成员','状态','条目位置','依据'],[[r['citation'],m['number'],STATUS[m['status']],str([x['paragraph'] for x in m['references']]),m['reason']] for r in c['member_details'] for m in r['members']]),'<h3>首次位置组证据</h3>',table(['位置','原始成员顺序','本组首次','之前已出现','缺口','风险'],[[g['citation'],g['raw_numbers'],g['first_numbers'],g['previous_numbers'],g['first_missing'],g['risk']] for g in c['order_groups']])]
+    if data.get('citation_paragraphs'):
+        parts+=['<h2>确认引文上标与指定段落属性</h2>','<p>引文行内字体字号仍保护；本次仅在精确范围证明后读取指定pPr。XML声明符合不证明可见分页。</p>',table(['段落','确认引文区间','正文依据run','可检查属性','结构阻止','属性待复核'],[[p['paragraph'],[(r['start'],r['end']) for r in p['verified_citations']],p['ordinary_basis_runs'],p.get('allowed_properties',[]),p['blockers'],p.get('property_blockers',[])] for p in data['citation_paragraphs']])]
     parts+=['<h2>建议下一步</h2>','<ul>'+''.join('<li>'+esc(x['title']+'：'+x['reason'])+'</li>' for x in data['next_steps'])+'</ul>']
     if data.get('scope_summary'):
         sc=data['scope_summary']
@@ -147,6 +150,7 @@ def markdown_report(data):
     if data.get('impact'):out+=['预演与正式采用影响：'+json.dumps(data['impact'],ensure_ascii=False),'采用绑定核对：'+json.dumps(data['rehearsal'],ensure_ascii=False)]
     if data.get('plan'):out+=['分步计划及父子关系：'+json.dumps(data['plan'],ensure_ascii=False)]
     if data.get('scope_summary'):out+=['范围状态摘要：'+json.dumps(data['scope_summary'],ensure_ascii=False)]
+    if data.get('citation_paragraphs'):out+=['确认引文段落的精确证据：'+json.dumps(data['citation_paragraphs'],ensure_ascii=False)]
     if data.get('citation_summary'):out+=['引文逐成员与首次位置证据：'+json.dumps(data['citation_summary'],ensure_ascii=False)]
     if data.get('caption_summary'):out+=['题注编号/结构位置/实际分页：'+json.dumps(data['caption_summary'],ensure_ascii=False)]
     for r in data['records']:out.append('- '+CATEGORIES[r['category']]+' · '+r['record_key']+' · '+r['position']+' · '+STATUS[r['status']]+'：'+r['actual']+' → '+r['expected']+'；'+r['reason'])

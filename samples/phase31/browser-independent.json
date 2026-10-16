@@ -1,0 +1,65 @@
+{
+  "partial": {
+    "input_sha256": "10e81d577934827d3890e9e0eb7370376cff3dcd587c832a33b09e570b2a13f3",
+    "output_sha256": "7a29d92050259b661fd472f12a048bb06110fbfc028c52aec3b0824bb3f8b4f3",
+    "authorized_pPr_attributes": {
+      "3": [
+        "spacing.line",
+        "spacing.lineRule"
+      ]
+    },
+    "all_run_subtrees_byte_equivalent": true,
+    "all_text_whitespace_and_order_preserved": true,
+    "all_unselected_parts_byte_equal": true,
+    "fields_tables_media_numbering_sections_preserved": true,
+    "no_inline_or_citation_format_changes": true,
+    "not_visual_or_Word_acceptance": true
+  },
+  "final": {
+    "input_sha256": "10e81d577934827d3890e9e0eb7370376cff3dcd587c832a33b09e570b2a13f3",
+    "output_sha256": "0bfdb4bde938d9e01abe5ba6e4ed7e9f1d21a5185a5f3b010419f480cd0e4e8b",
+    "authorized_pPr_attributes": {
+      "3": [
+        "spacing.line",
+        "spacing.lineRule",
+        "spacing.before",
+        "spacing.beforeAutospacing",
+        "spacing.after",
+        "spacing.afterLines",
+        "spacing.afterAutospacing",
+        "jc.val",
+        "ind.firstLineChars",
+        "ind.firstLine"
+      ],
+      "4": [
+        "spacing.line",
+        "spacing.lineRule",
+        "spacing.before",
+        "spacing.beforeAutospacing",
+        "spacing.after",
+        "spacing.afterLines",
+        "spacing.afterAutospacing",
+        "jc.val",
+        "ind.firstLineChars",
+        "ind.firstLine"
+      ],
+      "7": [
+        "spacing.line",
+        "spacing.lineRule",
+        "spacing.before",
+        "spacing.beforeAutospacing",
+        "spacing.after",
+        "spacing.afterLines",
+        "spacing.afterAutospacing",
+        "jc.val"
+      ]
+    },
+    "all_run_subtrees_byte_equivalent": true,
+    "all_text_whitespace_and_order_preserved": true,
+    "all_unselected_parts_byte_equal": true,
+    "fields_tables_media_numbering_sections_preserved": true,
+    "no_inline_or_citation_format_changes": true,
+    "not_visual_or_Word_acceptance": true
+  },
+  "browser_matches_reproduction": true
+}

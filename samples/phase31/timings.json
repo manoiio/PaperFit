@@ -1,0 +1,10 @@
+{
+  "first_rehearsal_seconds": 0.09417645796202123,
+  "first_adoption_seconds": 0.18317729094997048,
+  "engine_calls": 2,
+  "adoption_engine_calls": 0,
+  "formal_rounds": 2,
+  "API_requests": 0,
+  "automatic_renders": 0,
+  "temporary_rehearsal_directories": 0
+}
