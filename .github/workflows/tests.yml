@@ -26,3 +26,7 @@ jobs:
         run: python scripts/reproduce_editing_workflow.py --output "$RUNNER_TEMP/paperfit-phase35-editing"
       - name: Stage36 unchanged legal repair and reader download reference
         run: python scripts/reproduce_reader_workflow.py --output "$RUNNER_TEMP/paperfit-phase36-reader"
+      - name: Stage38 existing long-scope draft and explicit two-attribute legal path
+        run: |
+          python scripts/prepare_problem_browser_fixture.py --output "$RUNNER_TEMP/paperfit38-long-draft.zip"
+          python scripts/reproduce_reader_workflow.py --output "$RUNNER_TEMP/paperfit38-two" --keys R05:paragraph=4:run=2 R03:paragraph=5:run=1

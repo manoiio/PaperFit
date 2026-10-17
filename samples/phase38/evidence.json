@@ -1,0 +1,124 @@
+{
+  "baseline": "50e9af1",
+  "regression_baseline": 1217,
+  "final_clean_suite": {
+    "tests": 1221,
+    "seconds": 183.554,
+    "result": "passed",
+    "no_historical_work_outputs": true
+  },
+  "targeted_ui_suite": {
+    "tests": 66,
+    "seconds": 12.312,
+    "result": "passed"
+  },
+  "environment": {
+    "os": "Darwin",
+    "os_version": "27.0.1",
+    "python": "3.14.5",
+    "streamlit": "1.65.0"
+  },
+  "api_requests": 0,
+  "render_requests": 0,
+  "portable_reproductions": {
+    "reader_two_explicit_keys": "passed",
+    "single_rehearsal": "passed",
+    "two_step_plan": "passed",
+    "rule_editing": "passed",
+    "existing_long_draft_project": "passed"
+  },
+  "browser": {
+    "tool": "real Chrome via Playwright CLI; visible UI actions and downloads, no private session_state injection",
+    "viewports": [
+      [
+        1280,
+        720
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "two_distinct_object_attributes_explicitly_selected": true,
+    "individual_removal_preserves_other_selection": true,
+    "empty_filter_clear_preserves_selection": true,
+    "preview_return_preserves_object": true,
+    "real_rehearsal_adopt_and_download": true,
+    "download_docx_and_18_members_equal_legal_path": true,
+    "output_readonly_and_batch_disabled": true,
+    "scope_change_invalidates_check_and_rehearsal": true,
+    "project_saved_restored_and_rechecked_in_fresh_context": true,
+    "restored_current_input_problem_count": 11,
+    "no_restored_adoption_authorization": true,
+    "separate_contexts": 3,
+    "R44_readonly_missing_target_affected_references": 3,
+    "complex_fixture_summary": {
+      "problems": 8,
+      "fixable": 6,
+      "readonly": 2,
+      "review": 44
+    },
+    "long_fixture": {
+      "fixture": "tests/fixtures/history/phase12/long-400.docx",
+      "paragraphs": 400,
+      "body": 390,
+      "heading1": 10,
+      "findings": 2015,
+      "problems": 1202,
+      "review": 800,
+      "projected_objects": 402,
+      "pages": 21,
+      "selected_paragraph_sizes": [
+        2,
+        20
+      ],
+      "outside_filter_retained": 2,
+      "sort_and_390_to_400_filter_valid_object": 400,
+      "return_from_rehearsal_page": 2,
+      "return_from_rehearsal_object": 20
+    },
+    "page_level_horizontal_overflow": false
+  },
+  "task_operation_comparison": {
+    "task": "View paragraph4 size and paragraph5 Chinese font, explicitly select each and inspect complete selection",
+    "before_main_clicks": 7,
+    "after_main_clicks": 5,
+    "scope": "Same input/rules/6-body-paragraph scope and exact two keys; default record already matches each target; scroll/wait/recovery/adoption excluded",
+    "no_latency_or_percentage_claim": true
+  },
+  "bounds": {
+    "object_options_per_page": 20,
+    "record_options_per_page": 4,
+    "selected_options_per_page": 8,
+    "legacy_multiselect_limit": 100,
+    "complete_exports_unchanged": true
+  },
+  "final_executable_sha256": {
+    "app.py": "06e9f4d99ecc14c6ad8af9553ecfa67dad0ac6a351c651322bd88386ed3e6989",
+    "web/center_ui.py": "6850ffacba14328a258801b2e5ab437fd9e8b0f18572a8c0365da776e884ab18",
+    "web/workflow_ui.py": "819580b16f350f5c9156763694dfaba2575d9d90798da8b395979ef4e61579e1",
+    "web/problem_browser_ui.py": "0a8df227b78a33ea10e41a026769253a968e7d58978f9fa5110d63ad8950dbcb",
+    "web/selection_ui.py": "0a4ca2106919ab1dc5e1ef6131e78b0b1badeec8342aeb277ab8a88a5fd2c9f9",
+    "tests/test_decision_ui.py": "f3bc2c7147c4cf628042c9c62771b30a315753ee6eecdf25d2ff66db6751e92f",
+    "tests/test_long_preview.py": "d1946cf8e8427ab98725eac79a8f3d444b07eef4aaafa23d4823e4bccf28dc40",
+    "tests/test_problem_browser_ui.py": "513fe02d4af3857ee0e4358aaefcc054c99ce7d1a75ea96d776e4355ac847f90",
+    "scripts/reproduce_reader_workflow.py": "a39eb3cc2a25ba8a70ef87a53ca8c856d543fee0b9f764c333468cc84131a412",
+    "scripts/prepare_problem_browser_fixture.py": "fa08711a3ef46c3d648d14941ebebfbfc40a4759e91dbcf99c9e85e35908315c",
+    ".github/workflows/tests.yml": "4a1724664c64cddf83e4af602722670937ff72ed3379590c163c0489fdc0f414"
+  },
+  "screenshots": {
+    "screens/after-basic-1280.png": "33428a8387b63ad5518f27c9955c6feb55e026ae9047a432cc8cca583715920b",
+    "screens/after-basic-1440.png": "eb1df4c4c10d372be26e152ff343780cb43092182d2bf5a2cec0f292b62587ce",
+    "screens/after-long-filter-1440.png": "0649532a6fba8fc07423b0cc764c5894ba67451fb6a852dcf8d6c4030fccd733",
+    "screens/after-long-page1-1440.png": "0836667314c757a2f4459b7993c46ef176d4da340124f1af4690320ffe01d5c4",
+    "screens/after-long-page2-1440.png": "804f8bcad8f26443f19b12e9f35a44669e9286313c4bb3bf6fc515038b3ae24e",
+    "screens/after-readonly-1440.png": "d7aadac499149cafc4640c9bdda73abaa073b3e31cf6b88af686cc4b2c07edd2",
+    "screens/after-selected-list-1440.png": "179bed5b00fe7f276405f9f11f47be30bde2e44e5d933f44b3851b9248df2837",
+    "screens/before-basic-1280.png": "f30f8b36e37d0d7d7b97a7ac15814ed2f9b4a2d61aeba5910226485b4dbc4462",
+    "screens/before-basic-1440.png": "3c7ef207542bba983a937fad5ba8986ce78f129e7ae2748685db82bb5bfd470b",
+    "screens/before-long-page1-1440.png": "f3474f51d71d96ae95c95a658261baf69b95199c0399aa5919e0bf8571068f42",
+    "screens/before-long-page2-1440.png": "bb0bee66152ef318272f60516c0be3deb24f823b88c31a64511033f0b47f97a8",
+    "screens/before-two-selected-1440.png": "5c8bf44f1d595822a8dee9ca97873493c88db3c78c668610d862fd74a5459c4a"
+  },
+  "word_or_docx_render_acceptance": "No new Word/render acceptance; unchanged DOCX semantics and whole-file legal-path equality only"
+}

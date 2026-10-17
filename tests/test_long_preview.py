@@ -132,6 +132,7 @@ class LongUIAcceptance(unittest.TestCase):
   try:
    next(x for x in at.radio if x.label=='检查模式').set_value('正文及标题题注检查').run();s=at.session_state['workflow'];p=ROOT/'tests/fixtures/history/phase12/long-400.docx';s.load(p.read_bytes(),'long.docx');s.set_types(json.loads(p.with_suffix('.types.json').read_text())['paragraph_types']);s.confirm_and_check();at.run();self.assertFalse(at.exception);self.assertEqual(len(s.report['findings']),2015);self.assertLess(len(at.dataframe),8);self.assertLess(len(at.button),40);self.assertLessEqual(len(next(x for x in at.multiselect if x.label=='逐项选择修正').options),100);self.assertEqual(len(at.json),0)
    next(x for x in at.button if x.label=='选择本页可修正项').click().run();first=set(s.selected);next(x for x in at.number_input if x.label=='对象页码').set_value(2).run();self.assertEqual(first,set(s.selected));next(x for x in at.button if x.label=='选择本页可修正项').click().run();self.assertTrue(first<set(s.selected));chosen=set(s.selected);next(x for x in at.text_input if x.label.startswith('段落编号筛选')).set_value('390-400').run();self.assertEqual(chosen,set(s.selected));self.assertEqual(next(x for x in at.number_input if x.label=='对象页码').value,1);self.assertFalse(at.exception)
+   next(x for x in at.toggle if x.label=='查看完整执行清单（含key）').set_value(True).run();self.assertFalse(at.exception)
    selected_frame=next(x.value for x in at.dataframe if 'key' in x.value.columns);self.assertEqual(set(selected_frame['key']),chosen)
   finally:s.reset()
  def test_lazy_json_explicitly_contains_full_report(self):

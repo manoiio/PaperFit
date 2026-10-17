@@ -6,7 +6,7 @@ import streamlit as st
 STEPS={1:'文档与要求',2:'确认检查范围',3:'查看问题',4:'修正预演',5:'结果与下载'}
 # Explicit editor-only keepalive. Never retain acknowledgements, actions, uploads,
 # data-editor patches or execution authorization. Business drafts remain on model.
-EDITOR_PREFIXES=('history-object-','history-view-','reader-mode-','reader-file-','reader-left-','reader-right-','reader-page-number-','reader-section-','class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
+EDITOR_PREFIXES=('center-object-','center-record-','selected-list-page-','selected-list-item-','history-object-','history-view-','reader-mode-','reader-file-','reader-left-','reader-right-','reader-page-number-','reader-section-','class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
  'wb-policy-','wb-name-','wb-text-','tpl-value-','tpl-mode-','template-name-',
  'norm-text-','norm-encoding','center-category-','center-status-','center-order-',
  'problem-detail-','center-range-','center-search-','center-type-','center-page-','object-detail-',
@@ -62,6 +62,10 @@ h3 {font-size:1.08rem !important;color:var(--pf-ink);}
 .empty-state {border:1px solid var(--pf-line);border-left:3px solid #8ca8c4;border-radius:var(--pf-radius);background:white;padding:.85rem 1rem;margin:.15rem 0 .5rem;}
 .empty-state strong {font-size:1rem;color:var(--pf-ink);}
 .empty-state p {margin:.3rem 0 0;color:var(--pf-muted);line-height:1.65;font-size:.95rem;overflow-wrap:anywhere;}
+.st-key-object-browser [data-testid="stRadio"] {width:100%;}
+.st-key-object-browser [data-testid="stRadio"] label p {color:var(--pf-muted);}
+.st-key-object-browser [data-testid="stRadio"] label {padding:.35rem .2rem;border-bottom:1px solid var(--pf-line);}
+.st-key-object-browser [data-testid="stRadio"] label:has(input[type="radio"]:checked) {background:#eaf0f7;border-radius:8px;box-shadow:inset 3px 0 var(--pf-blue);}
 .report-scroll {overflow-x:auto;}
 .report-table {border-collapse:collapse;width:100%;font-size:14px;line-height:1.6;}
 .report-table td,.report-table th {padding:9px;border-bottom:1px solid var(--pf-line);text-align:left;overflow-wrap:anywhere;}

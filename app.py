@@ -167,46 +167,9 @@ def render_basic_scope():
             b.button('开始检查', disabled=model.confirmed is None, on_click=run_check, width='stretch')
 
 def render_selection():
-    eligible = model.eligible()
-    if eligible and model.operation=='format':
-        with st.container(key='selection'):
-            st.subheader('选择修正')
-            from web.report_pages import object_page,merge_page_selection,selection_counts
-            lookup={f['key']:f for f in eligible}
-            view=getattr(model,'center_selection_view',None)
-            if not view or view.get('file_sha256')!=model.report['input_sha256']:
-                view=object_page([r for r in model.current_bundle()['projection']['records'] if r['record_key'] in lookup])
-            visible=[k for k in view['page_keys'] if k in lookup]
-            filtered=[k for k in view['filtered_keys'] if k in lookup]
-            a,b,c=st.columns(3)
-            a.button('选择本页可修正项',on_click=lambda:model.set_selection(model.selected+visible),width='stretch')
-            b.button('选择当前筛选的可修正项',on_click=lambda:model.set_selection(model.selected+filtered),width='stretch')
-            c.button('清空全部选择',on_click=lambda:model.set_selection([]),width='stretch')
-            with st.expander('高级：全部可修正项（不是当前筛选）'):
-                st.button('选择全部可修正问题',on_click=lambda:model.set_selection(list(lookup)))
-                st.button('清空选择',on_click=lambda:model.set_selection([]))
-            from core.package import sha256
-            key=f'selection-{model.task_dir.name}-{model.revision}-{model.report_revision}-'+sha256(str(visible).encode())[:12]
-            st.session_state[key]=[k for k in model.selected if k in visible]
-            def label(k):
-                f=lookup[k]
-                return f"{f['rule_id']} · {position(f['locator'])} · {f['rule_name']}：{field_value(f['actual'], f['rule_id'], f['locator'])} → {field_value(f['expected'], f['rule_id'], f['locator'], True)}"
-            def page_selection():model.set_selection(merge_page_selection(model.selected,visible,st.session_state.get(key,[])))
-            st.multiselect('逐项选择修正',options=visible,format_func=label,key=key,on_change=page_selection,placeholder='仅本页可修正记录；其他页的明确选择保留')
-            counts=selection_counts(model.selected,view)
-            st.caption(f"已选 {len(model.selected)} 项可修正问题。")
-            st.caption(f"本页已选 {counts['page']} · 全部已选 {counts['all']} · 当前筛选外仍保留 {counts['outside_filter']}")
-            warnings=[w['detail'] for w in model.report.get('modification_dependencies',[]) if set(w['trigger_keys'])&set(model.selected)]
-            warnings += [f['dependency_note'] for f in eligible if f['key'] in model.selected and f.get('dependency_note')]
-            if warnings:
-                st.warning(f"关联提示 {len(warnings)} 项："+'；'.join(warnings[:3]))
-                if st.toggle('查看全部关联提示'):st.dataframe([{'提示':w} for w in warnings],hide_index=True,width='stretch')
-            if model.selected:
-                with st.expander(f'执行确认摘要：全部 {len(model.selected)} 项明确选择'):
-                    st.caption('生成将执行下面全部选择，包括其他页和当前筛选外的项；不会自动加入待复核记录。')
-                    st.dataframe([{'key':k,'位置':position(lookup[k]['locator']),'规则':lookup[k]['rule_id'],'实际':field_value(lookup[k]['actual'],lookup[k]['rule_id'],lookup[k]['locator']),'要求':field_value(lookup[k]['expected'],lookup[k]['rule_id'],lookup[k]['locator'],True)} for k in model.selected],hide_index=True,width='stretch',height=240)
-    elif not eligible:
-        st.info('当前没有可自动修正项；待复核仍须人工核对。')
+    from web.selection_ui import render_selection_tools
+    render_selection_tools(model)
+
 
 def render_results():
     if model.result is None:return

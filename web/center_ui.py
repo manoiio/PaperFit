@@ -2,6 +2,7 @@ import streamlit as st
 from .issues import CATEGORIES,STATUS,filter_records,group_records,locate
 from .center_session import OPERATIONS
 from .session import public_error
+from .problem_browser_ui import plain_label,full_groups,object_browser,record_browser,status_counts,position_label,attribute_label
 
 ANCHORS={'format':'format-operations','width':'width-operations','pagination':'pagination-operations','preview':'preview-operations'}
 
@@ -53,7 +54,8 @@ def render_center(model,selection_renderer=None):
         keyword=cols[1].text_input('关键词筛选',key='center-search-'+str(model.revision),placeholder='例如：字号、缩进、链接')
         with cols[3]:
             # The complete count is the existing selection, never inferred from a filter.
-            st.write(f'**已选 {len(model.selected)} 项** · 当前输入')
+            from .selection_ui import render_selected_list
+            render_selected_list(model)
             st.button('前往修正预演',on_click=go,args=(4,),disabled=not model.selected,type='primary',key='problems-to-preview',width='stretch')
         from core.classification import TYPES as PARAGRAPH_TYPES
         TYPES={**PARAGRAPH_TYPES,'footnote':'脚注','endnote':'尾注','table_content':'论文内容表格','table_border':'表格左右外侧边框','cover_title':'封面论文标题','cover_field':'封面字段','section_story':'节与页眉页脚','toc_title':'目录标题','toc_entry':'目录条目','toc_correspondence':'目录对应核对','caption_number':'题注编号','caption_position':'题注结构位置','citation':'正文引文','citation_relation':'引文对应/顺序','internal_reference':'内部引用结构（R44只读）'}
@@ -64,6 +66,7 @@ def render_center(model,selection_renderer=None):
             ca,cb=st.columns(2)
             paragraph_range=ca.text_input('段落编号筛选（如8或8-20）',key='center-range-'+str(model.revision))
             order=cb.selectbox('对象排序',['编号升序','编号降序'],key='center-order-'+str(model.revision))
+            st.button('清除筛选',on_click=reset_filters,args=(model,),key='clear-popover-filters')
         from .issues import type_records
         records=type_records(p['records'],b['format']['coverage'],chosen_type)
         desired=['problem','risk','available','review','boundary'] if status=='需要处理' else [] if status=='全部状态' else [status]
@@ -79,47 +82,52 @@ def render_center(model,selection_renderer=None):
             with right:page=int(st.number_input('对象页码',min_value=1,max_value=first['pages'],value=1,step=1,key=page_key,label_visibility='collapsed',help='对象页码'))
             view=object_page(records,page=page,**args)
         except Exception as e:
-            model.center_selection_view=None;st.warning(public_error(e));return
+            model.center_selection_view=None;st.warning(public_error(e))
+            st.button('清除筛选',on_click=reset_filters,args=(model,));return
         model.center_selection_view={**view,'file_sha256':c['file_sha256'],'rules_sha256':c['rules_sha256']}
         counts=selection_counts(model.selected,view)
         left.caption(f"{view['record_count']} 条记录 / {view['object_count']} 个对象 · 第{view['page']}/{view['pages']}页 · 对象{view['start']}–{view['end']}（每页20个） · 本页已选 {counts['page']} · 筛选外仍保留 {counts['outside_filter']}")
+        filters=[]
+        if cat!='全部':filters.append(CATEGORIES.get(cat,cat))
+        if status!='需要处理':filters.append(STATUS.get(status,status))
+        if chosen_type!='全部':filters.append(TYPES.get(chosen_type,chosen_type))
+        if order!='编号升序':filters.append(order)
+        if keyword:filters.append('关键词：'+keyword)
+        if paragraph_range:filters.append('段落：'+paragraph_range)
+        if filters:st.caption('当前筛选：'+plain_label(' · '.join(filters))+'；清除入口在“更多筛选”，不会清空选择。')
         if view['objects']:
-            ls,ds=st.columns([1,1.5],gap='medium')
-            detail_key='object-detail-'+str(model.revision)+'-'+sha256(str(identity).encode())[:10]+'-'+str(page)
-            def object_label(obj):
-                rs=view['groups'][obj];r=next((r for r in rs if r['status'] in ('problem','risk','review','available')),rs[0])
-                return r['position'].split(' · ')[0]+' · '+STATUS[r['status']]+' · '+r['title'].split(' ',1)[-1]
+            groups=full_groups(p['records'])
+            seed=f"{model.task_dir.name}-{model.revision}-{model.report_revision}-"+sha256(str((c['file_sha256'],c['rules_sha256'],identity,page)).encode())[:16]
+            ls,ds=st.columns([1,1.65],gap='medium')
+            same_input=c['file_sha256']==model.report['input_sha256']
             with ls:
-                chosen=st.selectbox('查看所选对象详情',view['objects'],format_func=object_label,key=detail_key)
-                rs=view['groups'][chosen]
-                if rs[0]['excerpt']:st.write(rs[0]['excerpt'])
-                st.caption('查看对象不会选择修正。下方选择与批量操作才改变所选清单。')
-                with st.expander('本页对象列表'):
-                    st.dataframe([{'对象':object_label(obj),'短文本':view['groups'][obj][0]['excerpt'],'记录':len(view['groups'][obj])} for obj in view['objects']],hide_index=True,width='stretch',height=220)
-            detail=[r for r in p['records'] if r['object']==chosen]
-            active=[r for r in detail if r['status'] in ('problem','risk','available','review','boundary')] or detail
+                chosen=object_browser(view,groups,model.selected,seed,same_input)
+            detail=groups[chosen]
             with ds:
-                rk='problem-detail-'+detail_key
-                key=st.selectbox('查看此对象的问题',[r['id'] for r in active],format_func=lambda k:next(r['title'].split(' ',1)[-1]+' · '+STATUS[r['status']] for r in active if r['id']==k),key=rk,label_visibility='collapsed')
-                r=next(r for r in active if r['id']==key)
-                comparison(r['title'].split(' ',1)[-1],r['actual'],r['expected'],r['reason'],STATUS[r['status']],r['action'],key='current-problem')
+                r=record_browser(detail,view['groups'][chosen],seed+'-'+sha256(chosen.encode())[:12])
+                comparison(position_label(detail)+' · '+attribute_label(r),r['actual'],r['expected'],r['reason'],STATUS[r['status']],r['action'],key='current-problem')
                 eligible={f['key'] for f in model.eligible()}
-                if c['file_sha256']==model.report['input_sha256'] and r['status']=='problem' and r['record_key'] in eligible:
+                if same_input and r['status']=='problem' and r['record_key'] in eligible:
                     selected=r['record_key'] in model.selected
-                    st.button('移出此项修正' if selected else '选择此项修正',key='choose-record-'+r['id'],on_click=lambda k=r['record_key'],v=selected:model.set_selection([x for x in model.selected if x!=k] if v else model.selected+[k]))
-                elif c['file_sha256']!=model.report['input_sha256']:st.caption('当前查看输出副本；须明确以此副本继续后再选择修正。')
-                else:st.caption('本记录仅查看；不自动执行。' if r['status'] in ('problem','review','boundary') else '本记录无需格式修正。')
+                    st.caption('已加入修正；仅该具体属性。' if selected else '可自动修正；仅明确加入后进入预演，不自动选择同对象其他属性。')
+                    st.button('移出修正' if selected else '加入修正',key='choose-record-'+seed+'-'+r['id'],on_click=lambda k=r['record_key'],v=selected:model.set_selection([x for x in model.selected if x!=k] if v else model.selected+[k]),type='secondary' if selected else 'primary')
+                elif not same_input:st.caption('当前查看输出副本；须明确以此副本继续后再选择修正。')
+                elif r['status'] in ('risk','available'):st.caption('本项不进入普通格式修正；可按处理方式进入原有宽度/排版辅助，仍需单独确认。')
+                else:st.caption('只读问题或待复核，不能自动修正。' if r['status'] in ('problem','review','boundary') else '本记录无需格式修正。')
+                with st.expander('当前检查项的依据与定位'):
+                    st.text(r['position']);st.text(r['basis']);st.text(r['record_key'])
             with st.expander('此对象的全部记录与依据'):
-                st.caption(f"对象 {chosen} 全部 {len(detail)} 条记录（包括当前筛选隐藏的状态）。")
-                st.dataframe([{'检查项':r['title'],'状态':STATUS[r['status']],'位置':r['position'],'实际':r['actual'],'要求/建议':r['expected'],'原因':r['reason'],'操作':r['action'],'依据':r['basis'],'记录key':r['record_key']} for r in detail],hide_index=True,width='stretch')
+                st.caption(f"对象 {chosen} 全部 {len(detail)} 条记录（包括当前筛选隐藏的状态）。切换顶部全部状态可逐项查看符合/不适用；技术表仅明确载入后生成。")
+                if st.toggle('载入此对象完整技术记录',key='object-raw-'+seed):
+                    st.dataframe([{'检查项':r['title'],'状态':STATUS[r['status']],'位置':r['position'],'实际':r['actual'],'要求/建议':r['expected'],'原因':r['reason'],'操作':r['action'],'依据':r['basis'],'记录key':r['record_key']} for r in detail],hide_index=True,width='stretch')
                 for area,category in [('format','format'),('width','width'),('pagination','pagination')]:
                     actionable=[r for r in detail if r['category']==category and r['status'] in ('problem','risk','available') and '不自动' not in r['action']]
-                    if actionable and st.button('查看此对象的'+OPERATIONS[area]+'步骤',key='detail-guide-'+area+'-'+detail_key):
+                    if actionable and st.button('查看此对象的'+OPERATIONS[area]+'步骤',key='detail-guide-'+area+'-'+seed):
                         model.focus_operation(area,b['target'],[r['record_key'] for r in actionable]);st.rerun()
         else:
             from .workflow_ui import empty_state
             empty_state('当前筛选没有记录', '可清除筛选查看其他对象。此处为空不表示文档没有问题或全文合格；筛选外的明确选择仍保留。')
-            st.button('清除筛选',on_click=reset_filters,args=(model,))
+            st.button('清除筛选',on_click=reset_filters,args=(model,),key='clear-empty-filters')
         if selection_renderer:selection_renderer()
         with st.expander('建议下一步与其他操作（不自动执行）'):
             for i,step in enumerate(b['steps']):

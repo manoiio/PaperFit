@@ -1,0 +1,38 @@
+{
+  "fixture": "samples/errors.docx",
+  "input_sha256": "387eba6efdf4849459d5f4cd7c6096659f9b62be091eff21c7fe0dc575e6c25c",
+  "output_sha256": "3661215e5ab6ff65a6ffbdcbe191ea0ab04385cf54aa0e787cc92240fcc00b4c",
+  "selected": 2,
+  "selected_keys": [
+    "R03:paragraph=5:run=1",
+    "R05:paragraph=4:run=2"
+  ],
+  "changes": 2,
+  "input_unchanged": true,
+  "current_input_round": 0,
+  "output_round": 1,
+  "api_requests": 0,
+  "render_requests": 0,
+  "browser_download_equivalence": {
+    "docx_bytes_equal": true,
+    "all_zip_members_equal": true,
+    "sha256": "3661215e5ab6ff65a6ffbdcbe191ea0ab04385cf54aa0e787cc92240fcc00b4c",
+    "bytes": 38762,
+    "zip_members": 18,
+    "scope": "same existing input, rules, scope and explicit choices; website layout only"
+  },
+  "result_zip_docx_bytes_equal": true,
+  "result_zip_members": [
+    "fixed.docx",
+    "changes.md",
+    "recheck.md",
+    "report.html",
+    "report.json",
+    "report.md",
+    "scope.json",
+    "rules.json",
+    "README.txt",
+    "scope-summary.json",
+    "rehearsal-impact.json"
+  ]
+}
