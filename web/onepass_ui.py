@@ -34,7 +34,7 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         st.caption('规则版本：'+str(rules['version'])+('。2015年材料，不宣称现行通用校规。' if is_default else '。沿用已生效配置和来源。')+'未规定的属性不自动补齐。')
         extra=st.text_input('还有其他要求吗？（可选）',placeholder='例如：在SCUT要求基础上，正文改为四号、2倍行距',key='onepass-extra-'+task,max_chars=2000,
                             help='快捷补充先支持明确的正文常用字号、倍数行距。其他格式要求可在高级工作区设置。')
-        st.caption('开始后，需要时将向DeepSeek发送有限的脱敏文字摘录辅助识别结构；有补充要求时另解析一次补充文字。文件排版在本机完成，原稿保留。脱敏不保证彻底匿名。')
+        st.caption('开始后，需要时将向DeepSeek发送有限的脱敏文字摘录辅助识别段落及普通表格用途；脚注尾注本地识别。有补充要求时另解析一次补充文字。文件排版在本机完成，原稿保留。脱敏不保证彻底匿名。')
         valid=model.inventory is not None and current(model,state,extra)
         def progress(name):status.update(label=name);status.write(name)
         if st.button('开始智能排版',key='onepass-start',type='primary',width='stretch',disabled=model.inventory is None or (valid and state.get('status') in ('done','waiting','running'))):
@@ -50,7 +50,7 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         decisions={}
         for q in state['questions']:
             with st.container(border=True):
-                if q.get('context'):st.text('前一标题：'+q['context'])
+                if q.get('context'):st.text('附近文字：'+q['context'])
                 st.text('当前文字：'+q['text']);st.write(q['question'])
                 key='onepass-answer-'+state['id']+'-'+q['id']
                 answer=st.selectbox('您的选择',list(q['options']),format_func=q['options'].get,index=None,key=key,placeholder='请选择，或暂不处理')
@@ -70,19 +70,18 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
     if valid and state.get('status')=='failed':
         st.error('本次未能安全完成，没有发布新副本。请核对文件和要求，或查看高级详情。')
         if st.button('取消本次尝试，准备重新处理',key='onepass-clear-failure'):cancel(model,state);st.rerun()
-    with st.expander('高级设置、原处理方式与项目恢复'):
+    with st.expander('高级设置与项目恢复'):
         if state.get('status')=='failed':st.text(state.get('error','本次未完成'))
         if state.get('audit'):
             export={'status':state.get('status'),'current':valid,**state['audit']}
             st.download_button('下载处理记录（不含论文摘录）',json.dumps(export,ensure_ascii=False,indent=2).encode(),file_name='处理记录.json',on_click='ignore',key='onepass-audit')
             if state.get('status')!='done':st.json(export,expanded=False)
         from .workflow_ui import detail_go
-        st.button('进入详细工作区',on_click=detail_go,args=(1,),key='onepass-detail')
-        if st.button('使用原快捷流程',key='onepass-legacy'):st.session_state['smart-legacy']=True;st.rerun()
+        st.button('进入本地精细工作台',on_click=detail_go,args=(1,),key='onepass-detail')
         if model.inventory:
             with st.expander('查看可能发送的摘录（不发送、不处理）'):
                 from .structure_session import prepare
-                try:st.json(prepare(model)['request'],expanded=False)
+                try:st.json(prepare(model,include_tables=True)['request'],expanded=False)
                 except Exception as exc:st.caption(public_error(exc))
         st.caption('未开始处理的补充文字只保留在当前会话；项目只保存已经生效的规则和原有草稿，不恢复本次执行授权。')
         from .project_ui import render_project
@@ -103,9 +102,12 @@ def render_success(model,state,render_results):
     if model.result:
         groups={}
         for c in model.result['changes']:
-            rid=c['rule_id'];label='页面与边距' if rid in ('R01','R02') else '正文文字与段落' if rid in ('R03','R04','R05','R06','R07','R13') else '标题、题注及其他已确认文字'
+            rid=c['rule_id'];label='页面与边距' if rid in ('R01','R02') else '正文文字与段落' if rid in ('R03','R04','R05','R06','R07','R13') else {'R23':'表内普通文字','R36':'脚注普通文字','R37':'尾注普通文字'}.get(rid,'标题、题注及其他已确认文字')
             groups[label]=groups.get(label,0)+1
         st.write('主要调整：'+'；'.join(f'{k} {v} 处' for k,v in groups.items()))
+    scope=(model.result.get('output_classification_manifest') if model.result else model.classification_confirmed) or {}
+    tables=scope.get('table_scope',{}).get('table_types',{});notes=scope.get('note_scope',{}).get('objects',[])
+    st.write('参与范围：内容表格 '+str(sum(v=='content' for v in tables.values()))+' 张；脚注 '+str(sum(n.startswith('footnote:') for n in notes))+' 条；尾注 '+str(sum(n.startswith('endnote:') for n in notes))+' 条。与顶层段落分别计数，不代表全文覆盖率。')
     coverage=report['coverage'];types=coverage.get('paragraph_types',{})
     count=sum(t in ('other','pending') for t in types.values()) if types else len(coverage.get('unconfirmed_paragraphs',[]))
     st.write(f'还需留意：{count} 段用途未明确或不属普通文字，本次未套普通段落格式。实际分页、目录页码及复杂对象仍需查看。')

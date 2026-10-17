@@ -232,6 +232,15 @@ class ScopeSession:
         if self.mode=='academic':
             for area,method in METHODS.items():
                 if getattr(self,area+'_enabled'):getattr(staged,method)()
+        # Original module methods validate first; record this command's actual
+        # authorization for newly orchestrated tables/notes, not a fictional UI click.
+        if confirmation_text is not None:
+            if type(confirmation_text) is not str or not 1<=len(confirmation_text)<=250:raise DemoError('命令授权说明无效')
+            for area in ('table','note'):
+                c=getattr(staged,area+'_confirmed')
+                if c and 'scope' in c:
+                    c['scope']['confirmation']=confirmation_text
+                    if area=='note':staged.note_draft['confirmation']=confirmation_text
         manifest=None
         if self.mode!='basic':
             manifest=staged._classification_manifest();validate_classification(Package(self.input_path),manifest)

@@ -120,7 +120,8 @@ def shell(model,restart):
     if model.report is not None and model.confirmed is not None:
         st.session_state['workspace-observed-check']=True
     state,tone=check_status(model,st.session_state.get('workspace-observed-check',False))
-    simple=st.session_state.get('workspace-smart',False) and not st.session_state.get('smart-legacy',False)
+    if st.session_state.pop('smart-legacy',False):detail_go(2 if model.inventory else 1)  # old UI state migrates, never executes
+    simple=st.session_state.get('workspace-smart',False)
     if simple and model.inventory:
         state='可开始整理；已有设置会保留' if model.report or model.history else '已载入 · 可以开始整理'
         tone='neutral'
@@ -153,8 +154,11 @@ def shell(model,restart):
             if pending_rehearsal(model) and step!=4:labels.append('已有预演记录 · 尚未采用，采用前仍须核对')
             if labels:st.html('<div class="file-identities">'+''.join('<span>'+escape(label)+'</span>' for label in labels)+'</div>')
         else:st.caption('本地检查与选择修正 Word 格式 · 当前尚未载入文件')
+    a,b=st.columns(2)
+    a.button('智能排版 · 自动理解，少操作',key='smart-entry',type='primary' if simple else 'secondary',on_click=lambda:st.session_state.update({'workspace-smart':True}),width='stretch')
+    b.button('本地精细工作台 · 离线精确控制',key='local-entry',type='secondary' if simple else 'primary',on_click=detail_go,args=(step,),width='stretch')
     if simple:return step
-    st.button('智能处理 · 返回快捷主流程',key='smart-entry',on_click=lambda:st.session_state.update({'workspace-smart':True,'smart-legacy':False}),width='stretch')
+    st.caption('本地精细工作台：不调用AI也能完成检查和修改。联网工具仅明确点击才发送。')
     with st.container(key='workspace-nav'):
         for col,(n,label) in zip(st.columns(5),STEPS.items()):
             status='当前' if n==step else ('需载入' if n==2 else '需检查' if n in (3,4) else '需记录') if not ready[n] else '已确认' if n==2 and model.confirmed else '有记录' if n==3 and model.report else '有记录' if n==5 and model.history else '可进入'

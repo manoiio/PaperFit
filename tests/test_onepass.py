@@ -13,9 +13,12 @@ from core.package import DemoError
 ROOT=Path(__file__).resolve().parents[1]
 
 class OnePassAcceptance(TestCase):
- def setUp(self):self.tmp=TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
+ def setUp(self):
+  self.tmp=TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
+  for target in ('ai.structure.http_post','ai.short_spec.http_post'):
+   guard=patch(target,side_effect=AssertionError('Automatic tests must never use real API'));guard.start();self.addCleanup(guard.stop)
  def session(self,name='s',fixture='samples/phase41/structure.docx'):
-  s=WebSession(self.root/name);s.set_mode('academic');self.assertTrue(s.load((ROOT/fixture).read_bytes(),'合成.docx'));return s
+  s=WebSession(self.root/name);s.set_mode('academic');self.assertTrue(s.load((ROOT/fixture).read_bytes(),'合成.docx'));s.set_table_enabled(False);s.enable_notes(False);return s
  def runner(self,m,p,store):
   labels=json.loads((ROOT/'samples/phase41/labels.json').read_text())['paragraphs']
   rows=[{'id':c['id'],'role':'heading3' if c['id']=='p:13' else labels[int(c['id'][2:])-1]['role'],'evidence':c['text'],'reason':'模拟结构证据'} for c in p['request']['candidates']]
@@ -85,7 +88,7 @@ class OnePassAcceptance(TestCase):
  def test_existing_legal_two_step_and_direct_conflict_guard_retained(self):
   from scripts.reproduce_plan_demo import session
   from core import fix_document
-  s=session(self.root/'plan');before=deepcopy(s.classification_confirmed);selected=s.selected.copy()
+  s=session(self.root/'plan');s.set_table_enabled(False);s.enable_notes(False);before=deepcopy(s.classification_confirmed);selected=s.selected.copy()
   with self.assertRaises(DemoError):fix_document(s.input_path,self.root/'illegal.docx',s.confirmed,selected_keys=selected,**s._rules_arguments())
   st={};start(s,st);self.assertEqual(st['status'],'done',st.get('error'));self.assertEqual(st['outcome']['rounds'],2);self.assertEqual(s.generation_count,2);self.assertEqual(s.current_round,0)
 

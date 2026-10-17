@@ -1,0 +1,28 @@
+{
+  "kind": "offline_replay_of_unmocked_paths",
+  "API_requests_in_this_replay": 0,
+  "reachable_POST_sites": [
+    "test_existing_legal_two_step_and_direct_conflict_guard_retained",
+    "test_failed_structure_local_fallback_and_atomic_archive_failure",
+    "test_requirements_supported_only_touched_fields_and_source",
+    "test_rule_or_file_changes_during_execution_do_not_publish",
+    "test_unsupported_and_failed_requirements_never_ignored"
+  ],
+  "count": 5,
+  "historical_actual_requests": "unverified: initial run retained no receipts; cannot report zero or claim budget compliance",
+  "additional_paid_requests_after_discovery": 1,
+  "live_API_acceptance": "one authorized real batch response entered final workflow; both candidates pending, zero accepted AI suggestions; user decided table purpose, no further API",
+  "baseline_test_commit": "b527e452eb55026888e966879f04caaa517a67db",
+  "historical_response_retained": false,
+  "budget_verified": false,
+  "original_limit": 3,
+  "additional_request_permission": "user explicitly authorized one additional synthetic request",
+  "live_receipt_file": "live-audit.json",
+  "original_budget_verified": false,
+  "final_offline_suite": {
+    "tests": 1279,
+    "seconds": 220.679,
+    "sent_paid_requests": 0,
+    "unmocked_attempts": 0
+  }
+}

@@ -22,7 +22,7 @@ def binding(model,*,rounds=None):
     model._current()
     return fingerprint({'scope':model._scope_snapshot(),'confirmations':{k:getattr(model,k) for k in ATTRS},
                         'report':model.report,'selection':model.selected,'history':model._history_binding(),
-                        'rounds':model.generation_count if rounds is None else rounds,'execution':execution_hash(),'version':VERSION})
+                        'module_decisions':__import__('web.auto_ranges',fromlist=['decisions']).decisions(model),'rounds':model.generation_count if rounds is None else rounds,'execution':execution_hash(),'version':VERSION})
 
 def suggest(model):
     """Prepare an immutable, conservative projection; never publish any range."""
@@ -62,7 +62,7 @@ def accept_scope(model,proposal,*,confirmation_text=None):
     if not stage.confirm_scopes_and_check(pre['signature'],acknowledged=True,confirmation_text=confirmation_text):raise DemoError(stage.error)
     if binding(model)!=proposal['source_binding']:raise DemoError('确认检查期间绑定变化，未发布检查')
     model.cancel_rehearsal()
-    for k in set(ATTRS+['paragraph_types','report','report_revision','selected','result','result_signature','readonly_cache','error']):setattr(model,k,getattr(stage,k))
+    for k in set(ATTRS+['paragraph_types','report','report_revision','selected','result','result_signature','readonly_cache','error']+list(proposal['draft'])):setattr(model,k,getattr(stage,k))
     return shortcut_plan(model)
 
 def shortcut_plan(model):

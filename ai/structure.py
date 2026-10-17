@@ -7,6 +7,8 @@ from core.classification import TYPES
 from core.backmatter import material_hint
 
 VERSION='structure-v1'
+TABLE_VERSION='structure-v2-tables'
+TABLE_PROMPT='\n输入kind=table时，只用allowed_table_roles分类用途：content论文内容表格，cover封面表单，other其他，pending不确定。只判断已发送有限摘要与上下文，不猜敏感内容，不返回格式或授权。段落与表格ID及角色不能混用。'
 MAX_CANDIDATES=40
 MAX_INPUT=24000
 MAX_TOKENS=7000
@@ -40,11 +42,13 @@ def validate(data,request):
         n=item['id']
         if n not in candidates or n in seen:raise DemoError('AI结构ID越权或重复')
         seen.add(n)
-        if item['role'] not in request['allowed_roles']:raise DemoError('AI角色不在当前模式白名单')
+        is_table=candidates[n].get('kind')=='table'
+        allowed=request.get('allowed_table_roles',[]) if is_table else request['allowed_roles']
+        if item['role'] not in allowed:raise DemoError('AI角色不在当前模式白名单')
         if not 1<=len(item['reason'])<=100 or not 1<=len(item['evidence'])<=140:raise DemoError('AI结构依据或理由超限/为空')
         c=candidates[n];reason=None
         if item['evidence'] not in c['text']:reason='证据不是本次对应候选的连续原文'
-        elif item['role'].startswith('heading') and (re.match(r'^\d+\s*(?:年|月|日|mm|cm|kg|%|个|倍|项|毫米|厘米)',c['text'],re.I) or re.search('[。！？；;!?]',c['text'])):reason='标题建议与明确的句子/年份单位结构冲突'
+        elif not is_table and item['role'].startswith('heading') and (re.match(r'^\d+\s*(?:年|月|日|mm|cm|kg|%|个|倍|项|毫米|厘米)',c['text'],re.I) or re.search('[。！？；;!?]',c['text'])):reason='标题建议与明确的句子/年份单位结构冲突'
         elif item['role'] in ('figure_caption','table_caption') and not re.match(r'^(图|表)\s*\d',c['text']):reason='题注建议缺少本地编号线索'
         elif c['local_role'] not in ('pending','other',item['role']) and item['role']!=c['local_role']:reason='AI与本地已有角色线索冲突，需详细核对'
         elif item['role'] in ('pending','other'):reason='AI仍未建议纳入可检查文字'
@@ -56,7 +60,8 @@ def analyze(request,*,transport=None,config=None):
     # This task defaults to flash; explicit configured model remains the verified whitelist.
     text=json.dumps(request,ensure_ascii=False,sort_keys=True)
     if len(text)>MAX_INPUT or not 0<len(request['candidates'])<=MAX_CANDIDATES:raise DemoError('结构候选输入超限或为空，未请求API')
-    payload={'model':config.model,'messages':[{'role':'system','content':PROMPT},{'role':'user','content':text}],
+    prompt=PROMPT+(TABLE_PROMPT if request['version']==TABLE_VERSION else '')
+    payload={'model':config.model,'messages':[{'role':'system','content':prompt},{'role':'user','content':text}],
              'response_format':{'type':'json_object'},'thinking':{'type':'disabled'},'max_tokens':MAX_TOKENS,'stream':False}
     usage={}
     def once(req,timeout):
@@ -71,5 +76,5 @@ def analyze(request,*,transport=None,config=None):
         return raw
     result=call_json(text,payload,lambda d:validate(d,request),transport=once,config=config)
     receipt={k:v for k,v in result['receipt'].items() if k!='input_text'}
-    receipt.update(kind='real_api' if transport is None else 'mock_api',usage=usage or None,task='structure',prompt_version=VERSION)
+    receipt.update(kind='real_api' if transport is None else 'mock_api',usage=usage or None,task='structure',prompt_version=request['version'])
     return {'suggestions':result['draft'],'receipt':receipt}

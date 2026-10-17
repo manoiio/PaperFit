@@ -343,6 +343,8 @@ elif step==1:
     st.button('下一步：核对检查范围',on_click=go,args=(2,),disabled=model.inventory is None,type='primary',width='stretch')
 elif step==2:
     st.header('确认检查范围')
+    from web.local_ui import scope_tools
+    scope_tools(model)
     if st.session_state.get('workspace-scope-editor',False):
         if model.mode=='basic':
             st.button('返回范围总览（保留已保存草稿，不确认范围）',on_click=lambda:st.session_state.update({'workspace-scope-editor':False}),width='stretch')
@@ -355,6 +357,8 @@ elif step==2:
     if model.report:st.button('前往查看问题',on_click=go,args=(3,),type='primary',width='stretch')
 elif step==3:
     st.header('查看问题')
+    from web.local_ui import repair_tools
+    repair_tools(model)
     render_center(model,render_selection)
     with st.expander('格式覆盖、题注、引文及目录的完整明细'):
         report_view(model.report,model.inventory)
@@ -414,6 +418,9 @@ elif step==5:
         with st.expander('历史与中间副本（查看不会切换输入）'):
             render_history(model)
         render_project(model)
+        if model.report:
+            from web.dynamic_ui import render_dynamic
+            render_dynamic(model)
 
 from web.workflow_ui import finish_navigation
 finish_navigation()

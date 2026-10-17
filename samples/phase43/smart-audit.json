@@ -1,0 +1,97 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-2",
+  "authorization": "点击开始智能排版：按显示规则与明确补充要求，处理可安全识别对象、另存复查；不含动态/移动/宽度/分页辅助",
+  "command_id": "b837c627a87b482aad9ea141490ddafd",
+  "source_sha256": "f97af3b871f6178d3da1f84e72a4fd22d630356da46284967c3a2d7dff6f1aed",
+  "start_binding": "f3b8811d43c3ca921bd366af27f04d86480302a5ff9bfda15c4eceeeba68e8fb",
+  "API": {
+    "structure": {
+      "status": "failed",
+      "request_attempts": 0,
+      "elapsed_seconds": null
+    }
+  },
+  "phases": [
+    "识别论文内容",
+    "调整格式",
+    "检查修改后的文件"
+  ],
+  "candidate_count": 2,
+  "candidate_kinds": {
+    "paragraphs": 1,
+    "tables": 1,
+    "remaining": 0
+  },
+  "structure_fallback": "待配置：请在本机.env或环境变量中填写DEEPSEEK_API_KEY，不要发到聊天",
+  "auto_ranges": {
+    "tables": {
+      "1": "cover",
+      "2": "pending",
+      "3": "pending"
+    },
+    "protected": [
+      {
+        "id": "t:1",
+        "reason": "身份/表单或代码/敏感线索，本地保护，不发送"
+      },
+      {
+        "id": "t:3",
+        "reason": "合并/嵌套/浮动、条件样式或复杂内容，自动范围不放开"
+      }
+    ],
+    "note_counts": {
+      "footnote": 3,
+      "endnote": 3
+    },
+    "limits": [],
+    "table_roles": {
+      "1": "cover",
+      "2": "pending",
+      "3": "pending"
+    }
+  },
+  "user_decisions": {
+    "table:2": "content"
+  },
+  "plan_sha256": "63e700316943d297aa081d65394252316e38983ecfd9c5d086c4908110ca81ec",
+  "selected_count": 16,
+  "confirmed_scope_sha256": "9349e92c01b3a9d93f4da56ff76ac6066581e9a06b588b7728c5f2bdd1405659",
+  "processed_scope": {
+    "tables": {
+      "1": "cover",
+      "2": "content",
+      "3": "pending"
+    },
+    "notes": [
+      "footnote:1:3",
+      "footnote:2:4",
+      "footnote:3:5",
+      "endnote:1:3",
+      "endnote:2:4",
+      "endnote:3:5"
+    ]
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 1,
+    "selected": 16,
+    "changes": 16,
+    "output_sha256": "f7d9552d2f3ae4dc4bf49c74f9681644577d87a467161288a7de0faf71855444",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 25,
+      "problem_count": 1,
+      "review_count": 15,
+      "review_findings": 11,
+      "review_notes": 4,
+      "pass_count": 33,
+      "not_applicable_count": 14,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 6
+    }
+  },
+  "automatic_input_switch": false
+}

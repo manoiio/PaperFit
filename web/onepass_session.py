@@ -12,7 +12,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-1'
+VERSION='onepass-2'
 
 
 def command_binding(model,extra):
@@ -86,7 +86,7 @@ def structure_questions(stage,proposal,result=None):
     """No guessing unnumbered heading levels; numbering/outline/style evidence first."""
     types=proposal['draft']['paragraph_types'];byid={str(r['index']):r for r in stage.suggestions['paragraphs']};asks=[]
     protected=set(stage.material_exclusions)
-    ai_ids={r['id'].split(':')[1] for r in proposal.get('structure_ai',{}).get('rows',[]) if r['accepted']}
+    ai_ids={r['id'].split(':')[1] for r in proposal.get('structure_ai',{}).get('rows',[]) if r['accepted'] and r['id'].startswith('p:')}
     if stage.classification_confirmed or stage.mode=='basic':return asks
     for n,t in list(types.items()):
         row=byid[n]
@@ -168,7 +168,8 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
                 state['questions'].append({'id':'requirements','text':message,'question':'补充要求尚不能安全执行，您希望怎样继续？',
                                            'options':{'template':'本次沿用页面显示的原有要求','edit':'返回修改补充要求'}})
         phase('识别论文内容');proposal=suggest(stage)
-        prepared=structure.prepare(stage);state['audit']['candidate_count']=len(prepared['request']['candidates'])
+        prepared=structure.prepare(stage,include_tables=True);state['audit']['candidate_count']=len(prepared['request']['candidates'])
+        state['audit']['candidate_kinds']={'paragraphs':sum(c.get('kind')!='table' for c in prepared['request']['candidates']),'tables':sum(c.get('kind')=='table' for c in prepared['request']['candidates']),'remaining':prepared['remaining']}
         if prepared['request']['candidates']:
             store={};state['structure_store']=store
             try:
@@ -182,6 +183,9 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
                 state['audit']['structure_fallback']=public_error(exc)
                 state['audit']['API']['structure']={'status':'failed','request_attempts':store.get('attempts',0),'elapsed_seconds':store.get('elapsed_seconds')}
         else:state['audit']['structure_local_only']=True
+        from .auto_ranges import apply as apply_auto_ranges
+        state['questions']+=apply_auto_ranges(stage,proposal,prepared)
+        state['audit']['auto_ranges']=deepcopy(proposal.get('auto_ranges'))
         state['questions']+=structure_questions(stage,proposal)
         seal_proposal(stage,proposal);state['proposal']=proposal
         if state.get('id')!=token or command_binding(model,extra)!=source:raise DemoError('识别期间文档或要求已变化，本次结果未接入。')
@@ -201,6 +205,7 @@ def continue_command(model,state,extra,decisions,*,emit=None):
     if decisions.get('requirements')=='edit':cancel(model,state);return state
     for q in state['questions']:
         if 'paragraph' in q:state['proposal']['draft']['paragraph_types'][q['paragraph']]=decisions[q['id']]
+        if 'table' in q:state['proposal']['draft']['table_types'][q['table']]=decisions[q['id']]
     state['audit']['user_decisions']=deepcopy(decisions)
     seal_proposal(state['stage'],state['proposal']);state['status']='running'
     token=state['id'];own={'stage':state['stage'],'history_length':state['history_length'],'original_rule_path':state['original_rule_path']}
@@ -225,6 +230,7 @@ def finish(model,state,*,emit=None,command_id=None):
     outcome=execute(stage,plan,{})
     emit('检查修改后的文件');state['audit']['phases'].append('检查修改后的文件')
     if stage.result:stage.downloads()
+    state['audit']['processed_scope']={'tables':deepcopy(stage.table_types) if stage.table_enabled else {},'notes':deepcopy(stage.note_draft['objects']) if stage.note_enabled else []}
     post=command_binding(stage,state['extra'])
     if state.get('id')!=command_id or command_binding(model,state['extra'])!=state['start']:raise DemoError('整理期间文档或要求发生变化，未发布本次副本。')
     # All storage, original transactions and final bindings passed. In-memory publish only.

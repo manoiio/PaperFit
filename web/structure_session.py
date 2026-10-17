@@ -9,7 +9,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,suggest,isolated
 
 
-def prepare(model):
+def prepare(model,*,include_tables=False):
     start=binding(model);rows=model.suggestions['paragraphs'];candidates=[];protected=[];remaining=0
     fixed=bool(model.classification_confirmed or (model.mode=='basic' and model.body))
     # Already prepared optional scopes remain protected, not a new inference target.
@@ -49,7 +49,20 @@ def prepare(model):
         if len(json.dumps(req,ensure_ascii=False,sort_keys=True))>MAX_INPUT:remaining+=1;continue
         candidates.append(item)
     request={'version':VERSION,'mode':model.mode,'allowed_roles':roles(model.mode),'candidates':candidates}
-    out={'binding':start,'request':request,'protected':protected,'remaining':remaining,'prompt_sha256':fingerprint(PROMPT)}
+    auto=None
+    if include_tables:
+        from .auto_ranges import prepare as auto_prepare
+        from ai.structure import TABLE_VERSION,TABLE_PROMPT
+        from core.table_text import TYPES as TABLE_TYPES
+        auto=auto_prepare(model);request.update(version=TABLE_VERSION,allowed_table_roles=list(TABLE_TYPES))
+        for item in auto['candidates']:
+            trial={**request,'candidates':candidates+[item]}
+            if len(candidates)>=MAX_CANDIDATES or len(json.dumps(trial,ensure_ascii=False,sort_keys=True))>MAX_INPUT:remaining+=1;continue
+            candidates.append(item)
+    while candidates and len(json.dumps(request,ensure_ascii=False,sort_keys=True))>MAX_INPUT:
+        candidates.pop();remaining+=1
+    out={'binding':start,'request':request,'protected':protected,'remaining':remaining,'prompt_sha256':fingerprint(PROMPT+(TABLE_PROMPT if include_tables else ''))}
+    if auto is not None:out['auto_ranges']=auto
     out['seal']=fingerprint(out)
     if binding(model)!=start:raise DemoError('准备期间文件或范围变化')
     return out
@@ -57,7 +70,7 @@ def prepare(model):
 
 def verify(model,prepared):
     if prepared.get('seal')!=fingerprint({k:v for k,v in prepared.items() if k!='seal'}) or prepared['binding']!=binding(model):raise DemoError('AI候选已失效；请核对当前文件与范围后重新准备')
-    if prepared!=prepare(model):raise DemoError('AI候选或提示词版本已变化')
+    if prepared!=prepare(model,include_tables=prepared['request']['version']!=VERSION):raise DemoError('AI候选或提示词版本已变化')
 
 
 def run(model,prepared,store,*,transport=None,config=None):
@@ -89,7 +102,9 @@ def merge(model,prepared,result):
     raw={'suggestions':[{k:r[k] for k in ('id','role','evidence','reason')} for r in result['suggestions']]}
     checked=validate(raw,prepared['request']);proposal=suggest(model);types=proposal['draft']['paragraph_types']
     for row in checked:
-        if row['accepted']:types[row['id'].split(':')[1]]=row['role']
+        if row['accepted']:
+            if row['id'].startswith('t:'):proposal['draft'].setdefault('table_types',{})[row['id'][2:]]=row['role']
+            else:types[row['id'].split(':')[1]]=row['role']
     proposal['draft']['body']=sorted(int(n) for n,t in types.items() if t=='body')
     stage=isolated(model)
     for k,v in proposal['draft'].items():setattr(stage,k,deepcopy(v))

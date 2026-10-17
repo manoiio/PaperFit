@@ -5,11 +5,12 @@ from core.package import Package,DemoError,sha256,q
 
 class TableSession:
  def init_tables(self):
-  self.table_enabled=False;self.table_types={};self.table_confirmed=None;self.table_layout_options=None
+  self.table_explicit_choice=None;self.table_enabled=False;self.table_types={};self.table_confirmed=None;self.table_layout_options=None
  def table_inventory(self):
   self._current();return self.cached_data(('table-inventory',self.inventory['input_sha256']),lambda:inventory(self.input_path))
  def set_table_enabled(self,enabled):
   if type(enabled) is not bool or self.mode!='academic':raise DemoError('表格普通文字仅用于单文档模式')
+  self.table_explicit_choice=enabled
   if self.table_enabled!=enabled:self.table_enabled=enabled;self.invalidate()
  def set_table_types(self,types):
   self._current();scope={'input_sha256':self.inventory['input_sha256'],'table_types':types,'confirmed':False,'confirmation':'网页表格类型草稿'}

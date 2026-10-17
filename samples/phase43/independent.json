@@ -1,0 +1,62 @@
+{
+  "actual_API_requests": 0,
+  "response_source": "mock from author labels",
+  "seconds": 0.411,
+  "output_sha256": "8ca1395ed83eb1f514071b01194afbc63aae34343a0bc3f446dd6dca7c3368c1",
+  "same_final_scope_original_legal_bytes_equal": true,
+  "independent": {
+    "all_text_order_equal": true,
+    "unselected_parts_byte_equal": true,
+    "cover_nested_tables_exact": true,
+    "table2_song_10_5pt": true,
+    "note_marker_system_relationships_exact": true,
+    "selected_format_only": true
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 1,
+    "selected": 17,
+    "changes": 17,
+    "output_sha256": "8ca1395ed83eb1f514071b01194afbc63aae34343a0bc3f446dd6dca7c3368c1",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 25,
+      "problem_count": 1,
+      "review_count": 14,
+      "review_findings": 11,
+      "review_notes": 3,
+      "pass_count": 38,
+      "not_applicable_count": 14,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 11
+    }
+  },
+  "auto_scope": {
+    "tables": {
+      "1": "cover",
+      "2": "content",
+      "3": "pending"
+    },
+    "notes": [
+      "footnote:1:3",
+      "footnote:2:4",
+      "footnote:3:5",
+      "endnote:1:3",
+      "endnote:2:4",
+      "endnote:3:5"
+    ]
+  },
+  "actual_browser": {
+    "sha256": "f7d9552d2f3ae4dc4bf49c74f9681644577d87a467161288a7de0faf71855444",
+    "original_legal_bytes_equal": true,
+    "independent": {
+      "all_text_order_equal": true,
+      "unselected_parts_byte_equal": true,
+      "cover_nested_tables_exact": true,
+      "table2_song_10_5pt": true,
+      "note_marker_system_relationships_exact": true,
+      "selected_format_only": true
+    }
+  },
+  "actual_browser_source": "live.zip: one explicitly additionally authorized real API request, both suggestions pending; table role decided by user"
+}

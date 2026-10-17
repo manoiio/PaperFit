@@ -40,7 +40,7 @@ def run(out,browser_dir=None):
     if out.exists():raise SystemExit('Refuse existing output directory')
     out.mkdir(parents=True);browser_dir=Path(browser_dir) if browser_dir else None;labels=json.loads((ROOT/'samples/phase41/labels.json').read_text())['paragraphs']
     def session(name,source):
-        s=WebSession(out/name);s.set_mode('academic');assert s.load(source.read_bytes(),'合成.docx');return s
+        s=WebSession(out/name);s.set_mode('academic');assert s.load(source.read_bytes(),'合成.docx');s.set_table_enabled(False);s.enable_notes(False);return s
     def runner(m,p,store):
         rows=[{'id':c['id'],'role':'heading3' if c['id']=='p:13' else labels[int(c['id'][2:])-1]['role'],'evidence':c['text'],'reason':'作者夹具模拟'} for c in p['request']['candidates']]
         return run_structure(m,p,store,transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'suggestions':rows})}}]}),config=Settings('synthetic-placeholder'))

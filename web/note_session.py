@@ -5,10 +5,11 @@ from core.package import Package,DemoError
 from core.notes import make_scope,validate_scope,inventory,template,digest
 from core.rule_config import strict_json
 class NoteSession:
- def init_notes(self):self.note_enabled=False;self.note_draft=None;self.note_confirmed=None
+ def init_notes(self):self.note_explicit_choice=None;self.note_enabled=False;self.note_draft=None;self.note_confirmed=None
  def enable_notes(self,value):
   self._current()
   if self.mode!='academic' or type(value) is not bool:raise DemoError('注释检查须在单文档模式明确启用')
+  self.note_explicit_choice=value
   if value!=self.note_enabled:
    self.note_enabled=value
    if not self.note_draft or self.note_draft['input_sha256']!=self.inventory['input_sha256']:self.note_draft=self.seed_workbench_module("notes",make_scope(Package(self.input_path)))

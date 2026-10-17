@@ -14,7 +14,7 @@ class StructureUIAcceptance(TestCase):
   self.tmp=TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
   status=patch('web.structure_ui.config_status',return_value={'configured':True,'model':'deepseek-flash','message':'mock'});status.start();self.addCleanup(status.stop)
   self.s=WebSession(self.tmp.name);self.s.set_mode('academic');self.s.load((ROOT/'samples/phase41/structure.docx').read_bytes(),'合成.docx')
-  self.at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);self.at.session_state.workflow=self.s;self.at.run();self.at.button(key='smart-entry').click().run();self.at.button(key='onepass-legacy').click().run()
+  self.at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);self.at.session_state.workflow=self.s;self.at.run();self.at.button(key='local-entry').click().run();self.at.button(key='workspace-nav-2').click().run();self.at.checkbox(key='local-ai-tools').check().run()
  def test_explicit_request_cached_then_original_scope_and_shortcut(self):
   def transport(req,timeout):
    sent=json.loads(json.loads(req.data)['messages'][1]['content']);labels=json.loads((ROOT/'samples/phase41/labels.json').read_text())['paragraphs']

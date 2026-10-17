@@ -43,6 +43,6 @@ def render_structure(model,state):
                     current=merge(model,prepared,result);a=current['structure_ai']
                     st.write(f'本地原纳入 {a["local_included"]} 个 · AI补充纳入 {a["accepted"]} 个 · 本地拒绝/仍待核对 {a["rejected"]} 个 · 未返回 {a["omitted"]} 个')
                     st.dataframe([{'段落':x['id'],'AI前':TYPES[model.paragraph_types[x['id'].split(':')[1]]],'AI建议':TYPES[x['role']],'本地结果':'可供整体接受' if x['accepted'] else '仍待核对','原因':x['decision_reason'],'AI结构理由':x['reason']} for x in a['rows']],hide_index=True,height=180)
-                    st.caption('本地接受仅表示协议和保护边界校验通过，不保证语义分类正确；无明确编号的标题层级尤其需要核对。AI结果仅是待接受建议。下方“接受此范围并检查”才产生本轮范围确认；不会自动勾选修正。AI记录只留本会话，不进入项目/报告/日志，已接受的分类按原项目机制保存。')
+                    st.caption('本地接受仅表示协议和保护边界校验通过，不保证语义分类正确；无明确编号的标题层级尤其需要核对。AI结果仅是待接受建议。本页“接受此范围并检查”才产生本轮范围确认；不会自动勾选修正。AI记录只留本会话，不进入项目/报告/日志，已接受的分类按原项目机制保存。')
                 else:st.info('此前AI记录的输入、规则、范围或模式已变化，仅作本会话历史，不可用于当前摘要。重新调用需再次明确发送。')
         except Exception as exc:st.warning('AI候选未准备：'+public_error(exc)+'；仍可使用本地建议。')
