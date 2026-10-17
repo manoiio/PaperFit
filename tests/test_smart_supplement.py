@@ -32,8 +32,11 @@ class SmartSupplementAcceptance(TestCase):
   text='正文西文Arial；正文2倍行距；正文居左；正文段前0.5行，段后6pt；二级标题宋体小四居左，1.5倍行距；三级标题黑体小四居中；图题宋体五号；表题黑体五号；页面A4竖向，四周边距2cm。'
   vals={'font_western':('Arial','正文西文Arial'),'line_spacing':(2,'正文2倍行距'),'body__alignment':('left','正文居左'),'body__before':({'value':0.5,'unit':'lines'},'正文段前0.5行'),'body__after':({'value':6,'unit':'pt'},'正文段前0.5行，段后6pt'),'heading2_font_cn':('宋体','二级标题宋体'),'heading2_font_size':(12,'二级标题宋体小四'),'heading2_alignment':('left','二级标题宋体小四居左'),'heading2_line_spacing':(1.5,'二级标题宋体小四居左，1.5倍行距'),'heading3_font_cn':('黑体','三级标题黑体'),'heading3_font_size':(12,'三级标题黑体小四'),'heading3_alignment':('center','三级标题黑体小四居中'),'figure_caption_font_cn':('宋体','图题宋体'),'figure_caption_font_size':(10.5,'图题宋体五号'),'table_caption_font_cn':('黑体','表题黑体'),'table_caption_font_size':(10.5,'表题黑体五号'),'paper':('A4 portrait','页面A4竖向'),'margin_top':(20,'页面A4竖向，四周边距2cm'),'margin_bottom':(20,'页面A4竖向，四周边距2cm'),'margin_left':(20,'页面A4竖向，四周边距2cm'),'margin_right':(20,'页面A4竖向，四周边距2cm')}
   self.assertEqual(coverage(text),set(vals));self.assertEqual(validate(draft(vals),text)['fields']['body__before']['value']['unit'],'lines')
+ def test_previously_unsupported_fixed_declaration_now_strictly_proved(self):
+  text='正文固定20磅行距';field={'value':{'mode':'exact','value':20},'unit':'multiple','quote':text,'location':'摘录:L1','support':'supported'}
+  data={'version':VERSION,'fields':{'line_spacing':field},'issues':[]};self.assertEqual(validate(data,text)['fields']['line_spacing'],field)
  def test_whole_input_unknown_and_ambiguous_never_partly_applied(self):
-  for text in ('正文四号；把摘要润色一下','标题统一三号','正文固定20磅行距','正文方正宋体小四','正文小四；删除空白段','表内文字宋体，首行缩进两字符'):
+  for text in ('正文四号；把摘要润色一下','标题统一三号','正文行距20磅','正文方正宋体小四','正文小四；删除空白段','表内文字宋体，首行缩进两字符'):
    with self.assertRaises(DemoError):parse_requirements(text,config=Settings('synthetic'),transport=lambda *_:self.fail('local unsupported should not send'))
   for mutate in (lambda d:d['fields'].pop('first_line_indent'),lambda d:d['fields']['font_size'].update(value=14),lambda d:d['fields']['font_size'].update(unit='mm'),lambda d:d['fields']['font_cn'].update(location='摘录:L2'),lambda d:d['fields'].update(reference_item__font_size={'value':12})):
    d=draft();mutate(d)

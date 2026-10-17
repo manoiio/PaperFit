@@ -185,7 +185,7 @@ class ObjectTemplateAcceptance(unittest.TestCase):
             if n.endswith('font_size'):values += [7.5,36.5 if n.startswith('heading') else 24.5,13.3,'18']
             elif n.endswith('font_cn'):values+=['微软雅黑','黑体加粗']
             elif n.endswith('alignment'):values+=['justify','居中',1]
-            else:values += [1.1,3,'2']
+            else:values += [1.13,5.05,'2']
             for v in values:
                 with self.subTest(n=n,v=str(v)),self.assertRaises(DemoError):validate_value(n,v)
         for v in (8,24.5,36):self.assertEqual(validate_value('heading1_font_size',v),v)

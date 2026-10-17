@@ -15,7 +15,7 @@ def base_v5(d):
 
 def upgrade(d,base):
  d=old.validate_template(d,base)
- if d['structure_version']==6:return d
+ if d['structure_version'] in (6,7):return d
  if d['structure_version']<4:d=academic.make(d,{n:None for n in academic.EXTRA},{n:{'kind':'not_enabled','quote':'','location':None} for n in academic.EXTRA},d['norm_excerpt'],base)
  if d['structure_version']==4:d=prior.make(d,{n:None for n in prior.EXTRA},{n:{'kind':'not_enabled','quote':'','location':None} for n in prior.EXTRA},base)
  d.update(structure_version=6,supported_fields=list(V6_FIELDS),backmatter_base_sha256=sha256(PATH.read_bytes()),backmatter_compatibility={'from_version':5,'new_fields':'explicit_confirmed_or_disabled'})

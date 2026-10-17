@@ -54,6 +54,10 @@ def render_object_editor(model,module,obj,visible,g,active,baseline,current,disp
         key,mk=keys(n);s=spec(module,n);value=st.session_state.get(key)
         if s['kind']=='spacing':
             unit=st.session_state.get(key+'-unit');value={'value':value,'unit':unit} if value is not None and unit is not None else None
+        if s['kind']=='line':
+            mode=st.session_state.get(key+'-mode');value={'mode':mode,'value':value} if mode is not None and value is not None else None
+        if s['kind']=='indent':
+            kind=st.session_state.get(key+'-kind');unit=st.session_state.get(key+'-unit');value={'kind':kind,'unit':unit,'value':value} if kind is not None and unit is not None and value is not None else None
         st.session_state[mk]='manual';capture(n,'manual',value)
     def reset_widgets(mod,n,value,mode):
         key='wb-control-'+g+'-'+mod+'-'+n
@@ -63,6 +67,12 @@ def render_object_editor(model,module,obj,visible,g,active,baseline,current,disp
         if spec(mod,n)['kind']=='spacing':
             st.session_state[key]=float(value['value']) if value is not None else None
             st.session_state[key+'-unit']=value['unit'] if value is not None else None
+        elif spec(mod,n)['kind']=='line':
+            from core.paragraph_values import line
+            d=line(value) if value is not None else None;st.session_state[key]=float(d['value']) if d else None;st.session_state[key+'-mode']=d['mode'] if d else None
+        elif spec(mod,n)['kind']=='indent':
+            from core.paragraph_values import indent
+            d=indent(value,hanging=True) if value is not None else None;st.session_state[key]=float(d['value']) if d else None;st.session_state[key+'-kind']=d['kind'] if d else None;st.session_state[key+'-unit']=d['unit'] if d else None
         else:st.session_state[key]=float(value) if value is not None and spec(mod,n)['kind']=='number' else value
     def mode_changed(n):
         _,mk=keys(n);mode=st.session_state[mk]
@@ -71,7 +81,7 @@ def render_object_editor(model,module,obj,visible,g,active,baseline,current,disp
         reset_widgets(module,n,effective(n),mode)
     def formatted(n,value):
         unit=spec(module,n)['unit']
-        return display(value)+({'pt':'磅','mm':'毫米','multiple':'倍','chars':'字符'}.get(unit,'') if value is not None else '')
+        return display(value)+("" if isinstance(value,dict) else {'pt':'磅','mm':'毫米','multiple':'倍','chars':'字符'}.get(unit,'') if value is not None else '')
     def editing(n):return buffers.get(module+'.'+n,fs[n])
     def effective(n):
         edit=editing(n)

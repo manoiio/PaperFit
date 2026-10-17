@@ -9,6 +9,7 @@ def annotate_dependencies(report):
         if not sizes:continue
         wanted=sizes[0]['expected']
         chars=indent['expected']
+        if isinstance(chars,dict):continue
         label='两字符' if chars==2 else f'{chars:g}字符'
         detail=f'可能影响首行缩进：字号改为{wanted:g}pt后，现有{pt:g}pt点值缩进应重新核对；{label}等效点值为{wanted*chars:g}pt。未选R07不会自动修改。'
         item={'affected_key':indent['key'],'trigger_keys':[f['key'] for f in sizes],'locator':indent['locator'],'detail':detail}
@@ -19,6 +20,7 @@ def annotate_dependencies(report):
         if loc.get('property')!='first_line_indent' or not isinstance(a,dict) or a.get('pt') in (None,0):continue
         sizes=[f for f in fs if f['rule_id']==indent['rule_id'] and f['status']=='problem' and f['locator'].get('paragraph')==loc.get('paragraph') and f['locator'].get('property')=='size']
         if not sizes:continue
+        if 'chars' not in indent['expected']:continue
         chars=indent['expected']['chars'];wanted=sizes[0]['expected'];pt=a['pt']
         detail=f'可能影响首行缩进：本对象字号改为{wanted:g}pt后，{pt:g}pt缩进须复核；{chars:g}字符等效{wanted*chars:g}pt。不自动追加未选缩进。'
         warnings.append({'affected_key':indent['key'],'trigger_keys':[f['key'] for f in sizes],'locator':loc,'detail':detail})
@@ -38,7 +40,9 @@ def problem_delta(before,after):
             previous=next((x for x in before['findings'] if x['key']==key),None)
             prior=previous['actual'].get('uniform_size_pt') if previous and isinstance(previous['actual'],dict) else None
             if pt is not None and size is not None and prior!=size:
-                chars=f['expected'];label='两字符' if chars==2 else f'{chars:g}字符'
+                chars=f['expected']
+                if isinstance(chars,dict):continue
+                label='两字符' if chars==2 else f'{chars:g}字符'
                 cause=f'字号改为{size:g}pt后，{pt:g}pt缩进不再等效{label}（应为{size*chars:g}pt）；本轮未选择该缩进。'
             else:cause='其他所选格式变化后发现该问题，请核对实际值；本轮未自动追加修正。'
         elif f['locator'].get('property')=='first_line_indent' and isinstance(f['actual'],dict) and f['actual'].get('pt') is not None:

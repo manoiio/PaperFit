@@ -55,7 +55,7 @@ def overlay(stage,text,result,*,segments=None,name="本次补充排版要求"):
     from core import rule_bundle as rb,load_rules
     from core.norms import qualify_segments,selected_segments
     from ai.smart_spec import VERSION as SPEC_VERSION,validate
-    draft=result['draft'];plain=deepcopy(segments) if segments is not None else selected_segments(text)
+    source_segments=segments;draft=result['draft'];plain=deepcopy(segments) if segments is not None else selected_segments(text)
     if set(draft)=={'font_size','line_spacing','unsupported'}:
         # Compatibility for the old two-field injected caller; no broadening.
         old=validate_draft(draft,text);fields={}
@@ -68,7 +68,9 @@ def overlay(stage,text,result,*,segments=None,name="本次补充排版要求"):
     if segments is None:draft=validate(draft,text)
     else:
         if set(draft)!={'version','fields','issues'} or draft['version']!=SPEC_VERSION or draft['issues'] or not set(draft['fields'])<=set(__import__('ai.smart_spec',fromlist=['ALLOWED']).ALLOWED):raise DemoError('文件适配字段结构无效')
-        native={m:{'fields':{},'issues':[]} for m in rb.MODULES};native['main']['fields']=draft['fields'];rb.validate_draft(native,plain)
+        native={m:{'fields':{},'issues':[]} for m in rb.MODULES};
+        for n,f in draft['fields'].items():native[__import__('ai.smart_spec',fromlist=['module']).module(n)]['fields'][n]=f
+        rb.validate_draft(native,plain)
     touched=[n for n,f in draft['fields'].items() if f is not None]
     if stage.mode!='academic' and any(n.startswith(('body__','table_content__')) for n in touched) or stage.mode=='basic' and any(n.startswith(('heading','figure_caption','table_caption')) for n in touched):raise DemoError('当前检查方式不支持本次对象要求；未改变已有模式，请在本地工作台核对。')
     base=load_rules(stage.rules_path);prior=stage.current_rule_bundle();mods=deepcopy(prior['modules']);ss=deepcopy(prior['provenance'])
@@ -77,8 +79,19 @@ def overlay(stage,text,result,*,segments=None,name="本次补充排版要求"):
         if x not in segments:segments.append(x)
     applied=[]
     for n in touched:
-        f=draft['fields'][n];values[n]=deepcopy(f['value']);ss['main'][n]={'kind':'ai_extracted','quote':f['quote'],'location':locations[f['location']]}
-        applied.append({'field':n,'object_property':rb.FIELDS['main'][n][1],'value':deepcopy(f['value']),'unit':f['unit'],'quote':f['quote'],'location':locations[f['location']]})
+        f=draft['fields'][n];m=__import__('ai.smart_spec',fromlist=['module']).module(n)
+        if m=='main':values[n]=deepcopy(f['value'])
+        else:
+            from core import notes
+            if mods[m] is None:
+                mods[m]=notes.promote(notes.school())
+                for kind in notes.KINDS:
+                    for prop in notes.ALL_FIELDS:mods[m]['values'][kind][prop]=None;mods[m]['sources'][kind][prop]='not_enabled'
+            else:mods[m]=notes.promote(mods[m])
+            k,p=n.split('__');mods[m]['values'][k][p]=deepcopy(f['value']);mods[m]['sources'][k][p]='user_confirmed'
+            if ss[m] is None:ss[m]=rb.origins(m,mods[m])
+        ss[m][n]={'kind':'ai_extracted','quote':f['quote'],'location':locations[f['location']]}
+        applied.append({'field':n,'object_property':rb.FIELDS[m][n][1],'value':deepcopy(f['value']),'unit':f['unit'],'quote':f['quote'],'location':locations[f['location']]})
     receipt={k:result['receipt'][k] for k in ('kind','model','timestamp_utc')}
     mods['main']=rb.make_main(name,values,ss['main'],segments,receipt,base)
     notices=deepcopy(prior.get('notices',{m:[] for m in rb.MODULES}))
@@ -88,8 +101,12 @@ def overlay(stage,text,result,*,segments=None,name="本次补充排版要求"):
             if item not in notices['main']:notices['main'].append(item)
     bundle=rb.build(name,mods,segments,receipt,base,ss,notices);rb.compile_bundle(bundle,base)
     stage._save_custom(bundle);stage.sync_rules()
+    if stage.note_enabled and stage.note_draft and any(__import__('ai.smart_spec',fromlist=['module']).module(n)=='notes' for n in touched):
+        note_scope=deepcopy(stage.note_draft);note_scope['template']=deepcopy(mods['notes']);note_scope['confirmed']=False
+        __import__('core.notes',fromlist=['validate_scope']).validate_scope(__import__('core.package',fromlist=['Package']).Package(stage.input_path),note_scope,confirmed=False)
+        stage.note_draft=note_scope;stage.note_confirmed=None
     if stage.rules_hash is None:raise DemoError('补充规则未通过原配置验证')
-    return {'fields':touched,'overrides':applied,'receipt':{k:v for k,v in result['receipt'].items() if k!='input_text'},'source_sha256':sha256(text.encode()) if segments is None else result['receipt'].get('file_sha256',sha256(__import__('core.norms',fromlist=['marked_text']).marked_text(plain).encode()))}
+    return {'fields':touched,'overrides':applied,'receipt':{k:v for k,v in result['receipt'].items() if k!='input_text'},'source_sha256':sha256(text.encode()) if source_segments is None else result['receipt'].get('file_sha256',sha256(__import__('core.norms',fromlist=['marked_text']).marked_text(plain).encode()))}
 
 
 def structure_questions(stage,proposal,result=None):
@@ -297,3 +314,18 @@ def finish(model,state,*,emit=None,command_id=None):
     state['audit']['outcome']=deepcopy(outcome);state['audit']['automatic_input_switch']=False
     state.pop('stage',None);state.pop('proposal',None);state.pop('structure_store',None)
     return state
+
+
+def register_dynamic_followup(model,state,expected_post,parent_sha256):
+    """Register only a separately authorized, already verified dynamic adoption.
+
+    This does not execute anything or restore the original ordinary-format grant.
+    Input/requirements stay bound; a different history/output cannot be attached.
+    """
+    result=model.result
+    if state.get('status')!='done' or state.get('post')!=expected_post or not result or result.get('kind')!='dynamic_text' or result['round']['input_sha256']!=parent_sha256:
+        raise DemoError('动态副本与本次智能结果的父子关系不匹配')
+    model.downloads()  # Existing adopted-byte/transaction/history validation.
+    if result.get('dynamic',{}).get('adoption',{}).get('fix_calls')!=0:raise DemoError('动态结果没有原采用验证记录')
+    state['audit']['dynamic_followup']={'round':result['round']['number'],'parent_round':result['round']['input_round'],'parent_sha256':parent_sha256,'output_sha256':result['after']['input_sha256'],'numeric_changes':len(result['changes']),'separately_authorized':True,'fields_refreshed':False,'fix_calls_at_adoption':0}
+    state['post']=command_binding(model,state['extra'],state.get('requirements'))

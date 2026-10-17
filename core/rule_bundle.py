@@ -5,9 +5,10 @@ from .package import DemoError,sha256
 from .rule_config import strict_json
 from . import templates as main,back_templates as back,front_template as front,toc_template as toc,notes
 from .norms import marked_text
+from . import paragraph_templates as paragraphs
 MODULES=('main','front','toc','notes')
 LABELS={'main':'正文与章节 v6','front':'封面与页眉页脚','toc':'目录','notes':'脚注与尾注'}
-FIELDS={'main':back.V6_FIELDS,'front':{n:('',n,'pt' if p=='font_size' else 'mm' if p=='mm' else p) for n,p in front.FIELDS.items()},'toc':{n:('',n,{'font_cn':'font','font_size':'pt','alignment':'alignment','line_multiple':'multiple'}[p]) for n,p in toc.FIELDS.items()},'notes':{k+'__'+p:('',notes.KINDS[k]+' '+p,{'font_cn':'font','font_size':'pt','line_multiple':'multiple'}[p]) for k in notes.KINDS for p in notes.FIELDS}}
+FIELDS={'main':paragraphs.FIELDS,'front':{n:('',n,'pt' if p=='font_size' else 'mm' if p=='mm' else p) for n,p in front.FIELDS.items()},'toc':{n:('',n,{'font_cn':'font','font_size':'pt','alignment':'alignment','line_multiple':'multiple'}[p]) for n,p in toc.FIELDS.items()},'notes':{k+'__'+p:('',notes.KINDS[k]+' '+p,{'font_cn':'font','font_size':'pt','line_multiple':'multiple','before':'spacing','after':'spacing','alignment':'alignment'}[p]) for k in notes.KINDS for p in notes.ALL_FIELDS}}
 for _m in ('front','toc'):
  for _n,(_rid,_label,_unit) in list(FIELDS[_m].items()):
   if _n.endswith('_distance_mm'):_label='页眉距离' if _n.startswith('header') else '页脚距离'
@@ -22,12 +23,12 @@ def require(ok,msg):
  if not ok:raise DemoError(msg)
 def exact(d,keys,msg):require(type(d) is dict and set(d)==set(keys),msg)
 def flat(module,cfg):
- if module=='main':return deepcopy(cfg['template']['final_values'])|{n:None for n in cfg['disabled_fields']}
- if module=='notes':return {k+'__'+p:v for k,ps in cfg['values'].items() for p,v in ps.items()}
+ if module=='main':return {n:None for n in FIELDS[module]}|deepcopy(cfg['template']['final_values'])|{n:None for n in cfg['disabled_fields']}
+ if module=='notes':return {n:None for n in FIELDS[module]}|{k+'__'+p:v for k,ps in cfg['values'].items() for p,v in ps.items()}
  return deepcopy(cfg['values'])
 def origins(module,cfg):
- if module=='main':return deepcopy(cfg['template']['field_sources'])|{n:deepcopy(EMPTY) for n in cfg['disabled_fields']}
- if module=='notes':return {k+'__'+p:{'kind':s,'quote':'','location':None} for k,ps in cfg['sources'].items() for p,s in ps.items()}
+ if module=='main':return {n:deepcopy(EMPTY) for n in FIELDS[module]}|deepcopy(cfg['template']['field_sources'])|{n:deepcopy(EMPTY) for n in cfg['disabled_fields']}
+ if module=='notes':return {n:deepcopy(EMPTY) for n in FIELDS[module]}|{k+'__'+p:{'kind':s,'quote':'','location':None} for k,ps in cfg['sources'].items() for p,s in ps.items()}
  return deepcopy(cfg['sources'])
 def validate_value(module,n,v):
  require(module in MODULES and n in FIELDS[module],'规则包含未知执行字段')
@@ -38,7 +39,7 @@ def validate_value(module,n,v):
   d=toc.school() if module=='toc' else notes.school()
   if module=='toc':d['name']='用户确认的目录演示要求';d['values'][n]=v;d['sources'][n]=deepcopy(EMPTY) if v is None else {'kind':'user_confirmed','quote':'','location':None};toc.validate(d)
   else:
-   k,p=n.split('__');d['values'][k][p]=v;d['sources'][k][p]='not_enabled' if v is None else 'user_confirmed';notes.template(d)
+   k,p=n.split('__');d=notes.promote(d) if p in notes.EXTRA_FIELDS else d;d['values'][k][p]=v;d['sources'][k][p]='not_enabled' if v is None else 'user_confirmed';notes.template(d)
  return v
 
 def source(s,v,segments):
@@ -52,6 +53,7 @@ def source(s,v,segments):
 
 def validate(d,base):
  require(type(d) is dict,'规则包必须是JSON对象')
+ d=deepcopy(d)
  exact({k:v for k,v in d.items() if k!='notices'},('format','version','name','excerpt','excerpt_sha256','extraction','modules','provenance','confirmation'),'规则包结构不支持')
  require(d['format']=='paper-grid-rule-bundle' and type(d['version']) is int and d['version']==1,'未知规则包版本')
  main.safe_text(d['name'],80);require(not any(x in d['name'] for x in ('官方','华工','学校')),'自定义规则包不能冒充学校官方规范')
@@ -77,7 +79,11 @@ def validate(d,base):
   elif m=='toc':toc.validate(c)
   else:notes.template(c)
   require(len(raw(c['template'] if m=='main' else c))<=({'main':65536,'front':16000,'toc':32000,'notes':65536}[m]),'模块配置超过已有容量上限')
-  vals=flat(m,c);ss=d['provenance'][m];exact(ss,FIELDS[m],'规则包逐字段来源缺失或未知')
+  vals=flat(m,c);ss=d['provenance'][m]
+  if type(ss) is dict:
+   for n in set(FIELDS[m])-set(ss):
+    if vals[n] is None:ss[n]=deepcopy(EMPTY)
+  exact(ss,FIELDS[m],'规则包逐字段来源缺失或未知')
   for n,v in vals.items():
    validate_value(m,n,v);source(ss[n],v,d['excerpt'])
    native=origins(m,c)[n]
@@ -120,7 +126,9 @@ def validate_candidate(m,n,f,segments):
  main.safe_text(f['quote'],200);require(any(s['location']==f['location'] and f['quote'] in s['text'] for s in segments),'依据必须是来源位置内的连续原句')
  validate_value(m,n,f['value'])
  if m=='main':
-  d={x:None for x in FIELDS[m]};d.update({n:f,'unsupported':[]});back.validate_draft(d,segments)
+  d={x:None for x in back.V6_FIELDS};d['unsupported']=[]
+  if n in paragraphs.EXTRA:paragraphs.candidate(n,f,segments)
+  else:d[n]=f;back.validate_draft(d,segments)
  elif m=='front':
   d={x:None for x in FIELDS[m]};d.update({n:f,'unsupported':[]});front.validate_draft(d,'\n'.join(s['text'] for s in segments),segments=segments)
  elif m=='toc':
@@ -133,8 +141,23 @@ def validate_candidate(m,n,f,segments):
     for v in proof(n.split('__')[1],q):found.add(v)
   require(found=={f['value']},'目录原文存在冲突或不支持要求，须明确取舍')
  else:
-  k,p=n.split('__');q=f['quote'];ctx=notes.KINDS[k]+r'(?:普通文字|正文|文字)'
+  k,p=n.split('__');q=f['quote'];ctx=notes.KINDS[k]+r'(?:普通文字|正文|文字)?'
   require(bool(re.search(ctx,q)) and not re.search(('尾注' if k=='footnote' else '脚注')+'|正文标题|目录|论文正文',q),'注释对象依据不明确或混用')
+  if p in ('line_multiple','before','after','alignment'):
+   require(bool(re.search(ctx,q)),'注释对象不明确')
+   clauses=[c for s in segments for c in re.split('[。；;\n]',s['text']) if re.search(ctx,c)]
+   if p=='line_multiple':
+    from .paragraph_values import prove
+    prove(p,f['value'],q,clauses)
+   else:
+    from .academic_templates import validate_candidate_for
+    # Spacing/alignment proof is shared with ordinary paragraph units.
+    wanted=f['value'];found=[]
+    for c in clauses:
+     if p=='alignment':found.extend(v for v,t in main.ALIGNMENTS.items() if t in c)
+     else:found.extend({'value':float(x),'unit':'lines' if u=='行' else 'pt'} for x,u in re.findall(('段前' if p=='before' else '段后')+r'\s*(\d+(?:\.\d+)?)\s*(pt|磅|行)',c,re.I))
+    require(bool(found) and all(x==wanted for x in found),'注释段落要求不匹配或冲突')
+   return deepcopy(f)
   found=set()
   for s in segments:
    for clause in re.split('[。；;\n]',s['text']):
@@ -185,7 +208,7 @@ def make_main(name,values,sources,segments,extraction,base):
  b=a.make(b,{n:values[n] for n in a.EXTRA},{n:sources[n] for n in a.EXTRA},segments,base,name=name)
  b=t.make(b,{n:values[n] for n in t.EXTRA},{n:sources[n] for n in t.EXTRA},base)
  b=back.upgrade(b,base);b['final_values'].update({n:values[n] for n in back.EXTRA});b['field_sources'].update({n:sources[n] for n in back.EXTRA})
- return {'template':back.validate(b,base),'disabled_fields':disabled}
+ return {'template':paragraphs.wrap(back.validate(b,base),values,sources,base),'disabled_fields':disabled}
 
 def compile_bundle(d,base):
  d=validate(d,base);cfg=d['modules']['main'];require(cfg is not None,'执行规则包必须有明确的正文模块；补充模块请与当前正文规则核对后应用')

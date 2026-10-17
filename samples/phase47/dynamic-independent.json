@@ -1,0 +1,10 @@
+{
+  "kind": "actual smart result dynamic download; independent author text slots",
+  "numeric_changes": 5,
+  "all_other_XML_and_parts_preserved": true,
+  "source_sha256": "702bc5a182205a1ee5d1dccf23d565ea4ea7be785d823b241777f349fba85a79",
+  "output_sha256": "ce5588f3831691d544f5f71dde11af333c96d774893369c34c8d4bdc4131c3f1",
+  "API_requests": 0,
+  "current_input_switched": false,
+  "Word_COM_or_field_refresh": false
+}

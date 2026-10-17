@@ -9,6 +9,7 @@ REASONS={'unsupported':'超出已有支持范围','conflict':'要求相互冲突
 
 def group(module,name):
  if module=='main':
+  if name in ('figure_caption__line_spacing','table_caption__line_spacing'):return TYPES[name.split('__')[0]]
   from core.academic_rules import FIELDS as academic
   from core.backmatter import FIELDS as back
   if name in academic:return TYPES.get(academic[name][1],'整篇只读提示')
@@ -23,9 +24,10 @@ def group(module,name):
 
 def label(module,name):
  raw=rb.FIELDS[module][name][1]
+ if module in ('main','notes') and name.endswith(('line_spacing','line_multiple')):return '行距'
  if '__' in name:
   prop=name.split('__',1)[1]
-  labels={'font_cn':'中文字体','font_western':'西文字体','font_size':'字号','alignment':'对齐','line_multiple':'倍数行距','line_spacing':'倍数行距','first_line_indent':'首行字符缩进','before':'段前间距','after':'段后间距','bold':'加粗'}
+  labels={'font_cn':'中文字体','font_western':'西文字体','font_size':'字号','alignment':'对齐','line_multiple':'行距','line_spacing':'行距','first_line_indent':'段落缩进','before':'段前间距','after':'段后间距','bold':'加粗'}
   for prefix,title in (('label_','标签'),('content_','内容')):
    if prop.startswith(prefix):return title+labels.get(prop[len(prefix):],prop)
   return labels.get(prop,raw)
@@ -41,6 +43,8 @@ def spec(module,name):
  unit=rb.FIELDS[module][name][2]
  unit={'font_cn':'font','font_western':'font'}.get(unit,unit)
  candidates={'font':WEST if 'western' in name else CN,'alignment':tuple(ALIGNMENTS),'paper':('A4 portrait',),'bool':(True,False),'bold':(True,False),'multiple':(1.,1.25,1.5,2.),'chars':(0,1,2)}
+ if module in ('main','notes') and name.endswith(('line_spacing','line_multiple')):return {'kind':'line','unit':unit}
+ if module=='main' and name.endswith('first_line_indent'):return {'kind':'indent','unit':unit}
  if unit in candidates:return {'kind':'choice','unit':unit,'options':[v for v in candidates[unit] if accepts(module,name,v)]}
  if unit=='spacing':return {'kind':'spacing','unit':unit}
  if unit in ('pt','mm'):
@@ -53,6 +57,20 @@ def value_control(module,name,seed,key,touch):
  s=spec(module,name);unit=s['unit'];title=label(module,name)
  if seed is not None and not accepts(module,name,seed):
   st.error('已有草稿值不在当前支持范围，未替换为默认选项。请明确修复或选择不检查。');st.text(str(seed));return None
+ if s['kind'] in ('line','indent'):
+  from core.paragraph_values import line,indent
+  if s['kind']=='line':
+   d=line(seed) if seed is not None else None;options=['multiple','exact','minimum']
+   mode=st.selectbox(title+'模式',options,index=options.index(d['mode']) if d else None,format_func=lambda x:{'multiple':'倍数','exact':'固定（磅）','minimum':'最小（磅）'}[x],key=key+'-mode',on_change=touch,placeholder='尚未配置')
+   x=st.number_input(title+'数值',value=float(d['value']) if d else None,min_value=.05,max_value=120.,step=.05,key=key,on_change=touch,placeholder='尚未配置')
+   st.caption('倍数0.5–5；固定/最小1–120磅，均0.05步长。固定值可能裁切，需预览。')
+   return {'mode':mode,'value':x} if mode is not None and x is not None else None
+  d=indent(seed,hanging=True) if seed is not None else None;options=['first','hanging'] if name=='reference_item__first_line_indent' else ['first']
+  kind=st.selectbox('缩进类型',options,index=options.index(d['kind']) if d else None,format_func=lambda x:'首行缩进' if x=='first' else '悬挂缩进',key=key+'-kind',on_change=touch,placeholder='尚未配置')
+  units=['chars','pt','mm','cm'];u=st.selectbox('缩进单位',units,index=units.index(d['unit']) if d else None,format_func=lambda x:{'chars':'字符','pt':'磅','mm':'毫米','cm':'厘米'}[x],key=key+'-unit',on_change=touch,placeholder='尚未配置')
+  x=st.number_input(title+'数值',value=float(d['value']) if d else None,min_value=0.,max_value=144.,step=.01,key=key,on_change=touch,placeholder='尚未配置')
+  st.caption('字符与物理距离不互换；物理值取最邻近twip，误差不超过0.025磅。')
+  return {'kind':kind,'unit':u,'value':x} if kind is not None and u is not None and x is not None else None
  if s['kind']=='choice':
   options=s['options']
   def display(v):

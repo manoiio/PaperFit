@@ -82,16 +82,17 @@ def append_checks(report,pkg,manifest,rules,*,generic_only=False):
     if f['fixable']:f['dependency_note']='只更改'+prop+'间距属性，清理/中和相同行单位、磅值、自动间距冲突；保留行距/另一侧间距/缩进/分页'
    elif prop=='alignment':read(rid,location,typ,prop,lambda:alignment(res,pl),wanted)
    elif prop=='line_spacing':
-    def line():
-     attrs=res.attrs(pl,'spacing');raw=attrs.get('line');mode=attrs.get('lineRule','auto')
-     if raw is None:raise Unresolved('行距未设置，不按单倍补值')
-     x=int(raw)
-     if x<=0 or mode not in ('auto','exact','atLeast'):raise Unresolved('行距值或单位无法解析')
-     return {'multiple':x/240 if mode=='auto' else None,'line_rule':mode,'pt':x/20 if mode!='auto' else None}
-    f=read(rid,location,typ,prop,line,{'multiple':wanted},lambda a,b:a['multiple']==b['multiple'])
+    from .paragraph_values import read_line,line_equal
+    f=read(rid,location,typ,prop,lambda:read_line(res,pl),{'multiple':wanted} if not isinstance(wanted,dict) else wanted,line_equal)
     if any(s.find(q('docGrid')) is not None and s.find(q('docGrid')).get(q('type')) in ('lines','linesAndChars','snapToChars') for s in pkg.sections) and res.value(pl,'snapToGrid','1') not in ('0','false','off'):
      f.update(status='review',fixable=False,detail='存在文档网格且未关闭吸附，不能保证倍数行距')
    else:
+    if isinstance(wanted,dict):
+     from .paragraph_values import read_indent,indent_equal
+     def explicit_indent():
+      if any(s.find(q('docGrid')) is not None and s.find(q('docGrid')).get(q('type')) in ('lines','linesAndChars','snapToChars') for s in pkg.sections) and res.value(pl,'snapToGrid','1') not in ('0','false','off'):raise Unresolved('文档网格影响，明确缩进仍待复核')
+      return read_indent(res,pl,wanted)
+     read(rid,location,typ,prop,explicit_indent,wanted,indent_equal);continue
     def indent():
      a=res.attrs(pl,'ind')
      if any(k in a for k in ('hanging','hangingChars')):raise Unresolved('首行/悬挂缩进冲突')
@@ -222,17 +223,9 @@ def apply(pkg,f):
     slot=prop[5:];e=_ensure(rp,'rFonts');e.set(q(slot),wanted);e.attrib.pop(q(slot+'Theme'),None)
    elif prop=='size':_ensure(rp,'sz').set(q('val'),str(round(wanted*2)))
    elif prop=='bold':_ensure(rp,'b').set(q('val'),'1' if wanted else '0')
- elif prop in ('before','after'):
-  e=_ensure(_ensure(p,'pPr'),'spacing');e.attrib.pop(q(prop+'Lines'),None);e.attrib.pop(q(prop),None);e.set(q(prop+'Autospacing'),'0')
-  if wanted['unit']=='lines':e.set(q(prop+'Lines'),str(round(wanted['value']*100)));e.set(q(prop),'0')
-  else:e.set(q(prop),str(round(wanted['value']*20)))
- elif prop=='alignment':_ensure(_ensure(p,'pPr'),'jc').set(q('val'),wanted)
- elif prop=='line_spacing':
-  e=_ensure(_ensure(p,'pPr'),'spacing');e.set(q('line'),str(round(wanted['multiple']*240)));e.set(q('lineRule'),'auto')
- elif prop=='first_line_indent':
-  e=_ensure(_ensure(p,'pPr'),'ind')
-  for k in ('firstLine','hanging','hangingChars'):e.attrib.pop(q(k),None)
-  e.set(q('firstLineChars'),str(round(wanted['chars']*100)))
+ elif prop in ('before','after','alignment','line_spacing','first_line_indent'):
+  from .paragraph_values import apply as patch
+  patch(p,prop,wanted)
  else:raise DemoError('未知章节修正属性')
 
 def canonical_keyword(p):

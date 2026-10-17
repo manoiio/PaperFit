@@ -155,7 +155,7 @@ class WorkbenchSession(DiagnosticSession):
    if m=='main' and prior and vals==rb.flat(m,prior) and ss==d['baseline']['provenance'][m]:mods[m]=deepcopy(prior);continue
    if m=='main':mods[m]=rb.make_main(d['name'],vals,ss,segments,extraction,base)
    elif m=='notes':
-    c=rb.notes.school();c['name']=d['name'];c['values']={k:{p:vals[k+'__'+p] for p in rb.notes.FIELDS} for k in rb.notes.KINDS};c['sources']={k:{p:('not_enabled' if vals[k+'__'+p] is None else 'school_default' if ss[k+'__'+p]['kind']=='school_default' else 'user_confirmed') for p in rb.notes.FIELDS} for k in rb.notes.KINDS};mods[m]=rb.notes.template(c)
+    c=rb.notes.promote(rb.notes.school());c['name']=d['name'];c['values']={k:{p:vals[k+'__'+p] for p in rb.notes.ALL_FIELDS} for k in rb.notes.KINDS};c['sources']={k:{p:('not_enabled' if vals[k+'__'+p] is None else 'school_default' if ss[k+'__'+p]['kind']=='school_default' else 'user_confirmed') for p in rb.notes.ALL_FIELDS} for k in rb.notes.KINDS};mods[m]=rb.notes.template(c)
    else:
     c=rb.front.school() if m=='front' else rb.toc.school();c.update(name=d['name'],values=vals,sources=ss);mods[m]=c
   notices=deepcopy(d['baseline'].get('notices',{m:[] for m in rb.MODULES}))
@@ -206,7 +206,7 @@ class WorkbenchSession(DiagnosticSession):
    if obj.get('format')=='paper-grid-front-supplement':m='front';obj=rb.front.loads(content)
    elif obj.get('format')=='paper-grid-toc-supplement':m='toc';obj=rb.toc.loads(content)
    elif obj.get('kind')=='paper-grid-note-supplement':m='notes';obj=rb.notes.template(obj)
-   elif obj.get('structure_version') in (2,3,4,5,6):
+   elif obj.get('structure_version') in (2,3,4,5,6,7):
     m='main';obj={'template':rb.back.upgrade(validate_template(obj,base),base),'disabled_fields':[]}
    else:raise DemoError('不是受支持的规则包、旧模板或独立补充JSON')
    if m=='main':

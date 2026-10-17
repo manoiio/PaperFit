@@ -222,14 +222,22 @@ def _check(pkg, body, rules, classification=None):
         # snapToGrid can make the actual 1.5 line layout uncertain. The XML value alone is not enough.
         grid = any(s.find(q('docGrid')) is not None and s.find(q('docGrid')).get(q('type')) in
                    ('lines', 'linesAndChars', 'snapToChars') for s in pkg.sections)
-        pending = (proof.get('structurally_safe') and (proof.get('grid_active') or spacing.get('line') is not None and line is None)) or paragraph_special or mode not in ('auto', 'exact', 'atLeast') or (line is not None and line <= 0) or (
+        pending = (isinstance(rules['rules']['R06']['expected'],dict) and numbered) or any(len(x.findall(q('spacing')))>1 for x in pl) or (proof.get('structurally_safe') and (proof.get('grid_active') or spacing.get('line') is not None and line is None)) or paragraph_special or mode not in ('auto', 'exact', 'atLeast') or (line is not None and line <= 0) or (
             grid and res.value(pl, 'snapToGrid', '1') not in ('0', 'false', 'off'))
         if pending:
             add('R06', loc, actual, 'review', False, '混有特殊run或文档网格，段落行距不自动修正')
         else:
             # absent line means single spacing when no inheritance provides it.
             actual['multiple'] = 1 if line is None else actual['multiple']
-            add('R06', loc, actual, 'pass' if mode == 'auto' and actual['multiple'] == rules['rules']['R06']['expected'] else 'problem')
+            add('R06', loc, actual, 'pass' if __import__('core.paragraph_values',fromlist=['line_equal']).line_equal(actual,rules['rules']['R06']['expected']) else 'problem')
+        if isinstance(rules['rules']['R07']['expected'],dict):
+            from .paragraph_values import read_indent,indent_equal
+            try:
+                if paragraph_special or numbered or grid and res.value(pl,'snapToGrid','1') not in ('0','false','off'):raise Unresolved('特殊文字、编号或文档网格影响，缩进待复核')
+                actual=read_indent(res,pl,rules['rules']['R07']['expected'])
+                add('R07',loc,actual,'pass' if indent_equal(actual,rules['rules']['R07']['expected']) else 'problem')
+            except Unresolved as exc:add('R07',loc,{'unresolved':str(exc)},'review',False,str(exc))
+            continue
         ind = res.attrs(pl, 'ind')
         basis=[r for r in ordinary if r[0] in proof.get('ordinary_basis_runs',[])] if proof.get('structurally_safe') else ordinary
         sizes = {res.size(layers) for _, _, layers in basis}
@@ -324,6 +332,8 @@ def _check(pkg, body, rules, classification=None):
     if classification is not None and rules.get('mode')=='academic':
         from .internal_refs import append_checks as reference_checks
         reference_checks(report,pkg,classification)
+    from .paragraph_conflicts import isolate
+    isolate(report)
     from .dependencies import annotate_dependencies
     annotate_dependencies(report)
     if report.get('citations'):
@@ -443,10 +453,12 @@ def _apply(pkg, f):
         else:
             pp = _ensure(p, 'pPr')
             if rid == 'R06':
-                spacing = _ensure(pp, 'spacing')
-                spacing.set(q('line'), str(round(f['expected'] * 240)))
-                spacing.set(q('lineRule'), 'auto')
+                from .paragraph_values import apply
+                apply(p,'line_spacing',f['expected'])
             else:
+                if isinstance(f['expected'],dict):
+                    from .paragraph_values import apply
+                    apply(p,'first_line_indent',f['expected']);return
                 ind = _ensure(pp, 'ind')
                 ind.set(q('firstLineChars'), str(round(f['expected'] * 100)))
                 # A zero hanging attribute can still override firstLine; never introduce it.

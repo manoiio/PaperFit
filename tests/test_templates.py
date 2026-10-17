@@ -124,7 +124,7 @@ class TemplateAcceptance(unittest.TestCase):
 
     def test_unknown_fields_invalid_types_values_and_forged_evidence(self):
         s=self.norm();d=synthetic_draft(s)
-        for name,values in {'margin_top':[True,'30',9,51,float('inf')],'font_size':[True,13.3,7.5,float('nan'),10**1000],'line_spacing':[1.1,3,False],'first_line_indent':[-1,3,'1',True],'paper':['A3','A4 landscape'],'font_cn':['微软雅黑'],'font_western':['Cambria']}.items():
+        for name,values in {'margin_top':[True,'30',9,51,float('inf')],'font_size':[True,13.3,7.5,float('nan'),10**1000],'line_spacing':[1.13,5.05,False],'first_line_indent':[-1,3,'1',True],'paper':['A3','A4 landscape'],'font_cn':['微软雅黑'],'font_western':['Cambria']}.items():
             for value in values:
                 bad=deepcopy(d);bad[name]['value']=value
                 with self.subTest(name=name,value=value),self.assertRaises(DemoError):validate_draft(bad,s)

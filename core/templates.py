@@ -29,6 +29,9 @@ ALIGNMENTS = {'left':'居左','center':'居中','right':'居右','both':'两端�
 
 
 def field_map(data):
+    if data.get('structure_version')==7:
+        from .paragraph_templates import FIELDS as paragraph_fields
+        return paragraph_fields
     if data.get('structure_version')==6 or any(n.startswith(('appendix_','ack_')) for n in data):
         from .back_templates import V6_FIELDS
         return V6_FIELDS
@@ -59,6 +62,10 @@ def safe_text(value, limit=200, allow_empty=False):
 
 
 def validate_value(name, value):
+    from .paragraph_values import line,indent
+    if name in ALL_FIELDS and name.endswith('line_spacing'):line(value);return deepcopy(value)
+    if name=='first_line_indent':indent(value);return deepcopy(value)
+    if name in ('figure_caption__line_spacing','table_caption__line_spacing'):line(value);return deepcopy(value)
     from .backmatter import FIELDS as back_fields
     if name in back_fields:
         from .back_templates import value as back_value
@@ -145,7 +152,7 @@ def _values(segment, name):
         return result
     if name in ('font_cn','font_western'): return font_candidates(segment,name)
     if name=='font_size':
-        text=re.split(r'段前|段后|行距|缩进',segment)[0]
+        text=re.split(r'段前|段后|行距|缩进|固定|最小|至少',segment)[0]
         values={FONT_NAMES[m.group(1)] for m in re.finditer(r'(小四|小五|小三|小二)(?:号)?|([四五三二])号',text) if m.group(1)}
         values|={FONT_NAMES[m.group(2)] for m in re.finditer(r'(小四|小五|小三|小二)(?:号)?|([四五三二])号',text) if m.group(2)}
         return values | {float(m.group(1)) for m in re.finditer(r'(\d+(?:\.\d+)?)\s*(?:pt|磅)',text,re.I)}
@@ -238,6 +245,10 @@ def _validate_body_draft(draft, segments):
                 slots=re.findall(r'中文|汉字|西文|英文|英语|数字|Latin',prefix,re.I)
                 if slots and (slots[-1] in ('中文','汉字')) != (name=='font_cn'):raise DemoError('中文/西文字体范围不一致，不能套到另一字体槽位')
                 if name=='font_western' and not slots:raise DemoError('西文字体缺少明确西文范围，请人工确认')
+        if name in ('line_spacing','first_line_indent'):
+            from .paragraph_values import prove
+            from .norms import evidence_segments
+            prove(name,value,f['quote'],[p for s in evidence_segments(segments,f['location']) for p in _body_segments(s['text'])]);continue
         if _values(f['quote'],name)!={value}: raise DemoError('提取值与原文依据不一致或无法证明，请手动确认')
         candidates=set()
         from .norms import evidence_segments
@@ -276,6 +287,9 @@ def make_template(name, values, sources, segments, base, *, norm_sha256=None, im
 
 
 def validate_template(data, base):
+    if isinstance(data,dict) and data.get('structure_version')==7:
+        from .paragraph_templates import validate
+        return validate(data,base)
     if isinstance(data,dict) and data.get('structure_version')==6:
         from .back_templates import validate
         return validate(data,base)
@@ -335,6 +349,9 @@ def validate_template(data, base):
 
 
 def compile_template(data, base):
+    if isinstance(data,dict) and data.get('structure_version')==7:
+        from .paragraph_templates import compile
+        return compile(data,base)
     if isinstance(data,dict) and data.get('structure_version')==6:
         from .back_templates import compile
         return compile(data,base)
@@ -429,6 +446,10 @@ def validate_draft(draft, segments):
         # All occurrences need unambiguous object scope, not merely matching the end of a broad quote.
         if not any(quote in part for part in parts):raise DemoError('不是明确该级标题或该类题注的要求；不能根据数字或泛称标题猜测')
         if prop=='font_cn' and re.search(r'西文|英文|数字|Latin',quote,re.I):raise DemoError('中文字体字段不能接收西文/数字字体要求')
+        if prop=='line_spacing':
+            from .paragraph_values import prove
+            from .norms import evidence_segments
+            prove(prop,value,quote,[p for s in evidence_segments(segments,f['location']) for p in object_parts(s['text'],obj)]);continue
         if object_values(quote,name)!={value}:raise DemoError('提取值与标题/题注原文不一致、含糊或不支持')
         candidates=set()
         from .norms import evidence_segments

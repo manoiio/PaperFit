@@ -5,7 +5,7 @@ from core.package import Package
 from .dynamic_session import context,preview,adopt,valid,cancel
 from .session import public_error
 
-def render_dynamic(model):
+def render_dynamic(model,*,on_adopt=None):
     with st.expander('可选：动态编号与引用同步（默认关闭）',key='dynamic-panel-'+model.task_dir.name,on_change='rerun'):
         enabled=st.checkbox('启用本次动态处理',key='dynamic-enable-'+model.task_dir.name)
         st.caption('与普通一键格式处理分开授权。只改明确章节的普通题注数字及唯一正文纯文本引用，不移动对象、不更新域或真实页码。')
@@ -35,7 +35,9 @@ def render_dynamic(model):
                 st.dataframe(result['changes'],hide_index=True,width='stretch',height=180)
                 st.warning('域缓存未刷新、实际页码未核对。未知差异会阻止采用；本操作不补续表、重建目录或证明全文合格。')
                 if st.button('确认采用动态副本',key='dynamic-adopt-button',type='primary',width='stretch'):
-                    adopt(model,state);st.rerun()
+                    adopt(model,state)
+                    if on_adopt is not None:on_adopt()
+                    st.rerun()
                 if st.button('取消动态预演',key='dynamic-cancel-button'):cancel(model,state);st.rerun()
             elif state.get('adopted'):
                 if state['adopted_binding']==b:st.success('动态副本已采用为第'+str(state['adopted'])+'轮；处理前副本和当前输入保留。')

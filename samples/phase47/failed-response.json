@@ -1,0 +1,20 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "message": {
+        "content": "{\"version\":\"supplement-ids-v2\",\"items\":[{\"field\":\"F02\",\"value\":\"center\",\"source\":\"S3\"},{\"field\":\"F03\",\"value\":{\"value\":6,\"unit\":\"pt\"},\"source\":\"S3\"},{\"field\":\"F04\",\"value\":2,\"source\":\"S1\"},{\"field\":\"F05\",\"value\":12,\"source\":\"S1\"},{\"field\":\"F07\",\"value\":{\"value\":6,\"unit\":\"pt\"},\"source\":\"S2\"},{\"field\":\"F08\",\"value\":{\"value\":12,\"unit\":\"pt\"},\"source\":\"S2\"},{\"field\":\"F11\",\"value\":{\"kind\":\"hanging\",\"value\":2,\"unit\":\"chars\"},\"source\":\"S5\"},{\"field\":\"F12\",\"value\":1.5,\"source\":\"S4\"}],\"issues\":[{\"source\":\"S1\",\"reason\":\"正文行距为固定20磅，非倍数，无法确定F10\"},{\"source\":\"S2\",\"reason\":\"一级标题行距为固定24磅，非倍数，无法确定F09\"},{\"source\":\"S5\",\"reason\":\"参考文献行距为最小20磅，非倍数，无法确定F12\"},{\"source\":\"S6\",\"reason\":\"脚注行距为固定12磅，非倍数，无法确定F06\"}]}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1084,
+    "completion_tokens": 270,
+    "total_tokens": 1354,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 1084
+  }
+}

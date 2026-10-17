@@ -1,0 +1,115 @@
+{
+  "kind": "public synthetic phase47 delivery; no private debug directory",
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 2250,
+      "sha256": "cb7c957e4501ef626c81ae6cb1f949347a2dfa2d632efd42e7c5edf9079e1c26"
+    },
+    {
+      "file": "accepted-request.json",
+      "bytes": 9446,
+      "sha256": "67c0dcce567dcfc291d7a43f674c6fb7df889af90d2529f8417ea741921a211a"
+    },
+    {
+      "file": "accepted-response.json",
+      "bytes": 1378,
+      "sha256": "da725885574f71e5f0690bb9ee04d373eb0be1ef432bf6e2832201698722f666"
+    },
+    {
+      "file": "api-records.json",
+      "bytes": 3875,
+      "sha256": "48c17ad920b2698a9ed3347fa2a8c8f60647323fcd0871504c9eb3daa24e0aa1"
+    },
+    {
+      "file": "dynamic-independent.json",
+      "bytes": 421,
+      "sha256": "12dab546f54a0a225a5939b528ece5b8fb887b614804afa4ef1f4cf655af39f9"
+    },
+    {
+      "file": "errors.docx",
+      "bytes": 39641,
+      "sha256": "90a2ef6b0b5d018cb2082d1e54a69e9e2c49b4ad9624dd41f46ff2b1d63dd283"
+    },
+    {
+      "file": "expected.json",
+      "bytes": 1229,
+      "sha256": "a05ebff95d8c9d2ff10d1d32d951587b96da85111f8ca319a4966a7ec2040f82"
+    },
+    {
+      "file": "failed-request.json",
+      "bytes": 6265,
+      "sha256": "9b2fd43b47cb2459cc90e32a089b871123f868ae2dc23b6205c088cc43590e51"
+    },
+    {
+      "file": "failed-response.json",
+      "bytes": 1338,
+      "sha256": "5ba568393ad75f3089dc1235bb9412e08bebae9220ee6453ff1a36d2c87153d7"
+    },
+    {
+      "file": "fixed.docx",
+      "bytes": 39786,
+      "sha256": "295d78a10f17dfcace86a1782ddfb4d780623d04a771007e91e15ce6debaf8c0"
+    },
+    {
+      "file": "independent.json",
+      "bytes": 667,
+      "sha256": "a955972576a486ab247812e511b8b07b5e1c6ec481b5bc8ecd477e2d6d42ad24"
+    },
+    {
+      "file": "performance.json",
+      "bytes": 673,
+      "sha256": "132d4080ebe163eadb56d5d3106a129b764d10e6c6a3e968745bd7ef2e062209"
+    },
+    {
+      "file": "previews/final-1.png",
+      "bytes": 202743,
+      "sha256": "9520efbe9c53c96b01991af9b3b66804f8cd7117d5cca88a65eb2a30990c18dc"
+    },
+    {
+      "file": "previews/original-1.png",
+      "bytes": 205854,
+      "sha256": "98d36aa4118870e839086d1ddb3448fdcf4434a93901143962d53b8d18418211"
+    },
+    {
+      "file": "requirements.txt",
+      "bytes": 263,
+      "sha256": "af7a0f80675f6fb8b2a19e0f2dfb753544f3f6a765520d334d573fa1ebc9dfd0"
+    },
+    {
+      "file": "result.zip",
+      "bytes": 166957,
+      "sha256": "7fa8e8cfb06b0981f170d2b3681181634c1fafce1d457dada69052d8cb39817a"
+    },
+    {
+      "file": "roles.json",
+      "bytes": 304,
+      "sha256": "012b55da2f75fa21a57520043e8a48e93df940906f8bf040b6f2ea4abeaa4560"
+    },
+    {
+      "file": "rules.json",
+      "bytes": 67092,
+      "sha256": "e61963a209bb31e5b4876c3123ce48a941f1642a6c32e08738707cfa5159ea1b"
+    },
+    {
+      "file": "screenshots/dynamic-adopted.png",
+      "bytes": 126282,
+      "sha256": "f4d8052c6b3f8846131a701e3960986f03f653ada7c5b8d02116d1c304285f1e"
+    },
+    {
+      "file": "screenshots/local-controls.png",
+      "bytes": 104105,
+      "sha256": "4d75d328bf66232ba942b75c2c06f000c38d505344e18552d1f93a0b24dd7cf7"
+    },
+    {
+      "file": "screenshots/local-form.png",
+      "bytes": 98193,
+      "sha256": "9e5babd8524677c9591335c690ca895dd6fc929a0d8a3ca07b1896de0596e56b"
+    },
+    {
+      "file": "screenshots/smart-complete.png",
+      "bytes": 146626,
+      "sha256": "a3b5c4d6ebfe34ffe089eb1502747604596f1087b82baa6fc37d0992fff035a5"
+    }
+  ]
+}

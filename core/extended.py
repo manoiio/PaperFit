@@ -253,9 +253,9 @@ def append_checks(report,pkg,manifest,rules):
         except (TypeError,ValueError):line=None;mode='invalid';multiple=None
         grid=any(s.find(q('docGrid')) is not None and s.find(q('docGrid')).get(q('type')) in ('lines','linesAndChars','snapToChars') for s in pkg.sections)
         if line is not None and not math.isfinite(line):line=None;multiple=None
-        pending=special or (numbered and (numbering['status']!='resolved' or numbering.get('paragraph_conflict'))) or mode not in ('auto','exact','atLeast') or line is None or line<=0 or (grid and res.value(pl,'snapToGrid','1') not in ('0','false','off'))
+        pending=special or (numbered and isinstance(expected['line_multiple'],dict)) or (numbered and (numbering['status']!='resolved' or numbering.get('paragraph_conflict'))) or mode not in ('auto','exact','atLeast') or line is None or line<=0 or (grid and res.value(pl,'snapToGrid','1') not in ('0','false','off'))
         add(rid,{'paragraph':n,'property':'line'}, {'line_rule':mode,'multiple':multiple,'pt':line/20 if line is not None and mode in ('exact','atLeast') else None}, {'multiple':expected['line_multiple']},
-            'review' if pending else 'pass' if multiple==expected['line_multiple'] else 'problem',('编号段落行距：'+numbering.get('paragraph_conflict',numbering.get('reason',''))+'；文字字体字号仍独立检查') if numbered_paragraph_pending else '特殊run/文档网格或异常行距，禁止自动修改' if pending else '')
+            'review' if pending else 'pass' if __import__('core.paragraph_values',fromlist=['line_equal']).line_equal({'line_rule':mode,'multiple':multiple,'pt':line/20 if mode!='auto' else None},expected['line_multiple']) else 'problem',('编号段落行距：'+numbering.get('paragraph_conflict',numbering.get('reason',''))+'；文字字体字号仍独立检查') if numbered_paragraph_pending else '特殊run/文档网格或异常行距，禁止自动修改' if pending else '')
         findings[-1]['paragraph_evidence']={'inheritance_path':[res._layer_origin(x) for x in pl],'numbering':public_numbering(numbering) if numbered else None}
         sid=p.find('w:pPr/w:pStyle',NS);sid=sid.get(q('val')) if sid is not None else None
         raw=res.value(pl,'outlineLvl')
@@ -306,7 +306,8 @@ def apply_extended(pkg,f):
     elif loc['property']=='size':_ensure(_ensure(p.findall(q('r'))[loc['run']-1],'rPr'),'sz').set(q('val'),str(round(expected['pt']*2)))
     elif loc['property']=='alignment':_ensure(_ensure(p,'pPr'),'jc').set(q('val'),expected['alignment'])
     elif loc['property']=='line':
-        e=_ensure(_ensure(p,'pPr'),'spacing');e.set(q('line'),str(round(240*expected['multiple'])));e.set(q('lineRule'),'auto')
+        from .paragraph_values import apply
+        apply(p,'line_spacing',expected['multiple'])
 
 def mask_extended(p,f):
     loc=f['locator'];targets=[]

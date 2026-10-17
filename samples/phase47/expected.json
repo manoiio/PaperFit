@@ -1,0 +1,66 @@
+{
+  "kind": "hand-authored-before-live-request",
+  "fields": {
+    "font_size": 12,
+    "line_spacing": {
+      "mode": "exact",
+      "value": 20
+    },
+    "first_line_indent": {
+      "kind": "first",
+      "unit": "cm",
+      "value": 0.74
+    },
+    "heading1_line_spacing": {
+      "mode": "exact",
+      "value": 24
+    },
+    "heading1__before": {
+      "value": 12,
+      "unit": "pt"
+    },
+    "heading1__after": {
+      "value": 6,
+      "unit": "pt"
+    },
+    "figure_caption__alignment": "center",
+    "figure_caption__before": {
+      "value": 6,
+      "unit": "pt"
+    },
+    "abstract_cn_body__line_spacing": 1.5,
+    "reference_item__line_spacing": {
+      "mode": "minimum",
+      "value": 20
+    },
+    "reference_item__first_line_indent": {
+      "kind": "hanging",
+      "unit": "chars",
+      "value": 2
+    },
+    "footnote__line_multiple": {
+      "mode": "exact",
+      "value": 12
+    }
+  },
+  "xml": {
+    "body_line": [
+      "exact",
+      "400"
+    ],
+    "body_firstLine": "420",
+    "heading1_line": [
+      "exact",
+      "480"
+    ],
+    "reference_line": [
+      "atLeast",
+      "400"
+    ],
+    "reference_hangingChars": "200",
+    "footnote_line": [
+      "exact",
+      "240"
+    ]
+  }
+}

@@ -1,0 +1,2249 @@
+{
+  "confirmation": "用户核对后应用；规则不确认论文对象",
+  "excerpt": [
+    {
+      "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+      "text": "正文小四，固定20磅行距，首行缩进0.74厘米；一级标题固定24磅行距，段前12磅、段后6磅；图题居中，段前6磅；中文摘要正文1.5倍行距；参考文献最小20磅行距，悬挂缩进两字符；脚注固定12磅行距。"
+    }
+  ],
+  "excerpt_sha256": "f341eb3ddd357399fb17a8f911ad0eccc7649c2f9289d702b85f2958ff59bf3d",
+  "extraction": {
+    "kind": "real_api",
+    "model": "deepseek-flash",
+    "timestamp_utc": "2026-10-17T09:46:24.636081+00:00"
+  },
+  "format": "paper-grid-rule-bundle",
+  "modules": {
+    "front": null,
+    "main": {
+      "disabled_fields": [],
+      "template": {
+        "academic_base_sha256": "2db221cbc6b1a9e31d1cc133f1f545e0943ea796c959c71f23f9bc81e9623539",
+        "academic_compatibility": {
+          "from_version": 3,
+          "new_fields": "explicit_confirmed_or_disabled"
+        },
+        "backmatter_base_sha256": "73a31b9d434d3a2cce82aba538b3e8cc7f86ea00b6791a08ba7c21f127902864",
+        "backmatter_compatibility": {
+          "from_version": 5,
+          "new_fields": "explicit_confirmed_or_disabled"
+        },
+        "base_sha256": "1ef3ec0d674ddc3a1e5e5c84510dd7851f9011edf98c7efe92a46161d078ca10",
+        "compatibility": null,
+        "confirmation": {
+          "imported": false,
+          "method": "local_user",
+          "timestamp_utc": "2026-10-17T09:46:26.106795+00:00"
+        },
+        "extension_base_sha256": "1dccdfa3c93b951dad721a980e55d3d821354df9ceef5fe48d1482fbe938c96c",
+        "extraction": {
+          "kind": "real_api",
+          "model": "deepseek-flash",
+          "timestamp_utc": "2026-10-17T09:46:24.636081+00:00"
+        },
+        "field_sources": {
+          "abstract_cn_body__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_body__alignment": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_body__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_body__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_body__first_line_indent": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_body__font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_body__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_body__font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_body__line_spacing": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "中文摘要正文1.5倍"
+          },
+          "abstract_cn_title__after": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_title__alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_title__before": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_title__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_title__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_title__font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_title__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_title__font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_cn_title__line_spacing": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__font_cn": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__font_western": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_body__line_spacing": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__after": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__before": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__font_cn": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__font_western": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "abstract_en_title__line_spacing": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__alignment": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__font_cn": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__font_size": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_text__line_spacing": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__alignment": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__font_cn": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__font_size": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "ack_title__line_spacing": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__alignment": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_text__line_spacing": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "appendix_title__line_spacing": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "body__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "body__alignment": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "body__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "body__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "content_checks": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "figure_caption__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "figure_caption__alignment": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "图题居中"
+          },
+          "figure_caption__before": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "图题居中，段前6磅"
+          },
+          "figure_caption__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "figure_caption_font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "figure_caption_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "first_line_indent": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "正文小四，固定20磅行距，首行缩进0.74厘米"
+          },
+          "font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "font_size": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "正文小四"
+          },
+          "font_western": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading1__after": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "一级标题固定24磅行距，段前12磅、段后6磅"
+          },
+          "heading1__before": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "一级标题固定24磅行距，段前12磅"
+          },
+          "heading1__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "heading1_alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading1_font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading1_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading1_line_spacing": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "一级标题固定24磅"
+          },
+          "heading2__after": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading2__before": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading2__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "heading2_alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading2_font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading2_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading2_line_spacing": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading3__after": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading3__before": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading3__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "heading3_alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading3_font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading3_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "heading3_line_spacing": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__content_bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__content_font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__content_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__content_font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__label_bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__label_font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__label_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__label_font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_cn__line_spacing": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__content_bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__content_font_cn": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__content_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__content_font_western": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__label_bold": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__label_font_cn": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__label_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__label_font_western": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "keywords_en__line_spacing": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "line_spacing": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "正文小四，固定20磅"
+          },
+          "margin_bottom": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "margin_left": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "margin_right": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "margin_top": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "paper": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "reference_item__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "reference_item__alignment": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "reference_item__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "reference_item__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "reference_item__first_line_indent": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "参考文献最小20磅行距，悬挂缩进两字"
+          },
+          "reference_item__font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "reference_item__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "reference_item__font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "reference_item__line_spacing": {
+            "kind": "ai_extracted",
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "quote": "参考文献最小20磅"
+          },
+          "reference_title__after": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "reference_title__alignment": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "reference_title__before": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "reference_title__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "reference_title__first_line_indent": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "reference_title__font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "reference_title__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "reference_title__font_western": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "reference_title__line_spacing": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "table_caption__after": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "table_caption__alignment": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "table_caption__before": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "table_caption__bold": {
+            "kind": "not_enabled",
+            "location": null,
+            "quote": ""
+          },
+          "table_caption_font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "table_caption_font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "table_content__font_cn": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          },
+          "table_content__font_size": {
+            "kind": "default_inherited",
+            "location": null,
+            "quote": ""
+          }
+        },
+        "final_values": {
+          "abstract_cn_body__after": null,
+          "abstract_cn_body__alignment": null,
+          "abstract_cn_body__before": null,
+          "abstract_cn_body__bold": null,
+          "abstract_cn_body__first_line_indent": 2,
+          "abstract_cn_body__font_cn": "宋体",
+          "abstract_cn_body__font_size": 12,
+          "abstract_cn_body__font_western": null,
+          "abstract_cn_body__line_spacing": {
+            "mode": "multiple",
+            "value": 1.5
+          },
+          "abstract_cn_title__after": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "abstract_cn_title__alignment": "center",
+          "abstract_cn_title__before": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "abstract_cn_title__bold": null,
+          "abstract_cn_title__first_line_indent": null,
+          "abstract_cn_title__font_cn": "黑体",
+          "abstract_cn_title__font_size": 18,
+          "abstract_cn_title__font_western": null,
+          "abstract_cn_title__line_spacing": 1,
+          "abstract_en_body__after": null,
+          "abstract_en_body__alignment": "both",
+          "abstract_en_body__before": null,
+          "abstract_en_body__bold": null,
+          "abstract_en_body__first_line_indent": null,
+          "abstract_en_body__font_cn": null,
+          "abstract_en_body__font_size": 12,
+          "abstract_en_body__font_western": "Times New Roman",
+          "abstract_en_body__line_spacing": 1.5,
+          "abstract_en_title__after": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "abstract_en_title__alignment": "center",
+          "abstract_en_title__before": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "abstract_en_title__bold": null,
+          "abstract_en_title__first_line_indent": null,
+          "abstract_en_title__font_cn": null,
+          "abstract_en_title__font_size": 18,
+          "abstract_en_title__font_western": "Times New Roman",
+          "abstract_en_title__line_spacing": 1,
+          "ack_text__after": null,
+          "ack_text__alignment": null,
+          "ack_text__before": null,
+          "ack_text__bold": null,
+          "ack_text__first_line_indent": null,
+          "ack_text__font_cn": null,
+          "ack_text__font_size": null,
+          "ack_text__font_western": null,
+          "ack_text__line_spacing": null,
+          "ack_title__after": null,
+          "ack_title__alignment": null,
+          "ack_title__before": null,
+          "ack_title__bold": null,
+          "ack_title__first_line_indent": null,
+          "ack_title__font_cn": null,
+          "ack_title__font_size": null,
+          "ack_title__font_western": null,
+          "ack_title__line_spacing": null,
+          "appendix_text__after": null,
+          "appendix_text__alignment": null,
+          "appendix_text__before": null,
+          "appendix_text__bold": null,
+          "appendix_text__first_line_indent": null,
+          "appendix_text__font_cn": "宋体",
+          "appendix_text__font_size": 12,
+          "appendix_text__font_western": null,
+          "appendix_text__line_spacing": null,
+          "appendix_title__after": null,
+          "appendix_title__alignment": "center",
+          "appendix_title__before": null,
+          "appendix_title__bold": null,
+          "appendix_title__first_line_indent": null,
+          "appendix_title__font_cn": "黑体",
+          "appendix_title__font_size": 18,
+          "appendix_title__font_western": null,
+          "appendix_title__line_spacing": 1,
+          "body__after": null,
+          "body__alignment": null,
+          "body__before": null,
+          "body__bold": null,
+          "content_checks": true,
+          "figure_caption__after": null,
+          "figure_caption__alignment": "center",
+          "figure_caption__before": {
+            "unit": "pt",
+            "value": 6
+          },
+          "figure_caption__bold": null,
+          "figure_caption_font_cn": "宋体",
+          "figure_caption_font_size": 10.5,
+          "first_line_indent": {
+            "kind": "first",
+            "unit": "cm",
+            "value": 0.74
+          },
+          "font_cn": "宋体",
+          "font_size": 12,
+          "font_western": "Times New Roman",
+          "heading1__after": {
+            "unit": "pt",
+            "value": 6
+          },
+          "heading1__before": {
+            "unit": "pt",
+            "value": 12
+          },
+          "heading1__bold": null,
+          "heading1_alignment": "center",
+          "heading1_font_cn": "黑体",
+          "heading1_font_size": 18,
+          "heading1_line_spacing": {
+            "mode": "exact",
+            "value": 24
+          },
+          "heading2__after": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "heading2__before": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "heading2__bold": null,
+          "heading2_alignment": "left",
+          "heading2_font_cn": "黑体",
+          "heading2_font_size": 15,
+          "heading2_line_spacing": 1,
+          "heading3__after": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "heading3__before": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "heading3__bold": null,
+          "heading3_alignment": "left",
+          "heading3_font_cn": "黑体",
+          "heading3_font_size": 14,
+          "heading3_line_spacing": 1,
+          "keywords_cn__after": null,
+          "keywords_cn__alignment": "left",
+          "keywords_cn__before": null,
+          "keywords_cn__content_bold": null,
+          "keywords_cn__content_font_cn": "宋体",
+          "keywords_cn__content_font_size": 12,
+          "keywords_cn__content_font_western": null,
+          "keywords_cn__first_line_indent": null,
+          "keywords_cn__label_bold": null,
+          "keywords_cn__label_font_cn": "黑体",
+          "keywords_cn__label_font_size": 12,
+          "keywords_cn__label_font_western": null,
+          "keywords_cn__line_spacing": null,
+          "keywords_en__after": null,
+          "keywords_en__alignment": "left",
+          "keywords_en__before": null,
+          "keywords_en__content_bold": null,
+          "keywords_en__content_font_cn": null,
+          "keywords_en__content_font_size": 12,
+          "keywords_en__content_font_western": "Times New Roman",
+          "keywords_en__first_line_indent": null,
+          "keywords_en__label_bold": true,
+          "keywords_en__label_font_cn": null,
+          "keywords_en__label_font_size": 12,
+          "keywords_en__label_font_western": "Times New Roman",
+          "keywords_en__line_spacing": null,
+          "line_spacing": {
+            "mode": "exact",
+            "value": 20
+          },
+          "margin_bottom": 25,
+          "margin_left": 25,
+          "margin_right": 25,
+          "margin_top": 25,
+          "paper": "A4 portrait",
+          "reference_item__after": null,
+          "reference_item__alignment": null,
+          "reference_item__before": null,
+          "reference_item__bold": null,
+          "reference_item__first_line_indent": {
+            "kind": "hanging",
+            "unit": "chars",
+            "value": 2
+          },
+          "reference_item__font_cn": "宋体",
+          "reference_item__font_size": 12,
+          "reference_item__font_western": null,
+          "reference_item__line_spacing": {
+            "mode": "minimum",
+            "value": 20
+          },
+          "reference_title__after": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "reference_title__alignment": "center",
+          "reference_title__before": {
+            "unit": "lines",
+            "value": 0.5
+          },
+          "reference_title__bold": null,
+          "reference_title__first_line_indent": null,
+          "reference_title__font_cn": "黑体",
+          "reference_title__font_size": 18,
+          "reference_title__font_western": null,
+          "reference_title__line_spacing": 1,
+          "table_caption__after": null,
+          "table_caption__alignment": null,
+          "table_caption__before": null,
+          "table_caption__bold": null,
+          "table_caption_font_cn": "宋体",
+          "table_caption_font_size": 10.5,
+          "table_content__font_cn": "宋体",
+          "table_content__font_size": 10.5
+        },
+        "name": "本次补充排版要求",
+        "norm_excerpt": [
+          {
+            "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+            "text": "正文小四，固定20磅行距，首行缩进0.74厘米；一级标题固定24磅行距，段前12磅、段后6磅；图题居中，段前6磅；中文摘要正文1.5倍行距；参考文献最小20磅行距，悬挂缩进两字符；脚注固定12磅行距。"
+          }
+        ],
+        "norm_file_sha256": null,
+        "structure_version": 6,
+        "supported_fields": [
+          "paper",
+          "margin_top",
+          "margin_bottom",
+          "margin_left",
+          "margin_right",
+          "font_cn",
+          "font_western",
+          "font_size",
+          "line_spacing",
+          "first_line_indent",
+          "heading1_font_cn",
+          "heading1_font_size",
+          "heading1_alignment",
+          "heading1_line_spacing",
+          "heading2_font_cn",
+          "heading2_font_size",
+          "heading2_alignment",
+          "heading2_line_spacing",
+          "heading3_font_cn",
+          "heading3_font_size",
+          "heading3_alignment",
+          "heading3_line_spacing",
+          "figure_caption_font_cn",
+          "figure_caption_font_size",
+          "table_caption_font_cn",
+          "table_caption_font_size",
+          "body__before",
+          "body__after",
+          "body__alignment",
+          "body__bold",
+          "heading1__before",
+          "heading1__after",
+          "heading1__bold",
+          "heading2__before",
+          "heading2__after",
+          "heading2__bold",
+          "heading3__before",
+          "heading3__after",
+          "heading3__bold",
+          "figure_caption__before",
+          "figure_caption__after",
+          "figure_caption__alignment",
+          "figure_caption__bold",
+          "table_caption__before",
+          "table_caption__after",
+          "table_caption__alignment",
+          "table_caption__bold",
+          "abstract_cn_title__font_cn",
+          "abstract_cn_title__font_western",
+          "abstract_cn_title__font_size",
+          "abstract_cn_title__line_spacing",
+          "abstract_cn_title__first_line_indent",
+          "abstract_cn_title__before",
+          "abstract_cn_title__after",
+          "abstract_cn_title__alignment",
+          "abstract_cn_title__bold",
+          "abstract_cn_body__font_cn",
+          "abstract_cn_body__font_western",
+          "abstract_cn_body__font_size",
+          "abstract_cn_body__line_spacing",
+          "abstract_cn_body__first_line_indent",
+          "abstract_cn_body__before",
+          "abstract_cn_body__after",
+          "abstract_cn_body__alignment",
+          "abstract_cn_body__bold",
+          "abstract_en_title__font_cn",
+          "abstract_en_title__font_western",
+          "abstract_en_title__font_size",
+          "abstract_en_title__line_spacing",
+          "abstract_en_title__first_line_indent",
+          "abstract_en_title__before",
+          "abstract_en_title__after",
+          "abstract_en_title__alignment",
+          "abstract_en_title__bold",
+          "abstract_en_body__font_cn",
+          "abstract_en_body__font_western",
+          "abstract_en_body__font_size",
+          "abstract_en_body__line_spacing",
+          "abstract_en_body__first_line_indent",
+          "abstract_en_body__before",
+          "abstract_en_body__after",
+          "abstract_en_body__alignment",
+          "abstract_en_body__bold",
+          "keywords_cn__before",
+          "keywords_cn__after",
+          "keywords_cn__alignment",
+          "keywords_cn__line_spacing",
+          "keywords_cn__first_line_indent",
+          "keywords_cn__label_font_cn",
+          "keywords_cn__label_font_western",
+          "keywords_cn__label_font_size",
+          "keywords_cn__label_bold",
+          "keywords_cn__content_font_cn",
+          "keywords_cn__content_font_western",
+          "keywords_cn__content_font_size",
+          "keywords_cn__content_bold",
+          "keywords_en__before",
+          "keywords_en__after",
+          "keywords_en__alignment",
+          "keywords_en__line_spacing",
+          "keywords_en__first_line_indent",
+          "keywords_en__label_font_cn",
+          "keywords_en__label_font_western",
+          "keywords_en__label_font_size",
+          "keywords_en__label_bold",
+          "keywords_en__content_font_cn",
+          "keywords_en__content_font_western",
+          "keywords_en__content_font_size",
+          "keywords_en__content_bold",
+          "reference_title__font_cn",
+          "reference_title__font_western",
+          "reference_title__font_size",
+          "reference_title__line_spacing",
+          "reference_title__first_line_indent",
+          "reference_title__before",
+          "reference_title__after",
+          "reference_title__alignment",
+          "reference_title__bold",
+          "reference_item__font_cn",
+          "reference_item__font_western",
+          "reference_item__font_size",
+          "reference_item__line_spacing",
+          "reference_item__first_line_indent",
+          "reference_item__before",
+          "reference_item__after",
+          "reference_item__alignment",
+          "reference_item__bold",
+          "content_checks",
+          "table_content__font_cn",
+          "table_content__font_size",
+          "appendix_title__font_cn",
+          "appendix_title__font_western",
+          "appendix_title__font_size",
+          "appendix_title__alignment",
+          "appendix_title__line_spacing",
+          "appendix_title__before",
+          "appendix_title__after",
+          "appendix_title__first_line_indent",
+          "appendix_title__bold",
+          "appendix_text__font_cn",
+          "appendix_text__font_western",
+          "appendix_text__font_size",
+          "appendix_text__alignment",
+          "appendix_text__line_spacing",
+          "appendix_text__before",
+          "appendix_text__after",
+          "appendix_text__first_line_indent",
+          "appendix_text__bold",
+          "ack_title__font_cn",
+          "ack_title__font_western",
+          "ack_title__font_size",
+          "ack_title__alignment",
+          "ack_title__line_spacing",
+          "ack_title__before",
+          "ack_title__after",
+          "ack_title__first_line_indent",
+          "ack_title__bold",
+          "ack_text__font_cn",
+          "ack_text__font_western",
+          "ack_text__font_size",
+          "ack_text__alignment",
+          "ack_text__line_spacing",
+          "ack_text__before",
+          "ack_text__after",
+          "ack_text__first_line_indent",
+          "ack_text__bold"
+        ],
+        "table_base_sha256": "7e0824c3920007e417ad7b00b3f1bf5757a1c92429a9ed079cd3ff65d1295f6a",
+        "table_compatibility": {
+          "from_version": 4,
+          "new_fields": "explicit_confirmed_or_disabled"
+        }
+      }
+    },
+    "notes": {
+      "kind": "paper-grid-note-supplement",
+      "name": "用户确认的注释演示规则",
+      "sources": {
+        "endnote": {
+          "after": "not_enabled",
+          "alignment": "not_enabled",
+          "before": "not_enabled",
+          "font_cn": "school_default",
+          "font_size": "school_default",
+          "line_multiple": "school_default"
+        },
+        "footnote": {
+          "after": "not_enabled",
+          "alignment": "not_enabled",
+          "before": "not_enabled",
+          "font_cn": "school_default",
+          "font_size": "school_default",
+          "line_multiple": "user_confirmed"
+        }
+      },
+      "structure_version": 2,
+      "values": {
+        "endnote": {
+          "after": null,
+          "alignment": null,
+          "before": null,
+          "font_cn": "宋体",
+          "font_size": 12,
+          "line_multiple": 1.5
+        },
+        "footnote": {
+          "after": null,
+          "alignment": null,
+          "before": null,
+          "font_cn": "宋体",
+          "font_size": 12,
+          "line_multiple": {
+            "mode": "exact",
+            "value": 12
+          }
+        }
+      }
+    },
+    "toc": null
+  },
+  "name": "本次补充排版要求",
+  "notices": {
+    "front": [],
+    "main": [],
+    "notes": [],
+    "toc": []
+  },
+  "provenance": {
+    "front": null,
+    "main": {
+      "abstract_cn_body__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_body__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_body__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_body__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_body__first_line_indent": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_body__font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_body__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_body__font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_body__line_spacing": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "中文摘要正文1.5倍"
+      },
+      "abstract_cn_title__after": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_title__alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_title__before": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_title__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_title__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_title__font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_title__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_title__font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_cn_title__line_spacing": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__font_cn": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__font_western": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_body__line_spacing": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__after": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__before": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__font_cn": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__font_western": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "abstract_en_title__line_spacing": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__font_cn": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__font_size": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_text__line_spacing": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__font_cn": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__font_size": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "ack_title__line_spacing": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_text__line_spacing": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "appendix_title__line_spacing": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "body__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "body__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "body__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "body__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "content_checks": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "figure_caption__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "figure_caption__alignment": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "图题居中"
+      },
+      "figure_caption__before": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "图题居中，段前6磅"
+      },
+      "figure_caption__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "figure_caption__line_spacing": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "figure_caption_font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "figure_caption_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "first_line_indent": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "正文小四，固定20磅行距，首行缩进0.74厘米"
+      },
+      "font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "font_size": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "正文小四"
+      },
+      "font_western": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading1__after": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "一级标题固定24磅行距，段前12磅、段后6磅"
+      },
+      "heading1__before": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "一级标题固定24磅行距，段前12磅"
+      },
+      "heading1__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "heading1_alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading1_font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading1_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading1_line_spacing": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "一级标题固定24磅"
+      },
+      "heading2__after": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading2__before": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading2__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "heading2_alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading2_font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading2_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading2_line_spacing": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading3__after": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading3__before": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading3__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "heading3_alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading3_font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading3_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "heading3_line_spacing": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__content_bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__content_font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__content_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__content_font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__label_bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__label_font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__label_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__label_font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_cn__line_spacing": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__content_bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__content_font_cn": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__content_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__content_font_western": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__label_bold": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__label_font_cn": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__label_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__label_font_western": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "keywords_en__line_spacing": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "line_spacing": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "正文小四，固定20磅"
+      },
+      "margin_bottom": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "margin_left": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "margin_right": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "margin_top": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "paper": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "reference_item__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "reference_item__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "reference_item__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "reference_item__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "reference_item__first_line_indent": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "参考文献最小20磅行距，悬挂缩进两字"
+      },
+      "reference_item__font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "reference_item__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "reference_item__font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "reference_item__line_spacing": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "参考文献最小20磅"
+      },
+      "reference_title__after": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "reference_title__alignment": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "reference_title__before": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "reference_title__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "reference_title__first_line_indent": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "reference_title__font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "reference_title__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "reference_title__font_western": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "reference_title__line_spacing": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "table_caption__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "table_caption__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "table_caption__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "table_caption__bold": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "table_caption__line_spacing": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "table_caption_font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "table_caption_font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "table_content__font_cn": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "table_content__font_size": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      }
+    },
+    "notes": {
+      "endnote__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "endnote__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "endnote__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "endnote__font_cn": {
+        "kind": "school_default",
+        "location": null,
+        "quote": ""
+      },
+      "endnote__font_size": {
+        "kind": "school_default",
+        "location": null,
+        "quote": ""
+      },
+      "endnote__line_multiple": {
+        "kind": "school_default",
+        "location": null,
+        "quote": ""
+      },
+      "footnote__after": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "footnote__alignment": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "footnote__before": {
+        "kind": "not_enabled",
+        "location": null,
+        "quote": ""
+      },
+      "footnote__font_cn": {
+        "kind": "school_default",
+        "location": null,
+        "quote": ""
+      },
+      "footnote__font_size": {
+        "kind": "school_default",
+        "location": null,
+        "quote": ""
+      },
+      "footnote__line_multiple": {
+        "kind": "ai_extracted",
+        "location": "SRC:9375884a047b490b96b39777a770fef7f07fc656cab7b7d1e087c99898964aac:摘录:L1",
+        "quote": "脚注固定12磅"
+      }
+    },
+    "toc": null
+  },
+  "version": 1
+}

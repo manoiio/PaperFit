@@ -5,7 +5,7 @@ from tempfile import TemporaryDirectory
 from unittest import TestCase
 from unittest.mock import patch
 import json
-from ai.semantic_spec import request_for,adapt,parse_requirements,VERSION
+from ai.semantic_spec import request_for,adapt,parse_requirements,VERSION,wire_fields
 from ai.structure_ids import adapt as structure_adapt,VERSION as STRUCTURE_VERSION
 from ai.diagnostics import DiagnosticError,synthetic_capture
 from ai.short_spec import Settings
@@ -60,7 +60,7 @@ class SemanticAcceptance(TestCase):
         from ai import diagnostics
         from scripts.replay_ai_diagnostic import replay
         with TemporaryDirectory() as tmp,patch.object(diagnostics,'ROOT',Path(tmp)):
-            req=request_for(self.text);sent={**req,'fields':{k:{p:v for p,v in f.items() if p!='name'} for k,f in req['fields'].items()}};content=json.dumps(sent,ensure_ascii=False,sort_keys=True)
+            req=request_for(self.text);sent={**req,'fields':wire_fields(req['fields'])};content=json.dumps(sent,ensure_ascii=False,sort_keys=True)
             with synthetic_capture(Path(tmp)/'snapshots',[sha256(content.encode())]):
                 parse_requirements(self.text,config=Settings('secret-never-record'),transport=lambda *_:envelope(self.data,reasoning_content='PRIVATE_THINKING'))
             a=next(Path(tmp).rglob('*.request.json'));b=next(Path(tmp).rglob('*.response.json'))

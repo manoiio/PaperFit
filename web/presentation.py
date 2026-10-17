@@ -38,6 +38,10 @@ def original(finding, inventory):
     return '该节页面设置'
 
 def fmt(value, rule, expected=False):
+    from core.paragraph_values import label
+    readable=label(value)
+    if readable:return readable
+    if isinstance(value,dict) and set(value)=={'multiple'} and isinstance(value['multiple'],dict):return label(value['multiple']) or str(value)
     if rule=='R35' and isinstance(value,dict):
         if 'unresolved' in value:return '待复核：'+value['unresolved']
         return ('有外侧线' if value['visible'] else '无外侧线')+'；'+str(len(value.get('cells',[])))+'个外侧单元格（来源见详情）'

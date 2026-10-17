@@ -12,8 +12,8 @@ from ai.structure_ids import adapt as structure
 def replay(request,response):
     if request.get('format')!='paperfit-synthetic-debug-1' or request.get('public_synthetic') is not True or sha256(request['input'].encode())!=request['input_sha256']:raise DemoError('诊断输入快照哈希/声明无效')
     wire=strict_json(request['input'])
-    if wire['version']=='supplement-ids-v1':validator=lambda d:supplement(d,wire['input'])
-    elif wire['version']=='requirements-file-ids-v1':
+    if wire['version'] in ('supplement-ids-v1','supplement-ids-v2'):validator=lambda d:supplement(d,wire['input'])
+    elif wire['version'] in ('requirements-file-ids-v1','requirements-file-ids-v2'):
         from ai.file_spec import adapt as file_adapt
         validator=lambda d:file_adapt(d,{'file_sha256':wire['file_sha256'],'segments':wire['input'],'unextracted':[]})
     elif wire['version']=='structure-ids-v1':validator=lambda d:structure(d,wire)

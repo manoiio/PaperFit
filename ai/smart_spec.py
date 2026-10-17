@@ -11,7 +11,15 @@ from core.templates import CN,WEST
 VERSION='smart-supplement-v2'
 BASE=('paper','margin_top','margin_bottom','margin_left','margin_right','font_cn','font_western','font_size','line_spacing','first_line_indent','body__alignment','body__before','body__after')
 ALLOWED={n:FIELDS['main'][n] for n in (*BASE,*(f'heading{i}_{p}' for i in (1,2,3) for p in ('font_cn','font_size','alignment','line_spacing')),*(f'{o}_{p}' for o in ('figure_caption','table_caption') for p in ('font_cn','font_size')), 'table_content__font_cn','table_content__font_size')}
-OBJECTS={'正文':'body','一级标题':'heading1','二级标题':'heading2','三级标题':'heading3','图题':'figure_caption','表题':'table_caption','表内文字':'table_content','表格内文字':'table_content','普通内容表格':'table_content','页面':'page','纸张':'page'}
+LEGACY_ALLOWED=dict(ALLOWED)
+ALLOWED.update({n:meta for n,meta in FIELDS['main'].items() if n in ('figure_caption__line_spacing','table_caption__line_spacing') or n.startswith(('heading','figure_caption__','table_caption__','abstract_','reference_','keywords_','appendix_','ack_')) and n.split('__')[-1] in ('line_spacing','first_line_indent','before','after','alignment')})
+ALLOWED.update({n:meta for n,meta in FIELDS['notes'].items() if n.endswith(('line_multiple','before','after','alignment'))})
+from core.classification import TYPES as ROLE_LABELS
+for _n,_meta in list(ALLOWED.items()):
+ if '__' in _n:
+  _obj,_prop=_n.split('__',1);ALLOWED[_n]=(_meta[0],(ROLE_LABELS.get(_obj,{'footnote':'脚注','endnote':'尾注'}.get(_obj,_obj)))+' '+{'line_multiple':'行距','line_spacing':'行距','before':'段前间距','after':'段后间距','first_line_indent':'首行/悬挂缩进','alignment':'对齐'}.get(_prop,_prop),_meta[2])
+def module(n):return 'notes' if n.startswith(('footnote__','endnote__')) else 'main'
+OBJECTS={'中文摘要正文':'abstract_cn_body','英文摘要正文':'abstract_en_body','参考文献条目':'reference_item','参考文献正文':'reference_item','参考文献':'reference_item','脚注':'footnote','尾注':'endnote','附录普通文字':'appendix_text','致谢正文':'ack_text','中文关键词':'keywords_cn','英文关键词':'keywords_en','正文':'body','一级标题':'heading1','二级标题':'heading2','三级标题':'heading3','图题':'figure_caption','表题':'table_caption','表内文字':'table_content','表格内文字':'table_content','普通内容表格':'table_content','页面':'page','纸张':'page'}
 SUBJECT=re.compile('|'.join(sorted(OBJECTS,key=len,reverse=True)))
 SIZE=r'(?:小[二三四五](?:号)?|[二三四五]号|\d+(?:\.\d+)?\s*(?:pt|磅))'
 
@@ -33,7 +41,7 @@ def coverage(text):
             parts=[(OBJECTS[m.group()],sentence[m.end():matches[i+1].start() if i+1<len(matches) else len(sentence)]) for i,m in enumerate(matches)]
         for obj,part in parts:
             def field(prop):
-                n=prop if obj=='body' and prop not in ('alignment','before','after') or obj=='page' else 'body__'+prop if obj=='body' else obj+('__' if obj=='table_content' else '_')+prop
+                n=prop if obj=='body' and prop not in ('alignment','before','after') or obj=='page' else 'body__'+prop if obj=='body' else obj+('__' if obj in ('table_content','abstract_cn_body','abstract_en_body','reference_item','footnote','endnote','appendix_text','ack_text','keywords_cn','keywords_en') or prop in ('before','after') or obj in ('figure_caption','table_caption') and prop in ('line_spacing','alignment') else '_')+('line_multiple' if obj in ('footnote','endnote') and prop=='line_spacing' else prop)
                 if n not in ALLOWED:raise DemoError('该对象的补充属性尚未接入，请在本地工作台核对。')
                 names.add(n)
             def consume(pattern,prop):
@@ -48,9 +56,14 @@ def coverage(text):
                     return ' '
                 part=re.sub(r'(上下左右|四周|四边|上下|左右|上|下|左|右)(?:页)?(?:边距)?\s*(?:均为|均|为|：|:)?\s*\d+(?:\.\d+)?\s*(?:mm|cm|毫米|厘米)',margin,part,flags=re.I)
             else:
+                if re.search(r'(?:字号|字体|大小)\s*(?:为|：|:)?\s*(?:固定|最小|至少)',part):raise DemoError('固定字号与段落行距不能串用；请明确字号和行距要求')
+                for ambiguous in re.finditer(r'行距\s*\d+(?:\.\d+)?\s*(?:pt|磅)|\d+(?:\.\d+)?\s*(?:pt|磅)\s*行距',part,re.I):
+                    if not re.search(r'(?:固定(?:值)?|最小(?:值)?|至少)\s*$',part[:ambiguous.start()]):raise DemoError('磅值行距须明确固定或最小，不能猜测模式或当作字号')
                 consume(r'段前\s*\d+(?:\.\d+)?\s*(?:pt|磅|行)','before');consume(r'段后\s*\d+(?:\.\d+)?\s*(?:pt|磅|行)','after')
                 consume(r'首行(?:缩进)?\s*(?:为|：|:)?\s*(?:[零一二两]|\d+(?:\.\d+)?)\s*(?:个)?(?:字符|汉字|字)|无首行缩进|首行不缩进','first_line_indent')
-                consume(r'(?:\d+(?:\.\d+)?|单)\s*倍(?:行距)?','line_spacing')
+                consume(r'(?:首行|悬挂)(?:缩进)?\s*(?:\d+(?:\.\d+)?|[零一二两])\s*(?:个)?(?:字符|汉字|字|厘米|毫米|cm|mm|pt|磅)','first_line_indent')
+                consume(r'(?:固定(?:值)?|最小(?:值)?|至少)\s*\d+(?:\.\d+)?\s*(?:pt|磅)(?:行距)?','line_spacing')
+                consume(r'(?:\d+(?:\.\d+)?|单|双)\s*倍(?:行距)?','line_spacing')
                 consume(r'两端对齐|居中对齐|左对齐|右对齐|居左|居中|居右','alignment')
                 consume(SIZE,'font_size')
                 consume('|'.join(re.escape(x) for x in CN),'font_cn')
@@ -65,7 +78,8 @@ def validate(data,text):
     if type(data) is not dict or set(data)!={'version','fields','issues'} or data['version']!=VERSION:raise DemoError('智能补充响应结构或版本无效')
     if type(data['fields']) is not dict or not set(data['fields'])<=set(ALLOWED):raise DemoError('智能补充含越权字段')
     native={m:{'fields':{},'issues':[]} for m in ('main','front','toc','notes')}
-    native['main']={'fields':data['fields'],'issues':data['issues']}
+    for n,f in data['fields'].items():native[module(n)]['fields'][n]=f
+    native['main']['issues']=data['issues']
     validate_draft(native,selected_segments(text))
     if data['issues'] or {n for n,v in data['fields'].items() if v is not None}!=expected:raise DemoError('补充要求含冲突、未支持或遗漏字段，整组尚未采用。')
     return data

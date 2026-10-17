@@ -1,0 +1,116 @@
+{
+  "kind": "three actual public synthetic requests; not success rate",
+  "attempts": [
+    {
+      "attempt": {
+        "attempt_id": "ce59cfb2213c488c82840261a60fc9a2",
+        "purpose": "supplement",
+        "timestamp_utc": "2026-10-17T09:30:37.749669+00:00",
+        "input_sha256": "90dca22cd265569c90ce41f8753255268eff2b8bb61c8205cd4b2340676407df",
+        "model": "deepseek-flash",
+        "kind": "real_api",
+        "dispatch_started": true,
+        "sent": true,
+        "response_received": true,
+        "validation": "rejected",
+        "usage": {
+          "prompt_tokens": 1084,
+          "completion_tokens": 270,
+          "total_tokens": 1354,
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 1084
+        },
+        "billing_status": "unknown",
+        "elapsed_seconds": 1.595
+      },
+      "diagnostics": [
+        {
+          "path": "items[2].value",
+          "code": "unproved",
+          "reason": "first_line_indent: 段落模式、数值或单位与完整原文不符/冲突"
+        },
+        {
+          "path": "items[7].value",
+          "code": "unproved",
+          "reason": "reference_item__line_spacing: 参考文献条目 倍数行距：原文对象或标签/内容范围不明确，不能自动执行"
+        },
+        {
+          "path": "issues[0]",
+          "code": "unresolved",
+          "reason": "模型报告未解决要求，整组不应用"
+        },
+        {
+          "path": "issues[1]",
+          "code": "unresolved",
+          "reason": "模型报告未解决要求，整组不应用"
+        },
+        {
+          "path": "issues[2]",
+          "code": "unresolved",
+          "reason": "模型报告未解决要求，整组不应用"
+        },
+        {
+          "path": "issues[3]",
+          "code": "unresolved",
+          "reason": "模型报告未解决要求，整组不应用"
+        },
+        {
+          "path": "items",
+          "code": "missing",
+          "reason": "未证明字段：abstract_cn_body__line_spacing, first_line_indent, footnote__line_multiple, heading1_line_spacing, line_spacing, reference_item__line_spacing"
+        }
+      ],
+      "error": "AI响应未通过本地校验；未应用，请查看技术诊断（7项）。"
+    },
+    {
+      "attempt": {
+        "attempt_id": "ea5b29e227e34c33bbc37ff064bbd97a",
+        "purpose": "supplement",
+        "timestamp_utc": "2026-10-17T09:33:18.874908+00:00",
+        "input_sha256": "72e9706632132daee03a8058b917a87b06485e8e8edff8414e3a8f8d23b6f1e9",
+        "model": "deepseek-flash",
+        "kind": "real_api",
+        "dispatch_started": true,
+        "sent": true,
+        "response_received": true,
+        "validation": "accepted",
+        "usage": {
+          "prompt_tokens": 1593,
+          "completion_tokens": 283,
+          "total_tokens": 1876,
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 1593
+        },
+        "billing_status": "unknown",
+        "elapsed_seconds": 1.522
+      },
+      "diagnostics": [],
+      "error": null
+    },
+    {
+      "attempt": {
+        "attempt_id": "5598cfff17c245bb81ae2b333512265f",
+        "purpose": "supplement",
+        "timestamp_utc": "2026-10-17T09:46:24.633699+00:00",
+        "input_sha256": "72e9706632132daee03a8058b917a87b06485e8e8edff8414e3a8f8d23b6f1e9",
+        "model": "deepseek-flash",
+        "kind": "real_api",
+        "dispatch_started": true,
+        "sent": true,
+        "response_received": true,
+        "validation": "accepted",
+        "usage": {
+          "prompt_tokens": 1593,
+          "completion_tokens": 283,
+          "total_tokens": 1876,
+          "prompt_cache_hit_tokens": 1408,
+          "prompt_cache_miss_tokens": 185
+        },
+        "billing_status": "unknown",
+        "elapsed_seconds": 1.408
+      },
+      "diagnostics": [],
+      "error": null
+    }
+  ]
+}

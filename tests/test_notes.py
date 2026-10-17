@@ -119,7 +119,7 @@ class NotesTests(TestCase):
  def test_custom_values_and_disabled_attributes_real_effect(self):
   m=deepcopy(self.m);s=m['note_scope']['template'];s['values']['footnote']={'font_cn':'仿宋','font_size':10.5,'line_multiple':None};s['sources']['footnote']={'font_cn':'user_confirmed','font_size':'user_confirmed','line_multiple':'not_enabled'};r=self.fix(m=m);self.assertTrue(any(f['expected']==10.5 and f['status']=='pass' for f in findings(r['after'])));self.assertFalse(any(f['property']=='line_multiple' and f['rule_id']=='R36' for f in findings(r['after'])));self.assertEqual(parse(Package(self.p).parts['word/footnotes.xml'])[2].find('w:p/w:pPr/w:spacing',NS).attrib,parse(Package(r['output']).parts['word/footnotes.xml'])[2].find('w:p/w:pPr/w:spacing',NS).attrib)
  def test_template_strict_types_ranges_sources(self):
-  for prop,val in [('font_size',True),('font_size',float('nan')),('font_size',12.25),('font_size',25),('line_multiple',1.1),('font_cn','任意字体'),('font_cn',{'code':'exec'})]:
+  for prop,val in [('font_size',True),('font_size',float('nan')),('font_size',12.25),('font_size',25),('line_multiple',1.13),('font_cn','任意字体'),('font_cn',{'code':'exec'})]:
    s=school();s['values']['footnote'][prop]=val;s['sources']['footnote'][prop]='user_confirmed'
    with self.assertRaises(DemoError):template(s)
   s=school();s['values']['footnote']['font_size']=14

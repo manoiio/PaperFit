@@ -10,6 +10,9 @@ def basis(source):
     return f"{source['label']}：{source['quote']}" + ('（模拟API响应）' if source.get('parse_kind') == 'mock_api' else '')
 
 def _fmt(value):
+    from .paragraph_values import label
+    readable=label(value)
+    if readable:return readable
     return json.dumps(value, ensure_ascii=False).replace('|', '\\|').replace('\n', ' ')
 
 def markdown(report):

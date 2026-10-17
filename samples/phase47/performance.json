@@ -1,0 +1,32 @@
+{
+  "kind": "local synthetic declaration validation and XML conversion; not end-to-end speedup",
+  "iterations": 20000,
+  "elapsed_seconds": 0.0871,
+  "API_requests": 0,
+  "500_paragraph_actual_check": [
+    {
+      "requirement": 1.5,
+      "paragraphs": 500,
+      "elapsed_seconds": 0.6755,
+      "findings": 2529
+    },
+    {
+      "requirement": {
+        "mode": "exact",
+        "value": 20
+      },
+      "paragraphs": 500,
+      "elapsed_seconds": 0.6961,
+      "findings": 2529
+    },
+    {
+      "requirement": {
+        "mode": "minimum",
+        "value": 20
+      },
+      "paragraphs": 500,
+      "elapsed_seconds": 0.6732,
+      "findings": 2529
+    }
+  ]
+}

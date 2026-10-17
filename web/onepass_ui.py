@@ -106,11 +106,12 @@ def render_success(model,state,render_results):
         st.info('本次没有需要安全修改的格式，未额外生成副本。')
         st.download_button('下载已检查文件',model.input_path.read_bytes(),file_name='论文有格_已检查.docx',on_click='ignore')
     n=state['outcome'].get('changes',0);summary=report['summary']
+    if model.result and model.result.get('kind')=='dynamic_text':st.write('普通格式整理 '+str(n)+' 处；另已明确采用第'+str(model.result['round']['number'])+'轮动态副本，同步 '+str(len(model.result['changes']))+' 处数字。未更新域或真实页码。')
     st.write(f'已整理 {n} 处格式；原稿保留。修改后仍有 {summary["problem_count"]} 个问题、{summary["review_count"]} 项需要留意。')
     if model.result:
         groups={}
         for c in model.result['changes']:
-            rid=c['rule_id'];label='页面与边距' if rid in ('R01','R02') else '正文文字与段落' if rid in ('R03','R04','R05','R06','R07','R13') else {'R23':'表内普通文字','R36':'脚注普通文字','R37':'尾注普通文字'}.get(rid,'标题、题注及其他已确认文字')
+            rid=c['rule_id'];label='动态题注/纯文本引用数字' if model.result.get('kind')=='dynamic_text' else '页面与边距' if rid in ('R01','R02') else '正文文字与段落' if rid in ('R03','R04','R05','R06','R07','R13') else {'R23':'表内普通文字','R36':'脚注普通文字','R37':'尾注普通文字'}.get(rid,'标题、题注及其他已确认文字')
             groups[label]=groups.get(label,0)+1
         st.write('主要调整：'+'；'.join(f'{k} {v} 处' for k,v in groups.items()))
     scope=(model.result.get('output_classification_manifest') if model.result else model.classification_confirmed) or {}
@@ -133,3 +134,10 @@ def render_success(model,state,render_results):
             reading=model.prepare_reading_export();st.download_button('下载检查阅读报告',reading['report.html'],file_name='检查报告.html',on_click='ignore')
         st.json(state['audit'],expanded=False)
         if model.result:render_results()
+    # Same optional component/transactions as the local workspace. Navigation and
+    # ordinary Start never authorize numeric edits or a complete-range declaration.
+    if model.report:
+        from .dynamic_ui import render_dynamic
+        from .onepass_session import register_dynamic_followup
+        post=state['post'];parent=model.result['after']['input_sha256'] if model.result else model.inventory['input_sha256']
+        render_dynamic(model,on_adopt=lambda:register_dynamic_followup(model,state,post,parent))

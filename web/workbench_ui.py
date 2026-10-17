@@ -10,6 +10,9 @@ from .rule_fields_ui import group,label,value_control,DECISIONS,REASONS,friendly
 ORIGINS={'ai_extracted':'AI提取（可能为历史来源）','user_confirmed':'用户确认值','default_inherited':'沿用演示默认','school_demo':'2015演示原文','school_default':'2015注释演示原文','legacy_fixed':'旧版本固定要求','not_enabled':'不检查'}
 
 def text(v):
+ from core.paragraph_values import label
+ readable=label(v)
+ if readable:return readable
  if v is None:return '不检查 / 未配置'
  if isinstance(v,dict):return str(v.get('value'))+('行' if v.get('unit')=='lines' else '磅')
  if isinstance(v,bool):return '是' if v else '否'

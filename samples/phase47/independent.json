@@ -1,0 +1,19 @@
+{
+  "historical_response_replay_API_requests": 0,
+  "fields_equal_authored_expected": true,
+  "legal_changes": 39,
+  "independent": {
+    "source_sha256": "90a2ef6b0b5d018cb2082d1e54a69e9e2c49b4ad9624dd41f46ff2b1d63dd283",
+    "output_sha256": "295d78a10f17dfcace86a1782ddfb4d780623d04a771007e91e15ce6debaf8c0",
+    "changed_members": [
+      "word/document.xml",
+      "word/footnotes.xml",
+      "word/endnotes.xml"
+    ],
+    "authored_declarations_verified": true,
+    "all_text_order_and_protected_subtrees_preserved": true,
+    "unselected_parts_byte_equal": true,
+    "code_exclusion_preserved": true
+  },
+  "actual_browser_original_legal_bytes_equal": true
+}

@@ -21,12 +21,12 @@ class ObjectRulesAcceptance(TestCase):
  def number(self,label,value):next(x for x in self.app.number_input if x.label==label).set_value(value).run();self.assertFalse(self.app.exception)
  def click(self,label):next(x for x in self.app.button if x.label==label).click().run();self.assertFalse(self.app.exception)
  def pending(self):return next(b.label for b in self.app.button if b.label.startswith('保存本对象的'))
- def three(self):self.select('中文字体','楷体');self.number('普通文字字号（磅 / pt）',13.);self.select('倍数行距',2.)
+ def three(self):self.select('中文字体','楷体');self.number('普通文字字号（磅 / pt）',13.);self.number('行距数值',2.)
  def test_three_values_save_once_only_and_match_original_field_path(self):
   before=deepcopy(self.s.workbench['draft']);active=self.s.current_rule_bundle();self.three();self.assertEqual(self.pending(),'保存本对象的3项改动到草稿');self.assertEqual(before,self.s.workbench['draft']);self.assertEqual(active['provenance'],self.s.current_rule_bundle()['provenance']);self.assertEqual(rb.flat('main',active['modules']['main']),rb.flat('main',self.s.current_rule_bundle()['modules']['main']))
   self.click(self.pending());saved=self.s.workbench['draft'];self.assertEqual(self.pending(),'保存本对象的0项改动到草稿');self.assertEqual(active['provenance'],self.s.current_rule_bundle()['provenance']);self.assertEqual(rb.flat('main',active['modules']['main']),rb.flat('main',self.s.current_rule_bundle()['modules']['main']))
   other=session(Path(self.tmp.name)/'reference',checked=False);other.import_rule_bundle((ROOT/'samples/phase25/repaired-rule-bundle.json').read_bytes())
-  for n,v in {'font_cn':'楷体','font_size':13.,'line_spacing':2.}.items():other.workbench_edit('main',n,'manual',v)
+  for n,v in {'font_cn':'楷体','font_size':13.,'line_spacing':{'mode':'multiple','value':2.}}.items():other.workbench_edit('main',n,'manual',v)
   self.assertEqual(other.workbench['draft']['fields'],saved['fields'])
   for m,fields in saved['fields'].items():
    for n,f in fields.items():

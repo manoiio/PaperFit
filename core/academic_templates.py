@@ -16,6 +16,11 @@ def value(name,value):
  if name not in EXTRA:return old.validate_value(name,value)
  if value is None:return None
  _,obj,prop=EXTRA[name]
+ if prop in ('line_spacing','first_line_indent'):
+  from .paragraph_values import line,indent
+  line(value) if prop=='line_spacing' else indent(value,hanging=obj=='reference_item')
+  return deepcopy(value)
+ _,obj,prop=EXTRA[name]
  if prop in ('bold','enabled') or prop.endswith('_bold'):
   if type(value) is not bool:raise DemoError('加粗/只读提示开关必须是布尔值')
  elif prop in ('before','after'):
@@ -77,7 +82,7 @@ def validate(data,base):
 def base_v3_keys():return ('structure_version','name','supported_fields','base_sha256','final_values','field_sources','norm_excerpt','norm_file_sha256','confirmation','extension_base_sha256','compatibility','extraction')
 
 def context(obj,prop,quote):
- targets={'abstract_cn_title':r'中文摘要标题','abstract_cn_body':r'中文摘要(?:正文|内容)','abstract_en_title':r'(?:英文摘要标题|Abstract标题)','abstract_en_body':r'(?:英文摘要(?:正文|内容)|Abstract正文)','keywords_cn':r'(?:中文关键词|关键词标签|关键词内容)','keywords_en':r'(?:英文关键词|Keywords)','reference_title':r'参考文献标题','reference_item':r'参考文献(?:条目|正文)'}
+ targets={'abstract_cn_title':r'中文摘要标题','abstract_cn_body':r'中文摘要(?:正文|内容)','abstract_en_title':r'(?:英文摘要标题|Abstract标题)','abstract_en_body':r'(?:英文摘要(?:正文|内容)|Abstract正文)','keywords_cn':r'(?:中文关键词|关键词标签|关键词内容)','keywords_en':r'(?:英文关键词|Keywords)','reference_title':r'参考文献标题','reference_item':r'参考文献(?!(?:标题))(?:条目|正文)?'}
  if obj in targets:
   if obj=='keywords_cn' and re.search('英文|Keywords',quote,re.I):return False
   if not re.search(targets[obj],quote,re.I):return False
@@ -102,10 +107,12 @@ def validate_candidate(name,f,segments):
  if not any(p['location']==f['location'] and f['quote'] in p['text'] for p in segments):raise DemoError('AI原文短句或来源位置不存在')
  _,obj,prop=EXTRA[name]
  if name=='content_checks':raise DemoError('内容提示开关须用户明确选择，不由AI自报')
- if re.search('大约|任选|不超过|至少|至多|不要求|未要求|未规定|不作要求|不强制|无要求|不限|可选|无需|不需要',f['quote']):raise DemoError('含糊/不支持条款不可作为执行依据')
- if prop=='line_spacing' and re.search('固定|最小',f['quote']):raise DemoError('固定/最小行距不转倍数')
+ if re.search('大约|任选|不超过|至多|不要求|未要求|未规定|不作要求|不强制|无要求|不限|可选|无需|不需要',f['quote']) or prop!='line_spacing' and '至少' in f['quote']:raise DemoError('含糊/不支持条款不可作为执行依据')
+
  if not context(obj,prop,f['quote']):raise DemoError('原文对象或标签/内容范围不明确，不能自动执行')
  v=value(name,f['value']);quote=f['quote']
+ if prop in ('line_spacing','first_line_indent'):
+  validate_candidate_for(obj,prop,f,segments);return deepcopy(f)
  if len(extracted_values(name,segments))>1:raise DemoError('同一对象属性存在冲突，须保留空值并由用户明确取舍')
  if v is None:raise DemoError('提取记录不能携带空执行值')
  if prop in ('before','after'):
@@ -119,7 +126,7 @@ def validate_candidate(name,f,segments):
  elif prop=='alignment':
   if old.ALIGNMENTS[v] not in quote:raise DemoError('对齐依据不匹配')
  elif 'font_size' in prop:
-  size_quote=re.split(r'段前|段后|行距|缩进',quote)[0]
+  size_quote=re.split(r'段前|段后|行距|缩进|固定|最小|至少',quote)[0]
   nums=[float(n) for n in re.findall(r'(\d+(?:\.\d+)?)\s*(?:pt|磅)',size_quote,re.I)]
   from .spec_validation import FONT_NAMES
   nums += [FONT_NAMES[m.group(0).rstrip('号')] for m in re.finditer(r'小(?:二|三|四|五)(?:号)?|(?:二|三|四|五)号',size_quote)]
@@ -164,7 +171,7 @@ def extracted_values(name,segments):
    elif prop=='alignment':found.extend(k for k,v in old.ALIGNMENTS.items() if v in clause)
    elif 'font_size' in prop:
     from .spec_validation import FONT_NAMES
-    size_clause=re.split(r'段前|段后|行距|缩进',clause)[0]
+    size_clause=re.split(r'段前|段后|行距|缩进|固定|最小|至少',clause)[0]
     found.extend(float(x) for x in re.findall(r'(\d+(?:\.\d+)?)\s*(?:pt|磅)',size_clause,re.I))
     found.extend(FONT_NAMES[m.group(0).rstrip('号')] for m in re.finditer(r'小(?:二|三|四|五)(?:号)?|(?:二|三|四|五)号',size_clause))
    elif prop=='line_spacing':
@@ -178,3 +185,13 @@ def indent_values(quote):
  for n in re.findall(r'首行(?:缩进|空)?\s*(?:为|：|:)?\s*([012零一二两])\s*(?:个)?(?:字符|汉字|字)',quote):out.append(mapping[n] if n in mapping else int(n))
  if re.search('无首行缩进|首行不缩进',quote):out.append(0)
  return out
+
+
+def validate_candidate_for(obj,prop,f,segments):
+ from .paragraph_values import prove,line,indent
+ from .norms import evidence_segments
+ if type(f) is not dict or set(f)!={'value','unit','quote','location','support'} or f['support']!='supported' or f['unit']!=('multiple' if prop=='line_spacing' else 'chars'):raise DemoError('段落字段协议不符')
+ old.safe_text(f['quote'],200)
+ if not any(s['location']==f['location'] and f['quote'] in s['text'] for s in segments) or not context(obj,prop,f['quote']):raise DemoError('段落对象或连续依据不符')
+ line(f['value']) if prop=='line_spacing' else indent(f['value'],hanging=obj=='reference_item')
+ prove(prop,f['value'],f['quote'],[c for s in evidence_segments(segments,f['location']) for c in re.split('[。；;\n]',s['text']) if context(obj,prop,c)])

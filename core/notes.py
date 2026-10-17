@@ -10,6 +10,8 @@ from .package import Package,DemoError,parse,q,NS,sha256
 from .formats import Resolver,Unresolved,scripts,same_font
 KINDS={'footnote':'脚注','endnote':'尾注'}
 FIELDS=('font_cn','font_size','line_multiple')
+EXTRA_FIELDS=('before','after','alignment')
+ALL_FIELDS=FIELDS+EXTRA_FIELDS
 DEFAULT={'font_cn':'宋体','font_size':12,'line_multiple':1.5}
 QUOTE='参考文献和注释正文为小四号，宋体，1.5倍行距。'
 SOURCE={'label':'2015学校演示材料（Word普通注释对象解释）','file':'00-全员必看/本科毕业设计论文.pdf','physical_page':18,'quote':QUOTE}
@@ -18,16 +20,22 @@ def digest(v):return sha256(json.dumps(v,ensure_ascii=False,sort_keys=True).enco
 def text(e):return ''.join(e.xpath('.//w:t/text()',namespaces=NS))
 def school():return {'structure_version':1,'kind':'paper-grid-note-supplement','name':'用户确认的注释演示规则','values':{k:deepcopy(DEFAULT) for k in KINDS},'sources':{k:{p:'school_default' for p in FIELDS} for k in KINDS}}
 def template(d):
- if type(d) is not dict or set(d)!={'structure_version','kind','name','values','sources'} or type(d['structure_version']) is not int or d['structure_version']!=1 or d['kind']!='paper-grid-note-supplement' or type(d['name']) is not str or not 1<=len(d['name'])<=80 or any(c in d['name'] for c in '/\\\x00\n'):raise DemoError('注释补充配置版本或结构无效')
+ if type(d) is not dict or set(d)!={'structure_version','kind','name','values','sources'} or type(d['structure_version']) is not int or d['structure_version'] not in (1,2) or d['kind']!='paper-grid-note-supplement' or type(d['name']) is not str or not 1<=len(d['name'])<=80 or any(c in d['name'] for c in '/\\\x00\n'):raise DemoError('注释补充配置版本或结构无效')
  for group in ('values','sources'):
   if type(d[group]) is not dict or set(d[group])!=set(KINDS):raise DemoError('注释配置对象字段无效')
   for kind in KINDS:
-   if type(d[group][kind]) is not dict or set(d[group][kind])!=set(FIELDS):raise DemoError('注释配置含未知或缺失字段')
+   if type(d[group][kind]) is not dict or set(d[group][kind])!=set(FIELDS if d['structure_version']==1 else ALL_FIELDS):raise DemoError('注释配置含未知或缺失字段')
  for k in KINDS:
   for prop,v in d['values'][k].items():
-   valid=v is None or (type(v) is str and v in ('宋体','黑体','楷体','仿宋') if prop=='font_cn' else type(v) in (int,float) and math.isfinite(v) and (8<=v<=24 and v*2==int(v*2) if prop=='font_size' else v in (1,1.25,1.5,2)))
+   if prop=='line_multiple' and v is not None:
+    from .paragraph_values import line
+    line(v)
+   if prop in EXTRA_FIELDS and v is not None:
+    from .academic_templates import value
+    value('body__'+prop,v)
+   valid=prop in EXTRA_FIELDS or prop=='line_multiple' or v is None or (type(v) is str and v in ('宋体','黑体','楷体','仿宋') if prop=='font_cn' else type(v) in (int,float) and math.isfinite(v) and (8<=v<=24 and v*2==int(v*2) if prop=='font_size' else v in (1,1.25,1.5,2)))
    origin=d['sources'][k][prop]
-   if not valid or origin not in ('school_default','user_confirmed','not_enabled') or (v is None)!=(origin=='not_enabled') or origin=='school_default' and v!=DEFAULT[prop]:raise DemoError('注释字段取值或来源无效；编辑后应记为用户确认值')
+   if not valid or origin not in ('school_default','user_confirmed','not_enabled') or (v is None)!=(origin=='not_enabled') or origin=='school_default' and v!=DEFAULT.get(prop):raise DemoError('注释字段取值或来源无效；编辑后应记为用户确认值')
  return deepcopy(d)
 
 def inventory(path):
@@ -137,7 +145,9 @@ def append_checks(report,pkg,scope):
     if any(x.find(q('pPrChange')) is not None or x.find(q('sectPr')) is not None or x.find(q('framePr')) is not None or x.find(q('numPr')) is not None for x in pl):complex_p=True
    except Unresolved as exc:complex_p=True;paragraph_reason=str(exc)+'；继承不可靠，行距不修'
    if complex_p:add(k,loc,'structure',None,'review',paragraph_reason,False)
-   if cfg['values'][k]['line_multiple'] is not None:
+   for prop in ('line_multiple',*EXTRA_FIELDS):
+    wanted=cfg['values'][k].get(prop)
+    if wanted is None:continue
     try:
      if complex_p:raise Unresolved(paragraph_reason)
      for run in p.findall(q('r')):
@@ -148,8 +158,13 @@ def append_checks(report,pkg,scope):
       rl=res.layers(p,run)
       if run.find(q(k+'Ref')) is None and res.special(run,rl):raise Unresolved('段落含特殊文字；行距待复核')
      if any(sec.find(q('docGrid')) is not None and sec.find(q('docGrid')).get(q('type')) not in (None,'default') for sec in pkg.sections) and res.value(pl,'snapToGrid','1') not in ('0','false','off'):raise Unresolved('文档网格可能影响注释行距，待复核')
-     actual=line_value(res,pl);add(k,loc,'line_multiple',actual,'pass' if actual['multiple']==cfg['values'][k]['line_multiple'] else 'problem',part=part)
-    except (Unresolved,ValueError) as exc:add(k,loc,'line_multiple',{'unresolved':str(exc)},'review',str(exc),False)
+     from .paragraph_values import read_line,line_equal
+     from .paragraph_properties import space,spacing_equal,space_fixable,alignment
+     if prop=='line_multiple':actual=read_line(res,pl);equal=line_equal(actual,wanted);safe=True
+     elif prop=='alignment':actual=alignment(res,pl);equal=actual==wanted;safe=True
+     else:actual=space(res,pl,prop);equal=spacing_equal(actual,wanted);safe,reason=space_fixable(res,pl,prop,wanted)
+     add(k,loc,prop,actual,'pass' if equal else 'problem',safe=safe,part=part)
+    except (Unresolved,ValueError) as exc:add(k,loc,prop,{'unresolved':str(exc)},'review',str(exc),False)
    from .text_runs import walk
    linked=walk(pkg,p,part) if p.find(q('hyperlink')) is not None else None
    if linked:
@@ -187,7 +202,7 @@ def append_checks(report,pkg,scope):
   if not any(f['rule_id']==rid for f in fs):add(k,{'note_kind':k},'structure',None,'not_applicable','没有所选可适用Word注释；不判缺少注释',False)
  report['coverage']['note_scope']=s;report['coverage']['note_limits']=LIMITS
  report['notes']={'inventory':inv,'selected':s['objects'],'automatic_markers_preserved':marker_count,'system_objects_readonly':len(inv['systems']),'limits':LIMITS}
- report['rules']['note_supplement']={'name':cfg['name'],'version':1,'sha256':digest(cfg),'values':deepcopy(cfg['values']),'sources':deepcopy(cfg['sources'])}
+ report['rules']['note_supplement']={'name':cfg['name'],'version':cfg['structure_version'],'sha256':digest(cfg),'values':deepcopy(cfg['values']),'sources':deepcopy(cfg['sources'])}
  report['summary']['rule_count']+=2
  for status,n in [('problem','problem_count'),('review','review_findings'),('pass','pass_count'),('not_applicable','not_applicable_count')]:report['summary'][n]=sum(f['status']==status for f in fs)
  report['summary']['review_count']=report['summary']['review_findings']+len(report['coverage_notes']);report['summary']['applicable_rule_count']=len({f['rule_id'] for f in fs if f['status']!='not_applicable'});report['summary']['conclusion']='已覆盖检查发现问题' if report['summary']['problem_count'] else '已覆盖检查未发现问题'
@@ -198,13 +213,33 @@ def apply(pkg,f):
  if 'link' in f['locator']:
   from .text_runs import executable_run
   e=executable_run(pkg,e.getparent().getparent(),f['locator'],f['story_part'])
- prop=f['property'];rpr=prop!='line_multiple';container=_ensure(e,'rPr' if rpr else 'pPr')
+ prop=f['property']
+ if prop in ('line_multiple',*EXTRA_FIELDS):
+  from .paragraph_values import apply as patch
+  patch(e,prop,f['expected']);return
+ rpr=True;container=_ensure(e,'rPr' if rpr else 'pPr')
  if prop=='font_cn':rf=_ensure(container,'rFonts');rf.set(q('eastAsia'),f['expected']);rf.attrib.pop(q('eastAsiaTheme'),None)
  elif prop=='font_size':_ensure(container,'sz').set(q('val'),str(round(f['expected']*2)))
  else:sp=_ensure(container,'spacing');sp.set(q('line'),str(round(f['expected']*240)));sp.set(q('lineRule'),'auto')
 def mask_story(root,f):
- el=locate_root(root,f);prop=f['property'];tag='rFonts' if prop=='font_cn' else 'sz' if prop=='font_size' else 'spacing';e=el.find('w:'+('pPr' if prop=='line_multiple' else 'rPr')+'/w:'+tag,NS)
+ el=locate_root(root,f);prop=f['property']
+ if prop in ('line_multiple',*EXTRA_FIELDS):
+  from .paragraph_values import mask
+  mask(el,prop)
+  for node in list(el.findall(q('pPr'))):
+   if not len(node) and not node.attrib:el.remove(node)
+  return
+ tag='rFonts' if prop=='font_cn' else 'sz' if prop=='font_size' else 'spacing';e=el.find('w:'+('pPr' if prop=='line_multiple' else 'rPr')+'/w:'+tag,NS)
  if e is not None:
   for a in ('eastAsia','eastAsiaTheme') if prop=='font_cn' else ('val',) if prop=='font_size' else ('line','lineRule'):e.attrib.pop(q(a),None)
  for e in reversed(list(el.iter())):
   if e.tag in {q(x) for x in ('rFonts','sz','spacing','rPr','pPr')} and not len(e) and not e.attrib and not e.text:e.getparent().remove(e)
+
+
+def promote(d):
+ d=template(d)
+ if d['structure_version']==2:return d
+ d['structure_version']=2
+ for k in KINDS:
+  for p in EXTRA_FIELDS:d['values'][k][p]=None;d['sources'][k][p]='not_enabled'
+ return d
