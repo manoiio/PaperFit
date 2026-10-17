@@ -14,6 +14,8 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
     input_ui=st.session_state.get('requirements-ui-'+task,{})
     selected=input_ui.get('selected')
     prior_extra=st.session_state.get('onepass-extra-'+task,'') if input_ui.get('choice','current')=='current' else ''
+    from .page_ui import options as assembly_options
+    assembly_options(model,task)
     completed=model.inventory is not None and state.get('status')=='done' and current(model,state,prior_extra,selected)
     if completed:render_success(model,state,render_results)
     else:st.write('上传论文，按要求整理，下载修改好的副本。原稿保留。')
@@ -106,9 +108,19 @@ def render_success(model,state,render_results):
         st.info('本次没有需要安全修改的格式，未额外生成副本。')
         st.download_button('下载已检查文件',model.input_path.read_bytes(),file_name='论文有格_已检查.docx',on_click='ignore')
     n=state['outcome'].get('changes',0);summary=report['summary']
+    if state.get('audit',{}).get('page_skipped'):st.warning('本次未执行页码方案：'+state['audit']['page_skipped'])
+    if state.get('audit',{}).get('dynamic_blocked_groups'):st.info('部分编号关联组不能完整安全同步，已保留；详情见处理记录。')
+    if model.result and model.result.get('assembly'):
+        st.write('本次已验证 '+str(len(model.result['assembly']['steps']))+' 个阶段；普通格式、数字同步和页码结构分别记录，未刷新目录或引用域。')
+        with st.expander('各阶段父子关系与未处理事项'):st.json(model.result['assembly'],expanded=False)
     if model.result and model.result.get('kind')=='dynamic_text':st.write('普通格式整理 '+str(n)+' 处；另已明确采用第'+str(model.result['round']['number'])+'轮动态副本，同步 '+str(len(model.result['changes']))+' 处数字。未更新域或真实页码。')
-    st.write(f'已整理 {n} 处格式；原稿保留。修改后仍有 {summary["problem_count"]} 个问题、{summary["review_count"]} 项需要留意。')
-    if model.result:
+    assembly=model.result.get('assembly') if model.result else None
+    if assembly:
+        counts={k:sum(x['changes'] for x in assembly['steps'] if x['kind']==k) for k in ('format','dynamic_text','section_pages')}
+        st.write('普通格式 '+str(counts['format'])+' 处；编号/文本引用数字 '+str(counts['dynamic_text'])+' 处；页码结构 '+str(counts['section_pages'])+' 项。原稿保留。')
+        st.write(f'最终格式检查仍有 {summary["problem_count"]} 个问题、{summary["review_count"]} 项需要留意；不同操作数量不相加为合格分。')
+    else:st.write(f'已整理 {n} 处格式；原稿保留。修改后仍有 {summary["problem_count"]} 个问题、{summary["review_count"]} 项需要留意。')
+    if model.result and not assembly:
         groups={}
         for c in model.result['changes']:
             rid=c['rule_id'];label='动态题注/纯文本引用数字' if model.result.get('kind')=='dynamic_text' else '页面与边距' if rid in ('R01','R02') else '正文文字与段落' if rid in ('R03','R04','R05','R06','R07','R13') else {'R23':'表内普通文字','R36':'脚注普通文字','R37':'尾注普通文字'}.get(rid,'标题、题注及其他已确认文字')

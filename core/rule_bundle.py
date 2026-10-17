@@ -54,7 +54,8 @@ def source(s,v,segments):
 def validate(d,base):
  require(type(d) is dict,'规则包必须是JSON对象')
  d=deepcopy(d)
- exact({k:v for k,v in d.items() if k!='notices'},('format','version','name','excerpt','excerpt_sha256','extraction','modules','provenance','confirmation'),'规则包结构不支持')
+ exact({k:v for k,v in d.items() if k not in ('notices','assembly')},('format','version','name','excerpt','excerpt_sha256','extraction','modules','provenance','confirmation'),'规则包结构不支持')
+ if 'assembly' in d:__import__('core.page_policy',fromlist=['validate']).validate(d['assembly'])
  require(d['format']=='paper-grid-rule-bundle' and type(d['version']) is int and d['version']==1,'未知规则包版本')
  main.safe_text(d['name'],80);require(not any(x in d['name'] for x in ('官方','华工','学校')),'自定义规则包不能冒充学校官方规范')
  main.validate_segments(d['excerpt']);__import__('core.norms',fromlist=['verify_namespaces']).verify_namespaces(d['excerpt']);require(d['excerpt_sha256']==sha256(marked_text(d['excerpt']).encode()),'规则包摘录哈希不符')
@@ -114,8 +115,9 @@ def defaults(base):
  back.validate(b,base)
  return {'main':{'template':b,'disabled_fields':[]},'front':front.school(),'toc':toc.school(),'notes':notes.school()}
 
-def build(name,modules,segments,extraction,base,provenance=None,notices=None):
+def build(name,modules,segments,extraction,base,provenance=None,notices=None,assembly=None):
  d={'format':'paper-grid-rule-bundle','version':1,'name':name,'excerpt':deepcopy(segments),'excerpt_sha256':sha256(marked_text(segments).encode()),'extraction':extraction or {'kind':'none','model':None,'timestamp_utc':None},'modules':deepcopy(modules),'provenance':provenance or {m:origins(m,c) if c else None for m,c in modules.items()},'confirmation':'用户核对后应用；规则不确认论文对象','notices':deepcopy(notices or {m:[] for m in MODULES})}
+ if assembly is not None:d['assembly']=deepcopy(assembly)
  return validate(d,base)
 
 def validate_candidate(m,n,f,segments):
@@ -214,6 +216,7 @@ def compile_bundle(d,base):
  d=validate(d,base);cfg=d['modules']['main'];require(cfg is not None,'执行规则包必须有明确的正文模块；补充模块请与当前正文规则核对后应用')
  out=main.compile_template(cfg['template'],base)
  out['workbench']={'version':1,'name':d['name'],'sha256':digest(d),'excerpt_sha256':d['excerpt_sha256'],'disabled_fields':cfg['disabled_fields'],'note_sources':deepcopy(d['provenance']['notes']),'notices':deepcopy(d.get('notices',{m:[] for m in MODULES})),'modules':{m:{'configured':c is not None,'version':c['template']['structure_version'] if c and m=='main' else c['structure_version'] if c else None,'sha256':digest(c) if c else None} for m,c in d['modules'].items()}}
+ if d.get('assembly'):out['workbench']['assembly']=deepcopy(d['assembly'])
  out['name']=d['name'];out['version']='rule-bundle-1+'+out['version']
  return out
 

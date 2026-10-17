@@ -180,15 +180,16 @@ def render_results():
     if not files:return
     result,after=model.result,model.result['after']
     checks=result['preservation']
-    required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
-    if not all(checks.get(k) is True for k in required) or not checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal')):
+    required=('only_authorized_structure','main_object_order_preserved') if result.get('kind')=='section_pages' else ('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
+    if not all(checks.get(k) is True for k in required) or not (checks.get('only_authorized_structure') is True if result.get('kind')=='section_pages' else checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal'))):
         st.error('完整性结果异常，请重新开始。');return
     from web.decision_ui import compact_stats
     summary=after['summary'];n=result['round']['number']
     st.subheader(f'第{n}轮副本已生成')
     compact_stats([('实际修改',len(result['changes'])),('剩余问题',summary['problem_count']),('待复核',summary['review_count'])],'result-summary')
     verified=all(c['verification']=='pass' for c in result['changes'])
-    if verified and result.get('kind')=='dynamic_text':st.write('授权的动态数字清单已落盘，精确文字白名单验证通过；字段缓存、目录页码和实际分页未更新。')
+    if verified and result.get('kind')=='section_pages':st.write('授权的分节、页码及独立页脚结构复查通过；未刷新目录/引用域，实际显示须查看页面。')
+    elif verified and result.get('kind')=='dynamic_text':st.write('授权的动态数字清单已落盘，精确文字白名单验证通过；字段缓存、目录页码和实际分页未更新。')
     elif verified:
         message=f"所选修改的落盘复查全部符合要求 · 已保存{len(result['changes'])}项修改；仅代表所选属性。"
         if summary['problem_count'] or summary['review_count']:st.write(message)
@@ -239,10 +240,11 @@ def render_results():
             st.write('原稿保持不变 · 仅授权题注位置变化 · 所有对象子树与未选部件逐字节核对通过；实际同页未核对')
             st.info('段落编号已按XML对象映射重绑；旧选择、布局计划及不匹配预览失效。原稿仅提供渲染预览，不套用移动后的段号。')
             with st.expander('范围映射与失效详情'):st.json(result['range_mapping'])
+        elif result.get('kind')=='section_pages':st.write('仅计划允许的分节属性、页脚、关系及内容类型变化；原共享部件、全部run和未选内容保持。完整包逐部件复查通过。')
         elif result.get('kind')=='dynamic_text':st.write('仅授权题注/引用数字变化；所有run格式及未选部件保持。域、分页和目录页码未更新或核验。')
         else:st.write('原稿保持不变 · 未选格式与文档内容保留核对通过 · 未选包部件字节核对通过；选中故事部件只改格式')
-        required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
-        if not all(checks.get(k) is True for k in required) or not checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal')):
+        required=('only_authorized_structure','main_object_order_preserved') if result.get('kind')=='section_pages' else ('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
+        if not all(checks.get(k) is True for k in required) or not (checks.get('only_authorized_structure') is True if result.get('kind')=='section_pages' else checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal'))):
             st.error('完整性结果异常，请重新开始。')
             st.stop()
         changes = [{'规则': c['rule_id'], '位置': position(c['locator']), '修改前': field_value(c['before'], c['rule_id'], c['locator']),
@@ -421,6 +423,8 @@ elif step==5:
         if model.report:
             from web.dynamic_ui import render_dynamic
             render_dynamic(model)
+            from web.page_ui import render_local as render_page_layout
+            render_page_layout(model)
 
 from web.workflow_ui import finish_navigation
 finish_navigation()

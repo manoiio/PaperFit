@@ -64,6 +64,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
         self.result = None
         self.result_signature = None
         self.error = None
+        self.page_layout_draft = None
         self.rules_hash = None
         self.revision = 0
         self.report_revision = 0
@@ -373,7 +374,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
             self.result = self.result_signature = None
             raise DemoError('修正版文件发生变化，请重新生成')
         if self.result.get('plan'):self.plan_step_downloads()
-        if (self.result.get('plan') or self.result.get('kind') in ('figure_layout','pagination_layout','width_adaptation','caption_position','dynamic_text')) and digest(Path(self.result['round_input_path']).read_bytes()) != self.result['round']['input_sha256']:
+        if (self.result.get('plan') or self.result.get('kind') in ('figure_layout','pagination_layout','width_adaptation','caption_position','dynamic_text','section_pages')) and digest(Path(self.result['round_input_path']).read_bytes()) != self.result['round']['input_sha256']:
             self.result = self.result_signature = None
             raise DemoError('本轮辅助输入文件发生变化，结果已失效')
         j = lambda x: (json.dumps(x, ensure_ascii=False, indent=2) + '\n').encode('utf-8')
@@ -383,7 +384,7 @@ class WebSession(TemplateSession, PreviewSession, WidthSession, CenterSession, E
                     'result.json': j(self.result), 'fixed.body.json': j(self.result['output_body_manifest'])}
         reports=self.cached_bytes('legacy',self.result,build)
         files = {'fixed.docx': data, 'original.docx': self.original_bytes,
-                'round-input.docx': (Path(self.result['round_input_path']).read_bytes() if self.result.get('plan') or self.result.get('kind') in ('figure_layout','pagination_layout','width_adaptation','caption_position','dynamic_text') else self.input_bytes),
+                'round-input.docx': (Path(self.result['round_input_path']).read_bytes() if self.result.get('plan') or self.result.get('kind') in ('figure_layout','pagination_layout','width_adaptation','caption_position','dynamic_text','section_pages') else self.input_bytes),
                 **reports}
         if 'widths' in self.result:
             from core.widths import width_markdown

@@ -1,0 +1,40 @@
+{
+  "fields_evaluated": false,
+  "input_auto_switched": false,
+  "policy": {
+    "alignment": "center",
+    "body_start": 1,
+    "chapter_restart": false,
+    "dynamic": true,
+    "footer": "chapter",
+    "front_start": 1,
+    "pages": "front-body",
+    "roman": "lowerRoman",
+    "text": "",
+    "version": 1
+  },
+  "steps": [
+    {
+      "changes": 35,
+      "input_sha256": "a9a2ceded1f268a4f63133746334952554e0e1d471a5a5239921fedbab131ffe",
+      "kind": "format",
+      "output_sha256": "eeaaf07117dff5eda4e8da9a5c44953228a58cbbeb609324246e411b61b8a9c6",
+      "round": 1
+    },
+    {
+      "changes": 4,
+      "input_sha256": "eeaaf07117dff5eda4e8da9a5c44953228a58cbbeb609324246e411b61b8a9c6",
+      "kind": "dynamic_text",
+      "output_sha256": "49da3862c4590399d1825aa7b8ea9d72a394c6b6e365fd13ab31025efcdb2e7e",
+      "round": 2
+    },
+    {
+      "changes": 12,
+      "input_sha256": "49da3862c4590399d1825aa7b8ea9d72a394c6b6e365fd13ab31025efcdb2e7e",
+      "kind": "section_pages",
+      "output_sha256": "8b8ecf63c59a30a92041c7633044cc65c9071e941dbeb3a6bfc2c3f87567c2fb",
+      "round": 3
+    }
+  ],
+  "total_changes": 51
+}

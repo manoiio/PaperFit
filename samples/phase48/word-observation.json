@@ -1,0 +1,24 @@
+{
+  "kind": "actual Microsoft Word observation, not COM or programmatic field refresh",
+  "file": "fixed.docx",
+  "sha256": "8b8ecf63c59a30a92041c7633044cc65c9071e941dbeb3a6bfc2c3f87567c2fb",
+  "pages": 8,
+  "visible_page_numbers": [
+    null,
+    null,
+    "i",
+    "ii",
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "chapter_footer_pages": {
+    "5,6": "第1章 合成研究",
+    "7,8": "第2章 合成结果"
+  },
+  "repair_prompt_observed": false,
+  "closed_without_save": true,
+  "hash_after_close_unchanged": true,
+  "observation": "Opened the actual final file in local Word; inspected all eight pages at reduced zoom. No F9, updateFields, save or cache-number fabrication. Word screenshot images were observed live, not archived as separate files. Archived PNG contact sheets are LibreOffice renders, not Word screenshots."
+}

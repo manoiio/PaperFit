@@ -12,7 +12,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-4'
+VERSION='onepass-5'
 
 
 def command_binding(model,extra,requirements=None):
@@ -31,11 +31,11 @@ def clean_stage(model,state):
     # Only paths issued by this isolated command, never enumerate task directories.
     for h in stage.history[state.get('history_length',len(stage.history)):]:
         parent=Path(h['stem']).parts[0]
-        if parent.startswith('round-records-'):
+        if parent.startswith(('round-records-','dynamic-records-')):
             folder=stage.task_dir/parent
             if folder.parent==stage.task_dir and not folder.is_symlink():shutil.rmtree(folder,ignore_errors=True)
         output=Path(h['result']['output'])
-        if output.parent==stage.task_dir and output.name.startswith('fixed-'):output.unlink(missing_ok=True)
+        if output.parent==stage.task_dir and output.name.startswith(('fixed-','pages-fixed-','dynamic-fixed-')):output.unlink(missing_ok=True)
     path=stage.custom_rules_path
     if path and path!=state.get('original_rule_path') and path.parent==stage.task_dir and path.name.startswith('user-rules-'):path.unlink(missing_ok=True)
 
@@ -99,7 +99,7 @@ def overlay(stage,text,result,*,segments=None,name="本次补充排版要求"):
         if note.get('location') in locations and note.get('text'):
             item={'fields':[],'quote':note['text'],'location':locations[note['location']],'reason':'unsupported'}
             if item not in notices['main']:notices['main'].append(item)
-    bundle=rb.build(name,mods,segments,receipt,base,ss,notices);rb.compile_bundle(bundle,base)
+    bundle=rb.build(name,mods,segments,receipt,base,ss,notices,assembly=prior.get('assembly'));rb.compile_bundle(bundle,base)
     stage._save_custom(bundle);stage.sync_rules()
     if stage.note_enabled and stage.note_draft and any(__import__('ai.smart_spec',fromlist=['module']).module(n)=='notes' for n in touched):
         note_scope=deepcopy(stage.note_draft);note_scope['template']=deepcopy(mods['notes']);note_scope['confirmed']=False
@@ -185,7 +185,21 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
             stage.import_rule_bundle(__import__('core.rule_bundle',fromlist=['raw']).raw(requirements['bundle']))
             stage.apply_workbench(acknowledged=True)  # This start command, not a restored checkbox, authorizes use.
             state['audit']['requirements_source']={'kind':'saved','name':requirements['bundle']['name'],'file_sha256':requirements['file_sha256'],'requests':0}
-        if extra.strip() or requirements is not None and requirements['kind']=='file':
+        file_policy_only=False
+        if requirements is not None and requirements['kind']=='file':
+            from core.page_policy import extract
+            try:
+                pp,remaining,_=extract('\n'.join(s['text'] for s in requirements['extraction']['segments']))
+                file_policy_only=pp is not None and not remaining.strip()
+            except DemoError:pass
+        if file_policy_only:
+            state['audit']['API']['requirements']={'requests':0,'source':'local_exact_file_strategy','file_sha256':requirements['extraction']['file_sha256']}
+            state['audit']['requirements_source']={'kind':'file','name':requirements['name'],'file_sha256':requirements['extraction']['file_sha256']}
+            unextracted=requirements['extraction'].get('unextracted',[])
+            if unextracted:
+                state['audit']['requirements_not_applied']=[{'location':'文件','text':x,'reason':'未提取，不能宣称全部执行'} for x in unextracted]
+                state['questions'].append({'id':'requirements_partial','text':'已证明页码/动态策略；文件另有未提取内容。','question':'是否仅处理已证明策略？','options':{'partial':'仅执行已证明策略','template':'仍用当前要求，不采用文件','edit':'返回更换要求文件'}})
+        if extra.strip() or requirements is not None and requirements['kind']=='file' and not file_policy_only:
             phase('理解排版要求')
             try:
                 if requirements is None:supplement_supported(extra)
@@ -199,7 +213,10 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
                     state['audit']['notes_prepared_before_supplement']=deepcopy(initial_ranges['note_counts'])
                 from ai.semantic_spec import parse_requirements
                 # One supplement POST, native field validators, no retry.
-                if requirements is None:result=(spec_parser or parse_requirements)(extra)
+                if requirements is None:
+                    from core.page_policy import extract
+                    _,format_extra,_=extract(extra)
+                    result=(spec_parser or parse_requirements)(format_extra) if format_extra.strip() else None
                 else:
                     from ai.file_spec import parse_requirements as parse_file
                     from ai.short_spec import settings
@@ -211,7 +228,9 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
                         result=file_parser(requirements['extraction']) if file_parser else parse_file(requirements['extraction'],config=cfg)
                         if requirements_cache is not None:requirements_cache.update(key=cache_key,result=deepcopy(result))
                 if state.get('id')!=token:raise DemoError('本次处理已取消')
-                if requirements is None:state['audit']['API']['requirements']=overlay(stage,extra,result)
+                if requirements is None:
+                    if result is not None:state['audit']['API']['requirements']=overlay(stage,format_extra,result)
+                    else:state['audit']['API']['requirements']={'requests':0,'source':'local_exact_strategy'}
                 else:
                     state['audit']['API']['requirements']=overlay(stage,'',result,segments=requirements['extraction']['segments'],name=('部分文件要求 · ' if result['notices'] else '文件要求覆盖 · ')+requirements['extraction']['file_sha256'])
                     state['audit']['requirements_source']={'kind':'file','name':requirements['name'],'file_sha256':requirements['extraction']['file_sha256'],'notes':deepcopy(requirements['extraction']['notes'])}
@@ -230,6 +249,25 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
                 if any(w in message for w in ('API','密钥','.env','模型','JSON','连接','超时')):message='这次暂时无法理解补充要求。可以沿用当前排版要求，或修改文字后再试。'
                 state['questions'].append({'id':'requirements','text':message,'question':'补充要求尚不能安全执行，您希望怎样继续？',
                                            'options':{'template':'本次沿用页面显示的原有要求','edit':'返回更换要求文件' if requirements is not None else '返回修改补充要求'}})
+        from .assembly_session import policy_for
+        from core.page_policy import extract as extract_pages
+        page_text=extra if requirements is None else '\n'.join(s['text'] for s in requirements['extraction']['segments']) if requirements['kind']=='file' else ''
+        try:parsed_policy,_,page_evidence=extract_pages(page_text) if page_text.strip() else (None,'',[])
+        except DemoError as exc:
+            parsed_policy=None;page_evidence=[]
+            state['audit']['page_policy_not_applied']=str(exc)
+            if not any(q['id']=='requirements' for q in state['questions']):state['questions'].append({'id':'requirements','text':str(exc),'question':'这些要求尚不能执行，您希望怎样继续？','options':{'template':'本次沿用原有要求','edit':'返回修改要求'}})
+        state['assembly']=parsed_policy or policy_for(stage)
+        if state['assembly'] is None and (getattr(stage,'page_layout_draft',None) or {}).get('explicit') and stage.current_rule_bundle().get('assembly'):
+            from core import rule_bundle as rb,load_rules
+            bundle=stage.current_rule_bundle();bundle.pop('assembly',None);stage._save_custom(rb.validate(bundle,load_rules(stage.rules_path)));stage.sync_rules()
+        if state['assembly']:
+            old_draft=getattr(stage,'page_layout_draft',None) or {}
+            if not old_draft.get('explicit'):stage.page_layout_draft={'explicit':False,'enabled':True,'policy':deepcopy(state['assembly']),'input_sha256':stage.inventory['input_sha256'],'regions':deepcopy(old_draft.get('regions',[]))}
+            state['audit']['authorization']='本次开始命令：所列普通格式、安全数字同步和分节页码策略；不含对象移动、宽度及域批量刷新'
+            from core import rule_bundle as rb
+            bundle=stage.current_rule_bundle();bundle['assembly']=deepcopy(state['assembly']);stage._save_custom(rb.validate(bundle,__import__('core',fromlist=['load_rules']).load_rules(stage.rules_path)));stage.sync_rules()
+            state['audit']['assembly_authorization']={'policy':deepcopy(state['assembly']),'evidence':page_evidence,'source_locations':[{'quote':e['quote'],'locations':[s['location'] for s in requirements['extraction']['segments'] if e['quote'] in s['text']]} for e in page_evidence] if requirements is not None and requirements['kind']=='file' else [],'grant':'本次开始命令授权所列安全事务，不冒充旧勾选'}
         phase('识别论文内容');proposal=suggest(stage)
         prepared=structure.prepare(stage,include_tables=True,preserve_paragraphs=prior_types is not None);state['audit']['candidate_count']=len(prepared['request']['candidates'])
         state['audit']['candidate_kinds']={'paragraphs':sum(c.get('kind')!='table' for c in prepared['request']['candidates']),'tables':sum(c.get('kind')=='table' for c in prepared['request']['candidates']),'remaining':prepared['remaining']}
@@ -253,6 +291,8 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
             state['audit']['prior_classification_preserved']=True
         state['audit']['auto_ranges']=deepcopy(proposal.get('auto_ranges'))
         if prior_types is None:state['questions']+=structure_questions(stage,proposal)
+        from .assembly_session import prepare as prepare_assembly
+        state['questions']+=prepare_assembly(stage,state,proposal)
         seal_proposal(stage,proposal);state['proposal']=proposal
         if state.get('id')!=token or command_binding(model,extra,requirements)!=source:raise DemoError('识别期间文档或要求已变化，本次结果未接入。')
         if state['questions']:
@@ -268,7 +308,7 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
 def continue_command(model,state,extra,decisions,*,requirements=None,emit=None):
     if state.get('status')!='waiting' or not current(model,state,extra,requirements) or state.get('pending_seal')!=pending_seal(state):raise DemoError('文档、要求或待确认事项已变化，请重新开始。')
     if set(decisions)!={q['id'] for q in state['questions']} or any(decisions[q['id']] not in q['options'] for q in state['questions']):raise DemoError('请决定全部事项，或明确选择暂不处理。')
-    if decisions.get('requirements')=='edit' or decisions.get('requirements_partial')=='edit':cancel(model,state);return state
+    if decisions.get('requirements')=='edit' or decisions.get('requirements_partial')=='edit' or decisions.get('page_conflict')=='edit':cancel(model,state);return state
     if decisions.get('requirements_partial')=='template':
         old=state['stage'];clean_stage(model,state);stage=isolated(model)
         # Same unmodified DOCX and exact accepted structural draft; only the
@@ -276,9 +316,14 @@ def continue_command(model,state,extra,decisions,*,requirements=None,emit=None):
         if old.inventory['input_sha256']!=stage.inventory['input_sha256']:raise DemoError('输入变化，不能继承范围建议')
         state['stage']=stage;state['proposal']['source_binding']=binding(stage)
         state['audit']['file_requirements_declined']=True
+    if decisions.get('requirements')=='template' or decisions.get('requirements_partial')=='template':
+        from .assembly_session import policy_for
+        state['assembly']=policy_for(model);state.pop('page_regions',None)
     for q in state['questions']:
         if 'paragraph' in q:state['proposal']['draft']['paragraph_types'][q['paragraph']]=decisions[q['id']]
         if 'table' in q:state['proposal']['draft']['table_types'][q['table']]=decisions[q['id']]
+    from .assembly_session import continue_regions
+    continue_regions(state['stage'],state,decisions)
     state['audit']['user_decisions']=deepcopy(decisions)
     seal_proposal(state['stage'],state['proposal']);state['status']='running'
     token=state['id'];own={'stage':state['stage'],'history_length':state['history_length'],'original_rule_path':state['original_rule_path']}
@@ -301,6 +346,9 @@ def finish(model,state,*,emit=None,command_id=None):
     state['audit']['confirmed_scope_sha256']=fingerprint(stage.classification_confirmed or stage.confirmed)
     emit('调整格式');state['audit']['phases'].append('调整格式')
     outcome=execute(stage,plan,{})
+    from .assembly_session import execute as execute_assembly
+    execute_assembly(stage,state,emit)
+    if state.get('outcome_changes') is not None:outcome={**outcome,'changes':state['outcome_changes'],'rounds':len(state['audit'].get('assembly_steps',[]))}
     emit('检查修改后的文件');state['audit']['phases'].append('检查修改后的文件')
     if stage.result:stage.downloads()
     state['audit']['processed_scope']={'tables':deepcopy(stage.table_types) if stage.table_enabled else {},'notes':deepcopy(stage.note_draft['objects']) if stage.note_enabled else []}

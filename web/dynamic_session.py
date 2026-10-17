@@ -17,13 +17,13 @@ def context(model):
         path=Path(model.result['output']);sc=model.result['output_classification_manifest'];parent=model.result['round']['number']
     else:path=model.input_path;sc=model.classification_confirmed;parent=model.current_round
     value={'input':str(path),'sha256':sha256(path.read_bytes()),'classification':deepcopy(sc),'parent':parent,
-           'current_scope':model._scope_snapshot(),'selected':model.selected,'rules':model.rules_hash,'history':model.generation_count,'execution':execution_hash()}
+           'assembly_draft':deepcopy(getattr(model,'page_layout_draft',None)),'current_scope':model._scope_snapshot(),'selected':model.selected,'rules':model.rules_hash,'history':model.generation_count,'execution':execution_hash()}
     return value,fingerprint(value)
 
-def preview(model,state,*,complete=False):
+def preview(model,state,*,complete=False,automatic=False):
     ctx,b=context(model)
     cancel(model,state)
-    plan=dynamic.propose(ctx['input'],ctx['classification'],complete=complete)
+    plan=dynamic.propose(ctx['input'],ctx['classification'],complete=complete,automatic=automatic)
     folder=model.task_dir/('dynamic-preview-'+uuid4().hex);folder.mkdir()
     try:
         result=dynamic.rehearse(ctx['input'],folder/'dynamic.docx',ctx['classification'],plan,**model._base_rules_arguments())

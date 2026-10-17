@@ -58,6 +58,25 @@ class Package:
         self.ambiguous_sections = len(list(self.root.iter(q('sectPr')))) != len(self.sections)
         self.signed = any(n.startswith('_xmlsignatures/') for n in self.parts)
 
+    def structure_bytes(self, replacements, additions):
+        """Separate controlled OPC extension; legacy bytes() never adds members."""
+        import re
+        allowed={'word/document.xml','word/_rels/document.xml.rels','[Content_Types].xml'}
+        if type(replacements) is not dict or set(replacements)-allowed or type(additions) is not dict or set(additions)&set(self.parts):
+            raise DemoError('结构写出部件白名单不符或覆盖已有成员')
+        if len(additions)>360 or any(not re.fullmatch(r'word/(?:footerPF[1-9][0-9]*\.xml|_rels/footerPF[1-9][0-9]*\.xml\.rels)',n) for n in additions):
+            raise DemoError('只允许本次受控新增页脚及其关系')
+        if any(type(v) is not bytes or len(v)>2*1024*1024 for v in [*replacements.values(),*additions.values()]):raise DemoError('结构部件类型或容量无效')
+        if not replacements and not additions:return self.raw
+        if sum(map(len,self.parts.values()))+sum(map(len,additions.values()))>100*1024*1024:raise DemoError('结构输出解压总量超限')
+        out=BytesIO()
+        with zipfile.ZipFile(out,'w') as z:
+            z.comment=self.comment
+            for info in self.infos:z.writestr(info,replacements.get(info.filename,self.parts[info.filename]))
+            for name,data in additions.items():
+                info=zipfile.ZipInfo(name,date_time=(2026,1,1,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;z.writestr(info,data)
+        return out.getvalue()
+
     def bytes(self, changed):
         if not changed:
             return self.raw

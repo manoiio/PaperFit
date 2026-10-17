@@ -1,0 +1,71 @@
+{
+  "API_requests": 0,
+  "local_smart_DOCX_bytes_equal": true,
+  "steps": [
+    {
+      "kind": "format",
+      "round": 1,
+      "input_sha256": "a9a2ceded1f268a4f63133746334952554e0e1d471a5a5239921fedbab131ffe",
+      "output_sha256": "eeaaf07117dff5eda4e8da9a5c44953228a58cbbeb609324246e411b61b8a9c6",
+      "changes": 35
+    },
+    {
+      "kind": "dynamic_text",
+      "round": 2,
+      "input_sha256": "eeaaf07117dff5eda4e8da9a5c44953228a58cbbeb609324246e411b61b8a9c6",
+      "output_sha256": "49da3862c4590399d1825aa7b8ea9d72a394c6b6e365fd13ab31025efcdb2e7e",
+      "changes": 4
+    },
+    {
+      "kind": "section_pages",
+      "round": 3,
+      "input_sha256": "49da3862c4590399d1825aa7b8ea9d72a394c6b6e365fd13ab31025efcdb2e7e",
+      "output_sha256": "8b8ecf63c59a30a92041c7633044cc65c9071e941dbeb3a6bfc2c3f87567c2fb",
+      "changes": 12
+    }
+  ],
+  "independent": {
+    "only_authored_ordinary_attributes": true,
+    "only_authored_numeric_slots": true,
+    "main_text_objects_and_runs_preserved_by_structure_stage": true,
+    "all_old_header_footer_and_unselected_parts_byte_equal": true,
+    "all_existing_relationships_and_content_types_preserved": true,
+    "PAGE_empty_cache_not_fabricated": true,
+    "four_sections_variants_and_numbering_verified": true,
+    "physical_page_numbers": "not proved by XML; see actual page images and Word record",
+    "new_parts": [
+      "word/footerPF1.xml",
+      "word/footerPF10.xml",
+      "word/footerPF11.xml",
+      "word/footerPF12.xml",
+      "word/footerPF2.xml",
+      "word/footerPF3.xml",
+      "word/footerPF4.xml",
+      "word/footerPF5.xml",
+      "word/footerPF6.xml",
+      "word/footerPF7.xml",
+      "word/footerPF8.xml",
+      "word/footerPF9.xml"
+    ]
+  },
+  "final_sha256": "8b8ecf63c59a30a92041c7633044cc65c9071e941dbeb3a6bfc2c3f87567c2fb",
+  "actual_browser_DOCX_bytes_equal": true,
+  "actual_local_browser_DOCX_bytes_equal": true,
+  "local_browser_note": "Initial local format+page run omitted numeric sync under its old explicit-off UI draft; after explicitly enabling numeric sync and re-confirming, three-stage local result was downloaded and byte-matched. New complete-preset default-on is separately UI regression tested.",
+  "final_source_reproduction_byte_equal": true,
+  "single_section_independent": {
+    "new_boundaries_after_paragraphs": [
+      2,
+      4,
+      8
+    ],
+    "only_duplicate_start_pageBreakBefore_removed": [
+      3,
+      5,
+      9
+    ],
+    "original_section_settings_cloned_except_explicit_page_footer_type": true,
+    "no_new_paragraph_or_object": true,
+    "unselected_old_parts_byte_equal": true
+  }
+}

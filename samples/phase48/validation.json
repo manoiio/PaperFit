@@ -1,0 +1,26 @@
+{
+  "baseline": {
+    "branch": "main",
+    "commit": "96c2d19",
+    "tests": 1311
+  },
+  "final_local_suite": {
+    "command": "python scripts/run_offline_tests.py",
+    "tests": 1326,
+    "seconds": 384.192,
+    "status": "passed",
+    "real_paid_requests_sent": 0,
+    "blocked_unmocked_attempts": 0
+  },
+  "related_suite": {
+    "tests": 15,
+    "seconds": 74.769,
+    "status": "passed",
+    "included_in_full_suite": true
+  },
+  "real_DeepSeek_development_requests": 0,
+  "remote_CI": "manual; not triggered",
+  "repository_audit": "links, fixture hashes, no historical work dependencies, staged privacy scan and diff checks passed",
+  "browser_vs_local_DOCX_sha256": "8b8ecf63c59a30a92041c7633044cc65c9071e941dbeb3a6bfc2c3f87567c2fb",
+  "Word_observation": "see word-observation.json; no COM or field refresh"
+}

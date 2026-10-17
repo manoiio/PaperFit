@@ -39,6 +39,9 @@ def adapt(data,extraction):
     req=request_for(extraction,version=data.get('version',VERSION) if type(data) is dict else VERSION);exact(data,('version','items','background','issues'),'response')
     if data['version'] not in (VERSION,'requirements-file-ids-v1') or any(type(data[n]) is not list for n in ('items','background','issues')) or len(data['items'])>40 or len(data['issues'])>80 or len(data['background'])>80:raise DiagnosticError([problem('response','protocol','文件任务版本/列表类型或容量无效')])
     sources={s['id']:s for s in req['sources']};fields={};notices=[];accounted=set();seen=set()
+    from core.page_policy import extract
+    strategy_ids={sid for sid,s in sources.items() if extract(s['text'])[0] is not None and not extract(s['text'])[1].strip()}
+    accounted.update(strategy_ids)
     def notice(sid,why):
         s=sources.get(sid,{});notices.append({'source':sid,'location':s.get('location'),'text':s.get('text','')[:200],'reason':why})
     for i,item in enumerate(data['items']):
@@ -53,11 +56,12 @@ def adapt(data,extraction):
         if sid not in sources:raise DemoError('背景来源越权')
         if sid in accounted:raise DemoError('同一条款不能同时是执行依据和背景')
         accounted.add(sid)
-        if not background(sources[sid]['text']):notice(sid,'该条款不能可靠视为普通背景，尚未执行')
+        if sid not in strategy_ids and not background(sources[sid]['text']):notice(sid,'该条款不能可靠视为普通背景，尚未执行')
     for i,issue in enumerate(data['issues']):
         exact(issue,('source','reason'),f'issues[{i}]');sid=issue['source']
         if type(sid) is not str or sid not in sources or type(issue['reason']) is not str or not 1<=len(issue['reason'])<=200:raise DemoError('未支持条款的来源/原因无效')
-        accounted.add(sid);notice(sid,'尚未执行：'+issue['reason'])
+        accounted.add(sid)
+        if sid not in strategy_ids:notice(sid,'尚未执行：'+issue['reason'])
     for sid,s in sources.items():
         if sid not in accounted:notice(sid,'模型未解释此条款，未视为已处理')
         try:expected=coverage(s['text'])
@@ -80,9 +84,11 @@ def adapt(data,extraction):
 def parse_requirements(extraction,*,transport=None,config=None):
     req=request_for(extraction);config=settings() if config is None else config
     sent={**req,'fields':wire_fields(req['fields'])}
+    from core.page_policy import extract
+    sent['local_strategy_sources']=[s['id'] for s in req['sources'] if extract(s['text'])[0] is not None and not extract(s['text'])[1].strip()]
     text=json.dumps(sent,ensure_ascii=False,sort_keys=True)
     if len(text)>24000:raise DemoError('完整要求请求超过24000字符，未请求；请缩小要求章节。')
-    payload={'model':config.model,'messages':[{'role':'system','content':PROMPT},{'role':'user','content':text}],'response_format':{'type':'json_object'},'thinking':{'type':'disabled'},'max_tokens':5000,'stream':False}
+    payload={'model':config.model,'messages':[{'role':'system','content':PROMPT+'\nlocal_strategy_sources是程序已严格证明、另行执行的有限页码/动态策略。无需为这些来源编造文字格式字段，可把ID放background；程序保留真实原文证据，不由模型授权。'},{'role':'user','content':text}],'response_format':{'type':'json_object'},'thinking':{'type':'disabled'},'max_tokens':5000,'stream':False}
     result=tracked(text,payload,lambda d:adapt(d,extraction),purpose='requirements_file',config=config,transport=transport or http_post,real=transport is None)
     adapted=result.pop('draft');result.update(adapted);result['receipt'].update(protocol_version=VERSION,file_sha256=extraction['file_sha256'])
     return result

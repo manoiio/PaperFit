@@ -29,6 +29,11 @@ def coverage(text):
     stops the complete supplement; native candidate validators prove every value.
     """
     validate_text(text);names=set()
+    from core.page_policy import extract
+    policy,remaining,_=extract(text)
+    if policy is not None:
+        if not remaining.strip():return set()
+        text=remaining
     text=re.sub(r'在\s*SCUT\s*(?:的)?(?:排版)?要求(?:的)?基础上|(?:沿用|按|使用)\s*SCUT\s*(?:默认)?要求','',text,flags=re.I)
     for sentence in re.split('[。；;\n]',text):
         if not sentence.strip(' ，,、'):continue

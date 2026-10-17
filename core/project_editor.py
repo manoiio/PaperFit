@@ -5,7 +5,7 @@ from .spec_validation import validate_draft as short_draft, validate_text
 from .rule_config import validate_value as short_value
 from .engine import load_rules
 
-KEYS=('norm_text','norm_segments','historical_norm_sha256','template_draft','template_import','template_modes','template_values','template_touched','template_name','template_receipt','spec_text','ai_draft','ai_receipt','draft_modes','draft_values','draft_edited','workbench')
+KEYS=('norm_text','norm_segments','historical_norm_sha256','template_draft','template_import','template_modes','template_values','template_touched','template_name','template_receipt','spec_text','ai_draft','ai_receipt','draft_modes','draft_values','draft_edited','workbench','page_layout_draft')
 
 def receipt(data):
     if data is None:return
@@ -14,7 +14,12 @@ def receipt(data):
     safe_text(data['timestamp_utc'],40)
 
 def validate_editor(data, rules_path):
-    exact({k:v for k,v in data.items() if k!='workbench'},[k for k in KEYS if k!='workbench'],'编辑草稿')
+    exact({k:v for k,v in data.items() if k not in ('workbench','page_layout_draft')},[k for k in KEYS if k not in ('workbench','page_layout_draft')],'编辑草稿')
+    if data.get('page_layout_draft') is not None:
+        from .page_policy import validate
+        d=data['page_layout_draft'];exact({k:v for k,v in d.items() if k!='explicit'},('enabled','policy','input_sha256','regions'),'页码方案草稿');require(type(d.get('explicit',False)) is bool,'页码方案选择无效');require(type(d['enabled']) is bool and type(d['regions']) is list and len(d['regions'])<=60,'页码草稿容量无效');validate(d['policy'])
+        from .project import hash_value
+        hash_value(d['input_sha256'])
     if 'workbench' in data:
         from .rule_bundle import validate_state
         validate_state(data['workbench'],load_rules(rules_path))

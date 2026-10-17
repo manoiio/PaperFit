@@ -21,7 +21,7 @@ def isolated(model):
 def binding(model,*,rounds=None):
     model._current()
     return fingerprint({'scope':model._scope_snapshot(),'confirmations':{k:getattr(model,k) for k in ATTRS},
-                        'report':model.report,'selection':model.selected,'history':model._history_binding(),
+                        'assembly_draft':getattr(model,'page_layout_draft',None),'report':model.report,'selection':model.selected,'history':model._history_binding(),
                         'module_decisions':__import__('web.auto_ranges',fromlist=['decisions']).decisions(model),'rounds':model.generation_count if rounds is None else rounds,'execution':execution_hash(),'version':VERSION})
 
 def suggest(model):

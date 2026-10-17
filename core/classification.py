@@ -100,11 +100,13 @@ def numbering_heading_level(pkg, res, p):
         return level+1
     except (Unresolved,ValueError,AttributeError,DemoError,ET.XMLSyntaxError):return None
 
-def suggest_paragraph_types(input_path, *, include_sections=False):
+def suggest_paragraph_types(input_path, *, include_sections=False, body_start=None):
     pkg=Package(input_path);res=Resolver(pkg);rows=[];zone='front';main=False
     body_children=list(pkg.root.find(q('body')))
+    if body_start is not None and (type(body_start) is not int or not 1<=body_start<=len(pkg.paragraphs)):raise DemoError('明确正文起点无效')
     heading_seen=False
     for n,p in enumerate(pkg.paragraphs,1):
+        if n==body_start:zone='body';main=True;heading_seen=True
         text=''.join(p.xpath('.//w:t/text()',namespaces=NS)).strip()
         ps=p.find('w:pPr/w:pStyle',NS);sid=ps.get(q('val')) if ps is not None else None
         name=res.styles[sid].find(q('name')) if sid in res.styles else None

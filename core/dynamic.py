@@ -45,9 +45,9 @@ def spans(p,start,end,replacement):
     if covered!=end-start or not out:raise DemoError('编号范围不能精确映射到普通文字节点')
     return out
 
-def propose(input_path,classification,*,complete=False):
+def propose(input_path,classification,*,complete=False,automatic=False):
     pkg=Package(input_path);m=validate_classification(pkg,classification)
-    if complete is not True:raise DemoError('连续编号须明确确认本次相关章节题注范围完整；部分范围不能猜序列')
+    if complete is not True and automatic is not True:raise DemoError('连续编号须明确确认本次相关章节题注范围完整；部分范围不能猜序列')
     groups=defaultdict(list);blocked=[];heads=[];old=Counter();rows=[]
     for ns,typ in sorted(m['paragraph_types'].items(),key=lambda x:int(x[0])):
         n=int(ns);p=pkg.paragraphs[n-1]
@@ -109,6 +109,25 @@ def propose(input_path,classification,*,complete=False):
     out={'version':VERSION,'input_sha256':pkg.hash,'scope_sha256':digest(m),'complete_authorized':True,
          'chapter_evidence':[{'paragraph':h[0],'number':h[1],'reason':h[2]} for h in heads],
          'edits':edits,'accepted_captions':accepted,'blocked_groups':blocked,'word':word_capability(),'limits':deepcopy(LIMITS)}
+    if automatic:
+        out['complete_authorized']=False
+        # Independent full inventory proof, not an invented manual complete flag.
+        reasons=[]
+        for i,p in enumerate(pkg.paragraphs,1):
+            typ=m['paragraph_types'][str(i)];tx=text(p)
+            if NUMBER.search(tx) and typ not in ('body','figure_caption','table_caption') and str(i) not in m.get('material_exclusions',{}):reasons.append('有未纳入安全引用范围的图表编号文字')
+        from .front import fields
+        if any(re.match(r'\s*(REF|PAGEREF|SEQ)(?:\s|$)',f['instruction'],re.I) for f in fields(pkg.root)):reasons.append('文档含REF/PAGEREF/SEQ，关联无法完整同步')
+        from .internal_refs import _stories
+        stories,story_issues=_stories(pkg)
+        if story_issues:reasons.append('相关故事清单不完整，不能证明全部关联已覆盖')
+        for part,kind,story in stories:
+            if part!='word/document.xml' and (NUMBER.search(text(story)) or any(re.match(r'\s*(REF|PAGEREF|SEQ)(?:\s|$)',f['instruction'],re.I) for f in fields(story))):reasons.append('注释或页眉页脚存在未覆盖的图表关联')
+        top=set(pkg.paragraphs)
+        if any(NUMBER.search(text(p)) for p in pkg.root.iter(q('p')) if p not in top):reasons.append('非顶层容器含图表编号，不能证明关联完整')
+        out['automatic_scope']={'method':'full_supported_inventory','unresolved':sorted(set(reasons)),'not_manual_complete_confirmation':True}
+        if reasons:
+            out['blocked_groups']+= [{'group':['automatic_inventory'],'paragraphs':out['accepted_captions'],'reasons':sorted(set(reasons))}];out['accepted_captions']=[];out['edits']=[]
     out['seal']=digest(out);return out
 
 def _patch(root,edits):
@@ -127,7 +146,7 @@ def _patch(root,edits):
 
 def validate_output(input_path,output_path,plan,classification):
     original=Package(input_path);saved=Package(output_path)
-    if propose(input_path,classification,complete=True)!=plan:raise DemoError('动态计划、范围或执行代码不对应')
+    if propose(input_path,classification,complete=True,automatic='automatic_scope' in plan)!=plan:raise DemoError('动态计划、范围或执行代码不对应')
     if set(original.parts)!=set(saved.parts):raise DemoError('包部件集合变化')
     if any(v!=saved.parts[k] for k,v in original.parts.items() if k!='word/document.xml'):raise DemoError('动态事务改动了未授权部件')
     expected=parse(original.parts['word/document.xml']);_patch(expected,plan['edits'])
@@ -139,7 +158,7 @@ def rehearse(input_path,output_path,classification,plan,**rules_args):
     from . import check_document
     from .dependencies import problem_delta
     new_path(output_path,input_path);pkg=Package(input_path)
-    if propose(input_path,classification,complete=True)!=plan:raise DemoError('动态方案已变化')
+    if propose(input_path,classification,complete=True,automatic='automatic_scope' in plan)!=plan:raise DemoError('动态方案已变化')
     if not plan['edits']:raise DemoError('没有安全动态改动；未生成无意义副本')
     before=check_document(input_path,mode='academic',classification_manifest=classification,**rules_args)
     _patch(pkg.root,plan['edits']);write_new(output_path,pkg.bytes(True),input_path)

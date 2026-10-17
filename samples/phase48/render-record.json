@@ -1,0 +1,53 @@
+[
+  {
+    "kind": "original",
+    "document_sha256": "a9a2ceded1f268a4f63133746334952554e0e1d471a5a5239921fedbab131ffe",
+    "generated_at": "2026-10-17T10:36:47.870299+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "page_count": 8,
+    "preview_range": [
+      1,
+      8
+    ],
+    "input_bytes_unchanged": true,
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "limitation": "不是Microsoft Word验收；分页可能不同。格式属性通过与可见排版复核分别记录。"
+  },
+  {
+    "kind": "final",
+    "document_sha256": "8b8ecf63c59a30a92041c7633044cc65c9071e941dbeb3a6bfc2c3f87567c2fb",
+    "generated_at": "2026-10-17T10:16:02.035854+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "page_count": 8,
+    "preview_range": [
+      1,
+      8
+    ],
+    "input_bytes_unchanged": true,
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "limitation": "不是Microsoft Word验收；分页可能不同。格式属性通过与可见排版复核分别记录。"
+  },
+  {
+    "kind": "single",
+    "document_sha256": "e9485278b193d270921016606a69aebf0f0d7c02f7907d8fcc704617d2ffe1ef",
+    "generated_at": "2026-10-17T10:36:52.170201+00:00",
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "page_count": 8,
+    "preview_range": [
+      1,
+      8
+    ],
+    "input_bytes_unchanged": true,
+    "font_notes": [
+      "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+    ],
+    "limitation": "不是Microsoft Word验收；分页可能不同。格式属性通过与可见排版复核分别记录。"
+  }
+]

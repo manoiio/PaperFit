@@ -48,7 +48,7 @@ class WorkbenchSession(DiagnosticSession):
   notices=deepcopy((active or {}).get('notices',{m:[] for m in rb.MODULES}))
   if active and 'notices' not in active and self.workbench['draft'] and self.workbench['receipt'] and self.workbench['receipt']['timestamp_utc']==active['extraction']['timestamp_utc']:
    notices=deepcopy(self.workbench['draft']['issues'])
-  return rb.build(active['name'] if active else '用户确认的组合演示要求',mods,segments,extraction,base,provenance,notices)
+  return rb.build(active['name'] if active else '用户确认的组合演示要求',mods,segments,extraction,base,provenance,notices,assembly=(active or {}).get('assembly'))
  def seed_workbench_module(self,module,scope):
   active=self.workbench['active']
   if active and active['modules'][module] is not None:scope['template']=deepcopy(active['modules'][module])
@@ -162,7 +162,7 @@ class WorkbenchSession(DiagnosticSession):
   for m,issues in d['issues'].items():
    for issue in issues:
     if issue not in notices[m]:notices[m].append(deepcopy(issue))
-  return rb.build(d['name'],mods,segments,extraction,base,provenance,notices)
+  return rb.build(d['name'],mods,segments,extraction,base,provenance,notices,assembly=d['baseline'].get('assembly'))
  def apply_workbench(self,*,acknowledged=False):
   if acknowledged is not True:raise DemoError('须核对全部差异及完整配置后确认应用')
   if self.mode!='academic':raise DemoError('统一工作台只在单文档模式应用')
@@ -227,7 +227,7 @@ class WorkbenchSession(DiagnosticSession):
     for s in obj['template']['norm_excerpt']:
      if s not in segs:segs.append(s)
    sources=deepcopy(current['provenance']);sources[m]=rb.origins(m,obj)
-   obj=rb.build('导入的组合演示要求',mods,segs,obj['template']['extraction'] if m=='main' else current['extraction'],base,sources,current.get('notices'))
+   obj=rb.build('导入的组合演示要求',mods,segs,obj['template']['extraction'] if m=='main' else current['extraction'],base,sources,current.get('notices'),assembly=current.get('assembly'))
   self.archive_diagnostic()
   w=self.workbench;w.update(text='',segments=[],confirmed_excerpt=None,receipt=None,parse_attempted=False,origin='historical_import',historical=True)
   self.start_workbench_draft();w['draft']['issues']=deepcopy(obj.get('notices',{m:[] for m in rb.MODULES}));w['draft']['baseline']=obj;w['draft']['name']=obj['name'];w['draft']['imported']=True

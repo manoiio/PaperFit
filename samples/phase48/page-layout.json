@@ -1,0 +1,299 @@
+{
+  "adoption": {
+    "current_input_auto_switched": false,
+    "fix_calls": 0,
+    "validation": {
+      "changed_parts": [
+        "[Content_Types].xml",
+        "word/_rels/document.xml.rels",
+        "word/document.xml"
+      ],
+      "input_sha256": "49da3862c4590399d1825aa7b8ea9d72a394c6b6e365fd13ab31025efcdb2e7e",
+      "main_object_order_preserved": true,
+      "new_parts": [
+        "word/footerPF1.xml",
+        "word/footerPF10.xml",
+        "word/footerPF11.xml",
+        "word/footerPF12.xml",
+        "word/footerPF2.xml",
+        "word/footerPF3.xml",
+        "word/footerPF4.xml",
+        "word/footerPF5.xml",
+        "word/footerPF6.xml",
+        "word/footerPF7.xml",
+        "word/footerPF8.xml",
+        "word/footerPF9.xml"
+      ],
+      "output_sha256": "8b8ecf63c59a30a92041c7633044cc65c9071e941dbeb3a6bfc2c3f87567c2fb",
+      "physical_pages_not_computed": true
+    }
+  },
+  "plan": {
+    "added": {
+      "word/footerPF1.xml": "8c6d87169887de4e0260daf4d591533106e975c18a2635bc782c0a6d360f9a16",
+      "word/footerPF10.xml": "e4ec873a3c8c8853ed597c02976c29afe9805c909b7020d6e854c764f36d8d5d",
+      "word/footerPF11.xml": "4699a2b227e28649b2b9e34f89f9341dc46cb58919334089b264840254cd85b7",
+      "word/footerPF12.xml": "4699a2b227e28649b2b9e34f89f9341dc46cb58919334089b264840254cd85b7",
+      "word/footerPF2.xml": "99ea406dd814fb7153ec88cb8b0754b4dd611eac6a504d1997687d0e1689c4e5",
+      "word/footerPF3.xml": "99ea406dd814fb7153ec88cb8b0754b4dd611eac6a504d1997687d0e1689c4e5",
+      "word/footerPF4.xml": "8cf625b0a2ee533141df6f1754c4f21f497d78faba79a43a03d8e7e95f4644e5",
+      "word/footerPF5.xml": "c657640ef632f296a9ac2826895ee52a05307949be3824bb73a3cc470060b454",
+      "word/footerPF6.xml": "c657640ef632f296a9ac2826895ee52a05307949be3824bb73a3cc470060b454",
+      "word/footerPF7.xml": "fa703d3c1a8202e72ef158b92dfabad5020145c4f3f4d6fba8b1692e67f6d888",
+      "word/footerPF8.xml": "d749a77a70c67cd07288bf241770e2d9e5b85d7724fcca93f723febe54f9d00d",
+      "word/footerPF9.xml": "d749a77a70c67cd07288bf241770e2d9e5b85d7724fcca93f723febe54f9d00d"
+    },
+    "classification_sha256": "9e658424ba221f4ebf895dc1a72094d57d905fd3bb38fdc902480dff76c426c4",
+    "input_sha256": "49da3862c4590399d1825aa7b8ea9d72a394c6b6e365fd13ab31025efcdb2e7e",
+    "policy": {
+      "alignment": "center",
+      "body_start": 1,
+      "chapter_restart": false,
+      "dynamic": true,
+      "footer": "chapter",
+      "front_start": 1,
+      "pages": "front-body",
+      "roman": "lowerRoman",
+      "text": "",
+      "version": 1
+    },
+    "records": [
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF1.xml",
+        "old_part": "word/footer1.xml",
+        "restart": null,
+        "role": "cover",
+        "section": 1,
+        "text": "",
+        "variant": "default"
+      },
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF2.xml",
+        "old_part": "word/footer2.xml",
+        "restart": null,
+        "role": "cover",
+        "section": 1,
+        "text": "",
+        "variant": "first"
+      },
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF3.xml",
+        "old_part": "word/footer3.xml",
+        "restart": null,
+        "role": "cover",
+        "section": 1,
+        "text": "",
+        "variant": "even"
+      },
+      {
+        "alignment": "center",
+        "format": "lowerRoman",
+        "kind": "footer",
+        "new_part": "word/footerPF4.xml",
+        "old_part": "word/footer1.xml",
+        "restart": 1,
+        "role": "front",
+        "section": 2,
+        "text": "",
+        "variant": "default"
+      },
+      {
+        "alignment": "center",
+        "format": "lowerRoman",
+        "kind": "footer",
+        "new_part": "word/footerPF5.xml",
+        "old_part": "word/footer2.xml",
+        "restart": 1,
+        "role": "front",
+        "section": 2,
+        "text": "",
+        "variant": "first"
+      },
+      {
+        "alignment": "center",
+        "format": "lowerRoman",
+        "kind": "footer",
+        "new_part": "word/footerPF6.xml",
+        "old_part": "word/footer3.xml",
+        "restart": 1,
+        "role": "front",
+        "section": 2,
+        "text": "",
+        "variant": "even"
+      },
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF7.xml",
+        "old_part": "word/footer1.xml",
+        "restart": 1,
+        "role": "body",
+        "section": 3,
+        "text": "第1章 合成研究",
+        "variant": "default"
+      },
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF8.xml",
+        "old_part": "word/footer2.xml",
+        "restart": 1,
+        "role": "body",
+        "section": 3,
+        "text": "第1章 合成研究",
+        "variant": "first"
+      },
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF9.xml",
+        "old_part": "word/footer3.xml",
+        "restart": 1,
+        "role": "body",
+        "section": 3,
+        "text": "第1章 合成研究",
+        "variant": "even"
+      },
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF10.xml",
+        "old_part": "word/footer1.xml",
+        "restart": null,
+        "role": "body",
+        "section": 4,
+        "text": "第2章 合成结果",
+        "variant": "default"
+      },
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF11.xml",
+        "old_part": "word/footer2.xml",
+        "restart": null,
+        "role": "body",
+        "section": 4,
+        "text": "第2章 合成结果",
+        "variant": "first"
+      },
+      {
+        "alignment": "center",
+        "format": "decimal",
+        "kind": "footer",
+        "new_part": "word/footerPF12.xml",
+        "old_part": "word/footer3.xml",
+        "restart": null,
+        "role": "body",
+        "section": 4,
+        "text": "第2章 合成结果",
+        "variant": "even"
+      }
+    ],
+    "regions": [
+      {
+        "alignment": "center",
+        "footer": "page",
+        "format": "decimal",
+        "restart": null,
+        "role": "cover",
+        "start": 1,
+        "text": ""
+      },
+      {
+        "alignment": "center",
+        "footer": "page",
+        "format": "lowerRoman",
+        "restart": 1,
+        "role": "front",
+        "start": 3,
+        "text": ""
+      },
+      {
+        "alignment": "center",
+        "footer": "chapter",
+        "format": "decimal",
+        "restart": 1,
+        "role": "body",
+        "start": 5,
+        "text": "第1章 合成研究"
+      },
+      {
+        "alignment": "center",
+        "footer": "chapter",
+        "format": "decimal",
+        "restart": null,
+        "role": "body",
+        "start": 9,
+        "text": "第2章 合成结果"
+      }
+    ],
+    "replacements": {
+      "[Content_Types].xml": "b99599eaa19cd810bd27d415a352199ed79275b317023c373d10733d24832967",
+      "word/_rels/document.xml.rels": "1d33a2542f6a5e8c1652ead862e3daacbbe5c89b18f96025f131fe1473dd598a",
+      "word/document.xml": "364312154564f4b645fa13f04e968e83f75d3ace7440210e42d9f01004dd8946"
+    },
+    "seal": "3cd6e25414bba335e1f049af5366b6f626c54be6fa72efc85678b0d808b89fcc",
+    "section_map": {
+      "1": {
+        "end": 2,
+        "role": "cover",
+        "start": 1
+      },
+      "2": {
+        "end": 4,
+        "role": "front",
+        "start": 3
+      },
+      "3": {
+        "end": 8,
+        "role": "body",
+        "start": 5
+      },
+      "4": {
+        "end": 12,
+        "role": "body",
+        "start": 9
+      }
+    },
+    "version": "section-pages-1"
+  },
+  "validation": {
+    "changed_parts": [
+      "[Content_Types].xml",
+      "word/_rels/document.xml.rels",
+      "word/document.xml"
+    ],
+    "input_sha256": "49da3862c4590399d1825aa7b8ea9d72a394c6b6e365fd13ab31025efcdb2e7e",
+    "main_object_order_preserved": true,
+    "new_parts": [
+      "word/footerPF1.xml",
+      "word/footerPF10.xml",
+      "word/footerPF11.xml",
+      "word/footerPF12.xml",
+      "word/footerPF2.xml",
+      "word/footerPF3.xml",
+      "word/footerPF4.xml",
+      "word/footerPF5.xml",
+      "word/footerPF6.xml",
+      "word/footerPF7.xml",
+      "word/footerPF8.xml",
+      "word/footerPF9.xml"
+    ],
+    "output_sha256": "8b8ecf63c59a30a92041c7633044cc65c9071e941dbeb3a6bfc2c3f87567c2fb",
+    "physical_pages_not_computed": true
+  }
+}

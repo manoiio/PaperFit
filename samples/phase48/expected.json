@@ -1,0 +1,31 @@
+{
+  "kind": "author labelled before rendering/model response",
+  "physical_pages": 8,
+  "visible_numbers": [
+    null,
+    null,
+    "i",
+    "ii",
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "chapter_footers": {
+    "1": "第1章 合成研究",
+    "2": "第2章 合成结果"
+  },
+  "digits": {
+    "6": "依据图1-1和图2-1核对纯文本引用。",
+    "7": "图1-1 合成曲线",
+    "11": "图2-1 合成结果曲线"
+  },
+  "unchanged": [
+    "all nonnumeric body text",
+    "run properties during structure transaction",
+    "header parts",
+    "note and numbering settings",
+    "original footer parts",
+    "other relationships"
+  ]
+}

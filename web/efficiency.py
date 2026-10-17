@@ -136,6 +136,14 @@ class EfficiencySession:
                     if opts:members['table-layout-options.json']=encoded(opts)
             if self.result['after']['coverage'].get('caption_scope'):
                 members['caption-supplement.json']=encoded(self.result['after']['coverage']['caption_scope']['template'])
+            if self.result.get('assembly'):
+                members['assembly-summary.json']=encoded(clean(self.result['assembly']))
+                members['README.txt']+='完整整理：仅包含最终DOCX；各内部轮次可在历史单独下载，父子关系及修改/复查在assembly目录。\n'.encode()
+                for step in self.result['assembly']['steps']:
+                    h=next(h for h in self.history if h['result']['round']['number']==step['round']);rr=clean(h['result']);rr['output']='fixed.docx';rr['after']['input']='fixed.docx'
+                    members['assembly/round-'+str(step['round'])+'-changes.md']=modification_markdown(rr).encode()
+                    members['assembly/round-'+str(step['round'])+'-recheck.md']=markdown(rr['after']).encode()
+            if self.result.get('page_layout'):members['page-layout.json']=encoded(clean(self.result['page_layout']))
             if self.result.get('dynamic'):members['dynamic-summary.json']=encoded(clean(self.result['dynamic']))
             if self.result.get('range_mapping'):members['range-mapping.json']=encoded(self.result['range_mapping'])
             if self.result['after']['coverage'].get('reference_scope'):
