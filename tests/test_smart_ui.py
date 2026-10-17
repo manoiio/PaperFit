@@ -7,7 +7,7 @@ from web.session import WebSession
 ROOT=Path(__file__).resolve().parents[1]
 class SmartUIAcceptance(TestCase):
  def setUp(self):
-  self.tmp=TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.s=WebSession(self.tmp.name);self.at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);self.at.session_state.workflow=self.s;self.at.run();self.at.button(key='smart-entry').click().run()
+  self.tmp=TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.s=WebSession(self.tmp.name);self.at=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);self.at.session_state.workflow=self.s;self.at.run();self.at.button(key='smart-entry').click().run();self.at.button(key='onepass-legacy').click().run()
  def click(self,label):next(b for b in self.at.button if b.label==label).click().run();self.assertFalse(self.at.exception)
  def test_summary_then_shortcut_without_individual_selection(self):
   self.click('使用错误样本');self.assertIsNone(self.s.confirmed);self.assertTrue(any(b.label=='接受此范围并检查' for b in self.at.button));self.assertIsNone(self.s.report)

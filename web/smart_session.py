@@ -52,14 +52,14 @@ def suggest(model):
     if binding(model)!=start:raise DemoError('分析期间输入、规则或范围变化，请重新准备摘要')
     return out
 
-def accept_scope(model,proposal):
+def accept_scope(model,proposal,*,confirmation_text=None):
     frozen={k:v for k,v in proposal.items() if k!='seal'}
     if fingerprint(frozen)!=proposal['seal'] or binding(model)!=proposal['source_binding']:raise DemoError('范围摘要已变化或失效，请重新分析')
     stage=isolated(model)
     for k,v in proposal['draft'].items():setattr(stage,k,deepcopy(v))
     pre=stage.scope_preflight()
     if not pre['ready']:raise DemoError('范围仍有阻止项：'+'；'.join(r['reason'] for r in pre['blockers']))
-    if not stage.confirm_scopes_and_check(pre['signature'],acknowledged=True):raise DemoError(stage.error)
+    if not stage.confirm_scopes_and_check(pre['signature'],acknowledged=True,confirmation_text=confirmation_text):raise DemoError(stage.error)
     if binding(model)!=proposal['source_binding']:raise DemoError('确认检查期间绑定变化，未发布检查')
     model.cancel_rehearsal()
     for k in set(ATTRS+['paragraph_types','report','report_revision','selected','result','result_signature','readonly_cache','error']):setattr(model,k,getattr(stage,k))

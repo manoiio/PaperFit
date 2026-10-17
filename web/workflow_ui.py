@@ -6,7 +6,7 @@ import streamlit as st
 STEPS={1:'文档与要求',2:'确认检查范围',3:'查看问题',4:'修正预演',5:'结果与下载'}
 # Explicit editor-only keepalive. Never retain acknowledgements, actions, uploads,
 # data-editor patches or execution authorization. Business drafts remain on model.
-EDITOR_PREFIXES=('wb-layout-','center-object-','center-record-','selected-list-page-','selected-list-item-','history-object-','history-view-','reader-mode-','reader-file-','reader-left-','reader-right-','reader-page-number-','reader-section-','class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
+EDITOR_PREFIXES=('onepass-extra-','wb-layout-','center-object-','center-record-','selected-list-page-','selected-list-item-','history-object-','history-view-','reader-mode-','reader-file-','reader-left-','reader-right-','reader-page-number-','reader-section-','class-word-','class-filter-','class-page-','class-object-','class-target-','wb-control-','wb-object-','workspace-rule-entry','diag-edit-','diag-field','diag-issue','diag-detail','diag-modules','diag-states','diag-value-','diag-unit-','diag-quote-','diag-location-','diag-issue-','diag-reason-','wb-value-','wb-edit-mode-','wb-module-','wb-field-','wb-show-missing-',
  'wb-policy-','wb-name-','wb-text-','tpl-value-','tpl-mode-','template-name-',
  'norm-text-','norm-encoding','center-category-','center-status-','center-order-',
  'problem-detail-','center-range-','center-search-','center-type-','center-page-','object-detail-',
@@ -120,6 +120,14 @@ def shell(model,restart):
     if model.report is not None and model.confirmed is not None:
         st.session_state['workspace-observed-check']=True
     state,tone=check_status(model,st.session_state.get('workspace-observed-check',False))
+    simple=st.session_state.get('workspace-smart',False) and not st.session_state.get('smart-legacy',False)
+    if simple and model.inventory:
+        state='可开始整理；已有设置会保留' if model.report or model.history else '已载入 · 可以开始整理'
+        tone='neutral'
+        from .onepass_session import current
+        entry=st.session_state.get('onepass-'+model.task_dir.name,{})
+        if entry and current(model,entry,st.session_state.get('onepass-extra-'+model.task_dir.name,entry.get('extra',''))):
+            state={'done':'修正版已生成 · 原稿保留' if model.result else '本次整理检查已完成','waiting':'有少量事项需要确认','running':'正在整理','failed':'本次未完成'}.get(entry.get('status'),state)
     with st.container(key='workspace-header'):
         title,details,project,reset=st.columns([5,1,1.4,1.2])
         title.title('论文有格')
@@ -130,12 +138,12 @@ def shell(model,restart):
                 st.write(model.current_rule_bundle()['name'] if model.mode=='academic' else model.active_template['name'] if model.active_template else '华工本科工理类2015演示规则')
                 st.caption('完整规则、版本和来源见第1步；哈希和范围见完整报告。')
         def project_entry():
-            go(1);st.session_state['project-panel']=True
+            (detail_go if simple else go)(1);st.session_state['project-panel']=True
         project.button('保存 / 恢复',on_click=project_entry,width='stretch')
         reset.button('重新开始',on_click=restart,width='stretch')
         if model.inventory:
             current=input_label(model)
-            rule=model.current_rule_bundle()['name'] if model.mode=='academic' else model.active_template['name'] if model.active_template else '2015学校演示规则'
+            rule='SCUT 2015演示规则' if model.custom_rules_path is None and model.active_template is None else model.current_rule_bundle()['name'] if model.mode=='academic' else model.active_template['name'] if model.active_template else '2015学校演示规则'
             name=model.display_name if len(model.display_name)<=38 else model.display_name[:35]+'…'
             rule_short=rule if len(rule)<=22 else rule[:21]+'…'
             st.html('<div class="compact-file"><b title="'+escape(model.display_name,quote=True)+'">'+escape(name)+'</b><span>当前输入：'+escape(current)+'</span><span title="'+escape(rule,quote=True)+'">规则：'+escape(rule_short)+'</span><span class="file-state '+tone+'">'+escape(state)+'</span></div>')
@@ -145,7 +153,8 @@ def shell(model,restart):
             if pending_rehearsal(model) and step!=4:labels.append('已有预演记录 · 尚未采用，采用前仍须核对')
             if labels:st.html('<div class="file-identities">'+''.join('<span>'+escape(label)+'</span>' for label in labels)+'</div>')
         else:st.caption('本地检查与选择修正 Word 格式 · 当前尚未载入文件')
-    st.button('智能处理 · 返回快捷主流程',key='smart-entry',on_click=lambda:st.session_state.update({'workspace-smart':True}),width='stretch')
+    if simple:return step
+    st.button('智能处理 · 返回快捷主流程',key='smart-entry',on_click=lambda:st.session_state.update({'workspace-smart':True,'smart-legacy':False}),width='stretch')
     with st.container(key='workspace-nav'):
         for col,(n,label) in zip(st.columns(5),STEPS.items()):
             status='当前' if n==step else ('需载入' if n==2 else '需检查' if n in (3,4) else '需记录') if not ready[n] else '已确认' if n==2 and model.confirmed else '有记录' if n==3 and model.report else '有记录' if n==5 and model.history else '可进入'

@@ -1,0 +1,115 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-1",
+  "authorization": "点击开始智能排版：按显示规则与明确补充要求，处理可安全识别对象、另存复查；不含动态/移动/宽度/分页辅助",
+  "command_id": "8bd2b1454a874594bd761774ad137780",
+  "source_sha256": "78bae4bdb9422387d5dbfd506ad7f5a4374e7e5a7746e5f4f780959dae54c3eb",
+  "start_binding": "b413a6c5f10e4edc96edc15ceaf06d1e009ce15a2bb857898ff29fd1a6f83fed",
+  "API": {
+    "structure": {
+      "receipt": {
+        "kind": "real_api",
+        "model": "deepseek-flash",
+        "timestamp_utc": "2026-10-17T06:32:05.430553+00:00",
+        "elapsed_seconds": 2.107,
+        "input_sha256": "7398a2d4991f5eea7ea5039f78691b5ab283e6694bec7abf76f561e52a8ac393",
+        "json_output": true,
+        "request_count": 1,
+        "usage": {
+          "prompt_tokens": 1613,
+          "completion_tokens": 327,
+          "total_tokens": 1940,
+          "prompt_cache_hit_tokens": 1408,
+          "prompt_cache_miss_tokens": 205
+        },
+        "task": "structure",
+        "prompt_version": "structure-v1"
+      },
+      "cache_hit": false,
+      "suggestions": [
+        {
+          "id": "p:9",
+          "role": "heading1",
+          "accepted": true,
+          "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+        },
+        {
+          "id": "p:10",
+          "role": "body",
+          "accepted": true,
+          "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+        },
+        {
+          "id": "p:11",
+          "role": "heading2",
+          "accepted": true,
+          "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+        },
+        {
+          "id": "p:12",
+          "role": "body",
+          "accepted": true,
+          "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+        },
+        {
+          "id": "p:13",
+          "role": "heading3",
+          "accepted": true,
+          "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+        },
+        {
+          "id": "p:14",
+          "role": "body",
+          "accepted": true,
+          "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+        },
+        {
+          "id": "p:15",
+          "role": "body",
+          "accepted": true,
+          "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+        },
+        {
+          "id": "p:16",
+          "role": "body",
+          "accepted": true,
+          "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+        }
+      ]
+    }
+  },
+  "phases": [
+    "识别论文内容",
+    "调整格式",
+    "检查修改后的文件"
+  ],
+  "candidate_count": 8,
+  "user_decisions": {
+    "paragraph:13": "heading2"
+  },
+  "plan_sha256": "85c9db4c4bb3dbe2c65a4a3081a48f562d24dbb68ba1d6929d954194031daa9b",
+  "selected_count": 48,
+  "confirmed_scope_sha256": "e545bd96276d96b34e0cb8cb2dc0badd38aa6a162ad73bf6cf8b97e6a0633a5d",
+  "outcome": {
+    "status": "adopted",
+    "rounds": 1,
+    "selected": 48,
+    "changes": 48,
+    "output_sha256": "edb00388cf17f98f593323d7fadc5a318d7da787ec10a560f8f496453a034c4b",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 22,
+      "problem_count": 5,
+      "review_count": 12,
+      "review_findings": 10,
+      "review_notes": 2,
+      "pass_count": 87,
+      "not_applicable_count": 5,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 20
+    }
+  },
+  "automatic_input_switch": false
+}

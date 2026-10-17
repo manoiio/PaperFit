@@ -5,7 +5,7 @@ from .smart_session import suggest,accept_scope,shortcut_plan,execute,binding
 from core.classification import TYPES
 from .presentation import position
 
-def render_smart(model,root,load_builtin,upload_changed,render_results):
+def render_legacy_smart(model,root,load_builtin,upload_changed,render_results):
     st.header('智能处理')
     st.write('载入论文与要求 → 接受范围摘要 → 一键智能修正 → 下载与剩余事项')
     st.caption('AI解析规范，程序执行排版。沿用当前已生效要求；检查修正在本机执行；可选AI结构识别仅在明确点击后发送有限脱敏摘录，不自动调用AI或生成页面。')
@@ -100,3 +100,12 @@ def render_smart(model,root,load_builtin,upload_changed,render_results):
         from .project_ui import render_project
         render_project(model)
     except Exception as exc:st.error('未完成：'+public_error(exc))
+
+
+def render_smart(model,root,load_builtin,upload_changed,render_results):
+    if st.session_state.get('smart-legacy',False):
+        if st.button('返回一站式智能排版',key='onepass-home'):
+            st.session_state['smart-legacy']=False;st.rerun()
+        return render_legacy_smart(model,root,load_builtin,upload_changed,render_results)
+    from .onepass_ui import render_onepass
+    return render_onepass(model,root,load_builtin,upload_changed,render_results)

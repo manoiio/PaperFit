@@ -1,0 +1,104 @@
+{
+  "script_API_requests": 0,
+  "fixture_response_kind": "mock",
+  "cases": {
+    "A": {
+      "sha256": "eaf297997b3daf5d7eaed44ec1bf2b1f2c40615fa5ddd61dec14efc542db770f",
+      "original_legal_path_byte_equal": true,
+      "seconds": 0.203,
+      "outcome": {
+        "status": "adopted",
+        "rounds": 1,
+        "selected": 5,
+        "changes": 5,
+        "output_sha256": "eaf297997b3daf5d7eaed44ec1bf2b1f2c40615fa5ddd61dec14efc542db770f",
+        "fix_calls_at_adoption": 0,
+        "summary": {
+          "rule_count": 22,
+          "problem_count": 1,
+          "review_count": 24,
+          "review_findings": 16,
+          "review_notes": 8,
+          "pass_count": 29,
+          "not_applicable_count": 19,
+          "conclusion": "已覆盖检查发现问题",
+          "applicable_rule_count": 11
+        }
+      },
+      "independent": {
+        "text_order_preserved": true,
+        "unselected_parts_byte_equal": true,
+        "objects_and_links_preserved": true,
+        "protected_subtrees": [
+          18
+        ],
+        "body_size_pt": null,
+        "body_line_240ths": 360
+      },
+      "actual_browser_byte_equal": true
+    },
+    "B": {
+      "sha256": "edb00388cf17f98f593323d7fadc5a318d7da787ec10a560f8f496453a034c4b",
+      "original_legal_path_byte_equal": true,
+      "seconds": 0.339,
+      "outcome": {
+        "status": "adopted",
+        "rounds": 1,
+        "selected": 48,
+        "changes": 48,
+        "output_sha256": "edb00388cf17f98f593323d7fadc5a318d7da787ec10a560f8f496453a034c4b",
+        "fix_calls_at_adoption": 0,
+        "summary": {
+          "rule_count": 22,
+          "problem_count": 5,
+          "review_count": 12,
+          "review_findings": 10,
+          "review_notes": 2,
+          "pass_count": 87,
+          "not_applicable_count": 5,
+          "conclusion": "已覆盖检查发现问题",
+          "applicable_rule_count": 20
+        }
+      },
+      "independent": {
+        "text_order_preserved": true,
+        "unselected_parts_byte_equal": true,
+        "objects_and_links_preserved": true,
+        "protected_subtrees": [
+          1,
+          2,
+          17,
+          18,
+          19
+        ],
+        "body_size_pt": 12,
+        "body_line_240ths": 360
+      },
+      "actual_browser_byte_equal": true
+    },
+    "C": {
+      "sha256": "31a3f0bd3c51a2e5d007c533d9a12ad915b3311c12f297d9ff4f703a767e1318",
+      "original_legal_path_byte_equal": true,
+      "only_overrides": [
+        "font_size",
+        "line_spacing"
+      ],
+      "independent": {
+        "text_order_preserved": true,
+        "unselected_parts_byte_equal": true,
+        "objects_and_links_preserved": true,
+        "protected_subtrees": [
+          1,
+          2,
+          17,
+          18,
+          19
+        ],
+        "body_size_pt": 14,
+        "body_line_240ths": 480
+      },
+      "actual_browser_byte_equal": true,
+      "actual_browser_untouched_sources_preserved": true
+    }
+  }
+}

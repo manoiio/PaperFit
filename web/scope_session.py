@@ -220,7 +220,7 @@ class ScopeSession:
                 rows.extend({'区域':AREAS[a],'对象':str(n),'草稿用途':str(t),'附加说明':name} for n,t in d.get(name,{}).items())
         return rows
 
-    def confirm_scopes_and_check(self, signature, *, acknowledged=False):
+    def confirm_scopes_and_check(self, signature, *, acknowledged=False, confirmation_text=None):
         """Atomic original confirmations; execute only on this explicitly acknowledged snapshot."""
         if acknowledged is not True:raise DemoError('请先核对完整范围摘要并明确确认。')
         pre=self.scope_preflight()
@@ -241,6 +241,10 @@ class ScopeSession:
         else:
             staged.confirmed={'input_sha256':self.inventory['input_sha256'],'body_paragraphs':self.body.copy(),'confirmation':'网页人工确认'}
         saved=None
+        if confirmation_text is not None:
+            if type(confirmation_text) is not str or not 1<=len(confirmation_text)<=250:raise DemoError('命令授权说明无效')
+            staged.confirmed['confirmation']=confirmation_text
+            if manifest is not None:manifest['confirmation']=confirmation_text;staged.classification_confirmed=manifest
         # Storage succeeds before any live confirmation field is published.
         if manifest is not None:
             saved=write_new(self.task_dir/('confirmed-types-'+uuid4().hex+'.json'),(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n').encode())

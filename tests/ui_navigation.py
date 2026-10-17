@@ -1,5 +1,7 @@
 """Real five-step UI paths used by legacy interaction regressions."""
 def show(app,step,area=None,rules=False):
+ # Ordinary entry no longer displays the five-step controls. Enter the real advanced UI.
+ if not any(b.key==f'workspace-nav-{step}' for b in app.button):app.button(key='onepass-detail').click().run()
  app.button(key=f'workspace-nav-{step}').click().run()
  if area is not None:
   app.button(key='enter-scope-'+area).click().run()

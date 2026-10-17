@@ -1,0 +1,41 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-1",
+  "authorization": "点击开始智能排版：按显示规则与明确补充要求，处理可安全识别对象、另存复查；不含动态/移动/宽度/分页辅助",
+  "command_id": "b4f147a21f514e889a045d495342fbe5",
+  "source_sha256": "10e81d577934827d3890e9e0eb7370376cff3dcd587c832a33b09e570b2a13f3",
+  "start_binding": "60ed91530fa580506006d71dce69c2f43bf3a6492c3d2ebe2d053ceae024a528",
+  "API": {},
+  "phases": [
+    "识别论文内容",
+    "调整格式",
+    "检查修改后的文件"
+  ],
+  "candidate_count": 0,
+  "structure_local_only": true,
+  "plan_sha256": "9d0c64c89bc38ae31f0be7de2f1b3c52952e87186d0d5dce1ca0eb238d326995",
+  "selected_count": 5,
+  "confirmed_scope_sha256": "4ba62355e6bb578edf14c10739804d087f3023759c1d21cea232e8cc0b9ef62a",
+  "outcome": {
+    "status": "adopted",
+    "rounds": 1,
+    "selected": 5,
+    "changes": 5,
+    "output_sha256": "eaf297997b3daf5d7eaed44ec1bf2b1f2c40615fa5ddd61dec14efc542db770f",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 22,
+      "problem_count": 1,
+      "review_count": 24,
+      "review_findings": 16,
+      "review_notes": 8,
+      "pass_count": 29,
+      "not_applicable_count": 19,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 11
+    }
+  },
+  "automatic_input_switch": false
+}
