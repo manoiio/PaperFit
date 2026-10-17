@@ -1,0 +1,20 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "message": {
+        "content": "{\"version\":\"supplement-ids-v3\",\"items\":[{\"field\":\"P03\",\"value\":5,\"source\":\"S1\"},{\"field\":\"P05\",\"value\":\"chapter\",\"source\":\"S2\"}],\"issues\":[]}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 742,
+    "completion_tokens": 47,
+    "total_tokens": 789,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 742
+  }
+}

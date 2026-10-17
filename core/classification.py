@@ -132,6 +132,9 @@ def suggest_paragraph_types(input_path, *, include_sections=False, body_start=No
         next_text=''.join(pkg.paragraphs[n].xpath('.//w:t/text()',namespaces=NS)).strip() if n<len(pkg.paragraphs) else ''
         main_start=(level==1 and len(next_text)>20 and bool(re.search(r'[。！？!?]',next_text)))
         references=re.match(r'^[\[［]\d+[\]］]',text)
+        from .structure_evidence import heading
+        boundary=heading({'text':text,'number_level':level,'style_id':sid,'outline_level':outline,'special':special,'toc_like':bool(toc),'narrative_after':main_start})
+        if boundary==1:zone='main';main=True;heading_seen=True
         drawing=bool(p.xpath('.//w:drawing|.//w:pict',namespaces=NS))
         if marker:
             zone=marker;kind='other';reason='章节标记，摘要/目录/参考文献等不自动套正文或正文标题规则'
@@ -178,12 +181,12 @@ def suggest_paragraph_types(input_path, *, include_sections=False, body_start=No
         else:
             kind='pending';ambiguous=True;reason='短文本或尚未找到正文起点，需人工确认'
         rows.append({'index':n,'text':text,'style_id':sid,'style_name':style_name,'outline_level':outline,
-                     'suggested_type':kind,'reason':reason,'ambiguous':ambiguous,'special':special})
+                     'suggested_type':kind,'reason':reason,'ambiguous':ambiguous,'special':special,'number_level':level,'toc_like':bool(toc),'narrative_after':main_start,'structure_boundary':boundary==1 or n==body_start,'section_marker':marker,'marker_name':marker_text if marker else None})
     if include_sections:
         from .section_classification import refine
         refine(rows)
         from .backmatter import refine as refine_back
         refine_back(rows, pkg.paragraphs)
-    return {'input_sha256':pkg.hash,'algorithm':'deterministic-sections-1.0' if include_sections else 'deterministic-demo-1.0','confirmed':False,
+    return {'input_sha256':pkg.hash,'algorithm':'deterministic-sections-2.0' if include_sections else 'deterministic-demo-2.0','confirmed':False,
             'indexing':'主文档顶层段落，包含空段和图片段，不含表格内段落；无概率置信度',
             'paragraphs':rows}

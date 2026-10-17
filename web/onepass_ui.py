@@ -58,12 +58,19 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
             with st.expander('本次可以执行的已验证要求'):
                 for field in state['audit'].get('API',{}).get('requirements',{}).get('overrides',[]):st.write(field['object_property']+'：'+str(field['value'])+' '+field['unit'])
         decisions={}
+        if any(q['id'].startswith('page_') for q in state['questions']):
+            st.write('核对本次分区：同一正文起点同时用于分类、章节页脚和编号范围；不会再分别询问。')
         for q in state['questions']:
             with st.container(border=True):
                 if q.get('context'):st.text('附近文字：'+q['context'])
                 st.text('当前文字：'+q['text']);st.write(q['question'])
                 key='onepass-answer-'+state['id']+'-'+q['id']
-                answer=st.selectbox('您的选择',list(q['options']),format_func=q['options'].get,index=None,key=key,placeholder='请选择，或暂不处理')
+                choices=q.get('visible_options',list(q['options']))
+                if q.get('visible_options'):
+                    with st.expander('查看全部文本起点（不是物理页码）'):
+                        all_rows=st.checkbox('显示完整起点清单',key=key+'-all')
+                    if all_rows:choices=list(q['options'])
+                answer=st.selectbox('您的选择',choices,format_func=q['options'].get,index=None,key=key,placeholder='请选择，或暂不处理')
                 if answer is not None:decisions[q['id']]=answer
         a,b=st.columns([2,1])
         if a.button('确认并继续',key='onepass-continue',type='primary',disabled=len(decisions)!=len(state['questions']),width='stretch'):

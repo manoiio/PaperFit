@@ -1,0 +1,25 @@
+{
+  "attempt": {
+    "attempt_id": "89671192c0964c1bbb5f6bc333fc6903",
+    "purpose": "supplement",
+    "timestamp_utc": "2026-10-17T11:39:28.668636+00:00",
+    "input_sha256": "09f0b41ad17039435ea58a17a18481c875b3cece41ddacd4a13ede3a3c9b5c80",
+    "model": "deepseek-flash",
+    "kind": "real_api",
+    "dispatch_started": true,
+    "sent": true,
+    "response_received": true,
+    "validation": "accepted",
+    "usage": {
+      "prompt_tokens": 742,
+      "completion_tokens": 47,
+      "total_tokens": 789,
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 742
+    },
+    "billing_status": "unknown",
+    "elapsed_seconds": 0.949
+  },
+  "diagnostics": [],
+  "error": null
+}

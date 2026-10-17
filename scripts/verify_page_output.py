@@ -8,7 +8,7 @@ def q(n):return '{'+W+'}'+n
 def parts(path):
  with zipfile.ZipFile(path) as z:return {n:z.read(n) for n in z.namelist()}
 def canon(x):return E.tostring(x,method='c14n')
-def verify(source,formatted,numeric,final):
+def verify(source,formatted,numeric,final,*,fresh=False,body_start=1):
  a,b,c,d=map(parts,(source,formatted,numeric,final))
  # Ordinary stage author oracle: exact declared values and a narrow attribute mask.
  assert set(a)==set(b)
@@ -23,7 +23,7 @@ def verify(source,formatted,numeric,final):
    if e is not None:
     for k in attrs:e.attrib.pop(q(k),None)
     if not e.attrib and not len(e) and e.getparent() is not None:e.getparent().remove(e)
- for n in (3,5,6,7,8,9,10,11,12):
+ for n in ((3,4,5,6,8,9,10,12) if fresh else (3,5,6,7,8,9,10,11,12)):
   x,y=ap[n-1],bp[n-1]
   size='36' if n in (3,5,9) else '21' if n in (7,11) else '24'
   mask_pair(x.find('w:r/w:rPr/w:sz',N),y.find('w:r/w:rPr/w:sz',N),['val'],{'val':size})
@@ -32,6 +32,8 @@ def verify(source,formatted,numeric,final):
    if n!=3:expected.update(beforeAutospacing='0',beforeLines='50',before='0')
    mask_pair(x.find('w:pPr/w:spacing',N),y.find('w:pPr/w:spacing',N),list(expected),expected)
    if n!=3:mask_pair(x.find('w:pPr/w:jc',N),y.find('w:pPr/w:jc',N),['val'],{'val':'center'})
+  elif fresh and n==4:
+   mask_pair(x.find('w:pPr/w:spacing',N),y.find('w:pPr/w:spacing',N),['line','lineRule'],{'line':'360','lineRule':'auto'})
   elif n in (6,8,10,12):
    mask_pair(x.find('w:pPr/w:spacing',N),y.find('w:pPr/w:spacing',N),['line','lineRule'],{'line':'360','lineRule':'auto'})
    mask_pair(x.find('w:pPr/w:ind',N),y.find('w:pPr/w:ind',N),['firstLineChars','firstLine'],{'firstLineChars':'200','firstLine':'0'})
@@ -44,7 +46,7 @@ def verify(source,formatted,numeric,final):
  assert canon(aa)==canon(bb),'ordinary stage changed an unauthorized object/attribute'
  # Exact handwritten numeric slots; no searching or parser-created expected text.
  x=E.fromstring(b['word/document.xml']);ps=x.find(q('body')).findall(q('p'))
- for n,tx in {6:'依据图1-1和图2-1核对纯文本引用。',7:'图1-1 合成曲线',11:'图2-1 合成结果曲线'}.items():
+ for n,tx in ({} if fresh else {6:'依据图1-1和图2-1核对纯文本引用。',7:'图1-1 合成曲线',11:'图2-1 合成结果曲线'}).items():
   ts=ps[n-1].findall('w:r/w:t',N);assert len(ts)==1;ts[0].text=tx
  assert canon(x)==canon(E.fromstring(c['word/document.xml']))
  assert {n:v for n,v in b.items() if n!='word/document.xml'}=={n:v for n,v in c.items() if n!='word/document.xml'}
@@ -66,7 +68,7 @@ def verify(source,formatted,numeric,final):
  for r in oldrels:assert any(canon(r)==canon(s) for s in rels)
  ct=E.fromstring(d['[Content_Types].xml']);oldct=E.fromstring(c['[Content_Types].xml'])
  for e in oldct:assert any(canon(e)==canon(f) for f in ct)
- expected=[(None,None),("lowerRoman","1"),("decimal","1"),("decimal",None)]
+ expected=[(None,None),("lowerRoman","1"),("decimal",str(body_start)),("decimal",None)]
  for i,(os,ns) in enumerate(zip(oldsec,newsec)):
   pg=ns.find(q('pgNumType'));assert (pg.get(q('fmt')) if pg is not None else None,pg.get(q('start')) if pg is not None else None)==expected[i]
   for variant in ('default','first','even'):

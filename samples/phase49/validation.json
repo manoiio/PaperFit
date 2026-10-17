@@ -1,0 +1,61 @@
+{
+  "status": "accepted",
+  "baseline": "3b45abe",
+  "baseline_tests": 1326,
+  "real_API_requests": 1,
+  "structure_API_requests": 0,
+  "usage": {
+    "prompt_tokens": 742,
+    "completion_tokens": 47,
+    "total_tokens": 789
+  },
+  "API_seconds": 0.949,
+  "billing": "unknown",
+  "fresh_upload_main_actions": 4,
+  "boundary_decisions_fresh": 0,
+  "AI_policy_task_main_actions": 5,
+  "AI_policy_manual_decisions": 0,
+  "advanced_entries_required": 0,
+  "final_DOCX_sha256": "1587cea383860312b47fdd2f91414982bee0cda8233a9a18eb248691140f0aea",
+  "baseline_fresh_DOCX_equal": true,
+  "final_local_legal_path_DOCX_equal": true,
+  "default_fresh_changes": {
+    "format": 35,
+    "dynamic_digits": 0,
+    "section_pages": 12
+  },
+  "remaining": {
+    "problems": 2,
+    "review_total": 29
+  },
+  "read_only_problems": [
+    "合成摘要字数",
+    "确认文献数量"
+  ],
+  "Word": "actual all eight pages observed; closed without save, hash unchanged",
+  "LibreOffice": "all eight pages rendered and inspected",
+  "remote_CI": "manual; not triggered",
+  "ordinary_structural_whitelists_changed": false,
+  "frozen_source_suite": {
+    "tests": 1343,
+    "seconds": 429.536,
+    "passed": true,
+    "real_paid_requests": 0,
+    "blocked_unmocked_attempts": 0,
+    "log_sha256": "4ee44f1c773f1e0c233613eb5a84dd7dc73c8d8c2e9a440a9c98eb07f29adee5"
+  },
+  "controlled_new_structure_tests": 17,
+  "final_source_browser_default_bytes_equal": true,
+  "local_alias_and_real_API_browser_bytes_equal": true,
+  "changed_requirements_invalidates_direct_download": true,
+  "pre_final_full_suite": {
+    "count": 1341,
+    "seconds": 439.283,
+    "passed": true,
+    "scope": "before final numbered-special-marker regression, not the final source claim"
+  },
+  "related_suite_seconds": 41.461,
+  "final_source_fresh_browser_sha256": "13889564b8de7eb611d41bfbcf3904b9666d49877b74efc32dfe942778b03245",
+  "final_source_independent_proof_rechecked": true,
+  "execution_sha256": "c12af2d8938206a2606e121943dedea785360342c25e3675acdec5b0bc8066fe"
+}

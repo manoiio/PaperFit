@@ -12,7 +12,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-5'
+VERSION='onepass-6'
 
 
 def command_binding(model,extra,requirements=None):
@@ -216,7 +216,9 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
                 if requirements is None:
                     from core.page_policy import extract
                     _,format_extra,_=extract(extra)
-                    result=(spec_parser or parse_requirements)(format_extra) if format_extra.strip() else None
+                    result=(spec_parser or parse_requirements)(extra) if format_extra.strip() else None
+                    format_extra=extra
+                    if result and result.get('page_strategy'):state['semantic_page_strategy']=deepcopy(result['page_strategy'])
                 else:
                     from ai.file_spec import parse_requirements as parse_file
                     from ai.short_spec import settings
@@ -228,6 +230,7 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
                         result=file_parser(requirements['extraction']) if file_parser else parse_file(requirements['extraction'],config=cfg)
                         if requirements_cache is not None:requirements_cache.update(key=cache_key,result=deepcopy(result))
                 if state.get('id')!=token:raise DemoError('本次处理已取消')
+                if result and result.get('page_strategy'):state['semantic_page_strategy']=deepcopy(result['page_strategy'])
                 if requirements is None:
                     if result is not None:state['audit']['API']['requirements']=overlay(stage,format_extra,result)
                     else:state['audit']['API']['requirements']={'requests':0,'source':'local_exact_strategy'}
@@ -257,7 +260,19 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
             parsed_policy=None;page_evidence=[]
             state['audit']['page_policy_not_applied']=str(exc)
             if not any(q['id']=='requirements' for q in state['questions']):state['questions'].append({'id':'requirements','text':str(exc),'question':'这些要求尚不能执行，您希望怎样继续？','options':{'template':'本次沿用原有要求','edit':'返回修改要求'}})
-        state['assembly']=parsed_policy or policy_for(stage)
+        if state.get('semantic_page_strategy'):
+            parsed_policy=state['semantic_page_strategy']['policy'];page_evidence=state['semantic_page_strategy']['proof']
+        from core.page_policy import merge as merge_policy
+        base_policy=policy_for(stage)
+        state['assembly']=merge_policy(base_policy,parsed_policy,page_evidence) if parsed_policy else base_policy
+        if parsed_policy and not (base_policy and base_policy['pages']=='front-body'):
+            stated={k:v for e in page_evidence for k,v in e['values'].items()}
+            state['audit']['page_alignment_only']=set(stated)=={'alignment'} and not (base_policy and base_policy['pages']!='keep')
+            if stated.get('pages')=='front-body' and 'body' in parsed_policy.get('targets',('cover','front','body')) and 'body_start' not in stated:state['audit']['body_start_unspecified']=True
+            if stated.get('chapter_restart') is False and parsed_policy['pages']=='chapter-footers':
+                from core.front import section_inventory
+                from core.package import Package
+                state['audit']['continuity_restart_conflict']=any(s['page_numbering'].get('start') is not None for s in section_inventory(Package(stage.input_path))[1:])
         if state['assembly'] is None and (getattr(stage,'page_layout_draft',None) or {}).get('explicit') and stage.current_rule_bundle().get('assembly'):
             from core import rule_bundle as rb,load_rules
             bundle=stage.current_rule_bundle();bundle.pop('assembly',None);stage._save_custom(rb.validate(bundle,load_rules(stage.rules_path)));stage.sync_rules()
@@ -268,6 +283,19 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
             from core import rule_bundle as rb
             bundle=stage.current_rule_bundle();bundle['assembly']=deepcopy(state['assembly']);stage._save_custom(rb.validate(bundle,__import__('core',fromlist=['load_rules']).load_rules(stage.rules_path)));stage.sync_rules()
             state['audit']['assembly_authorization']={'policy':deepcopy(state['assembly']),'evidence':page_evidence,'source_locations':[{'quote':e['quote'],'locations':[s['location'] for s in requirements['extraction']['segments'] if e['quote'] in s['text']]} for e in page_evidence] if requirements is not None and requirements['kind']=='file' else [],'grant':'本次开始命令授权所列安全事务，不冒充旧勾选'}
+        boundaries=[e['boundary'] for e in page_evidence if e.get('boundary')]
+        body_intent=None
+        for decision in boundaries:
+            matches=[r for r in stage.suggestions['paragraphs'] if re.sub(r'\s','',r['text'])==decision['label']]
+            if prior_types is not None:
+                state['audit'].setdefault('boundary_limits',[]).append('已有人工范围优先，未覆盖前言用途');continue
+            if len(matches)!=1 or matches[0]['special'] or str(matches[0]['index']) in stage.material_exclusions:
+                state['audit'].setdefault('boundary_limits',[]).append('前言起点不唯一或受保护，未推测位置')
+                state['questions'].append({'id':'region_requirement','text':'无法唯一定位要求中的前言，原保护不变。','question':'是否暂不处理这项分区要求，继续其他安全整理？','options':{'skip':'暂不处理该分区要求','edit':'返回调整要求'}});continue
+            row=matches[0];n=str(row['index'])
+            stage.paragraph_types[n]='heading1' if decision['purpose']=='body' and row.get('style_id')=='Heading1' and row.get('outline_level')==0 else 'body' if decision['purpose']=='body' else 'other'
+            if decision['purpose']=='body':body_intent=int(n)
+            state['audit'].setdefault('explicit_region_purposes',[]).append({**decision,'paragraph':int(n)})
         phase('识别论文内容');proposal=suggest(stage)
         prepared=structure.prepare(stage,include_tables=True,preserve_paragraphs=prior_types is not None);state['audit']['candidate_count']=len(prepared['request']['candidates'])
         state['audit']['candidate_kinds']={'paragraphs':sum(c.get('kind')!='table' for c in prepared['request']['candidates']),'tables':sum(c.get('kind')=='table' for c in prepared['request']['candidates']),'remaining':prepared['remaining']}
@@ -291,8 +319,18 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
             state['audit']['prior_classification_preserved']=True
         state['audit']['auto_ranges']=deepcopy(proposal.get('auto_ranges'))
         if prior_types is None:state['questions']+=structure_questions(stage,proposal)
+        from .structure_session import coordinate
+        coordinate(stage,proposal,body_start=body_intent,confirmed=prior_types is not None)
+        state['audit']['structure']=deepcopy(proposal['structure'])
         from .assembly_session import prepare as prepare_assembly
         state['questions']+=prepare_assembly(stage,state,proposal)
+        body_question=next((q for q in state['questions'] if q['id']=='page_body'),None)
+        if body_question:
+            titles=[q for q in state['questions'] if q.get('paragraph') and 'heading1' in q['options']][:1]
+            body_question['title_choices']=list(dict.fromkeys(body_question.get('title_choices',[])+[q['paragraph'] for q in titles]))
+            if titles:
+                body_question['question']='正文从哪个一级章标题开始？此决定同时用于分类、页码和章节页脚。'
+                state['questions']=[q for q in state['questions'] if q not in titles]
         seal_proposal(stage,proposal);state['proposal']=proposal
         if state.get('id')!=token or command_binding(model,extra,requirements)!=source:raise DemoError('识别期间文档或要求已变化，本次结果未接入。')
         if state['questions']:
@@ -308,13 +346,25 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
 def continue_command(model,state,extra,decisions,*,requirements=None,emit=None):
     if state.get('status')!='waiting' or not current(model,state,extra,requirements) or state.get('pending_seal')!=pending_seal(state):raise DemoError('文档、要求或待确认事项已变化，请重新开始。')
     if set(decisions)!={q['id'] for q in state['questions']} or any(decisions[q['id']] not in q['options'] for q in state['questions']):raise DemoError('请决定全部事项，或明确选择暂不处理。')
-    if decisions.get('requirements')=='edit' or decisions.get('requirements_partial')=='edit' or decisions.get('page_conflict')=='edit':cancel(model,state);return state
+    body=decisions.get('page_body')
+    for question in state['questions']:
+        if question.get('paragraph')==body and body in next((q.get('title_choices',[]) for q in state['questions'] if q['id']=='page_body'),[]) and decisions[question['id']]!='heading1':raise DemoError('同一文字的正文起点与标题级别选择不一致，请统一后继续')
+    front=decisions.get('page_front');known_body=body or state['proposal'].get('structure',{}).get('body_start')
+    if front not in (None,'skip') and known_body not in (None,'skip') and int(front)>int(known_body):raise DemoError('前置起点不能晚于正文起点；尚未改变您的方案，请重新选择')
+    if decisions.get('requirements')=='edit' or decisions.get('requirements_partial')=='edit' or decisions.get('page_conflict')=='edit' or decisions.get('region_requirement')=='edit' or decisions.get('page_number_start')=='edit' or decisions.get('page_continuity')=='edit':cancel(model,state);return state
     if decisions.get('requirements_partial')=='template':
         old=state['stage'];clean_stage(model,state);stage=isolated(model)
         # Same unmodified DOCX and exact accepted structural draft; only the
         # explicit rule decision changes. Revalidate/reseal with original APIs.
         if old.inventory['input_sha256']!=stage.inventory['input_sha256']:raise DemoError('输入变化，不能继承范围建议')
         state['stage']=stage;state['proposal']['source_binding']=binding(stage)
+        if state['audit'].get('explicit_region_purposes'):
+            fresh=suggest(stage)
+            from .auto_ranges import apply as apply_ranges
+            apply_ranges(stage,fresh,structure.prepare(stage,include_tables=True))
+            state['proposal']=fresh
+            state['audit']['discarded_region_purposes']=state['audit'].pop('explicit_region_purposes')
+            state['audit']['file_boundary_decisions_discarded']=True
         state['audit']['file_requirements_declined']=True
     if decisions.get('requirements')=='template' or decisions.get('requirements_partial')=='template':
         from .assembly_session import policy_for
@@ -322,8 +372,17 @@ def continue_command(model,state,extra,decisions,*,requirements=None,emit=None):
     for q in state['questions']:
         if 'paragraph' in q:state['proposal']['draft']['paragraph_types'][q['paragraph']]=decisions[q['id']]
         if 'table' in q:state['proposal']['draft']['table_types'][q['table']]=decisions[q['id']]
+    bq=next((q for q in state['questions'] if q['id']=='page_body'),{})
+    if decisions.get('page_body') in bq.get('title_choices',[]):state['proposal']['draft']['paragraph_types'][decisions['page_body']]='heading1'
+    from .structure_session import coordinate
+    coordinate(state['stage'],state['proposal'],body_start=int(decisions['page_body']) if decisions.get('page_body','skip')!='skip' else None,decided=[q['paragraph'] for q in state['questions'] if q.get('paragraph')],confirmed=bool(state['audit'].get('prior_classification_preserved')))
+    state['audit']['structure']=deepcopy(state['proposal']['structure'])
     from .assembly_session import continue_regions
     continue_regions(state['stage'],state,decisions)
+    if any(k in decisions for k in ('page_number_start','page_continuity')):
+        from core import rule_bundle as rb,load_rules
+        stage=state['stage'];bundle=stage.current_rule_bundle();bundle['assembly']=deepcopy(state['assembly']);stage._save_custom(rb.validate(bundle,load_rules(stage.rules_path)));stage.sync_rules()
+        state['proposal']['source_binding']=binding(stage)
     state['audit']['user_decisions']=deepcopy(decisions)
     seal_proposal(state['stage'],state['proposal']);state['status']='running'
     token=state['id'];own={'stage':state['stage'],'history_length':state['history_length'],'original_rule_path':state['original_rule_path']}
@@ -342,6 +401,10 @@ def finish(model,state,*,emit=None,command_id=None):
     if not proposal['preflight']['ready']:raise DemoError('现有设置仍有冲突：'+'；'.join(r['reason'] for r in proposal['preflight']['blockers']))
     authorization='一站式开始命令授权（可安全识别对象，非旧勾选）：'+command_id+':'+state['start']
     plan=accept_scope(stage,proposal,confirmation_text=authorization)
+    if any(e.get('format_roles')==['body'] for e in state['audit'].get('assembly_authorization',{}).get('evidence',[])):
+        from .smart_session import shortcut_plan
+        keys=[f['key'] for f in plan['items'] if f['rule_id'] in ('R03','R04','R05','R06','R07','R13') and proposal['draft']['paragraph_types'].get(str(f['locator'].get('paragraph')))=='body']
+        plan=shortcut_plan(stage,allowed_keys=keys);state['audit']['format_roles']=['body']
     state['audit']['plan_sha256']=fingerprint(plan);state['audit']['selected_count']=len(plan['keys'])
     state['audit']['confirmed_scope_sha256']=fingerprint(stage.classification_confirmed or stage.confirmed)
     emit('调整格式');state['audit']['phases'].append('调整格式')

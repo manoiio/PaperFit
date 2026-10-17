@@ -28,8 +28,10 @@ def coverage(text):
     Recognize only named objects and existing property vocabulary. Unknown residue
     stops the complete supplement; native candidate validators prove every value.
     """
-    validate_text(text);names=set()
+    validate_text(text);original_text=text;names=set()
     from core.page_policy import extract
+    from .page_intent import strip
+    text,_=strip(text)
     policy,remaining,_=extract(text)
     if policy is not None:
         if not remaining.strip():return set()
@@ -75,7 +77,7 @@ def coverage(text):
                 consume('|'.join(re.escape(x) for x in WEST),'font_western')
             part=re.sub(r'中文|西文|英文|普通文字|文字|字体|字号|行距|页边距|边距|对齐|改为|设为|设置为|采用|使用|调整为|调整到|改成|改用|保持|以及|和|与|请|把|将|希望|为|用|的|均','',part)
             if part.strip(' ，,、:：\t'):raise DemoError('补充要求含未支持、含糊或未完整识别的内容（如固定行距、未知字体、润色）；未应用任何覆盖。')
-    if not names:raise DemoError('补充要求没有明确的可执行属性。')
+    if not names and not __import__('ai.page_intent',fromlist=['clauses']).clauses(original_text):raise DemoError('补充要求没有明确的可执行属性。')
     return names
 
 def validate(data,text):

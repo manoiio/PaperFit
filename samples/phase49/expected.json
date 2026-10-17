@@ -1,0 +1,50 @@
+{
+  "scope": {
+    "body_start": 5,
+    "chapters": [
+      5,
+      9
+    ],
+    "excluded_unproved_captions": [
+      7,
+      11
+    ]
+  },
+  "display_numbers": [
+    null,
+    null,
+    "i",
+    "ii",
+    "5",
+    "6",
+    "7",
+    "8"
+  ],
+  "section_numbering": [
+    [
+      null,
+      null
+    ],
+    [
+      "lowerRoman",
+      "1"
+    ],
+    [
+      "decimal",
+      "5"
+    ],
+    [
+      "decimal",
+      null
+    ]
+  ],
+  "API_fields": {
+    "P03": 5,
+    "P05": "chapter"
+  },
+  "unchanged_digits": {
+    "6": "依据图1-2和图2-3核对纯文本引用。",
+    "7": "图1-2 合成曲线",
+    "11": "图2-3 合成结果曲线"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "draft": {
+    "version": "smart-supplement-v2",
+    "fields": {},
+    "issues": []
+  },
+  "page_strategy": {
+    "policy": {
+      "version": 2,
+      "dynamic": false,
+      "pages": "front-body",
+      "roman": "lowerRoman",
+      "body_start": 5,
+      "front_start": 1,
+      "chapter_restart": false,
+      "footer": "chapter",
+      "text": "",
+      "alignment": "center",
+      "targets": [
+        "body"
+      ]
+    },
+    "proof": [
+      {
+        "id": "P03",
+        "value": 5,
+        "start": 0,
+        "end": 9,
+        "quote": "正文页码起算值为5",
+        "values": {
+          "body_start": 5,
+          "pages": "front-body"
+        }
+      },
+      {
+        "id": "P05",
+        "value": "chapter",
+        "start": 10,
+        "end": 23,
+        "quote": "各章页脚包含本章名称和页码",
+        "values": {
+          "footer": "chapter"
+        }
+      }
+    ],
+    "protocol": "page-intent-1"
+  }
+}

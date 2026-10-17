@@ -1,0 +1,21 @@
+{
+  "document_sha256": "1587cea383860312b47fdd2f91414982bee0cda8233a9a18eb248691140f0aea",
+  "render_config_sha256": "27007a9decf780a4e4e9ee4fd6db8675cf7a46234d4199c49ed36af42bcbd05a",
+  "generated_at": "2026-10-17T11:43:09.487551+00:00",
+  "renderer": "Codex bundled LibreOffice / Poppler",
+  "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+  "page_count": 8,
+  "preview_range": [
+    1,
+    8
+  ],
+  "font_notes": [
+    "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+  ],
+  "fallback_odt": false,
+  "input_bytes_unchanged": true,
+  "limitation": "不是Microsoft Word验收；分页可能不同。格式属性通过与可见排版复核分别记录。",
+  "all_eight_pages_visually_inspected": true,
+  "legacy_configuration_bundle_label": "26.1013.11914",
+  "actual_renderer_script_bundle": "26.1011.51657"
+}

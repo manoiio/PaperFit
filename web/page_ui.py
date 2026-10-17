@@ -13,9 +13,13 @@ def options(model,task,*,local=False):
   if model.inventory:
    if model.page_layout_draft is None:model.page_layout_draft={}
    model.page_layout_draft['explicit']=True
+  st.session_state[key+'-preset-changed']=True
  if not saved.get('explicit') and portable:st.session_state[key+'-choice']='complete'
- choice=st.selectbox('本次整理方案',['current','complete'],format_func={'current':'常规格式整理（保持原有页码与编号）','complete':'完整整理：格式＋安全编号同步＋页码方案'}.get,index=1 if saved.get('enabled') or portable else 0,key=key+'-choice',on_change=chosen)
- enabled=choice=='complete'
+ choice=st.selectbox('本次整理方案',['current','complete','complete_chapters'],format_func={'current':'常规格式整理（保持原有页码与编号）','complete':'完整整理：格式＋安全编号同步＋页码方案','complete_chapters':'完整整理：格式、编号同步、分区页码和章节页脚'}.get,index=1 if saved.get('enabled') or portable else 0,key=key+'-choice',on_change=chosen)
+ enabled=choice in ('complete','complete_chapters')
+ if st.session_state.pop(key+'-preset-changed',False) and choice=='complete_chapters':
+  seed={**DEFAULT,'pages':'front-body','footer':'chapter','dynamic':True}
+  for suffix,value in (('pages','front-body'),('footer','chapter'),('roman','lowerRoman'),('front-start',1),('start',1),('restart',False),('align','center')):st.session_state[key+'-'+suffix]=value
  p=deepcopy(seed)
  if enabled:
   a,b=st.columns(2)
@@ -47,7 +51,8 @@ def render_local(model):
    draft=model.page_layout_draft
    if st.button('依据已确认分类准备分区草稿',key='pages-prepare'):
     if not model.classification_confirmed:raise DemoError('请先确认当前分类和范围')
-    draft['regions']=page_layout.automatic(Package(model.input_path),model.classification_confirmed,p);st.rerun()
+    from .assembly_session import regions_from
+    draft['regions']=regions_from(model,model.classification_confirmed['paragraph_types'],p);st.rerun()
    if draft['regions']:
     rows=st.data_editor(draft['regions'],key='pages-regions-'+model.task_dir.name,num_rows='dynamic',hide_index=True,column_config={'start':st.column_config.NumberColumn('起点段落',min_value=1,step=1),'role':st.column_config.SelectboxColumn('用途',options=['cover','front','body','keep']),'format':st.column_config.SelectboxColumn('页码格式',options=['decimal','lowerRoman','upperRoman','keep']),'restart':st.column_config.NumberColumn('重启值（空值为连续）',min_value=1,step=1),'footer':st.column_config.SelectboxColumn('页脚内容',options=['page','chapter','text']),'text':'页脚文字/已确认章节名','alignment':st.column_config.SelectboxColumn('对齐',options=['center','right'])},width='stretch')
     if st.button('保存分区草稿',key='pages-save'):

@@ -1,0 +1,132 @@
+[
+  {
+    "file": "README.md",
+    "sha256": "e2dbad901964db74d1a3e0b9023d9f6de9d523ba9027ae1b16ee66441c6cf385",
+    "bytes": 2784
+  },
+  {
+    "file": "adapted.json",
+    "sha256": "1c849955e0f55e92db594546340589a40730fc0c247a5d6928a4e2193f8877bd",
+    "bytes": 949
+  },
+  {
+    "file": "api.json",
+    "sha256": "f562fdf4ed2157a808493856afb53f1f88dc6fcab92a742314a4b16dae693133",
+    "bytes": 696
+  },
+  {
+    "file": "audit.json",
+    "sha256": "2544bb2d912c631a084e23990679500e1a04649b17c81e885fe18078cafec26a",
+    "bytes": 6311
+  },
+  {
+    "file": "expected.json",
+    "sha256": "b2fbabed0f20e7b7e4d85788a0f93e60b51b3addd8c5532a9bd2d2cb712b648d",
+    "bytes": 650
+  },
+  {
+    "file": "fixed.docx",
+    "sha256": "1587cea383860312b47fdd2f91414982bee0cda8233a9a18eb248691140f0aea",
+    "bytes": 46998
+  },
+  {
+    "file": "independent.json",
+    "sha256": "2475136f692a0f942a869f007d9761038560b4a9d2e3f77d8c2ab8b15036fde9",
+    "bytes": 1025
+  },
+  {
+    "file": "previews/all-pages.jpg",
+    "sha256": "ae52f2942bf7c7a883cdd5ee4a6ea5b082e74de876c36f8c8145054bb4801831",
+    "bytes": 85763
+  },
+  {
+    "file": "public-request.json",
+    "sha256": "0973f0de459b7708ccd9f0a1ee0eb7e82ff2bfa75b20a03e144aef9dc3c5d95f",
+    "bytes": 3977
+  },
+  {
+    "file": "public-response.json",
+    "sha256": "5b9e7507674ddf1fd6d1e7fcac279567ff57e18ad4063ad8fff6035032f6e56c",
+    "bytes": 516
+  },
+  {
+    "file": "render-record.json",
+    "sha256": "65c49982b182ec06569c05d3a6bd72e81ca78da245a001ad0756e2259a3cd88e",
+    "bytes": 927
+  },
+  {
+    "file": "requirements.txt",
+    "sha256": "7ebb753497a804771235f2aad5b73910c5dd0d873c19ca12995dfbba78dc6ee2",
+    "bytes": 70
+  },
+  {
+    "file": "result.zip",
+    "sha256": "6ff739e26f1332f6ebca47ce52129c800547d38371bc0af0ae5bd10aa4bcce92",
+    "bytes": 138630
+  },
+  {
+    "file": "rules.json",
+    "sha256": "27e19c80db1d0216ce67af3c9eca6ed09d77bc31358686019612d61d1603cd59",
+    "bytes": 61559
+  },
+  {
+    "file": "screenshots/before-body-question.png",
+    "sha256": "5d57671c1c18a015e22adbdc2462c320b1a5b0d8a4a016759925faa6bb7e1063",
+    "bytes": 157176
+  },
+  {
+    "file": "screenshots/fresh-complete.png",
+    "sha256": "75b2e29c7df19cc296df9cf14846775d6e55eb5525c34efca2ca3cb55f194274",
+    "bytes": 143426
+  },
+  {
+    "file": "screenshots/real-policy-complete.png",
+    "sha256": "5417d557c3fe60912068628bfce56e155af26469cbf6d7c9ba77af64eb9232e6",
+    "bytes": 141303
+  },
+  {
+    "file": "screenshots/shared-question.png",
+    "sha256": "5e38bb79261e869acc2903cfa79183b42cb6eb3257de4a040d5933227d102eba",
+    "bytes": 100588
+  },
+  {
+    "file": "screenshots/word-body-5-6.png",
+    "sha256": "95fbab37d546db9a9c78dedb1fb5be11c459b4d3051b763cfeab5009cdfc64a0",
+    "bytes": 191690
+  },
+  {
+    "file": "screenshots/word-body-7-8.png",
+    "sha256": "701810915bba9e1002d45306641595732394382980be6b2d1219097cb21e9fb4",
+    "bytes": 177172
+  },
+  {
+    "file": "screenshots/word-cover.png",
+    "sha256": "27c62eb6e532ef9d5a4df1f606e22bf5351fb9549fcf66c3bf07ecd09e8d5c9e",
+    "bytes": 170402
+  },
+  {
+    "file": "screenshots/word-front.png",
+    "sha256": "3573de39267531272b7585bf436fdd479172150366d80011ac984ca29deec395",
+    "bytes": 172416
+  },
+  {
+    "file": "step1.docx",
+    "sha256": "2396364ee86dddaa0af181823e4dea9fb8ad9f94d4e48862283fa78d3eef5923",
+    "bytes": 39503
+  },
+  {
+    "file": "validation.json",
+    "sha256": "38fd48aecd456556d0b762a642d4cd86789a91fdad57c952607b7a2d04581364",
+    "bytes": 2028
+  },
+  {
+    "file": "word-observation.json",
+    "sha256": "10a812e74bafbadb9e1fcae8db4c469fc13ea9ddbc43f8c9edd6c44ac11d4476",
+    "bytes": 891
+  },
+  {
+    "file": "xml-proof.json",
+    "sha256": "e759bdf2d08ba204594640e2e6966962e77ddf54ba7d9b36e47d5bbcf5442f9a",
+    "bytes": 808
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "only_authored_ordinary_attributes": true,
+  "only_authored_numeric_slots": true,
+  "main_text_objects_and_runs_preserved_by_structure_stage": true,
+  "all_old_header_footer_and_unselected_parts_byte_equal": true,
+  "all_existing_relationships_and_content_types_preserved": true,
+  "PAGE_empty_cache_not_fabricated": true,
+  "four_sections_variants_and_numbering_verified": true,
+  "physical_page_numbers": "not proved by XML; see actual page images and Word record",
+  "new_parts": [
+    "word/footerPF1.xml",
+    "word/footerPF10.xml",
+    "word/footerPF11.xml",
+    "word/footerPF12.xml",
+    "word/footerPF2.xml",
+    "word/footerPF3.xml",
+    "word/footerPF4.xml",
+    "word/footerPF5.xml",
+    "word/footerPF6.xml",
+    "word/footerPF7.xml",
+    "word/footerPF8.xml",
+    "word/footerPF9.xml"
+  ]
+}

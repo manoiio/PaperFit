@@ -4,7 +4,9 @@ import re
 def refine(rows):
  zone=None;main=False
  for row in rows:
-  value=row['text'].strip();compact=re.sub(r'\s','',value).lower();typ=None;ambiguous=False;reason=''
+  value=row['text'].strip();compact=(row.get('marker_name') or re.sub(r'\s','',value)).lower();compact={'中文摘要':'摘要','英文摘要':'abstract'}.get(compact,compact);typ=None;ambiguous=False;reason=''
+  if row.get('structure_boundary') and not row.get('section_marker'):
+   zone=None;main=True;continue
   if compact=='摘要':zone='cn';main=False;typ='abstract_cn_title';reason='独立摘要章节标记（允许空格），不是正文内提及'
   elif compact=='abstract':zone='en';main=False;typ='abstract_en_title';reason='独立英文摘要章节标记'
   elif compact=='参考文献':zone='refs';main=False;typ='reference_title';reason='独立参考文献章节标记'
@@ -18,7 +20,7 @@ def refine(rows):
   elif main and row['suggested_type'] in ('other','pending') and value and not row['special']:
    if re.fullmatch(r'Heading[123]',row.get('style_id') or '') and len(value)<60 and not re.search('[。！？;；]',value):typ='heading'+row['style_id'][-1];reason='正文区内标题样式及短文本'
    elif len(value)>35 or re.search('[。！？;；]',value):typ='body';reason='已核对章节线索之后的叙述段；数字/单位句子不升级标题'
-  elif value and not row['special'] and zone in ('cn','en'):
+  elif value and not row['special'] and zone in ('cn','en') and not (row['ambiguous'] and row.get('outline_level') in (0,1,2)):
    typ='abstract_'+zone+'_body';reason='摘要标题之后、关键词/下一节之前的普通段落；需人工核对区域'
   elif value and zone=='refs':
    typ='reference_item';ambiguous=not bool(re.match(r'^[\[［]\d+[\]］]',value));reason='参考文献章节内条目'+('，非[整数]形式，著录/编号需复核' if ambiguous else '，手工编号仅提供只读线索')

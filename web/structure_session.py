@@ -30,6 +30,11 @@ def prepare(model,*,include_tables=False,preserve_paragraphs=False):
             if ident.startswith('p:'):reserved.add(ident.split(':')[1])
     def snippet(r):return {'id':'p:'+str(r['index']),'text':redact(r['text'],85) if not withheld(r['text']) and str(r['index']) not in unsafe_ids and str(r['index']) not in model.material_exclusions and str(r['index']) not in reserved and not r['special'] else '[保护或个人信息片段不发送]'}
     for i,row in enumerate(rows):
+        # A label-only cover marker or missing adjacent graphic is not a semantic
+        # ambiguity AI can resolve. Keep it excluded; do not spend a request.
+        import re
+        if re.match(r'^封面(?:第[一二三四五六七八九十0-9]+页)?(?:\s|[—－:：-]|$)',row['text']) or row['suggested_type'] in ('figure_caption','table_caption') and row['ambiguous'] and '未找到相邻图表' in row['reason']:
+            protected.append({'id':'p:'+str(row['index']),'reason':'封面标记或缺少相邻图表证据；不由语义请求补造关联'});continue
         n=str(row['index']);current=model.paragraph_types[n];p=pkg.paragraphs[i]
         blocked=fixed or current!=row['suggested_type'] or n in model.material_exclusions or n in reserved or withheld(row['text'])
         # No links/fields/bookmarks/unknown structural grants. Plain paragraphs only.
@@ -55,6 +60,11 @@ def prepare(model,*,include_tables=False,preserve_paragraphs=False):
         if len(json.dumps(req,ensure_ascii=False,sort_keys=True))>MAX_INPUT:remaining+=1;continue
         candidates.append(item)
     request={'version':VERSION,'mode':model.mode,'allowed_roles':roles(model.mode),'candidates':candidates}
+    from core.structure_evidence import index
+    skeleton=index(rows,model.paragraph_types,confirmed=bool(model.classification_confirmed),excluded=model.material_exclusions)
+    # One bounded skeleton, never repeated full context per candidate or a physical page map.
+    request['skeleton']={'version':skeleton['version'],'body_start':skeleton['body_start'],'anchors':[{**x,'id':'p:'+str(x['paragraph']),'text':snippet(rows[x['paragraph']-1])['text']} for x in (skeleton['chapters']+skeleton['markers'])[:16]],'protected_summary':{'confirmed_scope':fixed,'excluded_count':len(model.material_exclusions),'decisions':[{'id':'p:'+str(r['index']),'role':model.paragraph_types[str(r['index'])]} for r in rows if model.paragraph_types[str(r['index'])]!=r['suggested_type']][:16]},'context_only':True}
+
     auto=None
     if include_tables:
         from .auto_ranges import prepare as auto_prepare
@@ -75,7 +85,8 @@ def prepare(model,*,include_tables=False,preserve_paragraphs=False):
             trial={**request,'candidates':candidates+[item]}
             if len(candidates)>=MAX_CANDIDATES or len(json.dumps(trial,ensure_ascii=False,sort_keys=True))>MAX_INPUT:remaining+=1;continue
             candidates.append(item)
-    while candidates and len(json.dumps(request,ensure_ascii=False,sort_keys=True))>MAX_INPUT:
+    from ai.structure_ids import wire_request
+    while candidates and len(json.dumps(wire_request(request) if include_tables else request,ensure_ascii=False,sort_keys=True))>MAX_INPUT:
         candidates.pop();remaining+=1
     from ai.structure import prompt_for
     out={'binding':start,'request':request,'protected':protected,'remaining':remaining,'prompt_sha256':fingerprint(prompt_for(request['version']))}
@@ -140,5 +151,36 @@ def merge(model,prepared,result):
                               'rows':checked,'remaining_budget':prepared['remaining'],'protected':len(prepared['protected']),
                               'local_included':sum(t not in ('other','pending') for n,t in suggest(model)['draft']['paragraph_types'].items())}
     proposal['limits'][-1]='本次AI仅提供已展示候选的结构建议；用户接受后才确认范围。格式要求仍来自当前本地规则，结构保护和未纳入模块不变。'
+    coordinate(model,proposal)
     proposal.pop('seal');proposal['seal']=fingerprint(proposal)
     return proposal
+
+
+def coordinate(model,proposal,*,body_start=None,decided=(),confirmed=None):
+    """One current structure plan, shared by scopes, sections and numeric preparation."""
+    from core.structure_evidence import index
+    from core.classification import suggest_paragraph_types
+    types=proposal['draft']['paragraph_types'];rows=model.suggestions['paragraphs'];prior={str(r['index']):r for r in rows}
+    protected=set(model.material_exclusions)
+    for scope in (model.front_draft if model.front_enabled else None,model.toc_draft if model.toc_enabled else None):
+        protected.update(k[2:] for k in (scope or {}).get('objects',{}) if k.startswith('p:'))
+    fixed=bool(model.classification_confirmed) if confirmed is None else confirmed
+    known=index(rows,types,confirmed=fixed,excluded=protected)
+    chosen=body_start or known['body_start']
+    if body_start and str(body_start) not in protected:
+        from core.structure_evidence import heading
+        if heading(prior[str(body_start)])==1:types[str(body_start)]='heading1'
+    if chosen and not fixed:
+        ai={r['id'][2:] for r in proposal.get('structure_ai',{}).get('rows',[]) if r['accepted'] and r['id'].startswith('p:')}
+        fresh=suggest_paragraph_types(model.input_path,include_sections=True,body_start=chosen)['paragraphs']
+        for row in fresh:
+            n=str(row['index'])
+            if row['index']<chosen or n in protected or n in decided or n==str(body_start):continue
+            if model.paragraph_types[n]!=prior[n]['suggested_type']:continue
+            if n in ai:continue
+            types[n]='pending' if row['ambiguous'] else row['suggested_type']
+    out=index(rows,types,confirmed=fixed,excluded=protected,approved=[*decided,*([str(body_start)] if body_start else [])])
+    if chosen:out['body_start']=chosen;out['body_start_source']='user_decision' if body_start else 'shared_structure_evidence'
+    proposal['structure']=out
+    proposal['draft']['body']=sorted(int(n) for n,t in types.items() if t=='body')
+    return out

@@ -65,10 +65,13 @@ def accept_scope(model,proposal,*,confirmation_text=None):
     for k in set(ATTRS+['paragraph_types','report','report_revision','selected','result','result_signature','readonly_cache','error']+list(proposal['draft'])):setattr(model,k,getattr(stage,k))
     return shortcut_plan(model)
 
-def shortcut_plan(model):
+def shortcut_plan(model,*,allowed_keys=None):
     model._current()
     if not model.report:raise DemoError('请先接受范围摘要并检查')
     included=[f for f in model.eligible() if f['rule_id'].startswith('R') and f['rule_id'] not in ('R35',)]
+    if allowed_keys is not None:
+        if set(allowed_keys)-{f['key'] for f in included}:raise DemoError('限定修正集合包含当前不可修正项')
+        included=[f for f in included if f['key'] in set(allowed_keys)]
     stage=isolated(model);stage.selected=sorted(f['key'] for f in included)
     plan=stage.correction_plan() if included else None
     data={'version':VERSION,'binding':binding(model),'keys':stage.selected,'items':deepcopy(included),'plan':plan,

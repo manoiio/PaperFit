@@ -154,9 +154,8 @@ class PageLayoutTests(unittest.TestCase):
  def test_explicit_start_feedback_and_complex_footer_exception_continue_zero_API(self):
   from web.onepass_session import start,continue_command
   x=WebSession(self.root/'unknown-start');x.set_mode('academic');x.load(self.path.read_bytes(),'公开合成.docx');x.page_layout_draft={'enabled':True,'policy':self.policy,'input_sha256':x.inventory['input_sha256'],'regions':[]};st={}
-  start(x,st,structure_runner=lambda *_:(_ for _ in ()).throw(DemoError('AI unavailable')));self.assertEqual(st['status'],'waiting');self.assertEqual([q['id'] for q in st['questions']],['page_body'])
-  with patch('urllib.request.OpenerDirector.open',side_effect=AssertionError('continue must not request')):continue_command(x,st,'',{'page_body':'5'})
-  self.assertEqual(st['status'],'done',st.get('error'));self.assertEqual(st['audit']['explicit_body_boundary_reanalysis'],5);self.assertEqual(x.current_round,0)
+  start(x,st,structure_runner=lambda *_:(_ for _ in ()).throw(DemoError('AI unavailable')));self.assertEqual(st['status'],'done',st.get('error'))
+  self.assertFalse(st['questions']);self.assertEqual(st['audit']['structure']['body_start'],5);self.assertEqual(x.result['output_classification_manifest']['paragraph_types']['6'],'body');self.assertEqual(x.current_round,0)
   # A real legal picture footer is preserved by refusing the structural step.
   from docx import Document
   from docx.shared import Inches

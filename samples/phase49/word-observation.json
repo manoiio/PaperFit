@@ -1,0 +1,31 @@
+{
+  "file": "fixed.docx",
+  "sha256": "1587cea383860312b47fdd2f91414982bee0cda8233a9a18eb248691140f0aea",
+  "kind": "actual local Microsoft Word, opened the browser download",
+  "pages": 8,
+  "observed_visible_numbers": [
+    null,
+    null,
+    "i",
+    "ii",
+    "5",
+    "6",
+    "7",
+    "8"
+  ],
+  "chapter_footer": {
+    "physical_pages_5_6": "第1章 合成研究",
+    "physical_pages_7_8": "第2章 合成结果"
+  },
+  "repair_prompt_observed": false,
+  "closed_without_save": true,
+  "after_close_sha256": "1587cea383860312b47fdd2f91414982bee0cda8233a9a18eb248691140f0aea",
+  "fields_not_explicitly_refreshed": true,
+  "screenshots": [
+    "screenshots/word-cover.png",
+    "screenshots/word-front.png",
+    "screenshots/word-body-5-6.png",
+    "screenshots/word-body-7-8.png"
+  ],
+  "boundary": "Observed generated PAGE displays; no claim of directory or REF/PAGEREF refresh."
+}

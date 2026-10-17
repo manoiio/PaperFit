@@ -1,0 +1,237 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-6",
+  "authorization": "本次开始命令：所列普通格式、安全数字同步和分节页码策略；不含对象移动、宽度及域批量刷新",
+  "command_id": "25a7e405e5a04c4184fec0fad5bd2d87",
+  "source_sha256": "a9a2ceded1f268a4f63133746334952554e0e1d471a5a5239921fedbab131ffe",
+  "start_binding": "5429fbb7ae0099bdbf8d420c0ce19bc200c78db46936e081501183f49a322b71",
+  "API": {
+    "requirements": {
+      "fields": [],
+      "overrides": [],
+      "receipt": {
+        "kind": "real_api",
+        "model": "deepseek-flash",
+        "timestamp_utc": "2026-10-17T11:39:28.670024+00:00",
+        "elapsed_seconds": 0.948,
+        "input_sha256": "09f0b41ad17039435ea58a17a18481c875b3cece41ddacd4a13ede3a3c9b5c80",
+        "json_output": true,
+        "request_count": 1,
+        "attempt": {
+          "attempt_id": "89671192c0964c1bbb5f6bc333fc6903",
+          "purpose": "supplement",
+          "timestamp_utc": "2026-10-17T11:39:28.668636+00:00",
+          "input_sha256": "09f0b41ad17039435ea58a17a18481c875b3cece41ddacd4a13ede3a3c9b5c80",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": true,
+          "sent": true,
+          "response_received": true,
+          "validation": "accepted",
+          "usage": {
+            "prompt_tokens": 742,
+            "completion_tokens": 47,
+            "total_tokens": 789,
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 742
+          },
+          "billing_status": "unknown",
+          "elapsed_seconds": 0.949
+        },
+        "usage": {
+          "prompt_tokens": 742,
+          "completion_tokens": 47,
+          "total_tokens": 789,
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 742
+        },
+        "protocol_version": "supplement-ids-v3"
+      },
+      "source_sha256": "7ebb753497a804771235f2aad5b73910c5dd0d873c19ca12995dfbba78dc6ee2"
+    }
+  },
+  "phases": [
+    "理解排版要求",
+    "识别论文内容",
+    "调整格式",
+    "检查修改后的文件"
+  ],
+  "assembly_authorization": {
+    "policy": {
+      "version": 2,
+      "dynamic": true,
+      "pages": "front-body",
+      "roman": "lowerRoman",
+      "body_start": 5,
+      "front_start": 1,
+      "chapter_restart": false,
+      "footer": "chapter",
+      "text": "",
+      "alignment": "center",
+      "targets": [
+        "cover",
+        "front",
+        "body"
+      ]
+    },
+    "evidence": [
+      {
+        "id": "P03",
+        "value": 5,
+        "start": 0,
+        "end": 9,
+        "quote": "正文页码起算值为5",
+        "values": {
+          "body_start": 5,
+          "pages": "front-body"
+        }
+      },
+      {
+        "id": "P05",
+        "value": "chapter",
+        "start": 10,
+        "end": 23,
+        "quote": "各章页脚包含本章名称和页码",
+        "values": {
+          "footer": "chapter"
+        }
+      }
+    ],
+    "source_locations": [],
+    "grant": "本次开始命令授权所列安全事务，不冒充旧勾选"
+  },
+  "candidate_count": 0,
+  "candidate_kinds": {
+    "paragraphs": 0,
+    "tables": 0,
+    "remaining": 0
+  },
+  "structure_local_only": true,
+  "auto_ranges": {
+    "tables": {},
+    "protected": [],
+    "note_counts": {
+      "footnote": 0,
+      "endnote": 0
+    },
+    "limits": [],
+    "table_roles": {}
+  },
+  "structure": {
+    "version": "structure-evidence-1",
+    "body_start": 5,
+    "chapters": [
+      {
+        "paragraph": 5,
+        "role": "heading1",
+        "level": 1,
+        "source": "style_outline_number"
+      },
+      {
+        "paragraph": 9,
+        "role": "heading1",
+        "level": 1,
+        "source": "style_outline_number"
+      }
+    ],
+    "markers": [
+      {
+        "paragraph": 3,
+        "role": "abstract_cn_title",
+        "source": "independent_marker"
+      }
+    ],
+    "regions": [
+      {
+        "start": 1,
+        "end": 2,
+        "purpose": "other",
+        "role": "pending"
+      },
+      {
+        "start": 3,
+        "end": 4,
+        "purpose": "front",
+        "role": "abstract_cn_title"
+      },
+      {
+        "start": 5,
+        "end": 8,
+        "purpose": "body",
+        "role": "heading1"
+      },
+      {
+        "start": 9,
+        "end": 12,
+        "purpose": "body",
+        "role": "heading1"
+      }
+    ],
+    "conflicts": [],
+    "physical_pages_computed": false,
+    "body_start_source": "shared_structure_evidence"
+  },
+  "plan_sha256": "45a09a3bcfe61327de879e6196fc676e1471775d91188ac75fd9d89bb1d2baea",
+  "selected_count": 35,
+  "confirmed_scope_sha256": "11d447c4dbc0cf369096c58662ad090b28c50a60e403eb0c20635c85bf9ae2da",
+  "dynamic_scope_proof": {
+    "method": "full_supported_inventory",
+    "unresolved": [
+      "有未纳入安全引用范围的图表编号文字"
+    ],
+    "not_manual_complete_confirmation": true
+  },
+  "dynamic_blocked_groups": [
+    {
+      "group": [
+        "automatic_inventory"
+      ],
+      "paragraphs": [],
+      "reasons": [
+        "有未纳入安全引用范围的图表编号文字"
+      ]
+    }
+  ],
+  "assembly_steps": [
+    {
+      "kind": "format",
+      "round": 1,
+      "input_sha256": "a9a2ceded1f268a4f63133746334952554e0e1d471a5a5239921fedbab131ffe",
+      "output_sha256": "2396364ee86dddaa0af181823e4dea9fb8ad9f94d4e48862283fa78d3eef5923",
+      "changes": 35
+    },
+    {
+      "kind": "section_pages",
+      "round": 2,
+      "input_sha256": "2396364ee86dddaa0af181823e4dea9fb8ad9f94d4e48862283fa78d3eef5923",
+      "output_sha256": "1587cea383860312b47fdd2f91414982bee0cda8233a9a18eb248691140f0aea",
+      "changes": 12
+    }
+  ],
+  "processed_scope": {
+    "tables": {},
+    "notes": []
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 2,
+    "selected": 35,
+    "changes": 47,
+    "output_sha256": "2396364ee86dddaa0af181823e4dea9fb8ad9f94d4e48862283fa78d3eef5923",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 26,
+      "problem_count": 2,
+      "review_count": 29,
+      "review_findings": 22,
+      "review_notes": 7,
+      "pass_count": 39,
+      "not_applicable_count": 15,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 13
+    }
+  },
+  "automatic_input_switch": false
+}
