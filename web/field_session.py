@@ -63,6 +63,13 @@ def adopt(model,state):
   dest=model.task_dir/('fields-fixed-'+uuid4().hex+'.docx');os.link(r['output'],dest);rr=deepcopy(r);rr['output']=str(dest);rr['after']['input']=str(dest.resolve());rr['round_input_path']=ctx['input'];number=model.generation_count+1
   rr['round']={'number':number,'input_round':ctx['parent'],'input_sha256':ctx['sha256'],'original_sha256':sha256(model.original_bytes),'rules_version':rr['after']['rules']['version'],'rules_sha256':model.rules_hash}
   rr['field_update']['adoption']={'fix_calls':0,'Word_calls':0,'current_input_auto_switched':False}
+  # Preserve the same full parent chain for both smart and local adoption.
+  previous=deepcopy((model.result or {}).get('assembly'))
+  if previous:
+   if previous['steps'] and previous['steps'][-1]['output_sha256']!=ctx['sha256']:raise DemoError('Word采用与完整方案父子关系不符')
+   previous['steps'].append({'kind':'field_update','round':number,'input_sha256':ctx['sha256'],'output_sha256':rr['after']['input_sha256'],'changes':len(rr['changes'])})
+   previous.update(fields_evaluated=True,total_changes=previous['total_changes']+len(rr['changes']))
+   rr['assembly']=previous
   folder=model.task_dir/('round-records-fields-'+uuid4().hex);folder.mkdir();staged=copy(model);staged.task_dir=folder;staged.history=deepcopy(model.history);staged.center_cache=deepcopy(model.center_cache);staged._archive_round(rr);staged._verify_plan_archive(folder,staged.history[-1],rr)
   if context(model)[1]!=state['binding'] or valid(model,state) is None:raise DemoError('Word归档期间绑定变化')
   entry=deepcopy(staged.history[-1]);entry['stem']=folder.name+'/'+entry['stem'];future={**ctx,'input':str(dest),'sha256':rr['after']['input_sha256'],'classification':rr['output_classification_manifest'],'parent':number,'history':number}

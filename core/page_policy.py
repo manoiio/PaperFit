@@ -4,13 +4,14 @@ import re
 from .package import DemoError
 DEFAULT={'version':1,'dynamic':False,'pages':'keep','roman':'lowerRoman','body_start':1,'front_start':1,'chapter_restart':False,'footer':'page','text':'','alignment':'center'}
 def validate(p):
- if type(p) is not dict or set(p)!=(set(DEFAULT)|({'targets'} if p.get('version')==2 else set())):raise DemoError('完整整理策略字段不完整或未知')
- if type(p['version']) is not int or p['version'] not in (1,2) or type(p['dynamic']) is not bool or type(p['chapter_restart']) is not bool:raise DemoError('整理策略版本/开关无效')
+ if type(p) is not dict or set(p)!=(set(DEFAULT)|({'targets','auxiliaries'} if p.get('version')==3 else {'targets'} if p.get('version')==2 else set())):raise DemoError('完整整理策略字段不完整或未知')
+ if type(p['version']) is not int or p['version'] not in (1,2,3) or type(p['dynamic']) is not bool or type(p['chapter_restart']) is not bool:raise DemoError('整理策略版本/开关无效')
  if p['pages'] not in ('keep','front-body','chapter-footers') or p['roman'] not in ('lowerRoman','upperRoman') or p['footer'] not in ('page','chapter','text') or p['alignment'] not in ('center','right'):raise DemoError('页码/页脚模式不支持')
  if any(type(p[k]) is not int or not 1<=p[k]<=9999 for k in ('body_start','front_start')):raise DemoError('正文页码起始值须1–9999')
  if type(p['text']) is not str or len(p['text'])>80 or any(ord(c)<32 for c in p['text']) or '<' in p['text'] or '>' in p['text']:raise DemoError('页脚普通文字无效')
  if p['footer']=='text' and not p['text']:raise DemoError('请填写页脚文字')
- if p['version']==2 and (type(p['targets']) is not list or any(type(x) is not str or x not in ('cover','front','body') for x in p['targets']) or len(set(p['targets']))!=len(p['targets'])):raise DemoError('页码适用区域无效')
+ if p['version'] in (2,3) and (type(p['targets']) is not list or any(type(x) is not str or x not in ('cover','front','body') for x in p['targets']) or len(set(p['targets']))!=len(p['targets'])):raise DemoError('页码适用区域无效')
+ if p['version']==3 and p['auxiliaries']!='safe-layout-v1':raise DemoError('未知自动辅助授权版本')
  return deepcopy(p)
 def _legacy_extract(text):
  """Bounded exact declarations only; all unconsumed clauses go to strict format parser.
@@ -84,7 +85,7 @@ def merge(base,parsed,proof):
  out=deepcopy(base);values={k:v for e in proof for k,v in e['values'].items()};out.update(values)
  if parsed['version']==2:
   base_targets=set(base.get('targets',('cover','front','body') if base['pages']=='front-body' else ('body',) if base['pages']=='chapter-footers' else ()))
-  out['version']=2;out['targets']=[x for x in ('cover','front','body') if x in base_targets|set(parsed['targets'])] if values.get('pages')!='keep' else []
- if parsed['version']==1 and out['version']==2 and values.get('pages')=='front-body':out['targets']=['cover','front','body']
+  out['version']=3 if base['version']==3 else 2;out['targets']=[x for x in ('cover','front','body') if x in base_targets|set(parsed['targets'])] if values.get('pages')!='keep' else []
+ if parsed['version']==1 and out['version'] in (2,3) and values.get('pages')=='front-body':out['targets']=['cover','front','body']
  if 'pages' not in values and parsed['pages']=='chapter-footers' and base['pages']=='keep':out['pages']='chapter-footers'
  return validate(out)

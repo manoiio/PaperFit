@@ -1,0 +1,28 @@
+{
+  "kind": "actual native Word visual observation, separate from XML and LO",
+  "file_sha256": "ce0530ac9dc2f6f8d1b7c8010ab9b3420bb3fa668f867d27053e28cd42307b2c",
+  "pages": 6,
+  "repair_prompt": false,
+  "image_caption": "inline image before caption on body page1; both within text width and same observed page",
+  "table_caption": "above table; table within width",
+  "header": "existing header visibly repeats on next page; preserved, not newly inferred",
+  "TOC": [
+    {
+      "title": "第1章 合成方法",
+      "display_page": "1"
+    },
+    {
+      "title": "第2章 合成结果",
+      "display_page": "4"
+    }
+  ],
+  "PAGEREF_ResultTarget": {
+    "display": 4,
+    "physical_page": 6,
+    "native_internal_jump": true
+  },
+  "chapter_footer": "第2章 合成结果 4 visible",
+  "other_objects": "cover table and merged table preserved; merged table not automatically kept on one page",
+  "closed_without_saving": true,
+  "hash_unchanged": true
+}

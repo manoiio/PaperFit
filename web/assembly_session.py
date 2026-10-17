@@ -13,7 +13,7 @@ def policy_for(model):
 
 def regions_from(stage,types,policy,**kwargs):
  pkg=Package(stage.input_path);rows=automatic(pkg,{'paragraph_types':types},policy,**kwargs)
- if policy.get('version')==2:
+ if policy.get('version') in (2,3):
   allowed=set(policy['targets'])
   for row in rows:
    if row['role'] not in allowed:row['role']='keep'
@@ -86,9 +86,9 @@ def page_layout_text(p):return ''.join(p.xpath('.//w:t/text()',namespaces=__impo
 def continue_regions(stage,state,decisions):
  if not state.get('assembly') or state['assembly']['pages']=='keep':return
  if decisions.get('page_number_start')=='keep':
-  state['assembly'].update(version=2,targets=[x for x in state['assembly'].get('targets',('cover','front','body')) if x!='body'])
+  state['assembly'].update(version=3 if state['assembly']['version']==3 else 2,targets=[x for x in state['assembly'].get('targets',('cover','front','body')) if x!='body'])
  if decisions.get('page_number_start')=='1':state['assembly']['body_start']=1
- if decisions.get('page_continuity')=='1':state['assembly'].update(version=2,targets=['body'],pages='front-body',body_start=1,chapter_restart=False)
+ if decisions.get('page_continuity')=='1':state['assembly'].update(version=3 if state['assembly']['version']==3 else 2,targets=['body'],pages='front-body',body_start=1,chapter_restart=False)
  if any(k in decisions for k in ('page_number_start','page_continuity')):state.pop('page_regions',None)
  if decisions.get('page_conflict')=='keep':
   state['assembly']['pages']='keep';state['audit']['page_skipped']=state['audit'].get('page_structure_blocker','用户明确保持原页码');return
@@ -109,6 +109,12 @@ def execute(stage,state,emit):
  history=state['history_length'];steps=[]
  for h in stage.history[history:]:
   r=h['result'];steps.append({'kind':'format','round':r['round']['number'],'input_sha256':r['round']['input_sha256'],'output_sha256':r['after']['input_sha256'],'changes':len(r['changes'])})
+ from .auxiliary_session import enabled as auxiliary_enabled,execute as auxiliary_execute
+ def aux(kind):
+  r=auxiliary_execute(stage,state,kind,emit)
+  if r:steps.append({'kind':r['kind'],'round':r['round']['number'] if 'round' in r else stage.result['round']['number'],'input_sha256':stage.result['round']['input_sha256'],'output_sha256':stage.result['after']['input_sha256'],'changes':len(stage.result['changes'])})
+ auxiliary_granted=auxiliary_enabled(p) and not any(e.get('format_roles') for e in state['audit'].get('assembly_authorization',{}).get('evidence',[]))
+ if auxiliary_granted:aux('position')
  if p['dynamic']:
   emit('同步安全题注编号与文本引用')
   from core import dynamic
@@ -134,11 +140,13 @@ def execute(stage,state,emit):
   else:
    from .dynamic_session import cancel
    cancel(stage,st)
+ if auxiliary_granted:
+  aux('width');aux('pagination')
  if steps:
   for a,b in zip(steps,steps[1:]):
    if a['output_sha256']!=b['input_sha256']:raise DemoError('完整整理阶段父子关系错误')
   state['audit']['assembly_steps']=steps
-  stage.result['assembly']={'policy':deepcopy(p),'steps':steps,'total_changes':sum(s['changes'] for s in steps),'input_auto_switched':False,'fields_evaluated':False,'structure_evidence':deepcopy(state['audit'].get('structure'))}
+  stage.result['assembly']={'policy':deepcopy(p),'steps':steps,'total_changes':sum(s['changes'] for s in steps),'input_auto_switched':False,'fields_evaluated':False,'structure_evidence':deepcopy(state['audit'].get('structure')),'auxiliaries':deepcopy(state['audit'].get('auxiliaries',[]))}
   # Additive metadata is archived separately for readable export/history; DOCX never rewritten.
   state['outcome_changes']=sum(s['changes'] for s in steps)
   stage.history[-1]['saved_record']={'format':stage.result['after']['summary'],'preservation':stage.result.get('preservation'),'assembly':deepcopy(stage.result['assembly']),'page_layout':deepcopy(stage.result.get('page_layout'))}

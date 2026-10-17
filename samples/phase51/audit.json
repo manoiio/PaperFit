@@ -1,0 +1,438 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-8",
+  "authorization": "本次开始命令：所列格式、数字、页码及Word安全缓存更新；safe-layout-v1另授权安全题注位置、固定内容表/关联图片缩小、L01–L04；不含自动列宽转固定",
+  "command_id": "9d08290fcd1c4d248db30b7824132392",
+  "source_sha256": "b389d1d815ae994974b8f7cd22880620ed34e8fd39786c334e9400e2c6100e02",
+  "start_binding": "7575caca1d583e2740257f54b27c02e4005b5f2989847e0615c7a4c07db132b6",
+  "API": {},
+  "phases": [
+    "识别论文内容",
+    "调整格式",
+    "本机Word更新目录和引用",
+    "检查修改后的文件"
+  ],
+  "assembly_authorization": {
+    "policy": {
+      "version": 3,
+      "dynamic": true,
+      "pages": "front-body",
+      "roman": "lowerRoman",
+      "body_start": 1,
+      "front_start": 1,
+      "chapter_restart": false,
+      "footer": "chapter",
+      "text": "",
+      "alignment": "center",
+      "auxiliaries": "safe-layout-v1",
+      "targets": [
+        "cover",
+        "front",
+        "body"
+      ]
+    },
+    "evidence": [],
+    "source_locations": [],
+    "grant": "本次开始命令授权所列安全事务，不冒充旧勾选"
+  },
+  "candidate_count": 0,
+  "candidate_kinds": {
+    "paragraphs": 0,
+    "tables": 0,
+    "remaining": 0
+  },
+  "structure_local_only": true,
+  "auto_ranges": {
+    "tables": {
+      "1": "cover",
+      "2": "content",
+      "3": "pending"
+    },
+    "protected": [
+      {
+        "id": "t:1",
+        "reason": "身份/表单或代码/敏感线索，本地保护，不发送"
+      },
+      {
+        "id": "t:3",
+        "reason": "合并/嵌套/浮动、条件样式或复杂内容，自动范围不放开"
+      }
+    ],
+    "note_counts": {
+      "footnote": 0,
+      "endnote": 0
+    },
+    "limits": [],
+    "table_roles": {
+      "1": "cover",
+      "2": "content",
+      "3": "pending"
+    }
+  },
+  "structure": {
+    "version": "structure-evidence-1",
+    "body_start": 8,
+    "chapters": [
+      {
+        "paragraph": 8,
+        "role": "heading1",
+        "level": 1,
+        "source": "style_outline_number"
+      },
+      {
+        "paragraph": 17,
+        "role": "heading1",
+        "level": 1,
+        "source": "style_outline_number"
+      }
+    ],
+    "markers": [
+      {
+        "paragraph": 3,
+        "role": "abstract_cn_title",
+        "source": "independent_marker"
+      },
+      {
+        "paragraph": 5,
+        "role": "toc",
+        "source": "independent_marker"
+      }
+    ],
+    "regions": [
+      {
+        "start": 1,
+        "end": 2,
+        "purpose": "other",
+        "role": "other"
+      },
+      {
+        "start": 3,
+        "end": 4,
+        "purpose": "front",
+        "role": "abstract_cn_title"
+      },
+      {
+        "start": 5,
+        "end": 7,
+        "purpose": "front",
+        "role": "other"
+      },
+      {
+        "start": 8,
+        "end": 16,
+        "purpose": "body",
+        "role": "heading1"
+      },
+      {
+        "start": 17,
+        "end": 20,
+        "purpose": "body",
+        "role": "heading1"
+      }
+    ],
+    "conflicts": [],
+    "physical_pages_computed": false,
+    "body_start_source": "shared_structure_evidence"
+  },
+  "plan_sha256": "2908527c6b54df803313ea8538a80a1b2a9e319399908b8b2c25f08c050a79f0",
+  "selected_count": 112,
+  "confirmed_scope_sha256": "6317e183af1c09596ef1b9cf3a4de48e7a60f448333ea13f738df65d852512a3",
+  "auxiliaries": [
+    {
+      "stage": "position",
+      "input_sha256": "6c909118c83c97128ef6994eede877be46ef30d8c57ddfa6b7d1f1dfc6a613fa",
+      "objects": [
+        {
+          "key": "L05:10:image:p:11",
+          "status": "selected",
+          "reason": "反向紧邻，可核对独立L05位置纠正"
+        },
+        {
+          "key": "L05:13:table:2",
+          "status": "satisfied",
+          "reason": "已确认关联且结构位置正确；实际同页尚未核对"
+        }
+      ],
+      "selected_count": 1,
+      "status": "verified",
+      "seconds": 0.4298,
+      "changes": 1,
+      "output_sha256": "a8719772a83d9340da48a8f7d096ba98b8951e07799ea9d5566bfec81c6261ee"
+    },
+    {
+      "stage": "width",
+      "input_sha256": "f8a6813d7d7ef0bf3600bdf427aae3337ec2df0bdd299da0209e39b6dcc67ffa",
+      "objects": [
+        {
+          "key": "W01:table=1",
+          "status": "protected",
+          "reason": "不属于已确认内容表格或安全关联图片；封面、未知用途、材料保护保持",
+          "section": 1
+        },
+        {
+          "key": "W02:paragraph=10",
+          "status": "selected",
+          "reason": "普通内嵌图片内外尺寸一致；仅等比例缩小，不放大；裁剪与媒体字节保留",
+          "section": 3
+        },
+        {
+          "key": "W01:table=2",
+          "status": "selected",
+          "reason": "表格、网格与单元格声明一致；仍是首选几何宽度，不代表实际可见宽度",
+          "section": 3
+        },
+        {
+          "key": "W01:table=3",
+          "status": "protected",
+          "reason": "不属于已确认内容表格或安全关联图片；封面、未知用途、材料保护保持",
+          "section": 3
+        }
+      ],
+      "selected_count": 2,
+      "status": "verified",
+      "seconds": 0.4307,
+      "changes": 2,
+      "output_sha256": "164b1ab11e7d0b1d4a22f3523d4af397430e08b4fdad188fa22314845bd32523"
+    },
+    {
+      "stage": "pagination",
+      "input_sha256": "164b1ab11e7d0b1d4a22f3523d4af397430e08b4fdad188fa22314845bd32523",
+      "objects": [
+        {
+          "key": "L01:10:11",
+          "status": "selected",
+          "reason": "单一内嵌图片与紧接其后的已确认图题；建议尚未应用"
+        },
+        {
+          "key": "L03:3:4",
+          "status": "selected",
+          "reason": "实际XML顺序紧接，建议尚未应用；须确认所选对象"
+        },
+        {
+          "key": "L03:8:9",
+          "status": "satisfied",
+          "reason": "实际XML顺序紧接，建议尚未应用；须确认所选对象"
+        },
+        {
+          "key": "L02:13:2",
+          "status": "selected",
+          "reason": "实际XML顺序紧接，建议尚未应用；须确认所选对象"
+        },
+        {
+          "key": "L02:15:3",
+          "status": "protected",
+          "reason": "关联或内容表格用途未确认；不借相似文字扩大范围"
+        },
+        {
+          "key": "L03:17:18",
+          "status": "protected",
+          "reason": "非普通段落，待复核"
+        },
+        {
+          "key": "L04:2:1",
+          "status": "satisfied",
+          "reason": "用户已确认连续表头行；只修改所选行tblHeader，不改变长表跨页能力"
+        }
+      ],
+      "selected_count": 3,
+      "status": "verified",
+      "seconds": 0.8049,
+      "changes": 5,
+      "output_sha256": "088d37ff7e7302375567c361700941bc963b6a6cc95b822f0f4e748f44b7b0d0"
+    }
+  ],
+  "dynamic_scope_proof": {
+    "method": "full_supported_inventory",
+    "unresolved": [
+      "文档含REF/PAGEREF/SEQ，关联无法完整同步"
+    ],
+    "not_manual_complete_confirmation": true
+  },
+  "dynamic_blocked_groups": [
+    {
+      "group": [
+        "automatic_inventory"
+      ],
+      "paragraphs": [
+        11,
+        13,
+        15
+      ],
+      "reasons": [
+        "文档含REF/PAGEREF/SEQ，关联无法完整同步"
+      ]
+    }
+  ],
+  "assembly_steps": [
+    {
+      "kind": "format",
+      "round": 1,
+      "input_sha256": "b389d1d815ae994974b8f7cd22880620ed34e8fd39786c334e9400e2c6100e02",
+      "output_sha256": "6c909118c83c97128ef6994eede877be46ef30d8c57ddfa6b7d1f1dfc6a613fa",
+      "changes": 112
+    },
+    {
+      "kind": "caption_position",
+      "round": 2,
+      "input_sha256": "6c909118c83c97128ef6994eede877be46ef30d8c57ddfa6b7d1f1dfc6a613fa",
+      "output_sha256": "a8719772a83d9340da48a8f7d096ba98b8951e07799ea9d5566bfec81c6261ee",
+      "changes": 1
+    },
+    {
+      "kind": "section_pages",
+      "round": 3,
+      "input_sha256": "a8719772a83d9340da48a8f7d096ba98b8951e07799ea9d5566bfec81c6261ee",
+      "output_sha256": "f8a6813d7d7ef0bf3600bdf427aae3337ec2df0bdd299da0209e39b6dcc67ffa",
+      "changes": 7
+    },
+    {
+      "kind": "width_adaptation",
+      "round": 4,
+      "input_sha256": "f8a6813d7d7ef0bf3600bdf427aae3337ec2df0bdd299da0209e39b6dcc67ffa",
+      "output_sha256": "164b1ab11e7d0b1d4a22f3523d4af397430e08b4fdad188fa22314845bd32523",
+      "changes": 2
+    },
+    {
+      "kind": "pagination_layout",
+      "round": 5,
+      "input_sha256": "164b1ab11e7d0b1d4a22f3523d4af397430e08b4fdad188fa22314845bd32523",
+      "output_sha256": "088d37ff7e7302375567c361700941bc963b6a6cc95b822f0f4e748f44b7b0d0",
+      "changes": 5
+    },
+    {
+      "kind": "field_update",
+      "round": 6,
+      "input_sha256": "088d37ff7e7302375567c361700941bc963b6a6cc95b822f0f4e748f44b7b0d0",
+      "output_sha256": "ce0530ac9dc2f6f8d1b7c8010ab9b3420bb3fa668f867d27053e28cd42307b2c",
+      "changes": 2
+    }
+  ],
+  "field_update": {
+    "status": "updated",
+    "validation": {
+      "input_sha256": "088d37ff7e7302375567c361700941bc963b6a6cc95b822f0f4e748f44b7b0d0",
+      "output_sha256": "ce0530ac9dc2f6f8d1b7c8010ab9b3420bb3fa668f867d27053e28cd42307b2c",
+      "unselected_parts_byte_equal": true,
+      "original_object_relative_order": true,
+      "paragraph_map": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "7": "8",
+        "8": "9",
+        "9": "10",
+        "10": "11",
+        "11": "12",
+        "12": "13",
+        "13": "14",
+        "14": "15",
+        "15": "16",
+        "16": "17",
+        "17": "18",
+        "18": "19",
+        "19": "20",
+        "20": "21"
+      },
+      "retired_TOC_paragraphs": [
+        "6"
+      ],
+      "new_TOC_paragraphs": [
+        6,
+        7
+      ],
+      "added_bookmarks": [
+        {
+          "name": "PFToc_088d37ff7e73_8",
+          "id": "21",
+          "paragraph": 8
+        },
+        {
+          "name": "PFToc_088d37ff7e73_17",
+          "id": "22",
+          "paragraph": 17
+        }
+      ],
+      "selected_fields": [
+        "field:1",
+        "field:2"
+      ],
+      "passes": [
+        {
+          "pass": 1,
+          "seconds": 0.784,
+          "readback_seconds": 0.81,
+          "final_target_pages_equal": true
+        },
+        {
+          "pass": 2,
+          "seconds": 0.884,
+          "readback_seconds": 0.818,
+          "final_target_pages_equal": true
+        }
+      ],
+      "target_pages": {
+        "ResultTarget": {
+          "adjusted": 4,
+          "physical": 6,
+          "display": "4"
+        },
+        "PFToc_088d37ff7e73_8": {
+          "adjusted": 1,
+          "physical": 3,
+          "display": "1"
+        },
+        "PFToc_088d37ff7e73_17": {
+          "adjusted": 4,
+          "physical": 6,
+          "display": "4"
+        }
+      },
+      "cache_values": {
+        "field:2": "4"
+      },
+      "kept": [],
+      "calculator_package_published": false,
+      "original_sha256_unchanged": true,
+      "only_authorized_field_caches": true,
+      "unselected_zip_member_bytes_equal": true
+    },
+    "counts": {
+      "TOC": 1,
+      "REF": 0,
+      "PAGEREF": 1
+    },
+    "kept_count": 0
+  },
+  "processed_scope": {
+    "tables": {
+      "1": "cover",
+      "2": "content",
+      "3": "pending"
+    },
+    "notes": []
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 6,
+    "selected": 112,
+    "changes": 129,
+    "output_sha256": "6c909118c83c97128ef6994eede877be46ef30d8c57ddfa6b7d1f1dfc6a613fa",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 27,
+      "problem_count": 2,
+      "review_count": 105,
+      "review_findings": 103,
+      "review_notes": 2,
+      "pass_count": 116,
+      "not_applicable_count": 16,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 15
+    }
+  },
+  "automatic_input_switch": false
+}

@@ -12,7 +12,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-7'
+VERSION='onepass-8'
 
 
 def command_binding(model,extra,requirements=None):
@@ -282,7 +282,7 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
         if state['assembly']:
             old_draft=getattr(stage,'page_layout_draft',None) or {}
             if not old_draft.get('explicit'):stage.page_layout_draft={'explicit':False,'enabled':True,'policy':deepcopy(state['assembly']),'input_sha256':stage.inventory['input_sha256'],'regions':deepcopy(old_draft.get('regions',[]))}
-            state['audit']['authorization']='本次开始命令：所列普通格式、安全数字同步和分节页码策略；不含对象移动、宽度及域批量刷新'
+            state['audit']['authorization']='本次开始命令：所列格式、数字、页码及Word安全缓存更新；'+('safe-layout-v1另授权安全题注位置、固定内容表/关联图片缩小、L01–L04；不含自动列宽转固定' if state['assembly'].get('version')==3 else '旧方案不含题注移动、宽度或相邻辅助')
             from core import rule_bundle as rb
             bundle=stage.current_rule_bundle();bundle['assembly']=deepcopy(state['assembly']);stage._save_custom(rb.validate(bundle,__import__('core',fromlist=['load_rules']).load_rules(stage.rules_path)));stage.sync_rules()
             state['audit']['assembly_authorization']={'policy':deepcopy(state['assembly']),'evidence':page_evidence,'source_locations':[{'quote':e['quote'],'locations':[s['location'] for s in requirements['extraction']['segments'] if e['quote'] in s['text']]} for e in page_evidence] if requirements is not None and requirements['kind']=='file' else [],'grant':'本次开始命令授权所列安全事务，不冒充旧勾选'}
@@ -415,7 +415,7 @@ def finish(model,state,*,emit=None,command_id=None):
     from .assembly_session import execute as execute_assembly
     execute_assembly(stage,state,emit)
     if state.get('outcome_changes') is not None:outcome={**outcome,'changes':state['outcome_changes'],'rounds':len(state['audit'].get('assembly_steps',[]))}
-    if state.get('assembly') and getattr(stage,'field_updates_enabled',False):
+    if state.get('assembly') and getattr(stage,'field_updates_enabled',False) and not any(e.get('format_roles') for e in state['audit'].get('assembly_authorization',{}).get('evidence',[])):
         from .field_session import submit
         job={};state['field_job']=job;state['pending_outcome']=deepcopy(outcome)
         try:

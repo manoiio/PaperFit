@@ -1,0 +1,43 @@
+{
+  "kind": "real browser; no private session_state injection",
+  "ordinary_task_actions": [
+    "upload paper",
+    "select new complete preset",
+    "start",
+    "download DOCX"
+  ],
+  "ordinary_task_major_actions": 4,
+  "ordinary_task_exception_decisions": 0,
+  "ready_seconds": 20.372,
+  "API_requests": 0,
+  "advanced_pages_required": 0,
+  "exception_task_actions": [
+    "upload paper",
+    "select new complete preset",
+    "start",
+    "choose cover purpose",
+    "confirm and continue",
+    "download DOCX"
+  ],
+  "exception_decisions": {
+    "page_cover": "cover"
+  },
+  "exception_API": {},
+  "exception_final_status": "done",
+  "restored_history_rounds": 6,
+  "restore_rechecked_input": true,
+  "restore_did_not_execute": true,
+  "isolated_fresh_session_downloads": 0,
+  "ordinary_final_sha256": "ce0530ac9dc2f6f8d1b7c8010ab9b3420bb3fa668f867d27053e28cd42307b2c",
+  "smart_and_manual_legal_bytes_equal": true,
+  "local_browser_bytes_equal": true,
+  "local_aggregate_stage_count": 6,
+  "local_aggregate_modification_records": 129,
+  "early_invalidated_attempt": "source changed while awaiting decision; old result hidden, no adoption",
+  "timing_exclusion": "2.81s measured a default ordinary-only attempt after UI upload changed widget namespace; not counted as complete-layout timing",
+  "local_repeat_does_not_add_round": true,
+  "local_history_after_repeat": 12,
+  "local_repeat_DOCX_bytes_equal": true,
+  "prior_same_plan_ready_seconds": 20.919,
+  "body_only_limit_controlled_test": true
+}

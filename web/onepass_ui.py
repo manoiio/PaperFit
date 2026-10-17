@@ -121,6 +121,14 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
 
 
 def render_success(model,state,render_results):
+    auxiliary=state.get('audit',{}).get('auxiliaries',[])
+    if auxiliary:
+        changed=sum(r.get('changes',0) for r in auxiliary);kept=sum(o['status']=='protected' for r in auxiliary for o in r['objects'])
+        st.write(f'安全图表与分页辅助：实际修改{changed}项；{kept}条对象/属性保持或待核对。相邻属性不等于实际同页。')
+        with st.expander('查看图表与分页处理范围及保持原因'):
+            for r in auxiliary:
+                st.write({'position':'题注位置','width':'宽度适配','pagination':'相邻属性及表头'}[r['stage']]+' · '+str(r.get('changes',0))+'项修改')
+                for o in r['objects']:st.text(o['key']+' · '+{'selected':'已处理','protected':'保持/待核对','satisfied':'已满足'}.get(o['status'],o['status'])+' · '+o['reason'])
     files=model.downloads() if model.result else {}
     st.subheader('修正版已准备好' if files else '本次整理检查已完成')
     report=model.result['after'] if model.result else model.report

@@ -14,13 +14,17 @@ def options(model,task,*,local=False):
    if model.page_layout_draft is None:model.page_layout_draft={}
    model.page_layout_draft['explicit']=True
   st.session_state[key+'-preset-changed']=True
- if not saved.get('explicit') and portable:st.session_state[key+'-choice']='complete'
- choice=st.selectbox('本次整理方案',['current','complete','complete_chapters'],format_func={'current':'常规格式整理（保持原有页码与编号）','complete':'完整整理：格式＋安全编号同步＋页码方案','complete_chapters':'完整整理：格式、编号同步、分区页码和章节页脚'}.get,index=1 if saved.get('enabled') or portable else 0,key=key+'-choice',on_change=chosen)
- enabled=choice in ('complete','complete_chapters')
- if st.session_state.pop(key+'-preset-changed',False) and choice=='complete_chapters':
+ if not saved.get('explicit') and portable:st.session_state[key+'-choice']='complete_safe' if portable.get('version')==3 else 'complete'
+ choice=st.selectbox('本次整理方案',['current','complete_safe','complete_safe_chapters','complete','complete_chapters'],format_func={'current':'常规格式整理（保持原有页码与编号）','complete_safe':'完整整理：格式、图表适配、相邻辅助、编号、页码和目录更新','complete_safe_chapters':'完整整理：安全图表与分页辅助＋分区页码和章节页脚','complete':'旧版完整整理：格式、编号同步、页码和目录更新','complete_chapters':'旧版完整整理：格式、编号、分区页码和章节页脚'}.get,index=(1 if seed.get('version')==3 else 3) if saved.get('enabled') or portable else 0,key=key+'-choice',on_change=chosen)
+ enabled=choice in ('complete','complete_chapters','complete_safe','complete_safe_chapters')
+ if st.session_state.pop(key+'-preset-changed',False) and choice in ('complete_chapters','complete_safe_chapters'):
   seed={**DEFAULT,'pages':'front-body','footer':'chapter','dynamic':True}
   for suffix,value in (('pages','front-body'),('footer','chapter'),('roman','lowerRoman'),('front-start',1),('start',1),('restart',False),('align','center')):st.session_state[key+'-'+suffix]=value
  p=deepcopy(seed)
+ if enabled and choice.startswith('complete_safe'):
+  p.update(version=3,auxiliaries='safe-layout-v1',targets=deepcopy(seed.get('targets',['cover','front','body'])))
+ elif p.get('version')==3:
+  p.pop('auxiliaries');p['version']=2
  if enabled:
   a,b=st.columns(2)
   p['pages']=a.selectbox('页码方案',['front-body','keep','chapter-footers'],format_func={'front-body':'封面无页码，前置罗马，正文重启','keep':'保持原有页码','chapter-footers':'仅章节页脚，保持已有编号方案'}.get,index=['front-body','keep','chapter-footers'].index(seed['pages']) if portable or saved.get('enabled') else 0,key=key+'-pages')
@@ -36,6 +40,7 @@ def options(model,task,*,local=False):
    if local:p['dynamic']=st.checkbox('按本次方案同步安全编号与纯文本引用',value=seed['dynamic'] if saved.get('enabled') or portable else True,key=key+'-dynamic')
    st.caption('这是可选产品方案，不是学校官方唯一解释。新增分节可能改变分页；可选本机Word仅更新已验证的目录/REF/PAGEREF，不批量刷新其他域。')
   st.caption(('页脚居中。' if p['alignment']=='center' else '页脚居右。')+'点击开始授权：先整理格式，再同步可证明完整的安全编号组，最后生成PAGE及章节页脚，并在本机Word更新安全目录/引用；复杂组保留，不自动切换输入。')
+ if enabled and choice.startswith('complete_safe'):st.caption('新版明确授权：安全题注位置纠正；仅缩小超宽固定内容表格及关联内嵌图片；唯一相邻属性和有据连续表头。未知、受保护和需改为固定列宽的对象保持。所有辅助完成后才由Word更新目录/引用。')
  model.field_updates_enabled=bool(enabled)
  if enabled:st.caption('本次完整整理还将使用本机Word更新安全自动目录和REF/PAGEREF，并复查回填文件；失败时保留已验证排版副本。')
  if model.inventory:
@@ -64,10 +69,13 @@ def render_local(model):
    ackbulk=st.checkbox('按当前明确范围批量整理：格式、安全编号同步、本页页码方案及Word安全目录/引用更新；原稿保留',key='pages-bulk-ack-'+str(draft))
    if st.button('执行当前完整方案（本地零API）',disabled=not ackbulk,key='pages-bulk',type='primary'):
     from .assembly_session import execute_local
+    from .smart_session import binding
+    new_command=not bulk.get('done') or bulk.get('post')!=binding(model)
     execute_local(model,bulk,acknowledged=True)
-    from .field_session import submit
-    auto=st.session_state.setdefault('pages-word-'+model.task_dir.name,{})
-    if not auto.get('identity'):submit(model,auto)
+    if new_command:
+     from .field_session import submit
+     auto={};st.session_state['pages-word-'+model.task_dir.name]=auto
+     submit(model,auto)
     st.rerun()
    auto=st.session_state.get('pages-word-'+model.task_dir.name,{})
    if auto.get('identity') and not auto.get('adopted'):
@@ -75,7 +83,10 @@ def render_local(model):
     def complete_word():
      from .field_session import receive,adopt
      status=receive(model,auto)
-     if status['state']=='succeeded':adopt(model,auto);st.rerun()
+     if status['state']=='succeeded':
+      adopt(model,auto)
+      from .smart_session import binding
+      bulk['post']=binding(model);st.rerun()
      elif status['state'] in ('queued','running'):st.info('本机Word更新和最终复查中；已有排版副本仍可下载。')
      else:st.warning('目录/引用更新未完成：'+status.get('error','任务未完成'))
     complete_word()
