@@ -1,0 +1,19 @@
+{
+  "main": {
+    "renderer": "Codex bundled LibreOffice / Poppler",
+    "version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "pages": 8,
+    "all_page_images_inspected": true,
+    "differences": "LibreOffice page7 displays Error text for missing/locked REF. Formal DOCX and Word keep original caches."
+  },
+  "reflow": {
+    "LibreOffice_pages": 3,
+    "Word_pages": 4,
+    "all_LO_page_images_inspected": true,
+    "TOC_cache": "Word-derived 2/4",
+    "differences": "LO lays subsection on3 and has a heading glyph overlap; do not save renderer refresh over formal file."
+  },
+  "actual_renderer_script_bundle": "26.1011.51657",
+  "legacy_configuration_label": "26.1013.11914",
+  "formal_files_unchanged": true
+}

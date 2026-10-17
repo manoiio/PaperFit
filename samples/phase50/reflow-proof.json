@@ -1,0 +1,33 @@
+{
+  "before": {
+    "PFToc_a197cb397c42_4": {
+      "adjusted": 2,
+      "physical": 2
+    },
+    "PFToc_a197cb397c42_6": {
+      "adjusted": 3,
+      "physical": 3
+    }
+  },
+  "after": {
+    "PFToc_21a1aabe45e2_4": {
+      "adjusted": 2,
+      "physical": 2,
+      "display": "2"
+    },
+    "PFToc_21a1aabe45e2_6": {
+      "adjusted": 4,
+      "physical": 4,
+      "display": "4"
+    }
+  },
+  "format_selected": [
+    "R05:paragraph=5:run=1",
+    "R06:paragraph=5",
+    "R05:paragraph=7:run=1",
+    "R06:paragraph=7"
+  ],
+  "source_text_unchanged_by_format": true,
+  "actual_Word_final_jump_page": 4,
+  "no_save_hash_unchanged": true
+}

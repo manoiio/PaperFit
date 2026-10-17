@@ -34,8 +34,10 @@ def options(model,task,*,local=False):
    p['alignment']=st.selectbox('页脚对齐',['center','right'],format_func={'center':'居中','right':'居右'}.get,index=0 if seed['alignment']=='center' else 1,key=key+'-align')
    if p['footer']=='text':p['text']=st.text_input('页脚普通文字',value=seed['text'],max_chars=80,key=key+'-text')
    if local:p['dynamic']=st.checkbox('按本次方案同步安全编号与纯文本引用',value=seed['dynamic'] if saved.get('enabled') or portable else True,key=key+'-dynamic')
-   st.caption('这是可选产品方案，不是学校官方唯一解释。新增分节可能改变分页；不刷新目录或REF/PAGEREF。')
-  st.caption(('页脚居中。' if p['alignment']=='center' else '页脚居右。')+'点击开始授权：先整理格式，再同步可证明完整的安全编号组，最后生成PAGE及章节页脚；复杂组保留，不自动切换输入。')
+   st.caption('这是可选产品方案，不是学校官方唯一解释。新增分节可能改变分页；可选本机Word仅更新已验证的目录/REF/PAGEREF，不批量刷新其他域。')
+  st.caption(('页脚居中。' if p['alignment']=='center' else '页脚居右。')+'点击开始授权：先整理格式，再同步可证明完整的安全编号组，最后生成PAGE及章节页脚，并在本机Word更新安全目录/引用；复杂组保留，不自动切换输入。')
+ model.field_updates_enabled=bool(enabled)
+ if enabled:st.caption('本次完整整理还将使用本机Word更新安全自动目录和REF/PAGEREF，并复查回填文件；失败时保留已验证排版副本。')
  if model.inventory:
   new={'explicit':bool((getattr(model,'page_layout_draft',None) or {}).get('explicit',False)),'enabled':enabled,'policy':validate(p),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(saved.get('regions',[])) if saved.get('input_sha256')==model.inventory['input_sha256'] else []}
   if new!=saved and (enabled or new['explicit'] or saved):model.page_layout_draft=new
@@ -59,10 +61,24 @@ def render_local(model):
      draft['regions']=page_layout.regions_validate(Package(model.input_path),rows);st.success('已保存分区草稿，尚未执行。')
     st.caption('keep区域保持原有页码/页脚；分区起点是XML段落，不是物理页码。')
    bulk=st.session_state.setdefault('pages-bulk-'+model.task_dir.name,{})
-   ackbulk=st.checkbox('按当前明确范围批量整理：格式、安全编号同步和本页页码方案；原稿保留',key='pages-bulk-ack-'+str(draft))
+   ackbulk=st.checkbox('按当前明确范围批量整理：格式、安全编号同步、本页页码方案及Word安全目录/引用更新；原稿保留',key='pages-bulk-ack-'+str(draft))
    if st.button('执行当前完整方案（本地零API）',disabled=not ackbulk,key='pages-bulk',type='primary'):
     from .assembly_session import execute_local
-    execute_local(model,bulk,acknowledged=True);st.rerun()
+    execute_local(model,bulk,acknowledged=True)
+    from .field_session import submit
+    auto=st.session_state.setdefault('pages-word-'+model.task_dir.name,{})
+    if not auto.get('identity'):submit(model,auto)
+    st.rerun()
+   auto=st.session_state.get('pages-word-'+model.task_dir.name,{})
+   if auto.get('identity') and not auto.get('adopted'):
+    @st.fragment(run_every=2)
+    def complete_word():
+     from .field_session import receive,adopt
+     status=receive(model,auto)
+     if status['state']=='succeeded':adopt(model,auto);st.rerun()
+     elif status['state'] in ('queued','running'):st.info('本机Word更新和最终复查中；已有排版副本仍可下载。')
+     else:st.warning('目录/引用更新未完成：'+status.get('error','任务未完成'))
+    complete_word()
    state=st.session_state.setdefault('pages-preview-'+model.task_dir.name,{})
    from .page_session import preview,adopt
    from .dynamic_session import valid,cancel

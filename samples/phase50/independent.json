@@ -1,0 +1,13 @@
+{
+  "only_authorised_TOC_cache_REF_PAGEREF_and_two_bookmarks": true,
+  "all_other_XML_exact_after_reverse_mask": true,
+  "all_other_ZIP_parts_byte_equal": true,
+  "missing_locked_SEQ_preserved": true,
+  "source_sha256": "7513472979359ba8ad8fc943c0018b93204faeabbc5a8bc1a436b8d5bad54667",
+  "output_sha256": "90f463005fa50bbc003659c5122285ebfd4e1c1089ba37f13c7bc32447c8dce0",
+  "expected_TOC_pages": [
+    "5",
+    "7"
+  ],
+  "physical_page_claim": "not inferred here; native Word observations recorded separately"
+}

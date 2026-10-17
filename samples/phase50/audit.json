@@ -1,0 +1,338 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-7",
+  "authorization": "本次开始命令：所列普通格式、安全数字同步和分节页码策略；不含对象移动、宽度及域批量刷新",
+  "command_id": "ad7c9f1d77c24047a79e6f45d14a75e7",
+  "source_sha256": "bd42a60f80b37de4d054abf5d5dd053840fdd07b4f954ed08194fafbdcc523a9",
+  "start_binding": "5aef9ab41793dc6a099be7295ba6b3b149bf98cc09ac4132636db2703b74da94",
+  "API": {
+    "requirements": {
+      "requests": 0,
+      "source": "local_exact_strategy"
+    }
+  },
+  "phases": [
+    "理解排版要求",
+    "识别论文内容",
+    "调整格式",
+    "本机Word更新目录和引用",
+    "检查修改后的文件"
+  ],
+  "assembly_authorization": {
+    "policy": {
+      "version": 2,
+      "dynamic": true,
+      "pages": "front-body",
+      "roman": "lowerRoman",
+      "body_start": 5,
+      "front_start": 1,
+      "chapter_restart": false,
+      "footer": "chapter",
+      "text": "",
+      "alignment": "center",
+      "targets": [
+        "cover",
+        "front",
+        "body"
+      ]
+    },
+    "evidence": [
+      {
+        "start": 0,
+        "end": 6,
+        "quote": "正文从5开始",
+        "values": {
+          "pages": "front-body",
+          "body_start": 5
+        }
+      },
+      {
+        "start": 7,
+        "end": 13,
+        "quote": "后面每章连续",
+        "values": {
+          "chapter_restart": false
+        }
+      }
+    ],
+    "source_locations": [],
+    "grant": "本次开始命令授权所列安全事务，不冒充旧勾选"
+  },
+  "candidate_count": 0,
+  "candidate_kinds": {
+    "paragraphs": 0,
+    "tables": 0,
+    "remaining": 0
+  },
+  "structure_local_only": true,
+  "auto_ranges": {
+    "tables": {},
+    "protected": [],
+    "note_counts": {
+      "footnote": 0,
+      "endnote": 0
+    },
+    "limits": [],
+    "table_roles": {}
+  },
+  "structure": {
+    "version": "structure-evidence-1",
+    "body_start": 7,
+    "chapters": [
+      {
+        "paragraph": 7,
+        "role": "heading1",
+        "level": 1,
+        "source": "style_outline_number"
+      },
+      {
+        "paragraph": 11,
+        "role": "heading1",
+        "level": 1,
+        "source": "style_outline_number"
+      }
+    ],
+    "markers": [
+      {
+        "paragraph": 3,
+        "role": "abstract_cn_title",
+        "source": "independent_marker"
+      },
+      {
+        "paragraph": 4,
+        "role": "toc",
+        "source": "independent_marker"
+      }
+    ],
+    "regions": [
+      {
+        "start": 1,
+        "end": 2,
+        "purpose": "other",
+        "role": "pending"
+      },
+      {
+        "start": 3,
+        "end": 3,
+        "purpose": "front",
+        "role": "abstract_cn_title"
+      },
+      {
+        "start": 4,
+        "end": 6,
+        "purpose": "front",
+        "role": "other"
+      },
+      {
+        "start": 7,
+        "end": 10,
+        "purpose": "body",
+        "role": "heading1"
+      },
+      {
+        "start": 11,
+        "end": 15,
+        "purpose": "body",
+        "role": "heading1"
+      }
+    ],
+    "conflicts": [],
+    "physical_pages_computed": false,
+    "body_start_source": "shared_structure_evidence"
+  },
+  "plan_sha256": "4c5f6476de9b6339d608372acfc07e9e8281180fe022f1cd0969ae1c2b3eadea",
+  "selected_count": 33,
+  "confirmed_scope_sha256": "e8db3016f1c5210933a79168a041ca74a4dc8dca8fccd6383abb60c95647b750",
+  "dynamic_scope_proof": {
+    "method": "full_supported_inventory",
+    "unresolved": [
+      "文档含REF/PAGEREF/SEQ，关联无法完整同步",
+      "有未纳入安全引用范围的图表编号文字"
+    ],
+    "not_manual_complete_confirmation": true
+  },
+  "dynamic_blocked_groups": [
+    {
+      "group": [
+        "automatic_inventory"
+      ],
+      "paragraphs": [],
+      "reasons": [
+        "文档含REF/PAGEREF/SEQ，关联无法完整同步",
+        "有未纳入安全引用范围的图表编号文字"
+      ]
+    }
+  ],
+  "assembly_steps": [
+    {
+      "kind": "format",
+      "round": 1,
+      "input_sha256": "bd42a60f80b37de4d054abf5d5dd053840fdd07b4f954ed08194fafbdcc523a9",
+      "output_sha256": "01698615ce54b821a7d5c4ae331e6b5073c54297ba758b7ace1894d115f499aa",
+      "changes": 33
+    },
+    {
+      "kind": "section_pages",
+      "round": 2,
+      "input_sha256": "01698615ce54b821a7d5c4ae331e6b5073c54297ba758b7ace1894d115f499aa",
+      "output_sha256": "7513472979359ba8ad8fc943c0018b93204faeabbc5a8bc1a436b8d5bad54667",
+      "changes": 12
+    },
+    {
+      "kind": "field_update",
+      "round": 3,
+      "input_sha256": "7513472979359ba8ad8fc943c0018b93204faeabbc5a8bc1a436b8d5bad54667",
+      "output_sha256": "90f463005fa50bbc003659c5122285ebfd4e1c1089ba37f13c7bc32447c8dce0",
+      "changes": 3
+    }
+  ],
+  "field_update": {
+    "status": "updated",
+    "validation": {
+      "input_sha256": "7513472979359ba8ad8fc943c0018b93204faeabbc5a8bc1a436b8d5bad54667",
+      "output_sha256": "90f463005fa50bbc003659c5122285ebfd4e1c1089ba37f13c7bc32447c8dce0",
+      "unselected_parts_byte_equal": true,
+      "original_object_relative_order": true,
+      "paragraph_map": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "6": "7",
+        "7": "8",
+        "8": "9",
+        "9": "10",
+        "10": "11",
+        "11": "12",
+        "12": "13",
+        "13": "14",
+        "14": "15",
+        "15": "16"
+      },
+      "retired_TOC_paragraphs": [
+        "5"
+      ],
+      "new_TOC_paragraphs": [
+        5,
+        6
+      ],
+      "added_bookmarks": [
+        {
+          "name": "PFToc_751347297935_7",
+          "id": "104",
+          "paragraph": 7
+        },
+        {
+          "name": "PFToc_751347297935_11",
+          "id": "105",
+          "paragraph": 11
+        }
+      ],
+      "selected_fields": [
+        "field:1",
+        "field:2",
+        "field:3"
+      ],
+      "passes": [
+        {
+          "pass": 1,
+          "seconds": 0.861,
+          "readback_seconds": 0.891,
+          "final_target_pages_equal": true
+        },
+        {
+          "pass": 2,
+          "seconds": 0.972,
+          "readback_seconds": 0.919,
+          "final_target_pages_equal": true
+        }
+      ],
+      "target_pages": {
+        "CaptionOne": {
+          "adjusted": 5,
+          "physical": 5,
+          "display": "5"
+        },
+        "ChapterTwo": {
+          "adjusted": 7,
+          "physical": 7,
+          "display": "7"
+        },
+        "PFToc_751347297935_7": {
+          "adjusted": 5,
+          "physical": 5,
+          "display": "5"
+        },
+        "PFToc_751347297935_11": {
+          "adjusted": 7,
+          "physical": 7,
+          "display": "7"
+        }
+      },
+      "cache_values": {
+        "field:2": "图1-2 合成曲线",
+        "field:3": "7"
+      },
+      "kept": [
+        {
+          "id": "field:4",
+          "kind": "REF",
+          "instruction": " REF MissingTarget \\h ",
+          "start": 14,
+          "end": 14,
+          "safe": false,
+          "reason": "目标未找到",
+          "target": "MissingTarget",
+          "levels": null
+        },
+        {
+          "id": "field:5",
+          "kind": "REF",
+          "instruction": " REF ChapterOne \\h ",
+          "start": 14,
+          "end": 14,
+          "safe": false,
+          "reason": "域已锁定",
+          "target": "ChapterOne",
+          "levels": null
+        }
+      ],
+      "calculator_package_published": false,
+      "original_sha256_unchanged": true,
+      "only_authorized_field_caches": true,
+      "unselected_zip_member_bytes_equal": true
+    },
+    "counts": {
+      "TOC": 1,
+      "REF": 1,
+      "PAGEREF": 1
+    },
+    "kept_count": 2
+  },
+  "processed_scope": {
+    "tables": {},
+    "notes": []
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 3,
+    "selected": 33,
+    "changes": 48,
+    "output_sha256": "01698615ce54b821a7d5c4ae331e6b5073c54297ba758b7ace1894d115f499aa",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 26,
+      "problem_count": 1,
+      "review_count": 28,
+      "review_findings": 20,
+      "review_notes": 8,
+      "pass_count": 36,
+      "not_applicable_count": 16,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 12
+    }
+  },
+  "automatic_input_switch": false
+}

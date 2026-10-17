@@ -12,11 +12,11 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-6'
+VERSION='onepass-7'
 
 
 def command_binding(model,extra,requirements=None):
-    return fingerprint({'source':binding(model),'extra':extra,'requirements':requirements,'version':VERSION})
+    return fingerprint({'source':binding(model),'extra':extra,'requirements':requirements,'version':VERSION,'field_updates':bool(getattr(model,'field_updates_enabled',False))})
 
 
 def current(model,state,extra,requirements=None):
@@ -41,6 +41,9 @@ def clean_stage(model,state):
 
 
 def cancel(model,state):
+    if state.get('field_job'):
+        from .field_session import cancel as cancel_fields
+        cancel_fields(state['field_job'])
     if state.get('status')!='done':clean_stage(model,state)
     state.clear();state['status']='cancelled'
 
@@ -412,7 +415,18 @@ def finish(model,state,*,emit=None,command_id=None):
     from .assembly_session import execute as execute_assembly
     execute_assembly(stage,state,emit)
     if state.get('outcome_changes') is not None:outcome={**outcome,'changes':state['outcome_changes'],'rounds':len(state['audit'].get('assembly_steps',[]))}
-    emit('检查修改后的文件');state['audit']['phases'].append('检查修改后的文件')
+    if state.get('assembly') and getattr(stage,'field_updates_enabled',False):
+        from .field_session import submit
+        job={};state['field_job']=job;state['pending_outcome']=deepcopy(outcome)
+        try:
+            if submit(stage,job):state['status']='updating';state['audit']['phases'].append('本机Word更新目录和引用');return state
+            state['audit']['field_update']={'status':'nothing_supported','kept':job.get('kept',[])}
+        except Exception as exc:state['audit']['field_update']={'status':'failed','reason':str(exc),'fallback':'已经验证的普通排版/页码副本'}
+    return publish(model,state,outcome,emit,command_id)
+
+
+def publish(model,state,outcome,emit,command_id):
+    stage=state['stage'];emit('检查修改后的文件');state['audit']['phases'].append('检查修改后的文件')
     if stage.result:stage.downloads()
     state['audit']['processed_scope']={'tables':deepcopy(stage.table_types) if stage.table_enabled else {},'notes':deepcopy(stage.note_draft['objects']) if stage.note_enabled else []}
     post=command_binding(stage,state['extra'],state.get('requirements'))
@@ -425,6 +439,27 @@ def finish(model,state,*,emit=None,command_id=None):
     state['audit']['outcome']=deepcopy(outcome);state['audit']['automatic_input_switch']=False
     state.pop('stage',None);state.pop('proposal',None);state.pop('structure_store',None)
     return state
+
+
+def poll_fields(model,state):
+    """Only completes a job authorised by Start; never invokes AI or fixing again."""
+    if state.get('status')!='updating':return state
+    from .field_session import receive,adopt,cancel as cancel_fields
+    if not current(model,state,state['extra'],state.get('requirements')):
+        cancel_fields(state['field_job']);state.update(status='cancelled',error='输入或要求变化，Word任务结果不发布');return state
+    stage=state['stage'];job=state['field_job']
+    try:
+        status=receive(stage,job)
+        if status['state'] in ('queued','running'):return state
+        if status['state']!='succeeded':raise DemoError(status.get('error','Word任务未完成'))
+        previous=(deepcopy(stage.result.get('assembly')) if stage.result else None) or {'policy':deepcopy(state['assembly']),'steps':[],'total_changes':0,'input_auto_switched':False,'fields_evaluated':False}
+        adopt(stage,job);proof=stage.result['field_update']['validation'];state['audit']['field_update']={'status':'updated','validation':proof,'counts':{k:sum(r['kind']==k for r in job['plan']['selected']) for k in ('TOC','REF','PAGEREF')},'kept_count':len(job['plan']['kept'])}
+        if previous:
+            r=stage.result;previous['steps'].append({'kind':'field_update','round':r['round']['number'],'input_sha256':r['round']['input_sha256'],'output_sha256':r['after']['input_sha256'],'changes':len(r['changes'])});previous['fields_evaluated']=True;previous['total_changes']+=len(r['changes']);r['assembly']=previous;stage.history[-1]['saved_record']={'assembly':deepcopy(previous),'field_update':deepcopy(r['field_update'])}
+            state['audit']['assembly_steps']=deepcopy(previous['steps']);state['pending_outcome'].update(changes=previous['total_changes'],rounds=len(previous['steps']))
+    except Exception as exc:
+        state['audit']['field_update']={'status':'failed','reason':str(exc),'fallback':'已经验证的普通排版/页码副本'}
+    return publish(model,state,state['pending_outcome'],lambda _:None,state['id'])
 
 
 def register_dynamic_followup(model,state,expected_post,parent_sha256):

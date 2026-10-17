@@ -1,0 +1,116 @@
+{
+  "input_sha256": "12a390a9d494f5446a0b7bcb96fb52f0342d2a13f2b5bf43c467010fea1298c9",
+  "output_sha256": "6e4b58a769ea2cd2a42003c59bc06dd9f2d06cee7d048da87707a5efbef8302a",
+  "unselected_parts_byte_equal": true,
+  "original_object_relative_order": true,
+  "paragraph_map": {
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "6": "7",
+    "7": "8",
+    "8": "9",
+    "9": "10",
+    "10": "11",
+    "11": "12",
+    "12": "13",
+    "13": "14",
+    "14": "15",
+    "15": "16"
+  },
+  "retired_TOC_paragraphs": [
+    "5"
+  ],
+  "new_TOC_paragraphs": [
+    5,
+    6
+  ],
+  "added_bookmarks": [
+    {
+      "name": "PFToc_12a390a9d494_7",
+      "id": "104",
+      "paragraph": 7
+    },
+    {
+      "name": "PFToc_12a390a9d494_11",
+      "id": "105",
+      "paragraph": 11
+    }
+  ],
+  "selected_fields": [],
+  "passes": [
+    {
+      "pass": 1,
+      "seconds": 0.761,
+      "readback_seconds": 0.766,
+      "final_target_pages_equal": true
+    },
+    {
+      "pass": 2,
+      "seconds": 0.811,
+      "readback_seconds": 0.75,
+      "final_target_pages_equal": true
+    }
+  ],
+  "target_pages": {
+    "PFToc_12a390a9d494_7": {
+      "adjusted": 5,
+      "physical": 5,
+      "display": "5"
+    },
+    "PFToc_12a390a9d494_11": {
+      "adjusted": 7,
+      "physical": 7,
+      "display": "7"
+    }
+  },
+  "cache_values": {},
+  "kept": [
+    {
+      "id": "field:1",
+      "kind": "REF",
+      "instruction": " REF CaptionOne \\h ",
+      "start": 14,
+      "end": 14,
+      "safe": true,
+      "reason": null,
+      "target": "CaptionOne",
+      "levels": null
+    },
+    {
+      "id": "field:2",
+      "kind": "PAGEREF",
+      "instruction": " PAGEREF ChapterTwo \\h ",
+      "start": 14,
+      "end": 14,
+      "safe": true,
+      "reason": null,
+      "target": "ChapterTwo",
+      "levels": null
+    },
+    {
+      "id": "field:3",
+      "kind": "REF",
+      "instruction": " REF MissingTarget \\h ",
+      "start": 14,
+      "end": 14,
+      "safe": false,
+      "reason": "目标未找到",
+      "target": "MissingTarget",
+      "levels": null
+    },
+    {
+      "id": "field:4",
+      "kind": "REF",
+      "instruction": " REF ChapterOne \\h ",
+      "start": 14,
+      "end": 14,
+      "safe": false,
+      "reason": "域已锁定",
+      "target": "ChapterOne",
+      "levels": null
+    }
+  ],
+  "calculator_package_published": false
+}

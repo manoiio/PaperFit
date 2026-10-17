@@ -143,6 +143,7 @@ class EfficiencySession:
                     h=next(h for h in self.history if h['result']['round']['number']==step['round']);rr=clean(h['result']);rr['output']='fixed.docx';rr['after']['input']='fixed.docx'
                     members['assembly/round-'+str(step['round'])+'-changes.md']=modification_markdown(rr).encode()
                     members['assembly/round-'+str(step['round'])+'-recheck.md']=markdown(rr['after']).encode()
+            if self.result.get('field_update'):members['field-update.json']=encoded(clean(self.result['field_update']))
             if self.result.get('page_layout'):members['page-layout.json']=encoded(clean(self.result['page_layout']))
             if self.result.get('dynamic'):members['dynamic-summary.json']=encoded(clean(self.result['dynamic']))
             if self.result.get('range_mapping'):members['range-mapping.json']=encoded(self.result['range_mapping'])

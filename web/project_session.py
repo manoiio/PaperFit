@@ -88,7 +88,7 @@ class ProjectSession:
                 if h.get('project_rules_path'):candidates.insert(0,(Path(h['project_rules_path']),h['project_rules_kind']))
                 history.append({'number':r['round']['number'],'parent':r['round']['input_round'],'input':ih,'output':oh,
                                 'rule':rule(after['rules']['sha256'],h['binding'][0]),'mode':h['binding'][0],
-                                **({'input_scope':manifest_scope(self,before,ih)} if r.get('kind') in ('caption_position','dynamic_text','section_pages') else {}),
+                                **({'input_scope':manifest_scope(self,before,ih)} if r.get('kind') in ('caption_position','dynamic_text','section_pages','field_update') else {}),
                                 'scope':manifest_scope(self,after,oh),'changes':clean(h.get('saved_changes',r['changes'])),
                                 'kind':r.get('kind','format'),'saved_summary':clean(h.get('saved_record',{'format':after['summary'],'preservation':r.get('preservation'),
                                         'pagination':r.get('layout'),'width':r.get('widths'),'delta':r.get('problem_delta'),'plan':r.get('plan'),'assembly':r.get('assembly'),'page_layout':r.get('page_layout')}))})
@@ -248,7 +248,7 @@ class ProjectSession:
                'round':{'number':saved['number'],'input_round':saved['parent'],'input_sha256':saved['input'],'original_sha256':state['original'],
                         'rules_version':after['rules']['version'],'rules_sha256':after['rules']['sha256']},
                'kind':saved['kind'],'restored_history':True}
-            if saved['kind'] in ('caption_position','dynamic_text','section_pages'):r['input_classification_manifest']=rule_args(rulepath,kinds[saved['rule']],saved['mode'],inputscope)['classification_manifest']
+            if saved['kind'] in ('caption_position','dynamic_text','section_pages','field_update'):r['input_classification_manifest']=rule_args(rulepath,kinds[saved['rule']],saved['mode'],inputscope)['classification_manifest']
             for change in r['changes']:
                 change['verification']='review';change['restoration_note']='保存时修改记录；本次未验证该操作'
             if saved['mode']!='basic':r['output_classification_manifest']={'input_sha256':oh,'paragraph_types':sc['types'],'confirmed':True,'confirmation':'保存时分类（导入校验）',**({'material_exclusions':deepcopy(sc['material_exclusions'])} if sc.get('material_exclusions') else {}),**({'caption_scope':deepcopy(sc['caption_scope'])} if sc.get('caption_scope') and sc['caption_scope']['confirmed'] else {}),**({'reference_scope':deepcopy(sc['reference_scope'])} if sc.get('reference_scope') and sc['reference_scope']['confirmed'] else {}),**({'note_scope':deepcopy(sc['note_scope'])} if sc.get('note_scope') and sc['note_scope']['confirmed'] else {}),**({'citation_scope':deepcopy(sc['citation_scope'])} if sc.get('citation_scope') and sc['citation_scope']['confirmed'] else {}),**({'toc_scope':deepcopy(sc['toc_scope'])} if sc.get('toc_scope') and sc['toc_scope']['confirmed'] else {}),**({'front_scope':deepcopy(sc['front_scope'])} if sc.get('front_scope') and sc['front_scope']['confirmed'] else {}),**({'table_scope':deepcopy(sc['table_scope'])} if sc.get('table_scope') and sc['table_scope']['confirmed'] else {})}

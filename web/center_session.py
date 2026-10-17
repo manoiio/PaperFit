@@ -10,7 +10,7 @@ from .issues import project,next_steps
 from .reading_report import portable,clean,html_report,markdown_report
 
 OPERATIONS={'format':'格式修正','width':'宽度适配','pagination':'分页辅助','preview':'页面预览'}
-KIND={'section_pages':'分节页码与独立页脚','dynamic_text':'动态题注编号与纯文本引用同步','caption_position':'题注位置纠正','width_adaptation':'宽度适配','figure_layout':'图题相邻','pagination_layout':'分页辅助'}
+KIND={'field_update':'本机Word目录与引用更新','section_pages':'分节页码与独立页脚','dynamic_text':'动态题注编号与纯文本引用同步','caption_position':'题注位置纠正','width_adaptation':'宽度适配','figure_layout':'图题相邻','pagination_layout':'分页辅助'}
 
 class CenterSession:
     def init_center(self):
@@ -71,7 +71,7 @@ class CenterSession:
             self.center_cache[cache_key]=cached
         projection=project(report,cached['width'],cached['proposals'],inventory=cached['inventory'],context=context,boundaries=cached['boundaries'])
         from .scope_session import report_scope_summary
-        return {'assembly':deepcopy(result.get('assembly')) if result else None,'page_layout':deepcopy(result.get('page_layout')) if result else None,'dynamic':deepcopy(result.get('dynamic')) if result else None,'plan':deepcopy(result.get('plan')) if result else None,'impact':deepcopy(result.get('impact')) if result else None,'rehearsal':deepcopy(result.get('rehearsal')) if result else None,'scope_summary':report_scope_summary(report,classification),'context':context,'format':deepcopy(report),'width':deepcopy(cached['width']),'proposals':deepcopy(cached['proposals']),'projection':projection,
+        return {'field_update':deepcopy(result.get('field_update')) if result else None,'assembly':deepcopy(result.get('assembly')) if result else None,'page_layout':deepcopy(result.get('page_layout')) if result else None,'dynamic':deepcopy(result.get('dynamic')) if result else None,'plan':deepcopy(result.get('plan')) if result else None,'impact':deepcopy(result.get('impact')) if result else None,'rehearsal':deepcopy(result.get('rehearsal')) if result else None,'scope_summary':report_scope_summary(report,classification),'context':context,'format':deepcopy(report),'width':deepcopy(cached['width']),'proposals':deepcopy(cached['proposals']),'projection':projection,
                 'changes':deepcopy(result['changes']) if result else [],'delta':deepcopy(result['problem_delta']) if result else None,
                 'pagination_applied':deepcopy(result.get('layout')) if result else None,'pagination_history':self.pagination_history(number,result),'preservation':deepcopy(result.get('preservation')) if result else None,
                 'steps':next_steps(report,cached['width'],result,is_output=bool(result)),'preview':{'status':'未生成预览'},'visual':{'status':'未记录人工视觉复核'},'history':self.history_rows()}

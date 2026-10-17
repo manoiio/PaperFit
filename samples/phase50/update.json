@@ -1,0 +1,188 @@
+{
+  "adoption": {
+    "Word_calls": 0,
+    "current_input_auto_switched": false,
+    "fix_calls": 0
+  },
+  "plan": {
+    "classification_sha256": "267004421aa17385481e358e06ab2d18a8a31197e7a650326f54acebed6e3f8e",
+    "creation": null,
+    "input_sha256": "7513472979359ba8ad8fc943c0018b93204faeabbc5a8bc1a436b8d5bad54667",
+    "kept": [
+      {
+        "end": 14,
+        "id": "field:4",
+        "instruction": " REF MissingTarget \\h ",
+        "kind": "REF",
+        "levels": null,
+        "reason": "目标未找到",
+        "safe": false,
+        "start": 14,
+        "target": "MissingTarget"
+      },
+      {
+        "end": 14,
+        "id": "field:5",
+        "instruction": " REF ChapterOne \\h ",
+        "kind": "REF",
+        "levels": null,
+        "reason": "域已锁定",
+        "safe": false,
+        "start": 14,
+        "target": "ChapterOne"
+      }
+    ],
+    "selected": [
+      {
+        "end": 5,
+        "id": "field:1",
+        "instruction": " TOC \\o \"1-2\" \\h ",
+        "kind": "TOC",
+        "levels": [
+          1,
+          2
+        ],
+        "reason": null,
+        "safe": true,
+        "start": 5,
+        "target": null
+      },
+      {
+        "end": 14,
+        "id": "field:2",
+        "instruction": " REF CaptionOne \\h ",
+        "kind": "REF",
+        "levels": null,
+        "reason": null,
+        "safe": true,
+        "start": 14,
+        "target": "CaptionOne"
+      },
+      {
+        "end": 14,
+        "id": "field:3",
+        "instruction": " PAGEREF ChapterTwo \\h ",
+        "kind": "PAGEREF",
+        "levels": null,
+        "reason": null,
+        "safe": true,
+        "start": 14,
+        "target": "ChapterTwo"
+      }
+    ],
+    "version": "word-fields-1"
+  },
+  "validation": {
+    "added_bookmarks": [
+      {
+        "id": "104",
+        "name": "PFToc_751347297935_7",
+        "paragraph": 7
+      },
+      {
+        "id": "105",
+        "name": "PFToc_751347297935_11",
+        "paragraph": 11
+      }
+    ],
+    "cache_values": {
+      "field:2": "图1-2 合成曲线",
+      "field:3": "7"
+    },
+    "calculator_package_published": false,
+    "input_sha256": "7513472979359ba8ad8fc943c0018b93204faeabbc5a8bc1a436b8d5bad54667",
+    "kept": [
+      {
+        "end": 14,
+        "id": "field:4",
+        "instruction": " REF MissingTarget \\h ",
+        "kind": "REF",
+        "levels": null,
+        "reason": "目标未找到",
+        "safe": false,
+        "start": 14,
+        "target": "MissingTarget"
+      },
+      {
+        "end": 14,
+        "id": "field:5",
+        "instruction": " REF ChapterOne \\h ",
+        "kind": "REF",
+        "levels": null,
+        "reason": "域已锁定",
+        "safe": false,
+        "start": 14,
+        "target": "ChapterOne"
+      }
+    ],
+    "new_TOC_paragraphs": [
+      5,
+      6
+    ],
+    "original_object_relative_order": true,
+    "original_sha256_unchanged": true,
+    "output_sha256": "90f463005fa50bbc003659c5122285ebfd4e1c1089ba37f13c7bc32447c8dce0",
+    "paragraph_map": {
+      "1": "1",
+      "10": "11",
+      "11": "12",
+      "12": "13",
+      "13": "14",
+      "14": "15",
+      "15": "16",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "6": "7",
+      "7": "8",
+      "8": "9",
+      "9": "10"
+    },
+    "passes": [
+      {
+        "final_target_pages_equal": true,
+        "pass": 1,
+        "readback_seconds": 0.891,
+        "seconds": 0.861
+      },
+      {
+        "final_target_pages_equal": true,
+        "pass": 2,
+        "readback_seconds": 0.919,
+        "seconds": 0.972
+      }
+    ],
+    "retired_TOC_paragraphs": [
+      "5"
+    ],
+    "selected_fields": [
+      "field:1",
+      "field:2",
+      "field:3"
+    ],
+    "target_pages": {
+      "CaptionOne": {
+        "adjusted": 5,
+        "display": "5",
+        "physical": 5
+      },
+      "ChapterTwo": {
+        "adjusted": 7,
+        "display": "7",
+        "physical": 7
+      },
+      "PFToc_751347297935_11": {
+        "adjusted": 7,
+        "display": "7",
+        "physical": 7
+      },
+      "PFToc_751347297935_7": {
+        "adjusted": 5,
+        "display": "5",
+        "physical": 5
+      }
+    },
+    "unselected_parts_byte_equal": true,
+    "unselected_zip_member_bytes_equal": true
+  }
+}

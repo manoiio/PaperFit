@@ -67,6 +67,7 @@ def modification_markdown(result):
     if result.get('caption_move'):lines += ['',result['caption_move']['message'],result['caption_move']['limitation'],'授权的对象顺序变化及范围映射：'+_fmt(result['range_mapping'])]
     if 'layout' in result:lines += ['', result['layout']['message']+'。'+result['layout']['limitation'], '这是独立产品排版辅助，不计入R01–R12学校演示格式规则；尚未自动验证分页。']
     if result.get('page_layout'):lines += ['', '## 分节页码结构事务', '已生成PAGE并验证受控新增/克隆部件及分节。未计算域缓存、目录或实际页码；真实渲染/Word观察另行记录。',_fmt(result['page_layout']['validation'])]
+    if result.get('field_update'):lines += ['', '## 本机Word目录与引用更新', '隔离计算后仅回填授权缓存和必要目标；最终回填文件重新打开校验，未刷新其他域。',_fmt(result['field_update'])]
     if result.get('assembly'):lines += ['', '完整整理各阶段及父子关系：'+_fmt(result['assembly'])]
     if result.get('dynamic'):lines += ['', '## 用户授权动态数字事务（不是普通格式修正）', '仅按清单修改题注及唯一纯文本引用数字；所有run格式与未选部件保持。REF/PAGEREF、目录页码及实际分页未更新，须在Word更新并复核。']
     if 'widths' in result:

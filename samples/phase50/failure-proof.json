@@ -1,0 +1,12 @@
+{
+  "kind": "controlled adapter failure, not real denied permission",
+  "status": "done",
+  "Word_update": "failed",
+  "fallback": "verified ordinary format and section-page output",
+  "formal_rounds": 2,
+  "no_half_field_round": true,
+  "fallback_bytes_equal_before_update": true,
+  "sha256": "7513472979359ba8ad8fc943c0018b93204faeabbc5a8bc1a436b8d5bad54667",
+  "API_requests": 0,
+  "real_Word_calls": 0
+}

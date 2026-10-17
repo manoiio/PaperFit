@@ -1,0 +1,29 @@
+{
+  "kind": "actual Microsoft Word observation",
+  "output_sha256": "90f463005fa50bbc003659c5122285ebfd4e1c1089ba37f13c7bc32447c8dce0",
+  "no_repair_dialog_observed": true,
+  "TOC": [
+    {
+      "title": "第1章 合成研究",
+      "display_page": "5"
+    },
+    {
+      "title": "第2章 合成结果",
+      "display_page": "7"
+    }
+  ],
+  "internal_jump": {
+    "method": "Word native follow hyperlink, empty external address, exact second TOC anchor",
+    "target": "第2章 合成结果",
+    "physical_page": 7,
+    "visible_footer": "7"
+  },
+  "REF_display": "图1-2 合成曲线",
+  "PAGEREF_display": "7",
+  "missing_and_locked_results_kept": true,
+  "SEQ_result_kept": "66",
+  "repaginated_for_observation": true,
+  "closed_without_save": true,
+  "hash_unchanged": true,
+  "boundary": "No all-field update; PAGE view repaginates normally. Other unsupported fields not refreshed."
+}

@@ -180,7 +180,7 @@ def render_results():
     if not files:return
     result,after=model.result,model.result['after']
     checks=result['preservation']
-    required=('only_authorized_structure','main_object_order_preserved') if result.get('kind')=='section_pages' else ('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
+    required=('original_sha256_unchanged','only_authorized_field_caches') if result.get('kind')=='field_update' else ('only_authorized_structure','main_object_order_preserved') if result.get('kind')=='section_pages' else ('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
     if not all(checks.get(k) is True for k in required) or not (checks.get('only_authorized_structure') is True if result.get('kind')=='section_pages' else checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal'))):
         st.error('完整性结果异常，请重新开始。');return
     from web.decision_ui import compact_stats
@@ -188,7 +188,8 @@ def render_results():
     st.subheader(f'第{n}轮副本已生成')
     compact_stats([('实际修改',len(result['changes'])),('剩余问题',summary['problem_count']),('待复核',summary['review_count'])],'result-summary')
     verified=all(c['verification']=='pass' for c in result['changes'])
-    if verified and result.get('kind')=='section_pages':st.write('授权的分节、页码及独立页脚结构复查通过；未刷新目录/引用域，实际显示须查看页面。')
+    if verified and result.get('kind')=='field_update':st.write('本机Word已更新所选目录/引用；最终回填文件复查通过，未选域保持。')
+    elif verified and result.get('kind')=='section_pages':st.write('授权的分节、页码及独立页脚结构复查通过；未刷新目录/引用域，实际显示须查看页面。')
     elif verified and result.get('kind')=='dynamic_text':st.write('授权的动态数字清单已落盘，精确文字白名单验证通过；字段缓存、目录页码和实际分页未更新。')
     elif verified:
         message=f"所选修改的落盘复查全部符合要求 · 已保存{len(result['changes'])}项修改；仅代表所选属性。"
@@ -243,7 +244,7 @@ def render_results():
         elif result.get('kind')=='section_pages':st.write('仅计划允许的分节属性、页脚、关系及内容类型变化；原共享部件、全部run和未选内容保持。完整包逐部件复查通过。')
         elif result.get('kind')=='dynamic_text':st.write('仅授权题注/引用数字变化；所有run格式及未选部件保持。域、分页和目录页码未更新或核验。')
         else:st.write('原稿保持不变 · 未选格式与文档内容保留核对通过 · 未选包部件字节核对通过；选中故事部件只改格式')
-        required=('only_authorized_structure','main_object_order_preserved') if result.get('kind')=='section_pages' else ('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
+        required=('original_sha256_unchanged','only_authorized_field_caches') if result.get('kind')=='field_update' else ('only_authorized_structure','main_object_order_preserved') if result.get('kind')=='section_pages' else ('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
         if not all(checks.get(k) is True for k in required) or not (checks.get('only_authorized_structure') is True if result.get('kind')=='section_pages' else checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal'))):
             st.error('完整性结果异常，请重新开始。')
             st.stop()
@@ -425,6 +426,8 @@ elif step==5:
             render_dynamic(model)
             from web.page_ui import render_local as render_page_layout
             render_page_layout(model)
+            from web.field_ui import render_local as render_fields
+            render_fields(model)
 
 from web.workflow_ui import finish_navigation
 finish_navigation()

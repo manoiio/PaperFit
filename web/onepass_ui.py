@@ -42,7 +42,7 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         st.caption('开始后，需要时将向DeepSeek发送有限的脱敏文字摘录辅助识别段落及普通表格用途；脚注尾注本地识别。使用要求文件/补充文字时另发送提取的要求解析一次。文件排版在本机完成，原稿保留。脱敏不保证彻底匿名。')
         valid=model.inventory is not None and current(model,state,extra,requirements)
         def progress(name):status.update(label=name);status.write(name)
-        if st.button('开始智能排版',key='onepass-start',type='primary',width='stretch',disabled=model.inventory is None or not requirements_ready or (valid and state.get('status') in ('done','waiting','running'))):
+        if st.button('开始智能排版',key='onepass-start',type='primary',width='stretch',disabled=model.inventory is None or not requirements_ready or (valid and state.get('status') in ('done','waiting','running','updating'))):
             with st.status('识别论文内容',expanded=True) as status:
                 start(model,state,extra,requirements=requirements,requirements_cache=st.session_state.setdefault('requirements-cache-'+task,{}),emit=progress)
                 status.update(label='有少量事项需要您决定' if state.get('status')=='waiting' else '整理完成' if state.get('status')=='done' else '本次未完成',state='error' if state.get('status')=='failed' else 'complete')
@@ -81,6 +81,21 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
                 st.rerun()
             except Exception as exc:st.error(public_error(exc))
         if b.button('取消本次处理',key='onepass-cancel',width='stretch'):cancel(model,state);st.rerun()
+    if state.get('status')=='updating':
+        from .field_session import JOBS
+        @st.fragment(run_every=2)
+        def word_progress():
+            from .onepass_session import poll_fields
+            poll_fields(model,state)
+            if state.get('status')!='updating':st.rerun()
+            job=state['field_job'];status=job['scheduler'].status(job['owner'],job['identity'])
+            st.info('本机Word正在重新分页、更新目录与引用并复查；'+('排队中' if status['state']=='queued' else '正在执行')+'。您仍可查看已有结果。')
+            if st.button('取消接收此次Word结果',key='onepass-word-cancel'):
+                from .field_session import cancel as cancel_fields
+                cancel_fields(job);state['audit']['field_update']={'status':'cancelled','reason':'停止接收结果，不表示Word进程已停止'}
+                from .onepass_session import publish
+                publish(model,state,state['pending_outcome'],lambda _:None,state['id']);st.rerun()
+        word_progress()
     if valid and state.get('status')=='running':
         st.info('本次正在处理；切换页面不会重新发起。若处理已中断，可取消后明确重试。')
         if st.button('取消当前处理',key='onepass-cancel-running'):cancel(model,state);st.rerun()
@@ -115,10 +130,15 @@ def render_success(model,state,render_results):
         st.info('本次没有需要安全修改的格式，未额外生成副本。')
         st.download_button('下载已检查文件',model.input_path.read_bytes(),file_name='论文有格_已检查.docx',on_click='ignore')
     n=state['outcome'].get('changes',0);summary=report['summary']
+    field_status=state.get('audit',{}).get('field_update')
+    if field_status:
+        if field_status['status']=='updated':
+            c=field_status['counts'];st.write('本机Word已更新目录 '+str(c['TOC'])+' 个、引用 '+str(c['REF']+c['PAGEREF'])+' 个；保持 '+str(field_status['kept_count'])+' 个不支持/受保护对象。最终回填副本经分页和结构复查。')
+        else:st.warning('目录/引用未完成更新：'+field_status.get('reason','没有安全可更新对象')+'。下载为已经验证的排版副本。Word中可点入目录→更新目录；在可信文件中选定引用域后更新。')
     if state.get('audit',{}).get('page_skipped'):st.warning('本次未执行页码方案：'+state['audit']['page_skipped'])
     if state.get('audit',{}).get('dynamic_blocked_groups'):st.info('部分编号关联组不能完整安全同步，已保留；详情见处理记录。')
     if model.result and model.result.get('assembly'):
-        st.write('本次已验证 '+str(len(model.result['assembly']['steps']))+' 个阶段；普通格式、数字同步和页码结构分别记录，未刷新目录或引用域。')
+        st.write('本次已验证 '+str(len(model.result['assembly']['steps']))+' 个阶段；普通格式、数字同步和页码结构分别记录，目录/引用的实际更新状态见上方；未执行任意域刷新。')
         with st.expander('各阶段父子关系与未处理事项'):st.json(model.result['assembly'],expanded=False)
     if model.result and model.result.get('kind')=='dynamic_text':st.write('普通格式整理 '+str(n)+' 处；另已明确采用第'+str(model.result['round']['number'])+'轮动态副本，同步 '+str(len(model.result['changes']))+' 处数字。未更新域或真实页码。')
     assembly=model.result.get('assembly') if model.result else None
