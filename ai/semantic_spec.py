@@ -22,6 +22,19 @@ def request_for(text):
     fields={f'F{i:02}':{'name':n,'label':legacy.ALLOWED[n][1],'unit':legacy.ALLOWED[n][2]} for i,n in enumerate(sorted(names),1)}
     return {'version':VERSION,'input':text,'input_sha256':sha256(text.encode()),'sources':sources,'fields':fields}
 
+def prove(name,value,text,location,segments,path='field'):
+    """Exact bounded local evidence, shared by text and extracted-file adapters."""
+    record={'value':value,'unit':legacy.ALLOWED[name][2],'location':location,'support':'supported'}
+    last=None
+    for end in range(1,min(200,len(text))+1):
+        try:
+            candidate={**record,'quote':text[:end]}
+            validate_candidate('main',name,candidate,segments)
+            return candidate
+        except DemoError as exc:last=exc
+    raise DiagnosticError([problem(path+'.value','unproved',f'{name}: '+str(last))])
+
+
 def adapt(data,text):
     req=request_for(text);exact(data,('version','items','issues'),'response')
     if data['version']!=VERSION or type(data['items']) is not list or len(data['items'])>40 or type(data['issues']) is not list or len(data['issues'])>40:
@@ -37,17 +50,7 @@ def adapt(data,text):
             seen.add(fid)
             if type(sid) is not str or sid not in sources:raise DiagnosticError([problem(path+'.source','source','来源ID不在本次原文中')])
             name=req['fields'][fid]['name'];source=sources[sid];line=text.count('\n',0,source['start'])+1
-            record={'value':item['value'],'unit':legacy.ALLOWED[name][2],'location':f'摘录:L{line}','support':'supported'}
-            # Bounded exact prefixes, never fuzzy matching, concatenation or normalization.
-            # All candidates are proved against FULL original segments (including conflicts).
-            last=None
-            for end in range(1,min(200,len(source['text']))+1):
-                try:
-                    candidate={**record,'quote':source['text'][:end]}
-                    validate_candidate('main',name,candidate,segments)
-                    fields[name]=candidate;break
-                except DemoError as exc:last=exc
-            else:raise DiagnosticError([problem(path+'.value','unproved',f'{name}: '+str(last))])
+            fields[name]=prove(name,item['value'],source['text'],f'摘录:L{line}',segments,path)
         except DiagnosticError as exc:errors.extend(exc.diagnostics)
     for i,issue in enumerate(data['issues']):
         errors.append(problem(f'issues[{i}]','unresolved','模型报告未解决要求，整组不应用'))

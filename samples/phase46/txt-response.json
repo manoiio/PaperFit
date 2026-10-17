@@ -1,0 +1,20 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "message": {
+        "content": "{\"version\":\"requirements-file-ids-v1\",\"items\":[{\"field\":\"F01\",\"value\":{\"value\":6,\"unit\":\"pt\"},\"source\":\"S2\"},{\"field\":\"F02\",\"value\":\"left\",\"source\":\"S2\"},{\"field\":\"F03\",\"value\":{\"value\":0.5,\"unit\":\"lines\"},\"source\":\"S2\"},{\"field\":\"F06\",\"value\":2,\"source\":\"S1\"},{\"field\":\"F07\",\"value\":\"宋体\",\"source\":\"S1\"},{\"field\":\"F08\",\"value\":12,\"source\":\"S1\"},{\"field\":\"F10\",\"value\":\"center\",\"source\":\"S3\"},{\"field\":\"F11\",\"value\":\"黑体\",\"source\":\"S3\"},{\"field\":\"F12\",\"value\":16,\"source\":\"S3\"},{\"field\":\"F14\",\"value\":\"left\",\"source\":\"S4\"},{\"field\":\"F15\",\"value\":\"宋体\",\"source\":\"S4\"},{\"field\":\"F16\",\"value\":12,\"source\":\"S4\"},{\"field\":\"F18\",\"value\":\"left\",\"source\":\"S5\"},{\"field\":\"F19\",\"value\":\"黑体\",\"source\":\"S5\"},{\"field\":\"F20\",\"value\":12,\"source\":\"S5\"},{\"field\":\"F22\",\"value\":2,\"source\":\"S1\"}],\"background\":[],\"issues\":[]}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 1418,
+    "completion_tokens": 281,
+    "total_tokens": 1699,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 1418
+  }
+}

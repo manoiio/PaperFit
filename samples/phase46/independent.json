@@ -1,0 +1,35 @@
+{
+  "txt": {
+    "sha256": "b978dfe640b08bdc7e37d17c6b37f556d3a04ffeb48ca900c4f3bae1e6bd57a7",
+    "original_legal_bytes_equal": true,
+    "authored_16_values_and_physical_locations": true,
+    "untouched_values_origins_and_other_modules_equal": true,
+    "file_sha256_retained": true,
+    "independent_XML_ZIP": {
+      "all_text_and_order_equal": true,
+      "unselected_parts_byte_equal": true,
+      "authored_font_size_line_indent_spacing_alignment": true,
+      "other_XML_equal_after_explicit_format_mask": true
+    },
+    "replay_requests": 0
+  },
+  "docx": {
+    "sha256": "b978dfe640b08bdc7e37d17c6b37f556d3a04ffeb48ca900c4f3bae1e6bd57a7",
+    "original_legal_bytes_equal": true,
+    "authored_16_values_and_physical_locations": true,
+    "untouched_values_origins_and_other_modules_equal": true,
+    "file_sha256_retained": true,
+    "independent_XML_ZIP": {
+      "all_text_and_order_equal": true,
+      "unselected_parts_byte_equal": true,
+      "authored_font_size_line_indent_spacing_alignment": true,
+      "other_XML_equal_after_explicit_format_mask": true
+    },
+    "replay_requests": 0
+  },
+  "reuse": {
+    "browser_bytes_equal": true,
+    "requirements_parse_requests": 0
+  },
+  "network_requests": 0
+}

@@ -7,7 +7,7 @@ from core.package import DemoError,sha256
 
 _ACTIVE=ContextVar('synthetic_diagnostic',default=None)
 LIMIT=256*1024
-ROOT=Path(__file__).resolve().parents[1]/'work/phase45'
+ROOT=Path(__file__).resolve().parents[1]/'work'
 class DiagnosticError(DemoError):
     def __init__(self,records):
         self.diagnostics=records
@@ -21,8 +21,9 @@ def exact(data,keys,path):
     if missing or extra:raise DiagnosticError([problem(path,'keys','缺少 '+str(sorted(missing))+'；多余 '+str(sorted(extra)))])
 
 class SyntheticCapture:
-    def __init__(self,directory,allowed_input_hashes):
-        self.directory=Path(directory).resolve();self.allowed=set(allowed_input_hashes)
+    def __init__(self,directory,allowed_input_hashes,max_requests=20):
+        self.directory=Path(directory).resolve();self.allowed=set(allowed_input_hashes);self.max_requests=max_requests
+        if type(max_requests) is not int or not 1<=max_requests<=20:raise DemoError('合成诊断请求上限无效')
         root=ROOT
         if not self.directory.is_relative_to(root.resolve()) or not self.allowed:raise DemoError('诊断仅允许本任务忽略目录和明确合成输入哈希')
     def write(self,attempt,kind,data):
@@ -33,7 +34,7 @@ class SyntheticCapture:
         path.write_bytes(raw);path.chmod(0o600)
     def request(self,attempt,text,payload):
         if sha256(text.encode()) not in self.allowed:raise DemoError('未授权的输入不能写入合成诊断或发送')
-        if len(list(self.directory.glob('*.request.json')))>=20:raise DemoError('本阶段20次合成请求预算已用尽，未发送')
+        if len(list(self.directory.glob('*.request.json')))>=self.max_requests:raise DemoError('本阶段合成请求预算已用尽，未发送')
         self.write(attempt,'request',{'format':'paperfit-synthetic-debug-1','input':text,'input_sha256':sha256(text.encode()),'payload':payload,'prompt_sha256':sha256(json.dumps(payload.get('messages',[])[:1],ensure_ascii=False,sort_keys=True).encode()),'protocol_version':json.loads(text).get('version') if text.startswith('{') else None,'public_synthetic':True})
     def response(self,attempt,raw):
         # Retain content before validation, but never reasoning_content or headers.
@@ -64,6 +65,6 @@ def active():
     if not path.is_relative_to(ROOT.resolve()) or path.stat().st_size>8192:raise DemoError('合成诊断配置位置或容量无效')
     from core.rule_config import strict_json
     data=strict_json(path.read_text())
-    exact(data,('public_synthetic','allowed_input_hashes','directory'),'synthetic_policy')
+    exact({k:v for k,v in data.items() if k!='max_requests'},('public_synthetic','allowed_input_hashes','directory'),'synthetic_policy')
     if data['public_synthetic'] is not True or type(data['allowed_input_hashes']) is not list or len(data['allowed_input_hashes'])>8 or any(type(h) is not str or len(h)!=64 for h in data['allowed_input_hashes']):raise DemoError('合成诊断声明无效')
-    return SyntheticCapture(data['directory'],data['allowed_input_hashes'])
+    return SyntheticCapture(data['directory'],data['allowed_input_hashes'],data.get('max_requests',20))

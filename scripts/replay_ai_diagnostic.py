@@ -13,11 +13,14 @@ def replay(request,response):
     if request.get('format')!='paperfit-synthetic-debug-1' or request.get('public_synthetic') is not True or sha256(request['input'].encode())!=request['input_sha256']:raise DemoError('诊断输入快照哈希/声明无效')
     wire=strict_json(request['input'])
     if wire['version']=='supplement-ids-v1':validator=lambda d:supplement(d,wire['input'])
+    elif wire['version']=='requirements-file-ids-v1':
+        from ai.file_spec import adapt as file_adapt
+        validator=lambda d:file_adapt(d,{'file_sha256':wire['file_sha256'],'segments':wire['input'],'unextracted':[]})
     elif wire['version']=='structure-ids-v1':validator=lambda d:structure(d,wire)
     else:raise DemoError('未知诊断协议')
     # Original envelope/protocol gates including finish reason and tool-call protection.
     result=call_json(request['input'],request['payload'],validator,transport=lambda *_:json.dumps(response,ensure_ascii=False),config=Settings('offline-synthetic'))
-    return {'kind':'offline_replay','request_count':0,'draft':result['draft']}
+    return {'kind':'offline_replay','request_count':0,'draft':result['draft'],'scope':'只核对已发送的原始片段；本地未提取内容须结合原文件另核对'}
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('request',type=Path);p.add_argument('response',type=Path);p.add_argument('--output',required=True,type=Path);a=p.parse_args()
     if any(f.stat().st_size>256*1024 for f in (a.request,a.response)):raise SystemExit('Snapshot exceeds 256KiB')

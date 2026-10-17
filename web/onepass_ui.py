@@ -11,7 +11,10 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
     st.header('智能排版')
     task=model.task_dir.name if model.task_dir else 'new'
     state=st.session_state.setdefault('onepass-'+task,{})
-    completed=model.inventory is not None and state.get('status')=='done' and current(model,state,st.session_state.get('onepass-extra-'+task,''))
+    input_ui=st.session_state.get('requirements-ui-'+task,{})
+    selected=input_ui.get('selected')
+    prior_extra=st.session_state.get('onepass-extra-'+task,'') if input_ui.get('choice','current')=='current' else ''
+    completed=model.inventory is not None and state.get('status')=='done' and current(model,state,prior_extra,selected)
     if completed:render_success(model,state,render_results)
     else:st.write('上传论文，按要求整理，下载修改好的副本。原稿保留。')
     def recommended():
@@ -32,14 +35,14 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         is_default=model.custom_rules_path is None and model.active_template is None
         st.write('排版要求：'+('SCUT本科工理类 · 2015年项目材料演示规则' if is_default else rules['name']))
         st.caption('规则版本：'+str(rules['version'])+('。2015年材料，不宣称现行通用校规。' if is_default else '。沿用已生效配置和来源。')+'未规定的属性不自动补齐。')
-        extra=st.text_input('还有其他要求吗？（可选）',placeholder='例如：正文宋体小四，首行缩进两字符；一级标题黑体三号居中；表内文字五号',key='onepass-extra-'+task,max_chars=2000,
-                            help='支持明确的正文、各级标题、图表题、表内文字及页面常用格式；只覆盖提及字段，冲突或不支持要求会集中询问。')
-        st.caption('开始后，需要时将向DeepSeek发送有限的脱敏文字摘录辅助识别段落及普通表格用途；脚注尾注本地识别。有补充要求时另解析一次补充文字。文件排版在本机完成，原稿保留。脱敏不保证彻底匿名。')
-        valid=model.inventory is not None and current(model,state,extra)
+        from .requirements_ui import render_requirements
+        extra,requirements,requirements_ready=render_requirements(model,task,state)
+        st.caption('开始后，需要时将向DeepSeek发送有限的脱敏文字摘录辅助识别段落及普通表格用途；脚注尾注本地识别。使用要求文件/补充文字时另发送提取的要求解析一次。文件排版在本机完成，原稿保留。脱敏不保证彻底匿名。')
+        valid=model.inventory is not None and current(model,state,extra,requirements)
         def progress(name):status.update(label=name);status.write(name)
-        if st.button('开始智能排版',key='onepass-start',type='primary',width='stretch',disabled=model.inventory is None or (valid and state.get('status') in ('done','waiting','running'))):
+        if st.button('开始智能排版',key='onepass-start',type='primary',width='stretch',disabled=model.inventory is None or not requirements_ready or (valid and state.get('status') in ('done','waiting','running'))):
             with st.status('识别论文内容',expanded=True) as status:
-                start(model,state,extra,emit=progress)
+                start(model,state,extra,requirements=requirements,requirements_cache=st.session_state.setdefault('requirements-cache-'+task,{}),emit=progress)
                 status.update(label='有少量事项需要您决定' if state.get('status')=='waiting' else '整理完成' if state.get('status')=='done' else '本次未完成',state='error' if state.get('status')=='failed' else 'complete')
             st.rerun()
     if state and not valid and model.inventory:
@@ -47,6 +50,11 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
     if valid and state.get('status')=='waiting':
         st.subheader('请帮助确认这几处')
         st.caption('只询问影响修改、目前无法可靠判断的事项。回答后继续，不重新发送全部摘录。')
+        if state.get('audit',{}).get('requirements_not_applied'):
+            st.write('文件中本次不会执行的内容：')
+            for note in state['audit']['requirements_not_applied']:st.text((note.get('location') or '提取范围')+' · '+note['text']+' · '+note['reason'])
+            with st.expander('本次可以执行的已验证要求'):
+                for field in state['audit'].get('API',{}).get('requirements',{}).get('overrides',[]):st.write(field['object_property']+'：'+str(field['value'])+' '+field['unit'])
         decisions={}
         for q in state['questions']:
             with st.container(border=True):
@@ -59,7 +67,7 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         if a.button('确认并继续',key='onepass-continue',type='primary',disabled=len(decisions)!=len(state['questions']),width='stretch'):
             try:
                 with st.status('继续整理',expanded=True) as status:
-                    continue_command(model,state,extra,decisions,emit=progress)
+                    continue_command(model,state,extra,decisions,requirements=requirements,emit=progress)
                     status.update(label='整理完成' if state.get('status')=='done' else '已返回，请修改补充要求' if state.get('status')=='cancelled' else '本次未完成',state='error' if state.get('status')=='failed' else 'complete')
                 st.rerun()
             except Exception as exc:st.error(public_error(exc))
@@ -112,7 +120,12 @@ def render_success(model,state,render_results):
     count=sum(t in ('other','pending') for t in types.values()) if types else len(coverage.get('unconfirmed_paragraphs',[]))
     st.write(f'还需留意：{count} 段用途未明确或不属普通文字，本次未套普通段落格式。实际分页、目录页码及复杂对象仍需查看。')
     if state.get('audit',{}).get('structure_fallback'):st.info('这次未能完成辅助识别，已整理可靠识别的部分；未确定内容保持。')
+    if state.get('audit',{}).get('requirements_not_applied') and not state['audit'].get('file_requirements_declined'):
+        st.warning('本次仅执行您同意的已验证文件要求；另有 '+str(len(state['audit']['requirements_not_applied']))+' 项未执行/未提取，不代表已完整采用文件规范。')
+    if state.get('audit',{}).get('file_requirements_declined'):st.info('本次按您选择沿用当前要求，未采用上传文件的覆盖。')
     st.caption('部分范围整理不等于全文排版合格。正在处理的输入仍为原文件，未自动切换。')
+    st.download_button('保存这套排版要求',model.rule_bundle_download(),file_name='排版要求.json',mime='application/json',on_click='ignore',key='onepass-save-rules')
+    st.caption('仅保存规则和规范来源，不含论文或修改授权；下次选择“使用已保存的要求”。')
     with st.expander('更多下载、修改记录与处理详情'):
         if model.result:
             st.download_button('下载完整结果包',model.result_package(),file_name='论文有格_结果.zip',on_click='ignore')
