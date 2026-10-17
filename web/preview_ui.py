@@ -19,6 +19,8 @@ def view_seed(model):
 
 def open_reader(model,key=None,compare=False):
     """Navigation intent only. Called by explicit result-entry buttons."""
+    from .workflow_ui import detail_go
+    detail_go(5)
     seed=view_seed(model)
     st.session_state['reader-open-'+seed]=True
     st.session_state['reader-request-'+seed]={'target':key,'compare':compare}

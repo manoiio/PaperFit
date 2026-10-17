@@ -155,10 +155,10 @@ def stage(raw, work_root):
             if inputscope.get('citation_scope'):inputscope['citation_scope']={**inputscope['citation_scope'],'input_sha256':r['input']}
             if inputscope.get('caption_scope'):inputscope['caption_scope']={**inputscope['caption_scope'],'input_sha256':r['input']}
             if 'input_scope' in r:inputscope=r['input_scope']
-            if r['kind']=='caption_position':require('input_scope' in r,'位置变化历史缺少原始范围，不可猜测段号')
+            if r['kind'] in ('caption_position','dynamic_text'):require('input_scope' in r,'对象/文字变化历史缺少原始范围，不可猜测定位')
             scope(pkgs[r['input']],inputscope)
             if r['mode']=='extended':require(set(r['scope']['body'])=={int(n) for n,t in r['scope']['types'].items() if t=='body'},'历史正文与分类不一致')
-            require(type(r['changes']) is list and len(r['changes'])<=10000 and type(r['saved_summary']) is dict and r['kind'] in ('format','width_adaptation','figure_layout','pagination_layout','caption_position'),'历史记录类型无效')
+            require(type(r['changes']) is list and len(r['changes'])<=10000 and type(r['saved_summary']) is dict and r['kind'] in ('format','width_adaptation','figure_layout','pagination_layout','caption_position','dynamic_text'),'历史记录类型无效')
             for c in r['changes']:
                 require(type(c) is dict and {'rule_id','locator','before','after','verification','source'}<=set(c),'修改记录无效')
             rounds[r['number']]=r

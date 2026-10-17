@@ -31,6 +31,10 @@ def go(step):
         st.session_state['workspace-step']=step
         if step==2:st.session_state['workspace-scope-editor']=False
 
+def detail_go(step):
+    st.session_state['workspace-smart']=False
+    go(step)
+
 def availability(model):
     return {1:True,2:model.inventory is not None,3:model.report is not None,
             4:model.report is not None,5:model.report is not None or bool(model.history)}
@@ -141,11 +145,12 @@ def shell(model,restart):
             if pending_rehearsal(model) and step!=4:labels.append('已有预演记录 · 尚未采用，采用前仍须核对')
             if labels:st.html('<div class="file-identities">'+''.join('<span>'+escape(label)+'</span>' for label in labels)+'</div>')
         else:st.caption('本地检查与选择修正 Word 格式 · 当前尚未载入文件')
+    st.button('智能处理 · 返回快捷主流程',key='smart-entry',on_click=lambda:st.session_state.update({'workspace-smart':True}),width='stretch')
     with st.container(key='workspace-nav'):
         for col,(n,label) in zip(st.columns(5),STEPS.items()):
             status='当前' if n==step else ('需载入' if n==2 else '需检查' if n in (3,4) else '需记录') if not ready[n] else '已确认' if n==2 and model.confirmed else '有记录' if n==3 and model.report else '有记录' if n==5 and model.history else '可进入'
             missing='先载入DOCX。' if n==2 else '先核对范围并完成检查。' if n in (3,4) else '先完成检查，或恢复含历史的项目。'
-            col.button(f'{n} {label} · {status}',key=f'workspace-nav-{n}',disabled=not ready[n],help=missing if not ready[n] else '仅切换查看区域，不确认、不执行、不切换输入。',type='primary' if step==n else 'secondary',on_click=go,args=(n,),width='stretch')
+            col.button(f'{n} {label} · {status}',key=f'workspace-nav-{n}',disabled=not ready[n],help=missing if not ready[n] else '仅切换查看区域，不确认、不执行、不切换输入。',type='primary' if step==n else 'secondary',on_click=detail_go,args=(n,),width='stretch')
     if st.session_state.get('workspace-observed-check') and model.inventory and model.report is None:
         st.html('<div class="workspace-hint">下一步：核对当前要求与范围，再明确确认并重新检查。旧记录不用于当前操作。</div>')
     return step

@@ -1,0 +1,58 @@
+{
+  "baseline_tests": 1227,
+  "scope_confirmation_seconds": 0.0455500828102231,
+  "shortcut_seconds": 0.08279654220677912,
+  "shortcut": {
+    "status": "adopted",
+    "rounds": 1,
+    "selected": 11,
+    "changes": 11,
+    "output_sha256": "82d0c27e5b3ceb2f5c2fa90d756c19e3f6578dc2b9535b28de0b82e33c02597a",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 7,
+      "problem_count": 0,
+      "review_count": 0,
+      "review_findings": 0,
+      "review_notes": 0,
+      "pass_count": 33,
+      "not_applicable_count": 7,
+      "conclusion": "已覆盖检查未发现问题",
+      "applicable_rule_count": 7
+    }
+  },
+  "original_legal_path_bytes_equal": true,
+  "original_input_unchanged": true,
+  "format_independent": {
+    "exact_author_expected_tree": true,
+    "all_unselected_parts_byte_equal": true,
+    "all_text_and_order_preserved": true
+  },
+  "smart_sha256": "82d0c27e5b3ceb2f5c2fa90d756c19e3f6578dc2b9535b28de0b82e33c02597a",
+  "API_requests": 0,
+  "render_requests": 0,
+  "browser_smart_bytes_equal": true,
+  "dynamic": {
+    "preview_seconds": 0.1035030831117183,
+    "adoption_seconds": 0.13212629198096693,
+    "rounds": 1,
+    "adoption_fix_calls": 0,
+    "numeric_edits": 5,
+    "sha256": "ce5588f3831691d544f5f71dde11af333c96d774893369c34c8d4bdc4131c3f1",
+    "word": {
+      "available": false,
+      "platform": "darwin",
+      "status": "not_run",
+      "reason": "当前非Windows，无Word COM；未更新域、重新分页或核验目录页码。"
+    },
+    "independent": {
+      "exact_author_numeric_changes_only": true,
+      "all_run_properties_and_other_objects_preserved": true,
+      "all_unselected_parts_byte_equal": true,
+      "no_Word_calculation": true
+    }
+  },
+  "browser_dynamic_bytes_equal": true,
+  "browser_result_packages_match_single_downloads": true,
+  "final_automatic_browser_bytes_equal": true
+}

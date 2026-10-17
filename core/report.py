@@ -63,6 +63,7 @@ def modification_markdown(result):
     if cleanup:lines += ['', '## 所选属性清理说明', '']+[c['rule_id']+' '+_fmt(c['locator'])+'：'+c['attribute_cleanup_note'] for c in cleanup]
     if result.get('caption_move'):lines += ['',result['caption_move']['message'],result['caption_move']['limitation'],'授权的对象顺序变化及范围映射：'+_fmt(result['range_mapping'])]
     if 'layout' in result:lines += ['', result['layout']['message']+'。'+result['layout']['limitation'], '这是独立产品排版辅助，不计入R01–R12学校演示格式规则；尚未自动验证分页。']
+    if result.get('dynamic'):lines += ['', '## 用户授权动态数字事务（不是普通格式修正）', '仅按清单修改题注及唯一纯文本引用数字；所有run格式与未选部件保持。REF/PAGEREF、目录页码及实际分页未更新，须在Word更新并复核。']
     if 'widths' in result:
         from .widths import width_markdown
         lines += ['', result['widths']['message'], result['widths']['limitation'], '', width_markdown(result['widths']['after'])]

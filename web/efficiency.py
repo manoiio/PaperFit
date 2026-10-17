@@ -136,6 +136,7 @@ class EfficiencySession:
                     if opts:members['table-layout-options.json']=encoded(opts)
             if self.result['after']['coverage'].get('caption_scope'):
                 members['caption-supplement.json']=encoded(self.result['after']['coverage']['caption_scope']['template'])
+            if self.result.get('dynamic'):members['dynamic-summary.json']=encoded(clean(self.result['dynamic']))
             if self.result.get('range_mapping'):members['range-mapping.json']=encoded(self.result['range_mapping'])
             if self.result['after']['coverage'].get('reference_scope'):
                 members['reference-supplement.json']=encoded(self.result['after']['coverage']['reference_scope']['template'])

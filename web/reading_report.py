@@ -33,6 +33,7 @@ def portable(bundle,*,display_name='待检查文档.docx',include_excerpts=False
          'preview':bundle.get('preview',{'status':'未生成预览'}),'visual':bundle.get('visual',{'status':'未记录人工视觉复核'}),'word_status':'未验收',
          'history':bundle.get('history',[]),'next_steps':bundle['steps'],'excerpt_policy':'最多20个对象、各48字符' if include_excerpts else '默认省略论文原文；按编号定位，完整论文不嵌入报告',
          'conclusion':'启用规则及确认范围内的结果，不代表全文排版合格。'}
+    if bundle.get('dynamic'):out['dynamic']=clean(bundle['dynamic'])
     if bundle['format']['rules'].get('workbench'):
         wb=bundle['format']['rules']['workbench'];cov=bundle['format']['coverage'];out['workbench_modules']=[{'module':m,'configured':v['configured'],'version':v.get('version',6 if m=='main' else 1),'participates':m=='main' or {'front':'front_scope','toc':'toc_scope','notes':'note_scope'}.get(m) in cov} for m,v in wb['modules'].items()]
     if bundle['format'].get('captions'):
@@ -141,6 +142,7 @@ def html_report(data):
     elif data.get('pagination_history'):
         parts+=['<p>当前轮未重复独立复查分页属性；下列实际祖先轮次曾设置属性，不能据此宣称当前文件同页。</p>',table(['来源轮次','历史应用结果','核对范围'],[[h['round'],h['message'],h['status']] for h in data['pagination_history']])]
     else:parts+=['<p>本轮及已记录的祖先轮次没有分页辅助应用记录；关联建议不等于跨页已解决。</p>']
+    if data.get('dynamic'):parts+=['<h2>动态数字事务（独立授权）</h2><p>仅已列明数字与唯一纯文本引用同步；REF/PAGEREF、目录页码和真实分页未更新，Word未验收。</p>',table(['数字改动','未处理关联组','域/页码状态'],[[len(data['dynamic']['plan']['edits']),len(data['dynamic']['plan']['blocked_groups']),data['dynamic']['word']['reason']]])]
     pre=data['preview'];vis=data['visual']
     parts+=['<h2>预览与人工视觉复核</h2>','<p>Word：'+esc(data['word_status'])+'。预览图未默认嵌入，可作为另行附件。</p>',table(['预览状态','渲染环境','页数/预览范围','人工视觉记录'],[[pre.get('status','未生成预览'),pre.get('renderer_version','未检查'),str(pre.get('page_count','未检查'))+' / '+str(pre.get('preview_range','未检查')),{'looked':'人工已查看，不表示无问题','issues':'人工发现问题'}.get(vis.get('status'),vis.get('status','未记录'))]]),'<p>'+esc(pre.get('environment_status','环境记录对应预览生成时；未生成时未检查。'))+'</p>']
     for note in pre.get('font_notes',[]):parts+=['<p>'+esc(note)+'</p>']
@@ -158,5 +160,6 @@ def markdown_report(data):
     if data.get('citation_summary'):out+=['引文逐成员与首次位置证据：'+json.dumps(data['citation_summary'],ensure_ascii=False)]
     if data.get('caption_summary'):out+=['题注编号/结构位置/实际分页：'+json.dumps(data['caption_summary'],ensure_ascii=False)]
     for r in data['records']:out.append('- '+CATEGORIES[r['category']]+' · '+r['record_key']+' · '+r['position']+' · '+STATUS[r['status']]+'：'+r['actual']+' → '+r['expected']+'；'+r['reason'])
+    if data.get('dynamic'):out+=['','动态数字事务：仅授权数字变化，域缓存/分页/目录页码未更新。',json.dumps(data['dynamic'],ensure_ascii=False)]
     out+=['','本轮修改：'+json.dumps(data['changes'],ensure_ascii=False),'预览/视觉：'+json.dumps({'preview':data['preview'],'visual':data['visual']},ensure_ascii=False)]
     return '\n'.join(out)+'\n'

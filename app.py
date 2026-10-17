@@ -17,6 +17,7 @@ st.set_page_config(page_title='论文有格', page_icon='📄', layout='wide', i
 
 if 'workflow' not in st.session_state:
     st.session_state.workflow = WebSession(ROOT / 'work/web')
+    st.session_state['workspace-smart']=True
 if 'upload_generation' not in st.session_state:
     st.session_state.upload_generation = 0
 model = st.session_state.workflow
@@ -179,7 +180,7 @@ def render_results():
     if not files:return
     result,after=model.result,model.result['after']
     checks=result['preservation']
-    required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
+    required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
     if not all(checks.get(k) is True for k in required) or not checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal')):
         st.error('完整性结果异常，请重新开始。');return
     from web.decision_ui import compact_stats
@@ -187,7 +188,8 @@ def render_results():
     st.subheader(f'第{n}轮副本已生成')
     compact_stats([('实际修改',len(result['changes'])),('剩余问题',summary['problem_count']),('待复核',summary['review_count'])],'result-summary')
     verified=all(c['verification']=='pass' for c in result['changes'])
-    if verified:
+    if verified and result.get('kind')=='dynamic_text':st.write('授权的动态数字清单已落盘，精确文字白名单验证通过；字段缓存、目录页码和实际分页未更新。')
+    elif verified:
         message=f"所选修改的落盘复查全部符合要求 · 已保存{len(result['changes'])}项修改；仅代表所选属性。"
         if summary['problem_count'] or summary['review_count']:st.write(message)
         else:st.success(message)
@@ -237,8 +239,9 @@ def render_results():
             st.write('原稿保持不变 · 仅授权题注位置变化 · 所有对象子树与未选部件逐字节核对通过；实际同页未核对')
             st.info('段落编号已按XML对象映射重绑；旧选择、布局计划及不匹配预览失效。原稿仅提供渲染预览，不套用移动后的段号。')
             with st.expander('范围映射与失效详情'):st.json(result['range_mapping'])
+        elif result.get('kind')=='dynamic_text':st.write('仅授权题注/引用数字变化；所有run格式及未选部件保持。域、分页和目录页码未更新或核验。')
         else:st.write('原稿保持不变 · 未选格式与文档内容保留核对通过 · 未选包部件字节核对通过；选中故事部件只改格式')
-        required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
+        required=('original_sha256_unchanged','only_authorized_caption_permutation','all_object_subtrees_equal','remaining_objects_relative_order_equal') if result.get('kind')=='caption_position' else ('original_sha256_unchanged','only_authorized_numeric_text') if result.get('kind')=='dynamic_text' else ('original_sha256_unchanged','document_except_selected_format_attributes_equal')
         if not all(checks.get(k) is True for k in required) or not checks.get('unselected_zip_member_bytes_equal',checks.get('other_zip_member_bytes_equal')):
             st.error('完整性结果异常，请重新开始。')
             st.stop()
@@ -303,7 +306,10 @@ if model.report is not None:
     except Exception as exc:model.error=public_error(exc)
 step=shell(model,restart)
 if model.error:st.error('处理未完成：'+model.error)
-if step==1:
+if st.session_state.get('workspace-smart',False):
+    from web.smart_ui import render_smart
+    render_smart(model,ROOT,load_builtin,upload_changed,render_results)
+elif step==1:
     st.header('文档与要求')
     if model.inventory is None:
         st.write('检查已有论文的格式，明确选择后另存修正版。先上传DOCX，或使用合成样本体验。')

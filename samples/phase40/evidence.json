@@ -1,0 +1,126 @@
+{
+  "phase": 40,
+  "date": "2026-10-17",
+  "baseline": {
+    "branch": "main",
+    "sha": "57c8edc",
+    "test_scenarios": 1227,
+    "initial_worktree": "clean"
+  },
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "Windows": false
+  },
+  "full_local_tests": {
+    "tests": 1244,
+    "seconds": 203.086,
+    "result": "OK",
+    "log_not_committed": true
+  },
+  "after_full_changes": {
+    "files": [
+      "core/dynamic.py",
+      "tests/test_dynamic.py",
+      "tests/test_smart_ui.py",
+      "web/smart_ui.py"
+    ],
+    "reason": "visible uncovered-range summary plus fail-closed dynamic input/output/rule readback guard and its regression",
+    "supplemental_tests": 30,
+    "seconds": 7.401,
+    "result": "OK",
+    "additional_guard_case": 1,
+    "claim_1245_test_full_rerun": false
+  },
+  "earlier_attempts": {
+    "first_full": "1244 scenarios, one old detailed-entry UI locator failure; not counted as passed",
+    "targeted_import_invocations": "incorrect test_project name/tests import path corrected; failures not counted as passed",
+    "browser_locator_errors": "early URL global and widget timeout attempts excluded; final public interactions succeeded"
+  },
+  "browser": {
+    "engine": "Chrome via playwright-cli",
+    "windows": [
+      [
+        1280,
+        720
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "private_session_state_injection": false,
+    "P0_actions": [
+      "upload",
+      "accept automatic range summary and check",
+      "one-click smart fix",
+      "download"
+    ],
+    "individual_classifications": 0,
+    "individual_fix_selections": 0,
+    "explicit_analyze_click_needed": false,
+    "formal_rounds": 1,
+    "current_input_round": 0,
+    "selected_format_records": 11,
+    "automatic_summary_browser_bytes_equal": true,
+    "dynamic_default_enabled": false,
+    "dynamic_captions": 4,
+    "dynamic_numeric_changes": 5,
+    "formal_dynamic_download_before_adoption": false,
+    "remaining_dynamic_problems": 1,
+    "remaining_dynamic_reviews": 11,
+    "project_save_service_restart_restore": "actual public browser upload/review/restore; rechecked current report, no current result or old preview authority restored",
+    "session_isolation": "distinct basic-format and academic-dynamic documents/contexts; no cross use",
+    "page_overflow": false,
+    "final_scope_caption": "9 top-level paragraphs not under ordinary paragraph rules; optional modules not included are explicit",
+    "final_dynamic_guard_browser_adoption": true
+  },
+  "dynamic_capabilities": {
+    "caption_numeric_text": "implemented bounded ordinary subset",
+    "unique_body_text_reference": "implemented exact original character spans, including cross-run/repeats; no chain replacement",
+    "Word_COM_REF_PAGEREF_TOC_pagination": "not implemented or live-validated; available=false, not_run on this host and disabled Windows branch",
+    "field_codes_and_cache": "unchanged",
+    "new_Word_or_render_acceptance": false,
+    "adoption_fix_calls": 0
+  },
+  "API_requests": 0,
+  "automatic_renders": 0,
+  "remote_full_CI": {
+    "trigger": "workflow_dispatch only",
+    "run_this_phase": false,
+    "Windows_CI_added": false
+  },
+  "source_sha256": {
+    "app.py": "b3782c429aaf34eace084cfcca6d16124d4d33039731ad96485e3d0262f60b0e",
+    ".github/workflows/tests.yml": "b15787400d215a932f478330088621bf0769c397072eba2578f59db4e742a002",
+    "core/backmatter.py": "b2c518df81dacdfedc1d5e11e72596e1fc9543b822c59a6548cef42434a28066",
+    "core/dynamic.py": "0c4e4f4ec88fe7f6fe3b4a4a5c84fc8391d838a2c05fbf7e206124322c982646",
+    "core/project.py": "1d7d32c2f0242590665e6dbde1324c727aadadf9d24ea23ad6f13caa2bf38c1a",
+    "core/report.py": "137ea66ca8e119a4b0a99f1dc92735d382e5ec838905de3a2cbf73cdb580fee2",
+    "web/smart_session.py": "d95a274eac23a749e8f08b8751b312a3569e8c36664d34411814072a4f69b217",
+    "web/smart_ui.py": "4eb02f10756261bfd83f1fd6cab742c9388a959d3f9644c1f0751dcbda104ba0",
+    "web/dynamic_session.py": "22ed4a068becdf2f97a98b6d05b7a9d3ad58fd7fdb1df607ccb7c8ffa1fcd93b",
+    "web/dynamic_ui.py": "6d25ab3d570abacfc0609dca9f873590d96762dc1b987b7eefb7cc37c4d5dec5",
+    "web/center_session.py": "1e438cb640e35d76e8d8a785f795712de4363a6d823a8de472c4963b4e75a865",
+    "web/reading_report.py": "69c8c908d3a19de77d823113c13db7dd526aa942b5e44c95703a2bc37b277112",
+    "web/session.py": "187644c0091cc9f2f9936f312f467228cef5d9df6e7097473136a2c5e0dc9243",
+    "web/efficiency.py": "fe95c21c870afec7fa834d2574902da8f00b9d29dbb2c8ec14a39d61d5ea1197",
+    "web/project_session.py": "bfe8e6f7f4cbe6dc283e4561a48a7467758ecb9a6849a0eb59fd56b8fbabca74",
+    "web/rehearsal_session.py": "881d23f41006505179a76738ec1b88bb60accfbfa0470393adf167750cc66c70",
+    "web/preview_ui.py": "4a38e42a4ea2c5f77c692962d884b5fa7f4d8fb5e1bdcab985f593d6915a8027",
+    "web/workflow_ui.py": "2435aef9b61df6c72fe1e8f3045529e0f135e0c7acaf3b6e02bead3e8045cc83",
+    "tests/test_smart.py": "61a2ad109f8e52f87d6049acf975a231032e884593740a518f3e4ba1a6a3d791",
+    "tests/test_dynamic.py": "a16c9cfc9b8d3cf8ed8e25520a0e357bd56c872e686722ff8ef123bd4771b9d7",
+    "tests/test_smart_ui.py": "0e74fe43dd6a612feae3c08751d899cf380296454801d6811bd91ff909ca35f2",
+    "tests/test_long_preview.py": "b7d58dc7b1a2613ec071a5c9f2f3337f4e437c62e18b1b10ed314b849199ec2e",
+    "scripts/reproduce_smart_workflow.py": "67079f5745b3c015381c27ddd4f41d3d2e15b55b3a304013a0b0f0ef4d9bf899",
+    "scripts/build_smart_dynamic_fixture.py": "ef46b43c1da567ad47e840f1a6eb4edd14d31b22d008f16b19b96d986d0c70bd"
+  },
+  "screens_sha256": {
+    "screens/automatic-summary-1280.png": "0af824eb8db1943390436e0ae179555a21dc5f384241e2bb063957ed88728ca8",
+    "screens/dynamic-preview-1280.png": "877bcdaf568c3877b347c0ec3a9aa49d13fe81b1456c3bfd8365881ecdac8c9f",
+    "screens/dynamic-result-1280.png": "1a3bf1c913bb614a2a07637858a5f0efd2ddcc296f6b4a3707ee46a78e8c6603",
+    "screens/smart-result-1440.png": "f9b90053dba88bde5ae59afe1e6f167cabfddc41603dec5dfd59f6454be10ee8"
+  },
+  "independent_proof": "independent.json"
+}

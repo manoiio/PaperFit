@@ -25,6 +25,10 @@ def validate_exclusions(pkg,data,types):
  if type(data) is not dict or any(type(n) is not str or n not in types or types[n] not in ('other','pending') or type(v) is not str or not v.strip() or len(v)>120 or any(ord(c)<32 for c in v) for n,v in data.items()):raise DemoError('材料排除必须绑定本文件有效段落、其他/待确认类型和简短原因')
  return deepcopy(data)
 
+def material_hint(t):
+ """Existing conservative code/data clue, never a confirmed material type."""
+ return bool(re.match(r'^\s*(?:代码|程序|数据|运行(?:结果|输出)|输出)\s*[:：]',t) or (re.match(r'^\s*(?:def\s+\w+\s*\(|class\s+\w+|#include|(?:for|while|if)\s*\(|return\b|print\s*\()',t) and len(re.findall(r'[:;{}()=]',t))>=2) or re.fullmatch(r'[\d.,\-+\s\t]+',t))
+
 def refine(rows,paragraphs=None):
  zone=None
  for r in rows:
@@ -36,7 +40,7 @@ def refine(rows,paragraphs=None):
   if compact=='致谢':zone='ack';r.update(suggested_type='ack_title',ambiguous=True,reason='独立致谢章节标记；格式默认未配置，须确认');continue
   if r['suggested_type'] in ('heading1','heading2','heading3','reference_title','abstract_cn_title','abstract_en_title') or compact in ('目录','结论','总结'):zone=None;continue
   if zone:
-   material=bool(re.match(r'^\s*(?:代码|程序|数据|运行(?:结果|输出)|输出)\s*[:：]',t) or (re.match(r'^\s*(?:def\s+\w+\s*\(|class\s+\w+|#include|(?:for|while|if)\s*\(|return\b|print\s*\()',t) and len(re.findall(r'[:;{}()=]',t))>=2) or re.fullmatch(r'[\d.,\-+\s\t]+',t))
+   material=material_hint(t)
    if r['special'] or not t or material:
     r.update(suggested_type='other',ambiguous=True,reason='附录/致谢的特殊或疑似代码数据材料，仅作排除线索；请明确保护，不套普通文字规则');continue
    if len(t)>20 and re.search('[。！？；]',t):r.update(suggested_type='appendix_text' if zone=='appendix' else 'ack_text',ambiguous=True,reason='章节内连续叙述候选；须明确确认普通文字，附录代码/数据/图表排除')

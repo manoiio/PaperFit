@@ -1,0 +1,26 @@
+{
+  "source": "phase23 synthetic author fixture",
+  "caption_numbers": {
+    "5": [
+      "图1-2",
+      "图1-1"
+    ],
+    "13": [
+      "图2-3",
+      "图2-1"
+    ]
+  },
+  "body_paragraph": 4,
+  "expected_body": "依据图1-1与图2-1，可比较合成结果。再次参见图1-1。",
+  "not_authorized": [
+    "positions",
+    "fonts",
+    "colors",
+    "styles",
+    "tables",
+    "images",
+    "fields",
+    "other paragraphs and parts"
+  ],
+  "word_com": "not run"
+}
