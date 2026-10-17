@@ -1,0 +1,54 @@
+{
+  "fixture": "samples/phase32/errors.docx",
+  "rule_fixture": "samples/phase25/repaired-rule-bundle.json",
+  "input_sha256": "9e946b67979e2358a54c5dd98e4c66aec781ea7d6a4d16ed9d7d33ff84936aac",
+  "edits": {
+    "font_cn": "楷体",
+    "font_size": 13.0,
+    "line_spacing": 2.0
+  },
+  "edited_sources": {
+    "font_cn": {
+      "kind": "user_confirmed",
+      "quote": "",
+      "location": null
+    },
+    "font_size": {
+      "kind": "user_confirmed",
+      "quote": "",
+      "location": null
+    },
+    "line_spacing": {
+      "kind": "user_confirmed",
+      "quote": "",
+      "location": null
+    }
+  },
+  "all_browser_rule_values_and_sources_equal": true,
+  "saved_project_draft_fields_equal": true,
+  "selected_key": "R05:paragraph=3:link=1:link_run=2",
+  "after_summary": {
+    "rule_count": 29,
+    "problem_count": 25,
+    "review_count": 44,
+    "review_findings": 37,
+    "review_notes": 7,
+    "pass_count": 21,
+    "not_applicable_count": 24,
+    "conclusion": "已覆盖检查发现问题",
+    "applicable_rule_count": 12
+  },
+  "all_text_and_unselected_parts_preserved": true,
+  "only_selected_size_attribute_changed": true,
+  "API_requests": 0,
+  "render_requests": 0,
+  "download_equivalence": {
+    "docx_bytes_equal": true,
+    "all_zip_members_equal": true,
+    "sha256": "53cd0f748234c4a89957ae1cbb403ac287d980299f09c353ee59d204841e04ec",
+    "bytes": 39412,
+    "zip_members": 20,
+    "scope": "same existing input, rules, scope and explicit choices; website layout only"
+  },
+  "result_package_docx_equal": true
+}

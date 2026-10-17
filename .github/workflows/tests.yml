@@ -30,3 +30,5 @@ jobs:
         run: |
           python scripts/prepare_problem_browser_fixture.py --output "$RUNNER_TEMP/paperfit38-long-draft.zip"
           python scripts/reproduce_reader_workflow.py --output "$RUNNER_TEMP/paperfit38-two" --keys R05:paragraph=4:run=2 R03:paragraph=5:run=1
+      - name: Stage39 original three-field reference and independent XML verification
+        run: python scripts/reproduce_object_rules_workflow.py --output "$RUNNER_TEMP/paperfit39-object-rules"

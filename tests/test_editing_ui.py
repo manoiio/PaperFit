@@ -15,7 +15,7 @@ class EditingUIAcceptance(TestCase):
  def select(self,label,value):next(x for x in self.at.selectbox if x.label==label).set_value(value).run();self.assertFalse(self.at.exception)
  def click(self,label):next(x for x in self.at.button if x.label==label).click().run();self.assertFalse(self.at.exception)
  def rule(self):
-  self.s.import_rule_bundle((ROOT/'samples/phase25/repaired-rule-bundle.json').read_bytes());show(self.at,1,rules=True);self.select('选择格式对象','正文');self.select('编辑字段','font_size')
+  self.s.import_rule_bundle((ROOT/'samples/phase25/repaired-rule-bundle.json').read_bytes());show(self.at,1,rules=True);self.select('选择格式对象','正文');next(x for x in self.at.radio if x.label=='编辑方式').set_value('高级：单字段编辑').run();self.select('编辑字段','font_size')
  def test_control_options_are_existing_validator_projection(self):
   for m in rb.MODULES:
    for n in rb.FIELDS[m]:

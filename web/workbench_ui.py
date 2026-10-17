@@ -97,46 +97,8 @@ def render_workbench(model,root):
    baseline=rb.flat(m,d['baseline']['modules'][m]) if d['baseline']['modules'][m] else {n:None for n in fs}
    active=rb.flat(m,current['modules'][m]) if current['modules'][m] else {n:None for n in fs}
    opts=[n for n,f in fs.items() if group(m,n)==obj and (show_missing or baseline[n] is not None or f['candidate'] or f['mode']=='manual')]
-   dirty_key='wb-unsaved-'+task_key+'-'+g
-   dirty=st.session_state.setdefault(dirty_key,[])
-   if opts:
-    n=st.selectbox('编辑字段',opts,format_func=lambda n:label(m,n),key='wb-field-'+g+'-'+m+'-'+obj)
-    f=fs[n];ident=m+'.'+n
-    def touch():
-     if ident not in st.session_state[dirty_key]:st.session_state[dirty_key]=st.session_state[dirty_key]+[ident]
-    saved=active[n] if f['mode']=='keep' else baseline[n] if f['mode']=='imported' else None if f['mode']=='disabled' else f['value']
-    with st.container(border=True,key='wb-edit-form-'+g+'-'+m+'-'+n):
-     st.markdown('**'+obj+' · '+label(m,n)+'**')
-     a,b=st.columns(2)
-     a.write('当前生效：**'+text(active[n])+'**')
-     b.write('已保存草稿：**'+('尚未决定' if f['mode']=='choose' else text(saved))+'**')
-     origin=current['provenance'][m][n]['kind'] if current['provenance'][m] else 'not_enabled'
-     draft_origin=ORIGINS['user_confirmed'] if f['mode']=='manual' else ORIGINS['ai_extracted'] if f['mode']=='ai' else ORIGINS['not_enabled'] if f['mode']=='disabled' else ORIGINS[origin] if f['mode']=='keep' else ORIGINS[d['baseline']['provenance'][m][n]['kind']] if f['mode']=='imported' and d['baseline']['provenance'][m] else '未提及 / 尚未决定'
-     st.caption('生效来源：'+ORIGINS[origin]+' · 草稿来源：'+draft_origin+' · '+DECISIONS[f['mode']])
-     modes=['manual','keep','disabled']+(['ai'] if f['candidate'] else [])
-     mode=st.selectbox('此字段采用方式',modes,index=modes.index(f['mode']) if f['mode'] in modes else 0,format_func=DECISIONS.get,key='wb-edit-mode-'+g+'-'+m+'-'+n,on_change=touch)
-     seed=saved if f['mode']!='choose' else baseline[n]
-     val=value_control(m,n,seed,'wb-control-'+g+'-'+m+'-'+n,touch) if mode=='manual' else None
-     if mode!='manual':st.caption('保存后采用：'+('不检查' if mode=='disabled' else text(active[n]) if mode=='keep' else text(f['candidate']['value'])))
-     st.caption('正在编辑 · 尚未保存到草稿' if ident in dirty else '已经应用；下次修改仍须保存草稿并整体应用。' if w['origin']=='applied' else '已保存草稿 · 尚未应用' if f['mode']!='choose' else '尚未决定；显示参考值不会自动保存。')
-     def edit():
-      model.workbench_edit(m,n,mode,val)
-      st.session_state[dirty_key]=[x for x in st.session_state[dirty_key] if x!=ident]
-      st.session_state['wb-last-saved-'+task_key]=obj+' · '+label(m,n)
-     if st.button('保存本字段到草稿',disabled=mode=='manual' and val is None):guard(edit);st.rerun()
-     if f['candidate']:st.caption('提取依据：'+f['candidate']['quote']+' · '+f['candidate']['location'])
-     with st.expander('字段ID、原值与来源技术记录'):
-      st.write({'字段ID':n,'单位':rb.FIELDS[m][n][2],'当前来源':current['provenance'][m][n] if current['provenance'][m] else None,'已保存草稿':f})
-   else:st.info('此对象没有已配置属性；勾选“编辑未提及或保留字段”可明确设置，不自动补值。')
-   if st.session_state[dirty_key]:st.warning('还有未保存的控件编辑：'+ '、'.join(friendly_error(x) for x in st.session_state[dirty_key])+'。请返回对应字段保存，或明确放弃这些编辑后再整体应用。')
-   if st.session_state[dirty_key] and st.button('放弃未保存控件编辑（保留已保存草稿）'):
-    # Only editor widgets, never business configuration or authorization.
-    for path in st.session_state[dirty_key]:
-     module,field=path.split('.',1)
-     for prefix in ('wb-control-','wb-edit-mode-'):
-      key=prefix+g+'-'+module+'-'+field
-      st.session_state.pop(key,None);st.session_state.pop(key+'-unit',None)
-    st.session_state[dirty_key]=[];st.rerun()
+   from .object_rules_ui import render_object_editor
+   dirty_key,editor_epoch=render_object_editor(model,m,obj,opts,g,active,baseline,current,text,ORIGINS)
    can=False
    try:
     proposed=model.proposed_rule_bundle();can=True
@@ -149,7 +111,7 @@ def render_workbench(model,root):
     st.markdown('**整体差异 · '+str(len(diffs))+'项**');st.dataframe(diffs,hide_index=True,width='stretch',height=220)
     with st.expander('拟应用最终完整配置（包括未启用）'):st.dataframe(rows(proposed),hide_index=True,width='stretch',height=320)
    except Exception as e:st.warning('尚不能应用：'+friendly_error(public_error(e)))
-   ack=st.checkbox('已核对整体差异与最终配置；仅应用规则，论文范围必须另行确认',key='wb-apply-ack-'+g+'-'+rb.digest({'draft':d,'rules':model.rules_hash})[:20])
+   ack=st.checkbox('已核对整体差异与最终配置；仅应用规则，论文范围必须另行确认',key='wb-apply-ack-'+g+'-'+rb.digest({'draft':d,'rules':model.rules_hash,'editor_epoch':editor_epoch})[:20])
    st.button('核对并应用整份规则',disabled=not can or not ack or w['origin']=='applied' or bool(st.session_state[dirty_key]),on_click=lambda:guard(lambda:model.apply_workbench(acknowledged=True)),type='primary')
   if model.template_error:st.error(friendly_error(model.template_error))
   if st.button('准备完整规则包（不包含论文）'):guard(lambda:st.session_state.update(wb_rule_download=model.rule_bundle_download()))

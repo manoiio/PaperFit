@@ -1,0 +1,119 @@
+{
+  "phase": 39,
+  "date": "2026-10-17",
+  "baseline": {
+    "branch": "main",
+    "commit": "150f13e",
+    "tests": 1221,
+    "worktree": "clean"
+  },
+  "environment": {
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "final_tests": {
+    "count": 1227,
+    "seconds": 199.688,
+    "result": "OK",
+    "clean_source_directory": true,
+    "no_historical_work_outputs_required": true,
+    "live_executable_sources_equal_test_snapshot": true,
+    "source_sha256": {
+      ".github/workflows/tests.yml": "f8d5930cd71f64eb637f568af7ad445563c765a0889a3c7ebf81cb9f349cbbd3",
+      "web/workbench_ui.py": "415dbde5c965f3e788b3312ceca30e60d64f5198d576cbac0a67dcd11fa257c0",
+      "web/workflow_ui.py": "2e09bc34d868dfe66b52bf168956595b2b041ff38dc166a0e526a3a3dc212998",
+      "web/object_rules_ui.py": "48e3a4f8e022bec7826d66c62dd08f8e1a927e5f21f28826a6b1a95005b8a509",
+      "tests/test_editing_ui.py": "50bb9c63eeaac2c7bb04c5a8f1ee25e5b52f576bd8e23d718534f140e00baaba",
+      "tests/test_workbench.py": "9e033101c00eefc184f8584ec1cb47995c37a4a553ecfda9fc13a14e906a4ad6",
+      "tests/test_workflow_ui.py": "532a6b6355d56e32e2a1441038e461cb826223abcfa87ad918dfbe8529a54c25",
+      "tests/test_object_rules_ui.py": "629134653a5140a2f3988e1a58d6c7cee046c007a8443eb6427d8c8599c3b721",
+      "scripts/reproduce_object_rules_workflow.py": "7b13da7b98a22153e2099d7759cf6fa2e5cd5348a07e9ff920178a1c4cbcf31f"
+    }
+  },
+  "targeted_tests": {
+    "final_binding_and_object_state": {
+      "count": 6,
+      "seconds": 14.892,
+      "result": "OK"
+    },
+    "widget_reset_and_original_editor": {
+      "count": 16,
+      "seconds": 21.781,
+      "result": "OK"
+    }
+  },
+  "browser": {
+    "engine": "Chrome via Playwright CLI",
+    "windows": [
+      [
+        1280,
+        720
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "private_session_state_injection": false,
+    "existing_document": "samples/phase32/errors.docx",
+    "existing_rule_bundle": "samples/phase25/repaired-rule-bundle.json",
+    "cases_passed": [
+      "three body values saved in one object submission; active rules unchanged until explicit whole apply",
+      "other-object unsaved edits retained; invalid group refused without partial fields",
+      "disabled/keep/discard controls reseeded; missing values remain empty",
+      "saved project restored after scoped service restart; UI-only buffer not restored",
+      "whole apply invalidated old check, selection and rehearsal; real check/fix/rehearsal/adopt/download completed",
+      "separate browser contexts isolated; package reimport reset old controls",
+      "historical public mock candidate adopted with original source; no real AI call"
+    ],
+    "final_values": {
+      "font_cn": "楷体",
+      "font_size": 13,
+      "line_spacing": 2
+    },
+    "final_selected_key": "R05:paragraph=3:link=1:link_run=2",
+    "remaining_problem_count": 25,
+    "remaining_review_count": 44,
+    "overflow_observed": false,
+    "early_locator_timeouts_counted_as_pass": false,
+    "mock_candidate_source": "existing phase24 public synthetic specification and mocked response; historical fixture, not live API"
+  },
+  "operations": {
+    "task": "edit and save three body requirements, excluding common object selection, within-control clicks and whole apply",
+    "original": {
+      "value_edits": 3,
+      "field_switches": 2,
+      "save_submissions": 3,
+      "total": 8
+    },
+    "object_editor": {
+      "value_edits": 3,
+      "field_switches": 0,
+      "save_submissions": 1,
+      "total": 4
+    },
+    "no_end_to_end_speed_claim": true
+  },
+  "independent_verification": "independent.json",
+  "AI_requests": 0,
+  "render_requests": 0,
+  "new_Word_or_DOCX_visual_acceptance": false,
+  "visual_boundary": "actual output byte-identical to original legal path; screenshots validate the web UI only",
+  "screenshots_sha256": {
+    "screens/after-object-1440.png": "bec3a943615be75aed46d04d2de7f4b42974eb3bb1848c7cd5d22bbb8a4559cb",
+    "screens/before-object-1280.png": "194a62281d18703674f5f027f8ebd7b264c06d3de85ef6f8ed2e897d7bf955eb",
+    "screens/before-object-1440.png": "224b1a767d8e5b4bb98c06a0d91d56ae4ec1bd6f1e2258cf4038fb89538ea199",
+    "screens/group-error-1440.png": "c43bb93d1533e34ba6805ec5ff10a9de6b24079466185dd0bd67085f2d0f4b91",
+    "screens/three-saved-1280.png": "080dfe21d7f39906ce66fb885b14660169afe8fc3cd6d6e0dc3578ab0f59a26d",
+    "screens/three-saved-1440.png": "87e1c6e4369b719cd461309abc7e10be7001a979b446a01ce1e4b4c5d7086545",
+    "screens/three-unsaved-1280.png": "84718931a0bcedfe996ede55fa40ec9340267b556908edbeec4a926b43b4981e",
+    "screens/three-unsaved-1440.png": "a79316344467bccfe41a07e860fdfebb7aaf4b8be511a1e65127aa048f47f97f"
+  },
+  "remote_CI": "verify exact new commit after push; not represented by local tests",
+  "clean_reproduction": {
+    "repository_links_and_fixture_audit": "OK",
+    "original_three_field_workflow": "OK; optional browser comparisons run separately in independent.json",
+    "single_rehearsal_workflow": "OK; direct/adopted bytes equal; adoption fix calls 0",
+    "two_step_plan_workflow": "OK; manual/plan proof preserved; adoption fix calls 0"
+  }
+}

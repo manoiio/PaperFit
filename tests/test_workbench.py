@@ -129,6 +129,7 @@ class WorkbenchTests(unittest.TestCase):
   draft(self.s);app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state['workflow']=self.s;app.run();show(app,1,rules=True);self.assertFalse(app.exception)
   next(x for x in app.selectbox if x.label=='查看与编辑模块').set_value('front');app.run()
   next(x for x in app.selectbox if x.label=='选择格式对象').set_value('封面论文标题');app.run()
+  next(x for x in app.radio if x.label=='编辑方式').set_value('高级：单字段编辑').run()
   next(x for x in app.selectbox if x.label=='编辑字段').set_value('cover_title__font_size');app.run()
   next(x for x in app.selectbox if x.label=='此字段采用方式').set_value('manual');app.run()
   next(x for x in app.number_input if x.label=='字号（磅 / pt）').set_value(24.)
