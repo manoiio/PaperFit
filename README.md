@@ -15,13 +15,15 @@
 
 表格结构请求现在保留最多3行×3单元格、每格60字符的片段及前后/章节信息。证据必须定位到具体发送片段。隐藏、身份、代码、复杂及人工保护内容不因补充上下文被放开；待查看与下载不请求API，脱敏不保证彻底匿名。
 
-**第44阶段实网验收未通过：两次合成请求均收到响应，但分别因结构字段及来源依据校验被拒绝；没有采用AI结果，没有证明分类或操作收益。**扩展字段的受控浏览器处理、原合法路径同字节及独立XML核对已通过，不能代替实网通过。后续未追加付费试验。详见[第44阶段记录](docs/acceptance/phase44.md)与[样本及证据](samples/phase44/README.md)。[第43阶段历史调用记录缺口](docs/acceptance/phase43.md)仍保持未知，不补造账目。
+**第45阶段已修通真实API到下载：原16字段补充与普通表格结构建议均实际参与排版。**模型返回短字段/来源/证据ID，本地补齐准确来源并执行原严格校验，不让用户修JSON。共3次合成实网请求；一次结构响应的多证据ID先被隔离，经零API重放定位和逐ID适配后验证通过。无补充不重复解析学校规则，不自动重试。两个浏览器下载均与同规则、范围、选择的原合法路径逐字节一致。短标题层级和用途不明的小表仍集中询问，不能以协议通过代表分类准确或全文合格。详见[第45阶段记录](docs/acceptance/phase45.md)与[可公开重放及文件证据](samples/phase45/README.md)。第44阶段未保存原响应，其历史失败仍只按[当时记录](docs/acceptance/phase44.md)描述；[第43阶段历史调用缺口](docs/acceptance/phase43.md)保持未知。
 
 没有新增格式规则、修正算法、Word COM或目录/域/真实页码刷新能力。
 
 **可选动态处理默认关闭**：在单文档扩展模式，明确声明相关题注范围完整后，可预演普通题注按章连续编号及唯一正文纯文本引用同步，再明确采用。只改授权数字，不改标题、run格式、图表或字段；重复目标、不可靠章节和复杂关联组不执行。**Windows Word COM适配及真实REF/PAGEREF、分页、目录页码更新本版尚未实现/验收**，当前macOS准确降级为需在Word更新并复核，不写`updateFields`冒充完成。
 
 第四十阶段快捷/动态事务及真实浏览器的历史证据见[第四十阶段验收](docs/acceptance/phase40.md)与[文件索引](samples/phase40/README.md)。旧CLI、普通格式白名单和旧项目默认行为保持；动态是独立精确文本事务，不放松原格式保护。LibreOffice预览不是Word分页验收，0格式问题仍不等于全文合格。全量工作流现为**workflow_dispatch手动触发**，本阶段不触发远端全量，以本地实际结果报告。
+
+原始响应只在显式公开合成调试中保留，默认不保存论文摘录或完整响应。离线诊断可用 `python scripts/reproduce_api_protocol.py --output /tmp/paperfit45-replay`，硬拦截网络，区分实网、已收响应重放和模拟。
 
 ## 安装与运行
 
@@ -36,7 +38,7 @@ python3 -m venv .venv
 .venv/bin/python -m streamlit run app.py --server.address 127.0.0.1 --server.port 8501
 ```
 
-访问 http://127.0.0.1:8501 。Windows可将`.venv/bin/python`替换为`.venv\Scripts\python.exe`。本轮验收及环境见[阶段记录](docs/acceptance/phase44.md)，未实际验证的平台不宣称通过。
+访问 http://127.0.0.1:8501 。Windows可将`.venv/bin/python`替换为`.venv\Scripts\python.exe`。本轮验收及环境见[阶段记录](docs/acceptance/phase45.md)，未实际验证的平台不宣称通过。
 
 **源码仓库无需本机历史产物即可运行全部自动测试。** 必要合成文件在[tests/fixtures/history](tests/fixtures/history/README.md)，日常测试输出使用独立临时目录。测试不调用付费API，模拟预览不证明视觉排版；真实渲染、浏览器和Word记录分别报告。`work/`、`outputs/`、学校PDF、组员资料、真实论文和本机`.env`不进Git，不要求从别人机器复制这些目录。
 

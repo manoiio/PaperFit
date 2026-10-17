@@ -108,7 +108,7 @@ def run(model,prepared,store,*,transport=None,config=None):
         return result
     except Exception as exc:
         # Never retain raw excerpt/response, credentials, exception internals or raw server error.
-        store.update(status='failed',elapsed_seconds=round(time.monotonic()-started,3))
+        store.update(status='failed',elapsed_seconds=round(time.monotonic()-started,3),diagnostics=deepcopy(getattr(exc,'diagnostics',[])))
         raise DemoError(str(exc) if isinstance(exc,DemoError) else 'AI结构请求未完成；未自动重试，本地流程仍可继续') from None
 
 
@@ -118,8 +118,14 @@ def merge(model,prepared,result):
     # Validate again from this exact transmitted request; don't trust cached accepted flags.
     from ai.structure import validate
     keys=('id','role','evidence','reason')+(('evidence_location',) if prepared['request']['version']=='structure-v3-context' else ())
-    raw={'suggestions':[{k:r[k] for k in keys} for r in result['suggestions']]}
-    checked=validate(raw,prepared['request']);proposal=suggest(model);types=proposal['draft']['paragraph_types']
+    if prepared['request']['version']=='structure-v3-context':
+        from ai.structure_ids import adapt
+        if 'semantic_response' not in result:raise DemoError('缺少本次语义协议原始建议；不能重新绑定旧缓存')
+        checked=adapt(result['semantic_response'],prepared['request'])
+    else:
+        raw={'suggestions':[{k:r[k] for k in keys} for r in result['suggestions']]}
+        checked=validate(raw,prepared['request'])
+    proposal=suggest(model);types=proposal['draft']['paragraph_types']
     for row in checked:
         if row['accepted']:
             if row['id'].startswith('t:'):proposal['draft'].setdefault('table_types',{})[row['id'][2:]]=row['role']
@@ -130,7 +136,7 @@ def merge(model,prepared,result):
     proposal['preflight']=stage.scope_preflight()
     proposal['excluded']=[r for r in proposal['excluded'] if types[str(r['paragraph'])] in ('other','pending')]
     proposal['structure_ai']={'receipt':deepcopy(result['receipt']),'accepted':sum(r['accepted'] for r in checked),
-                              'rejected':sum(not r['accepted'] for r in checked),'omitted':len(prepared['request']['candidates'])-len(checked),
+                              'rejected':sum(not r['accepted'] for r in checked),'omitted':len({c['id'] for c in prepared['request']['candidates']}-{r['id'] for r in checked}),
                               'rows':checked,'remaining_budget':prepared['remaining'],'protected':len(prepared['protected']),
                               'local_included':sum(t not in ('other','pending') for n,t in suggest(model)['draft']['paragraph_types'].items())}
     proposal['limits'][-1]='本次AI仅提供已展示候选的结构建议；用户接受后才确认范围。格式要求仍来自当前本地规则，结构保护和未纳入模块不变。'

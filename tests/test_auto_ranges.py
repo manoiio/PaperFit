@@ -26,7 +26,7 @@ class AutoRangeAcceptance(TestCase):
   if p['request']['version']=='structure-v3-context':
    for row,c in zip(rows,p['request']['candidates']):
     row['evidence_location']=c['fragments'][0]['id'] if c.get('kind')=='table' else 'text';row['evidence']=c['fragments'][0]['text'] if c.get('kind')=='table' else c['text']
-  return run(s,p,store,transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'suggestions':rows})}}]}),config=Settings('synthetic-placeholder'))
+  return run(s,p,store,transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'version':'structure-ids-v1','suggestions':[{k:(r['evidence_location'] if k=='evidence' else r[k]) for k in ('id','role','evidence','reason')} for r in rows]} if p['request']['version']=='structure-v3-context' else {'suggestions':rows})}}]}),config=Settings('synthetic-placeholder'))
  def test_combined_budget_exact_ids_and_private_complex_not_sent(self):
   s=self.session();p=prepare(s,include_tables=True);self.assertEqual({c['id'] for c in p['request']['candidates']},{'p:2','t:2'})
   self.assertNotIn('20260001234',json.dumps(p['request']));self.assertEqual(p['auto_ranges']['tables'],{'1':'cover','2':'pending','3':'pending'});self.assertEqual(p['auto_ranges']['note_counts'],{'footnote':3,'endnote':3})

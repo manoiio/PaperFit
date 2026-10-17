@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from core.package import NS,q,sha256
 from web.session import WebSession
 
-def verify(pack,output):
+def verify(pack,output,source_label="real API rejected, explicit table decisions then original local engines"):
  source=ROOT/'samples/phase44/errors.docx'
  with zipfile.ZipFile(source) as z:a={n:z.read(n) for n in z.namelist()}
  with zipfile.ZipFile(pack) as z:bundle={n:z.read(n) for n in z.namelist()}
@@ -48,7 +48,7 @@ def verify(pack,output):
   s=WebSession(tmp);s.set_mode('academic');s.load(source.read_bytes(),'合成.docx');s.set_types(scope['paragraph_types']);s.set_table_enabled(True);s.set_table_types(scope['table_scope']['table_types']);s.enable_notes(True)
   notes=deepcopy(scope['note_scope']);notes.update(input_sha256=s.inventory['input_sha256'],confirmed=False);s.edit_notes(notes);s.confirm_tables();s.confirm_notes();assert s.confirm_and_check(),s.error
   s.set_selection([f['key'] for f in s.eligible() if f['rule_id'].startswith('R') and f['rule_id']!='R35']);assert s.generate(),s.error;assert raw==s.downloads()['fixed.docx']
- result={'source':'real API rejected, explicit table decisions then original local engines','sha256':sha256(raw),'original_legal_bytes_equal':True,'independent':{'text_and_order_equal':True,'unselected_ZIP_parts_equal':True,'cover_nested_ambiguous_code_tables_exact':True,'content_table_selected_font_size_only':True,'system_notes_and_markers_fields_links_exact':True,'excluded_top_paragraphs_exact':True},'remaining_note':'Independent oracle covers named protections; existing original transaction validates the complete format whitelist.'}
+ result={'source':source_label,'sha256':sha256(raw),'original_legal_bytes_equal':True,'independent':{'text_and_order_equal':True,'unselected_ZIP_parts_equal':True,'cover_nested_ambiguous_code_tables_exact':True,'content_table_selected_font_size_only':True,'system_notes_and_markers_fields_links_exact':True,'excluded_top_paragraphs_exact':True},'remaining_note':'Independent oracle covers named protections; existing original transaction validates the complete format whitelist.'}
  Path(output).write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps(result,ensure_ascii=False,indent=2))
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('package');p.add_argument('--output',required=True);a=p.parse_args();verify(a.package,a.output)
+ p=argparse.ArgumentParser();p.add_argument('package');p.add_argument('--output',required=True);p.add_argument('--source-label',default='real API rejected, explicit table decisions then original local engines');a=p.parse_args();verify(a.package,a.output,a.source_label)

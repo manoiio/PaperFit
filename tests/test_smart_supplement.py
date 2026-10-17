@@ -53,7 +53,7 @@ class SmartSupplementAcceptance(TestCase):
    for c in p['request']['candidates']:
     table=c.get('kind')=='table';f=c['fragments'][0] if table else {'id':'text','text':c['text']}
     rows.append({'id':c['id'],'role':'content' if c['id']=='t:2' else 'pending','evidence':f['text'],'evidence_location':f['id'],'reason':'独立可见证据模拟'})
-   return run(s,p,store,config=Settings('synthetic'),transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'suggestions':rows})}}]}))
+   return run(s,p,store,config=Settings('synthetic'),transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'version':'structure-ids-v1','suggestions':[{k:(r['evidence_location'] if k=='evidence' else r[k]) for k in ('id','role','evidence','reason')} for r in rows]} if p['request']['version']=='structure-v3-context' else {'suggestions':rows})}}]}))
   s=self.session();old=s.rules_hash;st={};calls=[]
   def once(text):calls.append(1);return parser(text)
   start(s,st,TEXT,spec_parser=once,structure_runner=runner);self.assertEqual(st['status'],'waiting',st.get('error'));self.assertEqual(s.rules_hash,old);self.assertFalse(s.history)

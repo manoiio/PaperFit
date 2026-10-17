@@ -17,7 +17,10 @@ def main():
  def mocked(text,**kwargs):
   if text!=expected:raise DemoError('受控夹具只处理指定公开补充；没有网络请求')
   return original(text,transport=lambda *_:response,config=Settings('synthetic-only'))
- spec.parse_requirements=mocked;raw_open=OpenerDirector.open
+ spec.parse_requirements=mocked
+ import ai.semantic_spec as semantic
+ semantic.parse_requirements=mocked  # Historical authored mock; explicit legacy compatibility.
+ raw_open=OpenerDirector.open
  def offline(self,request,*a,**kw):
   url=request.full_url if hasattr(request,'full_url') else str(request)
   if 'api.deepseek.com' in url:raise AssertionError('All paid HTTP blocked in controlled browser acceptance')

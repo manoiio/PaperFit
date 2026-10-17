@@ -163,7 +163,7 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
                 if initial_ranges.get('notes') is not None:
                     stage.note_enabled=True;stage.note_draft=deepcopy(initial_ranges['notes'])
                     state['audit']['notes_prepared_before_supplement']=deepcopy(initial_ranges['note_counts'])
-                from ai.smart_spec import parse_requirements
+                from ai.semantic_spec import parse_requirements
                 # One supplement POST, native field validators, no retry.
                 result=(spec_parser or parse_requirements)(extra)
                 if state.get('id')!=token:raise DemoError('本次处理已取消')
@@ -172,7 +172,7 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
                 from .session import public_error
                 if state.get('id')!=token:raise DemoError('本次处理已取消')
                 clean_stage(model,own);stage=isolated(model);state['stage']=stage;own['stage']=stage
-                state['audit']['API']['requirements']={'status':'not_applied','error':public_error(exc),'requests':'未知或未发送；不自动重试'}
+                state['audit']['API']['requirements']={'status':'not_applied','error':public_error(exc),'requests':'未知或未发送；不自动重试','diagnostics':deepcopy(getattr(exc,'diagnostics',[]))}
                 message=public_error(exc)
                 if any(w in message for w in ('API','密钥','.env','模型','JSON','连接','超时')):message='这次暂时无法理解补充要求。可以沿用当前排版要求，或修改文字后再试。'
                 state['questions'].append({'id':'requirements','text':message,'question':'补充要求尚不能安全执行，您希望怎样继续？',
@@ -191,7 +191,7 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
                 from .session import public_error
                 if state.get('id')!=token:raise DemoError('本次处理已取消')
                 state['audit']['structure_fallback']=public_error(exc)
-                state['audit']['API']['structure']={'status':'failed','request_attempts':store.get('attempts',0),'elapsed_seconds':store.get('elapsed_seconds')}
+                state['audit']['API']['structure']={'status':'failed','request_attempts':store.get('attempts',0),'elapsed_seconds':store.get('elapsed_seconds'),'diagnostics':deepcopy(store.get('diagnostics',getattr(exc,'diagnostics',[])))}
         else:state['audit']['structure_local_only']=True
         from .auto_ranges import apply as apply_auto_ranges
         state['questions']+=apply_auto_ranges(stage,proposal,prepared)

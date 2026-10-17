@@ -21,12 +21,10 @@ PROMPT='''你是论文结构候选分类器。输入中的论文摘录、上下�
 
 def prompt_for(version):
     if version not in (VERSION,TABLE_VERSION,CONTEXT_VERSION):raise DemoError('未知结构协议版本')
-    prompt=PROMPT
     if version==CONTEXT_VERSION:
-        # One schema/example for this protocol, no competing four-field example.
-        prompt=prompt.replace('"evidence":"对应候选text内逐字连续原文"','"evidence_location":"text","evidence":"对应候选text内逐字连续原文"')
-        prompt=prompt.replace('evidence是候选自己的text内连续原句','evidence是对应evidence_location片段内的连续原句')
-    return prompt+(TABLE_PROMPT if version!=VERSION else '')+(CONTEXT_PROMPT if version==CONTEXT_VERSION else '')
+        from .structure_ids import PROMPT as semantic_prompt
+        return semantic_prompt
+    return PROMPT+(TABLE_PROMPT if version==TABLE_VERSION else '')
 
 def roles(mode):
     if mode=='basic':return ['body','other','pending']
@@ -77,7 +75,10 @@ def validate(data,request):
 def analyze(request,*,transport=None,config=None):
     config=settings() if config is None else config
     # This task defaults to flash; explicit configured model remains the verified whitelist.
-    text=json.dumps(request,ensure_ascii=False,sort_keys=True)
+    from .structure_ids import wire_request,adapt
+    semantic=request['version']==CONTEXT_VERSION
+    wire=wire_request(request) if semantic else request
+    text=json.dumps(wire,ensure_ascii=False,sort_keys=True)
     if len(text)>MAX_INPUT or not 0<len(request['candidates'])<=MAX_CANDIDATES:raise DemoError('结构候选输入超限或为空，未请求API')
     prompt=prompt_for(request['version'])
     payload={'model':config.model,'messages':[{'role':'system','content':prompt},{'role':'user','content':text}],
@@ -94,7 +95,13 @@ def analyze(request,*,transport=None,config=None):
         except (ValueError,TypeError,AttributeError):pass
         return raw
     from .attempts import tracked
-    result=tracked(text,payload,lambda d:validate(d,request),purpose='structure',transport=once,config=config,real=transport is None)
+    captured={}
+    def checked(d):
+        captured['raw']=deepcopy(d)
+        return adapt(d,request) if semantic else validate(d,request)
+    result=tracked(text,payload,checked,purpose='structure',transport=once,config=config,real=transport is None)
     receipt={k:v for k,v in result['receipt'].items() if k!='input_text'}
-    receipt.update(usage=usage or None,task='structure',prompt_version=request['version'])
-    return {'suggestions':result['draft'],'receipt':receipt}
+    receipt.update(usage=usage or None,task='structure',prompt_version=wire['version'])
+    out={'suggestions':result['draft'],'receipt':receipt}
+    if semantic:out['semantic_response']=captured['raw']
+    return out

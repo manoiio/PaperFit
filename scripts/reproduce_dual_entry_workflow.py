@@ -100,7 +100,7 @@ def main(output,browser_zip=None):
         if p['request']['version']=='structure-v3-context':
             for row,c in zip(rows,p['request']['candidates']):
                 row['evidence_location']=c['fragments'][0]['id'] if c.get('kind')=='table' else 'text';row['evidence']=c['fragments'][0]['text'] if c.get('kind')=='table' else c['text']
-        return run(s,p,store,config=Settings('synthetic-placeholder'),transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'suggestions':rows})}}]}))
+        return run(s,p,store,config=Settings('synthetic-placeholder'),transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'version':'structure-ids-v1','suggestions':[{k:(r['evidence_location'] if k=='evidence' else r[k]) for k in ('id','role','evidence','reason')} for r in rows]} if p['request']['version']=='structure-v3-context' else {'suggestions':rows})}}]}))
     def legal(types,tables,notes):
         s=session('legal-'+str(time.time_ns()));s.set_types(types);s.set_table_enabled(True);s.set_table_types(tables);s.enable_notes(True);notes=deepcopy(notes);notes.update(input_sha256=s.inventory['input_sha256'],confirmed=False);s.edit_notes(notes);s.confirm_tables();s.confirm_notes();assert s.confirm_and_check(),s.error
         selected=[f['key'] for f in s.eligible() if f['rule_id'].startswith('R') and f['rule_id']!='R35'];s.set_selection(selected);assert s.generate(),s.error;return s

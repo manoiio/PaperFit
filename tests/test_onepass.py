@@ -25,7 +25,7 @@ class OnePassAcceptance(TestCase):
   if p['request']['version']=='structure-v3-context':
    for row,c in zip(rows,p['request']['candidates']):
     row['evidence_location']=c['fragments'][0]['id'] if c.get('kind')=='table' else 'text';row['evidence']=c['fragments'][0]['text'] if c.get('kind')=='table' else c['text']
-  return run(m,p,store,transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'suggestions':rows})}}]}),config=Settings('synthetic-placeholder'))
+  return run(m,p,store,transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'version':'structure-ids-v1','suggestions':[{k:(r['evidence_location'] if k=='evidence' else r[k]) for k in ('id','role','evidence','reason')} for r in rows]} if p['request']['version']=='structure-v3-context' else {'suggestions':rows})}}]}),config=Settings('synthetic-placeholder'))
  def parser(self,text):return {'draft':{'font_size':{'value':14,'quote':'正文改为四号'},'line_spacing':{'value':2,'quote':'正文改为四号、2倍行距'},'unsupported':[]},'receipt':{'kind':'mock_api','model':'deepseek-flash','timestamp_utc':'2026-10-17T00:00:00+00:00','request_count':1}}
  def test_no_candidate_three_actions_idempotent_and_old_bytes(self):
   s=self.session(fixture='samples/phase31/errors.docx');st={}

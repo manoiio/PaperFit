@@ -19,7 +19,7 @@ class ContextAcceptance(TestCase):
  def test_rows_columns_anchors_and_unambiguous_local_not_sent(self):
   s=self.model();p=prepare(s,include_tables=True);by={c['id']:c for c in p['request']['candidates']};t=by['t:2']
   from ai.structure import prompt_for
-  self.assertNotIn('\"role\":\"body\",\"evidence\":',prompt_for(CONTEXT_VERSION));self.assertIn('evidence_location',prompt_for(CONTEXT_VERSION))
+  self.assertNotIn('\"role\":\"body\",\"evidence\":',prompt_for(CONTEXT_VERSION));self.assertIn('evidence_fragments',prompt_for(CONTEXT_VERSION))
   self.assertEqual(p['request']['version'],CONTEXT_VERSION);self.assertNotIn('p:7',by);self.assertNotIn('p:11',by);self.assertEqual(p['reliable_local_roles'],{'7':'heading1','11':'heading1'})
   self.assertEqual(t['columns'],3);self.assertEqual(t['rows'],3);self.assertEqual(t['fragments'][4]['id'],'r2:c2');self.assertEqual(t['fragments'][4]['text'],'12.8');self.assertEqual(t['anchors'][-1]['text'],'1 实验设计')
   self.assertEqual([x['position'] for x in t['context']],['before','before','after']);self.assertTrue(by['p:2']['context'][0]['withheld']);self.assertNotIn('姓名',json.dumps(p['request'],ensure_ascii=False));self.assertNotIn('print(data)',json.dumps(p['request']));self.assertEqual(prepare(s)['request']['version'],'structure-v1')
@@ -49,9 +49,9 @@ class ContextAcceptance(TestCase):
    else:r.font.hidden=True
    b=BytesIO();d.save(b);s.load(b.getvalue(),'合成.docx');req=prepare(s,include_tables=True)['request'];self.assertFalse(any(x.get('kind')=='table' for x in req['candidates']));self.assertNotIn('PRIVATE_HIDDEN_CELL',json.dumps(req))
  def test_changed_prompt_and_file_cannot_reuse(self):
-  s=self.model();p=prepare(s,include_tables=True);raw=json.dumps({'choices':[{'finish_reason':'stop','message':{'content':'{"suggestions":[]}'}}]})
+  s=self.model();p=prepare(s,include_tables=True);raw=json.dumps({'choices':[{'finish_reason':'stop','message':{'content':'{"version":"structure-ids-v1","suggestions":[]}'}}]})
   result=run(s,p,{},config=Settings('synthetic'),transport=lambda *_:raw)
-  with patch('ai.structure.CONTEXT_PROMPT','changed'):
+  with patch('ai.structure_ids.PROMPT','changed'):
    with self.assertRaises(DemoError):merge(s,p,result)
   s.input_path.write_bytes(b'changed')
   with self.assertRaises(DemoError):merge(s,p,result)

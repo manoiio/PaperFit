@@ -1,0 +1,20 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "message": {
+        "content": "{\"version\":\"structure-ids-v1\",\"suggestions\":[{\"id\":\"p:2\",\"role\":\"other\",\"evidence\":\"text\",\"reason\":\"脱敏演示说明，不属论文正文内容\"},{\"id\":\"p:9\",\"role\":\"heading3\",\"evidence\":\"text\",\"reason\":\"位于编号标题下，短标题用于组织实验结果讨论，层级定为h3\"},{\"id\":\"t:2\",\"role\":\"content\",\"evidence\":\"r1:c1,r1:c2,r1:c3,r2:c1,r2:c2,r2:c3\",\"reason\":\"含算法及运行时间、准确率数据，属论文实验内容表\"},{\"id\":\"t:4\",\"role\":\"pending\",\"evidence\":\"r1:c1,r1:c2\",\"reason\":\"仅两个占位标签，用途不明，不猜测\"}]}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 2318,
+    "completion_tokens": 170,
+    "total_tokens": 2488,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 2318
+  }
+}

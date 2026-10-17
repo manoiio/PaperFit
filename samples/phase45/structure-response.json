@@ -1,0 +1,20 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "message": {
+        "content": "{\"version\":\"structure-ids-v1\",\"suggestions\":[{\"id\":\"p:2\",\"role\":\"other\",\"evidence\":\"text\",\"reason\":\"含脱敏合成与演示说明，不属正文内容\"},{\"id\":\"p:9\",\"role\":\"heading3\",\"evidence\":\"text\",\"reason\":\"短标题，位于实验设计节内、结果段前，属节内下级小标题\"},{\"id\":\"t:2\",\"role\":\"content\",\"evidence\":\"r1:c1,r1:c2,r1:c3,r2:c1,r2:c2,r2:c3,r3:c1,r3:c2,r3:c3\",\"reason\":\"表头含算法、运行时间、准确率，数据为实验对比结果\"},{\"id\":\"t:4\",\"role\":\"pending\",\"evidence\":\"r1:c1,r1:c2\",\"reason\":\"仅列名甲、乙，用途无法确定\"}]}"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 2337,
+    "completion_tokens": 187,
+    "total_tokens": 2524,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 2337
+  }
+}

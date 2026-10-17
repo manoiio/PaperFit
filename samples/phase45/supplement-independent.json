@@ -1,0 +1,30 @@
+{
+  "source": "offline authored mock, not live API",
+  "mock_output_sha256": "b978dfe640b08bdc7e37d17c6b37f556d3a04ffeb48ca900c4f3bae1e6bd57a7",
+  "independent": {
+    "all_text_and_order_equal": true,
+    "unselected_parts_byte_equal": true,
+    "authored_font_size_line_indent_spacing_alignment": true,
+    "other_XML_equal_after_explicit_format_mask": true
+  },
+  "mock": {
+    "sha256": "b978dfe640b08bdc7e37d17c6b37f556d3a04ffeb48ca900c4f3bae1e6bd57a7",
+    "original_legal_bytes_equal": true,
+    "independent": {
+      "all_text_and_order_equal": true,
+      "unselected_parts_byte_equal": true,
+      "authored_font_size_line_indent_spacing_alignment": true,
+      "other_XML_equal_after_explicit_format_mask": true
+    }
+  },
+  "actual_browser": {
+    "sha256": "b978dfe640b08bdc7e37d17c6b37f556d3a04ffeb48ca900c4f3bae1e6bd57a7",
+    "original_legal_bytes_equal": true,
+    "independent": {
+      "all_text_and_order_equal": true,
+      "unselected_parts_byte_equal": true,
+      "authored_font_size_line_indent_spacing_alignment": true,
+      "other_XML_equal_after_explicit_format_mask": true
+    }
+  }
+}

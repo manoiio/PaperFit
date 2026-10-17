@@ -23,6 +23,9 @@ def tracked(text,payload,validator,*,purpose,config,transport,real,audit=None):
             with JOURNAL.open('a',encoding='utf-8') as f:
                 f.write(json.dumps(record,ensure_ascii=False,allow_nan=False)+'\n');f.flush()
         if audit:audit(deepcopy(record))
+    from .diagnostics import active
+    capture=active()
+    if capture:capture.request(record["attempt_id"],text,payload)
     save()  # A failed pre-dispatch write prevents the request.
     started=time.monotonic()
     def once(req,timeout):
@@ -31,6 +34,7 @@ def tracked(text,payload,validator,*,purpose,config,transport,real,audit=None):
         except HTTPError:
             record.update(sent=True,response_received=True);save();raise
         record.update(sent=True,response_received=True)
+        if capture:capture.response(record['attempt_id'],response)
         try:
             from core.rule_config import strict_json
             data=strict_json(response.decode() if isinstance(response,bytes) else response)
@@ -41,8 +45,13 @@ def tracked(text,payload,validator,*,purpose,config,transport,real,audit=None):
     try:
         result=call_json(text,payload,validator,transport=once,config=config)
         record['validation']='accepted'
-    except Exception:
-        record.update(validation='rejected',elapsed_seconds=round(time.monotonic()-started,3));save();raise
+    except Exception as exc:
+        record.update(validation='rejected',elapsed_seconds=round(time.monotonic()-started,3));save()
+        if capture:capture.outcome(record['attempt_id'],record,exc)
+        raise
     record['elapsed_seconds']=round(time.monotonic()-started,3);save()
+    if capture:
+        capture.write(record['attempt_id'],'adapted',result['draft'])
+        capture.outcome(record['attempt_id'],record)
     result['receipt'].update(kind=record['kind'],attempt=deepcopy(record),usage=record['usage'])
     return result

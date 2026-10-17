@@ -21,7 +21,7 @@ class OnePassUIAcceptance(TestCase):
   self.at.button(key='onepass-detail').click().run();self.at.button(key='workspace-nav-2').click().run();self.assertFalse(self.at.exception);self.assertTrue(any(b.label=='分析范围建议（不修改论文）' for b in self.at.button))
  def test_supplement_failure_plain_exception_template_continue(self):
   self.at.text_input(key='onepass-extra-'+self.s.task_dir.name).set_value('正文改为四号、2倍行距').run()
-  with patch('ai.smart_spec.parse_requirements',side_effect=TimeoutError()):
+  with patch('ai.semantic_spec.parse_requirements',side_effect=TimeoutError()):
    self.at.button(key='onepass-start').click().run();self.assertFalse(self.at.exception);self.assertIsNone(self.s.result)
    choices=[x for x in self.at.selectbox if x.label=='您的选择'];self.assertEqual(len(choices),1);self.assertIsNone(choices[0].value)
    self.assertTrue(self.at.button(key='onepass-continue').disabled)

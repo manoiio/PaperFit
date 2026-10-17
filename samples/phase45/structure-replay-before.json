@@ -1,0 +1,54 @@
+{
+  "kind": "offline_replay",
+  "request_count": 0,
+  "draft": [
+    {
+      "id": "p:2",
+      "role": "other",
+      "evidence": "脱敏合成论文，仅用于软件演示。自动编号由Word脚注尾注对象生成，不改写解释内容。",
+      "reason": "脱敏演示说明，不属论文正文内容",
+      "evidence_location": "text",
+      "accepted": false,
+      "decision_reason": "AI仍未建议纳入可检查文字"
+    },
+    {
+      "id": "p:9",
+      "role": "heading3",
+      "evidence": "结果解读",
+      "reason": "位于编号标题下，短标题用于组织实验结果讨论，层级定为h3",
+      "evidence_location": "text",
+      "accepted": true,
+      "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要"
+    },
+    {
+      "id": "t:2",
+      "role": "content",
+      "evidence": "",
+      "reason": "候选协议未通过",
+      "accepted": false,
+      "decision_reason": "AI响应未通过本地校验；未应用，请查看技术诊断（1项）。",
+      "diagnostics": [
+        {
+          "path": "suggestions[2].evidence",
+          "code": "source",
+          "reason": "证据ID不属于本候选"
+        }
+      ]
+    },
+    {
+      "id": "t:4",
+      "role": "pending",
+      "evidence": "",
+      "reason": "候选协议未通过",
+      "accepted": false,
+      "decision_reason": "AI响应未通过本地校验；未应用，请查看技术诊断（1项）。",
+      "diagnostics": [
+        {
+          "path": "suggestions[3].evidence",
+          "code": "source",
+          "reason": "证据ID不属于本候选"
+        }
+      ]
+    }
+  ]
+}

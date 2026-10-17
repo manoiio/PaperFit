@@ -1,0 +1,60 @@
+{
+  "kind": "offline_replay",
+  "request_count": 0,
+  "draft": [
+    {
+      "id": "p:2",
+      "role": "other",
+      "evidence": "脱敏合成论文，仅用于软件演示。自动编号由Word脚注尾注对象生成，不改写解释内容。",
+      "reason": "脱敏演示说明，不属论文正文内容",
+      "evidence_location": "text",
+      "accepted": false,
+      "decision_reason": "AI仍未建议纳入可检查文字",
+      "evidence_ids": [
+        "text"
+      ]
+    },
+    {
+      "id": "p:9",
+      "role": "heading3",
+      "evidence": "结果解读",
+      "reason": "位于编号标题下，短标题用于组织实验结果讨论，层级定为h3",
+      "evidence_location": "text",
+      "accepted": true,
+      "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要",
+      "evidence_ids": [
+        "text"
+      ]
+    },
+    {
+      "id": "t:2",
+      "role": "content",
+      "evidence": "算法",
+      "reason": "含算法及运行时间、准确率数据，属论文实验内容表",
+      "evidence_location": "r1:c1",
+      "accepted": true,
+      "decision_reason": "结构证据通过本地校验；仍待用户接受范围摘要",
+      "evidence_ids": [
+        "r1:c1",
+        "r1:c2",
+        "r1:c3",
+        "r2:c1",
+        "r2:c2",
+        "r2:c3"
+      ]
+    },
+    {
+      "id": "t:4",
+      "role": "pending",
+      "evidence": "甲",
+      "reason": "仅两个占位标签，用途不明，不猜测",
+      "evidence_location": "r1:c1",
+      "accepted": false,
+      "decision_reason": "AI仍未建议纳入可检查文字",
+      "evidence_ids": [
+        "r1:c1",
+        "r1:c2"
+      ]
+    }
+  ]
+}
