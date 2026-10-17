@@ -1,0 +1,244 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-3",
+  "authorization": "点击开始智能排版：按显示规则与明确补充要求，处理可安全识别对象、另存复查；不含动态/移动/宽度/分页辅助",
+  "command_id": "dc7b5a3177f245c4a8fd1eb402bcd4f2",
+  "source_sha256": "1f842cd97aa67b5fc4a2c2ad1096886c0815d45a30beb9181fe865d02ef35501",
+  "start_binding": "ec3283a9a846c5e3aaf21569afa5af26503931076793fa7a6646741ef4aef0e3",
+  "API": {
+    "requirements": {
+      "fields": [
+        "font_cn",
+        "font_size",
+        "first_line_indent",
+        "line_spacing",
+        "body__before",
+        "body__after",
+        "body__alignment",
+        "heading1_font_cn",
+        "heading1_font_size",
+        "heading1_alignment",
+        "heading2_font_cn",
+        "heading2_font_size",
+        "heading2_alignment",
+        "heading3_font_cn",
+        "heading3_font_size",
+        "heading3_alignment"
+      ],
+      "overrides": [
+        {
+          "field": "font_cn",
+          "object_property": "正文中文字体",
+          "value": "宋体",
+          "unit": "font",
+          "quote": "正文宋体",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "font_size",
+          "object_property": "正文普通文字字号",
+          "value": 12,
+          "unit": "pt",
+          "quote": "正文宋体小四",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "first_line_indent",
+          "object_property": "正文首行缩进",
+          "value": 2,
+          "unit": "chars",
+          "quote": "正文宋体小四，首行缩进两字符",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "line_spacing",
+          "object_property": "正文倍数行距",
+          "value": 2,
+          "unit": "multiple",
+          "quote": "正文宋体小四，首行缩进两字符，2倍行距",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "body__before",
+          "object_property": "body 段前间距",
+          "value": {
+            "value": 0.5,
+            "unit": "lines"
+          },
+          "unit": "spacing",
+          "quote": "正文段前0.5行",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "body__after",
+          "object_property": "body 段后间距",
+          "value": {
+            "value": 6,
+            "unit": "pt"
+          },
+          "unit": "spacing",
+          "quote": "正文段前0.5行，段后6pt",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "body__alignment",
+          "object_property": "body 对齐",
+          "value": "left",
+          "unit": "alignment",
+          "quote": "正文段前0.5行，段后6pt，居左",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading1_font_cn",
+          "object_property": "一级标题中文字体",
+          "value": "黑体",
+          "unit": "font",
+          "quote": "一级标题黑体",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading1_font_size",
+          "object_property": "一级标题字号",
+          "value": 16,
+          "unit": "pt",
+          "quote": "一级标题黑体三号",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading1_alignment",
+          "object_property": "一级标题对齐",
+          "value": "center",
+          "unit": "alignment",
+          "quote": "一级标题黑体三号居中",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading2_font_cn",
+          "object_property": "二级标题中文字体",
+          "value": "宋体",
+          "unit": "font",
+          "quote": "二级标题宋体",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading2_font_size",
+          "object_property": "二级标题字号",
+          "value": 12,
+          "unit": "pt",
+          "quote": "二级标题宋体小四",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading2_alignment",
+          "object_property": "二级标题对齐",
+          "value": "left",
+          "unit": "alignment",
+          "quote": "二级标题宋体小四居左",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading3_font_cn",
+          "object_property": "三级标题中文字体",
+          "value": "黑体",
+          "unit": "font",
+          "quote": "三级标题黑体",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading3_font_size",
+          "object_property": "三级标题字号",
+          "value": 12,
+          "unit": "pt",
+          "quote": "三级标题黑体小四",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        },
+        {
+          "field": "heading3_alignment",
+          "object_property": "三级标题对齐",
+          "value": "left",
+          "unit": "alignment",
+          "quote": "三级标题黑体小四居左",
+          "location": "SRC:5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc:摘录:L1"
+        }
+      ],
+      "receipt": {
+        "kind": "mock_api",
+        "model": "deepseek-flash",
+        "timestamp_utc": "2026-10-17T08:05:17.839314+00:00",
+        "elapsed_seconds": 0.005,
+        "input_sha256": "5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc",
+        "json_output": true,
+        "request_count": 1,
+        "attempt": {
+          "attempt_id": "3dd2655fac064e2e95683926492acb52",
+          "purpose": "supplement",
+          "timestamp_utc": "2026-10-17T08:05:17.839184+00:00",
+          "input_sha256": "5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc",
+          "model": "deepseek-flash",
+          "kind": "mock_api",
+          "dispatch_started": true,
+          "sent": true,
+          "response_received": true,
+          "validation": "accepted",
+          "usage": null,
+          "billing_status": "unknown",
+          "elapsed_seconds": 0.005
+        },
+        "usage": null
+      },
+      "source_sha256": "ed527f31dcc59599fdd99f9934fe11fb11c079f99dc3326baa4c51b29ede9507"
+    }
+  },
+  "phases": [
+    "理解排版要求",
+    "识别论文内容",
+    "调整格式",
+    "检查修改后的文件"
+  ],
+  "candidate_count": 0,
+  "candidate_kinds": {
+    "paragraphs": 0,
+    "tables": 0,
+    "remaining": 0
+  },
+  "structure_local_only": true,
+  "auto_ranges": {
+    "tables": {},
+    "protected": [],
+    "note_counts": {
+      "footnote": 0,
+      "endnote": 0
+    },
+    "limits": [],
+    "table_roles": {}
+  },
+  "plan_sha256": "ca360d2029c4bba2ceb4dc015bc06ff18f7f6b672cbfb5ec3175a8d37f5bb8e9",
+  "selected_count": 42,
+  "confirmed_scope_sha256": "5e151ec07b0bd740ba172229d03ebe9345ffc4815752a9c00daab1ae1ab4bf25",
+  "processed_scope": {
+    "tables": {},
+    "notes": []
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 1,
+    "selected": 42,
+    "changes": 42,
+    "output_sha256": "b978dfe640b08bdc7e37d17c6b37f556d3a04ffeb48ca900c4f3bae1e6bd57a7",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 26,
+      "problem_count": 1,
+      "review_count": 8,
+      "review_findings": 8,
+      "review_notes": 0,
+      "pass_count": 47,
+      "not_applicable_count": 16,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 12
+    }
+  },
+  "automatic_input_switch": false
+}

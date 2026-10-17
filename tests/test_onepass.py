@@ -22,6 +22,9 @@ class OnePassAcceptance(TestCase):
  def runner(self,m,p,store):
   labels=json.loads((ROOT/'samples/phase41/labels.json').read_text())['paragraphs']
   rows=[{'id':c['id'],'role':'heading3' if c['id']=='p:13' else labels[int(c['id'][2:])-1]['role'],'evidence':c['text'],'reason':'模拟结构证据'} for c in p['request']['candidates']]
+  if p['request']['version']=='structure-v3-context':
+   for row,c in zip(rows,p['request']['candidates']):
+    row['evidence_location']=c['fragments'][0]['id'] if c.get('kind')=='table' else 'text';row['evidence']=c['fragments'][0]['text'] if c.get('kind')=='table' else c['text']
   return run(m,p,store,transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'suggestions':rows})}}]}),config=Settings('synthetic-placeholder'))
  def parser(self,text):return {'draft':{'font_size':{'value':14,'quote':'正文改为四号'},'line_spacing':{'value':2,'quote':'正文改为四号、2倍行距'},'unsupported':[]},'receipt':{'kind':'mock_api','model':'deepseek-flash','timestamp_utc':'2026-10-17T00:00:00+00:00','request_count':1}}
  def test_no_candidate_three_actions_idempotent_and_old_bytes(self):

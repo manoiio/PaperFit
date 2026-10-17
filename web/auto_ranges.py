@@ -4,12 +4,33 @@ No network, confirmations or document writes. Never an alternate format engine.
 from copy import deepcopy
 import re
 from core.package import Package,q,NS
-from core.table_text import tables,inventory as table_inventory,_table_layers
+from core.table_text import tables,inventory as table_inventory,_table_layers,_layers
 from core.formats import Resolver,Unresolved
 from core.notes import inventory as note_inventory,make_scope
 from ai.structure import redact,withheld
 
-VERSION='auto-ranges-1'
+VERSION='auto-ranges-2'
+
+def paragraph_context(model,pkg,res,p,position):
+    """Only direct supported text; a protected placeholder is explicitly non-evidence."""
+    n=pkg.paragraphs.index(p)+1
+    row=model.suggestions['paragraphs'][n-1]
+    text=row['text'];blocked=n in [int(x) for x in model.material_exclusions] or withheld(text) or row['special'] or any(c.tag not in (q('pPr'),q('r')) for c in p)
+    try:
+        blocked=blocked or any(res.special(r,res.layers(p,r)) for r in p.findall(q('r')))
+    except (Unresolved,ValueError):blocked=True
+    return {'id':'p:'+str(n),'position':position,'text':'[保护片段未发送]' if blocked else redact(text,85),'withheld':bool(blocked)}
+
+def table_fragments(t):
+    fragments=[];lines=[];rows=t.findall(q('tr'))
+    for ri,row in enumerate(rows[:3],1):
+        cells=row.findall(q('tc'))
+        for ci,cell in enumerate(cells[:3],1):
+            raw=' / '.join(''.join(p.xpath('./w:r/w:t/text()',namespaces=NS)) for p in cell.findall(q('p')))
+            text=redact(raw,60)
+            fragments.append({'id':f'r{ri}:c{ci}','row':ri,'column':ci,'text':text,'truncated':len(raw)>60})
+            lines.append(f'R{ri} C{ci}: '+text)
+    return fragments,'\n'.join(lines)[:140],{'max_rows':3,'max_columns':3,'max_cell_characters':60,'truncated':len(rows)>3 or any(len(r.findall(q('tc')))>3 for r in rows[:3]) or any(f['truncated'] for f in fragments)}
 
 def decisions(model):
     return {'table':getattr(model,'table_explicit_choice',None),'note':getattr(model,'note_explicit_choice',None),'restored':bool(model.project_notice)}
@@ -35,6 +56,9 @@ def prepare(model):
                     if any(c.tag not in (q('pPr'),q('r')) for c in para):bad=True
                     for run in para.findall(q('r')):
                         if any(c.tag not in (q('rPr'),q('t'),q('tab'),q('br'),q('cr')) for c in run):bad=True
+                        try:
+                            if any(res.special(run,_layers(res,t,para,run,prop)) for prop in ('font_cn','font_size')):bad=True
+                        except (Unresolved,ValueError):bad=True
             try:
                 _,conditional=_table_layers(res,t)
                 if conditional:bad=True
@@ -42,13 +66,23 @@ def prepare(model):
             if bad:
                 out['protected'].append({'id':'t:'+n,'reason':'合并/嵌套/浮动、条件样式或复杂内容，自动范围不放开'});continue
             pos=body.index(t);neighbors=[x for x in body[max(0,pos-12):pos] if x.tag==q('p') and ''.join(x.xpath('.//w:t/text()',namespaces=NS)).strip()][-2:]+[x for x in body[pos+1:pos+5] if x.tag==q('p')][:1]
-            context=[redact(''.join(p.xpath('.//w:t/text()',namespaces=NS)),85) if not withheld(''.join(p.xpath('.//w:t/text()',namespaces=NS))) else '[保护片段不发送]' for p in neighbors]
+            context=[paragraph_context(model,pkg,res,p,'before' if body.index(p)<pos else 'after') for p in neighbors]
+            from core.classification import title_number
+            anchors=[]
+            for p in (x for x in body[:pos] if x.tag==q('p')):
+                r=model.suggestions['paragraphs'][pkg.paragraphs.index(p)]
+                numbered=title_number(r['text']);outline=r.get('outline_level')
+                if numbered and (outline is None or outline==numbered-1) or r.get('style_id') in ('Heading1','Heading2','Heading3') and outline==int(r['style_id'][-1])-1:
+                    a=paragraph_context(model,pkg,res,p,'before');a['basis']='explicit_number' if numbered else 'style_outline';anchors.append(a)
+            fragments,text,limits=table_fragments(t)
             previous=body[pos-1] if pos else None
             caption=previous is not None and previous.tag==q('p') and re.match(r'^表\s*\d+(?:[-－.]\d+)?\s+\S', ''.join(previous.xpath('.//w:t/text()',namespaces=NS)))
             if caption:
                 out['tables'][n]='content';continue
-            out['candidates'].append({'id':'t:'+n,'kind':'table','text':redact(raw),'local_role':'pending','local_reason':'普通结构，用途尚未确认',
-                'section':row['section'],'rows':row['rows'],'columns':row['columns'],'body_object':row['body_object'],'context':context})
+            if not any(f['text'].strip() for f in fragments):
+                out['protected'].append({'id':'t:'+n,'reason':'有限单元格样本为空，没有可发送的语义证据'});continue
+            out['candidates'].append({'id':'t:'+n,'kind':'table','text':text,'local_role':'pending','local_reason':'普通结构，用途尚未确认',
+                'section':row['section'],'rows':row['rows'],'columns':row['columns'],'body_object':row['body_object'],'context':context,'anchors':anchors[-2:],'fragments':fragments,'sample_limits':limits})
     # Word note container identity is deterministic: never send notes to AI.
     keep_notes=not hasattr(model,'note_explicit_choice') or model.note_enabled or model.note_draft is not None or decisions(model)['note'] is not None or bool(model.project_notice)
     if keep_notes:out['limits'].append('注释沿用人工/既有范围；未重新猜测排除项。')
@@ -65,12 +99,13 @@ def prepare(model):
 def apply(model,proposal,prepared):
     """Add verified fresh drafts to the original proposal, never confirm them here."""
     auto=prepared.get('auto_ranges') or {};draft=proposal['draft'];questions=[]
+    draft['paragraph_types'].update(prepared.get('reliable_local_roles',{}))
     if auto.get('tables'):
         types=deepcopy(auto['tables']);types.update(draft.get('table_types',{}))
         # Only transmitted candidates can become a question; budget omissions stay pending.
         for c in prepared['request']['candidates']:
             if c.get('kind')=='table' and types[c['id'][2:]]=='pending':
-                questions.append({'id':'table:'+c['id'][2:],'table':c['id'][2:],'text':c['text'],'context':' / '.join(c['context']),
+                questions.append({'id':'table:'+c['id'][2:],'table':c['id'][2:],'text':c['text'],'context':' / '.join(x['text'] for x in c['context']),
                     'question':'这张表属于论文内容，还是封面/表单等其他用途？','options':{'content':'论文内容表格','cover':'封面或表单表格','other':'其他用途，不套表内文字要求','pending':'暂不处理这张表'}})
         draft.update(table_enabled=True,table_types=types)
     if auto.get('notes') is not None:draft.update(note_enabled=True,note_draft=deepcopy(auto['notes']))

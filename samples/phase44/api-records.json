@@ -1,0 +1,180 @@
+{
+  "kind": "two_explicit_synthetic_live_attempts_not_accuracy_estimate",
+  "actual_POST_attempts": 2,
+  "responses_received": 2,
+  "validated_responses": 0,
+  "automatic_retries": 0,
+  "billing_status": "unknown",
+  "records": [
+    {
+      "attempt_id": "33d145e2b1ec4f97b0cbdd04e706e610",
+      "events": [
+        {
+          "attempt_id": "33d145e2b1ec4f97b0cbdd04e706e610",
+          "purpose": "structure",
+          "timestamp_utc": "2026-10-17T07:49:02.757964+00:00",
+          "input_sha256": "e2a9b8767b2b5478b2cd2493edd9648eebd2352f599727422c66a3b861875ab5",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": false,
+          "sent": false,
+          "response_received": false,
+          "validation": "pending",
+          "usage": null,
+          "billing_status": "unknown"
+        },
+        {
+          "attempt_id": "33d145e2b1ec4f97b0cbdd04e706e610",
+          "purpose": "structure",
+          "timestamp_utc": "2026-10-17T07:49:02.757964+00:00",
+          "input_sha256": "e2a9b8767b2b5478b2cd2493edd9648eebd2352f599727422c66a3b861875ab5",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": true,
+          "sent": "unknown",
+          "response_received": false,
+          "validation": "pending",
+          "usage": null,
+          "billing_status": "unknown"
+        },
+        {
+          "attempt_id": "33d145e2b1ec4f97b0cbdd04e706e610",
+          "purpose": "structure",
+          "timestamp_utc": "2026-10-17T07:49:02.757964+00:00",
+          "input_sha256": "e2a9b8767b2b5478b2cd2493edd9648eebd2352f599727422c66a3b861875ab5",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": true,
+          "sent": true,
+          "response_received": true,
+          "validation": "pending",
+          "usage": {
+            "prompt_tokens": 2047,
+            "completion_tokens": 172,
+            "total_tokens": 2219,
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 1919
+          },
+          "billing_status": "unknown"
+        },
+        {
+          "attempt_id": "33d145e2b1ec4f97b0cbdd04e706e610",
+          "purpose": "structure",
+          "timestamp_utc": "2026-10-17T07:49:02.757964+00:00",
+          "input_sha256": "e2a9b8767b2b5478b2cd2493edd9648eebd2352f599727422c66a3b861875ab5",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": true,
+          "sent": true,
+          "response_received": true,
+          "validation": "rejected",
+          "usage": {
+            "prompt_tokens": 2047,
+            "completion_tokens": 172,
+            "total_tokens": 2219,
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 1919
+          },
+          "billing_status": "unknown",
+          "elapsed_seconds": 1.579
+        }
+      ],
+      "reason": "AI结构字段类型或白名单无效"
+    },
+    {
+      "attempt_id": "af5cb41208fe4bd0b0661a9857602d80",
+      "events": [
+        {
+          "attempt_id": "af5cb41208fe4bd0b0661a9857602d80",
+          "purpose": "supplement",
+          "timestamp_utc": "2026-10-17T07:51:15.774044+00:00",
+          "input_sha256": "5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": false,
+          "sent": false,
+          "response_received": false,
+          "validation": "pending",
+          "usage": null,
+          "billing_status": "unknown"
+        },
+        {
+          "attempt_id": "af5cb41208fe4bd0b0661a9857602d80",
+          "purpose": "supplement",
+          "timestamp_utc": "2026-10-17T07:51:15.774044+00:00",
+          "input_sha256": "5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": true,
+          "sent": "unknown",
+          "response_received": false,
+          "validation": "pending",
+          "usage": null,
+          "billing_status": "unknown"
+        },
+        {
+          "attempt_id": "af5cb41208fe4bd0b0661a9857602d80",
+          "purpose": "supplement",
+          "timestamp_utc": "2026-10-17T07:51:15.774044+00:00",
+          "input_sha256": "5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": true,
+          "sent": true,
+          "response_received": true,
+          "validation": "pending",
+          "usage": {
+            "prompt_tokens": 805,
+            "completion_tokens": 622,
+            "total_tokens": 1427,
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 805
+          },
+          "billing_status": "unknown"
+        },
+        {
+          "attempt_id": "af5cb41208fe4bd0b0661a9857602d80",
+          "purpose": "supplement",
+          "timestamp_utc": "2026-10-17T07:51:15.774044+00:00",
+          "input_sha256": "5416109d5907aaefea970a363d2cce4fc720f7453f293cfe7936e49b4abf41cc",
+          "model": "deepseek-flash",
+          "kind": "real_api",
+          "dispatch_started": true,
+          "sent": true,
+          "response_received": true,
+          "validation": "rejected",
+          "usage": {
+            "prompt_tokens": 805,
+            "completion_tokens": 622,
+            "total_tokens": 1427,
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 805
+          },
+          "billing_status": "unknown",
+          "elapsed_seconds": 2.16
+        }
+      ],
+      "reason": "依据必须是来源位置内的连续原句"
+    }
+  ],
+  "phase43_history": "unchanged and still unknown; not included in this stage count",
+  "controlled_preflight_journal_entries": {
+    "attempt_ids": [
+      "2b38d958de904d56bf16aea2f90eec73",
+      "c71a6d835e2b462c9adbb7d320d43a66"
+    ],
+    "source": "test_structure_ui.py patched settings and HTTP transport; offline runner endpoint guard, zero network",
+    "note": "Before TEST_MODE journaling separation these simulated tests used real_api label; not actual paid attempts, original journal retained."
+  },
+  "limitations": [
+    "raw model content was not retained; no reconstruction of which raw field/quote failed",
+    "Final schema/example and location clarifications were mock-tested, not retried live",
+    "No usable live classification or supplement result adopted"
+  ],
+  "synthetic_snapshot_verification": {
+    "structure_request_sha256_matches": true,
+    "supplement_request_sha256_matches": true,
+    "source_DOCX_hash_matches_browser_audit": true,
+    "note": "Final prompt clarifications differ; only sent user input reproduced, not a new model response."
+  }
+}

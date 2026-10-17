@@ -12,7 +12,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-2'
+VERSION='onepass-3'
 
 
 def command_binding(model,extra):
@@ -46,40 +46,41 @@ def cancel(model,state):
 
 
 def supplement_supported(text):
-    """Local full-input guard over the original two-field parser, no new values/units."""
-    validate_text(text)
-    left=text
-    for pattern in (r'在\s*SCUT\s*(?:的)?(?:排版)?要求(?:的)?基础上',r'(?:沿用|按|使用)?\s*SCUT\s*(?:默认)?要求',
-                    r'(?:小四|小五|小三|小二|四|五|三|二)号',r'\d+(?:\.\d+)?\s*(?:pt|磅)',
-                    r'(?:\d+(?:\.\d+)?|单)\s*倍(?:行距)?',r'正文|字号|行距|改为|设为|设置为|采用|使用|要求|调整为|调整到|改成|改用|保持|以及|和|与|请|把|将|希望|为|用|的',r'[\s，,、；;。:：]+'):
-        left=re.sub(pattern,'',left,flags=re.I)
-    if left:raise DemoError('当前快捷补充只支持明确的正文「字号、倍数行距」；其他要求请修改文字或在高级工作区设置。')
+    from ai.smart_spec import coverage
+    return coverage(text)
 
 
 def overlay(stage,text,result):
-    """Existing strict config builders, exact untouched values and origins retained."""
+    """Native workbench validation/compilation, only explicitly touched fields."""
     from core import rule_bundle as rb,load_rules
-    from core.norms import qualify_segments
-    draft=validate_draft(result['draft'],text)
-    if draft['unsupported'] or not any(draft[n] for n in ('font_size','line_spacing')):raise DemoError('补充要求未完整理解或含不支持内容，尚未采用。')
+    from core.norms import qualify_segments,selected_segments
+    from ai.smart_spec import VERSION as SPEC_VERSION,validate
+    draft=result['draft'];plain=selected_segments(text)
+    if set(draft)=={'font_size','line_spacing','unsupported'}:
+        # Compatibility for the old two-field injected caller; no broadening.
+        old=validate_draft(draft,text);fields={}
+        if old['unsupported']:raise DemoError('补充要求含不支持内容，尚未采用')
+        for n in ('font_size','line_spacing'):
+            if old[n] is not None:
+                location=next((s['location'] for s in plain if old[n]['quote'] in s['text']),None)
+                fields[n]={'value':old[n]['value'],'unit':rb.FIELDS['main'][n][2],'quote':old[n]['quote'],'location':location,'support':'supported'}
+        draft={'version':SPEC_VERSION,'fields':fields,'issues':[]}
+    draft=validate(draft,text);touched=[n for n,f in draft['fields'].items() if f is not None]
+    if stage.mode!='academic' and any(n.startswith(('body__','table_content__')) for n in touched) or stage.mode=='basic' and any(n.startswith(('heading','figure_caption','table_caption')) for n in touched):raise DemoError('当前检查方式不支持本次对象要求；未改变已有模式，请在本地工作台核对。')
     base=load_rules(stage.rules_path);prior=stage.current_rule_bundle();mods=deepcopy(prior['modules']);ss=deepcopy(prior['provenance'])
-    values=rb.flat('main',mods['main']);segments=deepcopy(prior['excerpt'])
-    new=qualify_segments([{'location':'摘录:L1','text':text}])
+    values=rb.flat('main',mods['main']);segments=deepcopy(prior['excerpt']);new=qualify_segments(plain);locations={s['location']:n['location'] for s,n in zip(plain,new)}
     for x in new:
         if x not in segments:segments.append(x)
-    touched=[]
-    for name in ('font_size','line_spacing'):
-        item=draft[name]
-        if item is None:continue
-        values[name]=item['value'];ss['main'][name]={'kind':'ai_extracted','quote':item['quote'],'location':new[0]['location']};touched.append(name)
+    applied=[]
+    for n in touched:
+        f=draft['fields'][n];values[n]=deepcopy(f['value']);ss['main'][n]={'kind':'ai_extracted','quote':f['quote'],'location':locations[f['location']]}
+        applied.append({'field':n,'object_property':rb.FIELDS['main'][n][1],'value':deepcopy(f['value']),'unit':f['unit'],'quote':f['quote'],'location':locations[f['location']]})
     receipt={k:result['receipt'][k] for k in ('kind','model','timestamp_utc')}
     mods['main']=rb.make_main('本次补充排版要求',values,ss['main'],segments,receipt,base)
-    bundle=rb.build('本次补充排版要求',mods,segments,receipt,base,ss,prior.get('notices'))
-    rb.compile_bundle(bundle,base)
-    stage._save_custom(bundle)
-    stage.sync_rules()
+    bundle=rb.build('本次补充排版要求',mods,segments,receipt,base,ss,prior.get('notices'));rb.compile_bundle(bundle,base)
+    stage._save_custom(bundle);stage.sync_rules()
     if stage.rules_hash is None:raise DemoError('补充规则未通过原配置验证')
-    return {'fields':touched,'receipt':{k:v for k,v in result['receipt'].items() if k!='input_text'},'source_sha256':sha256(text.encode())}
+    return {'fields':touched,'overrides':applied,'receipt':{k:v for k,v in result['receipt'].items() if k!='input_text'},'source_sha256':sha256(text.encode())}
 
 
 def structure_questions(stage,proposal,result=None):
@@ -141,6 +142,7 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
     if len(extra)>2000:raise DemoError('补充要求最多2000字')
     cancel(model,state)
     source=command_binding(model,extra);stage=isolated(model);token=uuid4().hex
+    prior_types=deepcopy(stage.paragraph_types) if stage.classification_confirmed else None
     state.update(id=token,start=source,extra=extra,stage=stage,status='running',questions=[],history_length=len(model.history),original_rule_path=model.custom_rules_path,
                  audit={'kind':'onepass_command','version':VERSION,'authorization':'点击开始智能排版：按显示规则与明确补充要求，处理可安全识别对象、另存复查；不含动态/移动/宽度/分页辅助',
                         'command_id':token,'source_sha256':model.inventory['input_sha256'],'start_binding':source,'API':{},'phases':[]})
@@ -153,8 +155,16 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
             phase('理解排版要求')
             try:
                 supplement_supported(extra)
-                from ai.short_spec import parse_requirements
-                # Exactly one call, no retry, and still only the original supported fields.
+                # Preserve the same effective local note requirements that a
+                # no-supplement command would prepare. A rule-only main overlay
+                # must not turn implicit current note values into an empty module.
+                from .auto_ranges import prepare as prepare_ranges
+                initial_ranges=prepare_ranges(stage)
+                if initial_ranges.get('notes') is not None:
+                    stage.note_enabled=True;stage.note_draft=deepcopy(initial_ranges['notes'])
+                    state['audit']['notes_prepared_before_supplement']=deepcopy(initial_ranges['note_counts'])
+                from ai.smart_spec import parse_requirements
+                # One supplement POST, native field validators, no retry.
                 result=(spec_parser or parse_requirements)(extra)
                 if state.get('id')!=token:raise DemoError('本次处理已取消')
                 state['audit']['API']['requirements']=overlay(stage,extra,result)
@@ -168,7 +178,7 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
                 state['questions'].append({'id':'requirements','text':message,'question':'补充要求尚不能安全执行，您希望怎样继续？',
                                            'options':{'template':'本次沿用页面显示的原有要求','edit':'返回修改补充要求'}})
         phase('识别论文内容');proposal=suggest(stage)
-        prepared=structure.prepare(stage,include_tables=True);state['audit']['candidate_count']=len(prepared['request']['candidates'])
+        prepared=structure.prepare(stage,include_tables=True,preserve_paragraphs=prior_types is not None);state['audit']['candidate_count']=len(prepared['request']['candidates'])
         state['audit']['candidate_kinds']={'paragraphs':sum(c.get('kind')!='table' for c in prepared['request']['candidates']),'tables':sum(c.get('kind')=='table' for c in prepared['request']['candidates']),'remaining':prepared['remaining']}
         if prepared['request']['candidates']:
             store={};state['structure_store']=store
@@ -185,8 +195,11 @@ def start(model,state,extra='',*,structure_runner=None,spec_parser=None,emit=Non
         else:state['audit']['structure_local_only']=True
         from .auto_ranges import apply as apply_auto_ranges
         state['questions']+=apply_auto_ranges(stage,proposal,prepared)
+        if prior_types is not None:
+            proposal['draft']['paragraph_types']=deepcopy(prior_types)
+            state['audit']['prior_classification_preserved']=True
         state['audit']['auto_ranges']=deepcopy(proposal.get('auto_ranges'))
-        state['questions']+=structure_questions(stage,proposal)
+        if prior_types is None:state['questions']+=structure_questions(stage,proposal)
         seal_proposal(stage,proposal);state['proposal']=proposal
         if state.get('id')!=token or command_binding(model,extra)!=source:raise DemoError('识别期间文档或要求已变化，本次结果未接入。')
         if state['questions']:

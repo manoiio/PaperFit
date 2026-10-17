@@ -117,6 +117,9 @@ def font_candidates(segment,name):
     choices=CN if name=='font_cn' else WEST
     normalized=re.sub(r'正文|普通文字|中文|西文|英文|英语|汉字|文字|字体|采用|使用|选用|设为|设置为|为|用|是',' ',segment)
     normalized=re.sub(r'\d+(?:\.\d+)?\s*(?:pt|磅)',' ',normalized,flags=re.I)
+    # Compact natural requirements keep the exact original quote. Remove only
+    # already-supported size/alignment tokens, never a family-name prefix/suffix.
+    normalized=re.sub(r'小[二三四五](?:号)?|[二三四五]号|两端对齐|居中对齐|左对齐|右对齐|居左|居中|居右',' ',normalized)
     tokens=[p.strip() for p in re.split(r'[，。；;\n\t、()（）“”‘’\"\']',normalized) if p.strip()]
     found={v for v in choices if any(t.lower()==v.lower() for t in tokens)}
     mentions=any(v.lower() in segment.lower() for v in choices)
@@ -142,15 +145,18 @@ def _values(segment, name):
         return result
     if name in ('font_cn','font_western'): return font_candidates(segment,name)
     if name=='font_size':
-        text=re.split(r'行距|缩进',segment)[0]
-        values={FONT_NAMES[m.group(1)] for m in re.finditer(r'(小四|小五|小三|小二|四|五|三|二)号',text)}
+        text=re.split(r'段前|段后|行距|缩进',segment)[0]
+        values={FONT_NAMES[m.group(1)] for m in re.finditer(r'(小四|小五|小三|小二)(?:号)?|([四五三二])号',text) if m.group(1)}
+        values|={FONT_NAMES[m.group(2)] for m in re.finditer(r'(小四|小五|小三|小二)(?:号)?|([四五三二])号',text) if m.group(2)}
         return values | {float(m.group(1)) for m in re.finditer(r'(\d+(?:\.\d+)?)\s*(?:pt|磅)',text,re.I)}
     if name=='line_spacing':
         if any(w in segment for w in ('固定','最小')): return {'unsupported'}
         return {float(m.group(1)) for m in re.finditer(r'(\d+(?:\.\d+)?)\s*倍',segment)} | ({1.0} if '单倍' in segment else set())
     if name=='first_line_indent':
-        if re.search(r'首行[^。；;\n]*?(?:cm|厘米|mm|毫米|pt|磅)',segment,re.I): return {'unsupported'}
-        values={float(m.group(1)) for m in re.finditer(r'首行(?:缩进)?\s*(?:为|：|:)?\s*([0123456789]+(?:\.\d+)?)\s*(?:个)?(?:字符|汉字|字)',segment)}
+        if re.search(r'首行[^，,。；;\n]*?(?:cm|厘米|mm|毫米|pt|磅)',segment,re.I): return {'unsupported'}
+        from .academic_templates import indent_values
+        values=set(indent_values(segment))
+        values|={float(m.group(1)) for m in re.finditer(r'首行(?:缩进)?\s*(?:为|：|:)?\s*([0123456789]+(?:\.\d+)?)\s*(?:个)?(?:字符|汉字|字)',segment)}
         if any(v in segment for v in ('无首行缩进','首行不缩进','首行缩进为零')): values.add(0)
         return values
     return set()
@@ -394,8 +400,8 @@ def object_values(text, name):
     if prop=='font_size':
         # Only new title/caption schema adds larger Chinese sizes. Existing body validator unchanged.
         sizes={**FONT_NAMES,'初':42,'小初':36,'一':26,'小一':24}
-        clean=re.split(r'行距|缩进',re.sub(r'(?:固定|最小)[^，。；;]*','',text))[0]
-        values={sizes[m.group(1)] for m in re.finditer(r'(小初|初|小一|小二|小三|小四|小五|一|二|三|四|五)号',clean)}
+        clean=re.split(r'段前|段后|行距|缩进',re.sub(r'(?:固定|最小)[^，。；;]*','',text))[0]
+        values={sizes[m.group().rstrip('号')] for m in re.finditer(r'小[二三四五](?:号)?|(?:小初|初|小一|一|二|三|四|五)号',clean)}
         return values|{float(m.group(1)) for m in re.finditer(r'(\d+(?:\.\d+)?)\s*(?:pt|磅)',clean,re.I)}
     return _values(text,prop)
 

@@ -1,0 +1,60 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-3",
+  "authorization": "点击开始智能排版：按显示规则与明确补充要求，处理可安全识别对象、另存复查；不含动态/移动/宽度/分页辅助",
+  "command_id": "8124e971234d44b69922e12962d6c735",
+  "source_sha256": "1f842cd97aa67b5fc4a2c2ad1096886c0815d45a30beb9181fe865d02ef35501",
+  "start_binding": "eead9d5dcff16bdb8736071eb3249caf65e5b42ccc6575c3339ebfbffcf0a00b",
+  "API": {},
+  "phases": [
+    "识别论文内容",
+    "调整格式",
+    "检查修改后的文件"
+  ],
+  "candidate_count": 0,
+  "candidate_kinds": {
+    "paragraphs": 0,
+    "tables": 0,
+    "remaining": 0
+  },
+  "structure_local_only": true,
+  "auto_ranges": {
+    "tables": {},
+    "protected": [],
+    "note_counts": {
+      "footnote": 0,
+      "endnote": 0
+    },
+    "limits": [],
+    "table_roles": {}
+  },
+  "plan_sha256": "7456bd6f0cbf3c934682603ea22f534289cb9a12a09ce42c8d1938268bd74e6d",
+  "selected_count": 32,
+  "confirmed_scope_sha256": "6620276f3c04eb36d9c44f3154f16c74ca169d27733045613deaf24c61b107a8",
+  "processed_scope": {
+    "tables": {},
+    "notes": []
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 1,
+    "selected": 32,
+    "changes": 32,
+    "output_sha256": "8ecef57e6a97494f444634dc29bf8216cd7e1ed686f95d1474f3ced7ab737e30",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 22,
+      "problem_count": 1,
+      "review_count": 8,
+      "review_findings": 8,
+      "review_notes": 0,
+      "pass_count": 38,
+      "not_applicable_count": 12,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 12
+    }
+  },
+  "automatic_input_switch": false
+}

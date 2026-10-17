@@ -23,13 +23,16 @@ class AutoRangeAcceptance(TestCase):
   s=WebSession(self.root/n);s.set_mode('academic');self.assertTrue(s.load((ROOT/'samples/phase43/errors.docx').read_bytes(),'合成.docx'));return s
  def runner(self,s,p,store):
   rows=[{'id':c['id'],'role':'content' if c.get('kind')=='table' else 'body','evidence':c['text'],'reason':'作者预先标注的模拟响应'} for c in p['request']['candidates']]
+  if p['request']['version']=='structure-v3-context':
+   for row,c in zip(rows,p['request']['candidates']):
+    row['evidence_location']=c['fragments'][0]['id'] if c.get('kind')=='table' else 'text';row['evidence']=c['fragments'][0]['text'] if c.get('kind')=='table' else c['text']
   return run(s,p,store,transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'suggestions':rows})}}]}),config=Settings('synthetic-placeholder'))
  def test_combined_budget_exact_ids_and_private_complex_not_sent(self):
   s=self.session();p=prepare(s,include_tables=True);self.assertEqual({c['id'] for c in p['request']['candidates']},{'p:2','t:2'})
   self.assertNotIn('20260001234',json.dumps(p['request']));self.assertEqual(p['auto_ranges']['tables'],{'1':'cover','2':'pending','3':'pending'});self.assertEqual(p['auto_ranges']['note_counts'],{'footnote':3,'endnote':3})
   raw={'suggestions':[{'id':'t:2','role':'body','evidence':'方案','reason':'wrong type'}]}
   with self.assertRaises(DemoError):validate(raw,p['request'])
-  raw['suggestions'][0].update(role='content',evidence='invented');self.assertFalse(validate(raw,p['request'])[0]['accepted'])
+  raw['suggestions'][0].update(role='content',evidence='invented',evidence_location='r1:c1');self.assertFalse(validate(raw,p['request'])[0]['accepted'])
  def test_new_scopes_original_confirmation_recheck_and_independent_parts(self):
   s=self.session();state={};start(s,state,structure_runner=self.runner);self.assertEqual(state['status'],'done',state.get('error'));self.assertTrue(s.table_enabled);self.assertTrue(s.note_enabled)
   self.assertEqual(s.table_types,{'1':'cover','2':'content','3':'pending'});self.assertEqual(len(s.note_draft['objects']),6);self.assertIn('一站式开始命令授权',s.note_draft['confirmation']);self.assertIn('一站式开始命令授权',s.table_confirmed['scope']['confirmation'])

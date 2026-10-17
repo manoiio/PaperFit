@@ -9,9 +9,9 @@ from .scope_session import fingerprint
 from .smart_session import binding,suggest,isolated
 
 
-def prepare(model,*,include_tables=False):
-    start=binding(model);rows=model.suggestions['paragraphs'];candidates=[];protected=[];remaining=0
-    fixed=bool(model.classification_confirmed or (model.mode=='basic' and model.body))
+def prepare(model,*,include_tables=False,preserve_paragraphs=False):
+    start=binding(model);rows=model.suggestions['paragraphs'];candidates=[];protected=[];remaining=0;local_roles={}
+    fixed=bool(preserve_paragraphs or model.classification_confirmed or (model.mode=='basic' and model.body))
     # Already prepared optional scopes remain protected, not a new inference target.
     from core.package import Package,NS,q
     pkg=Package(model.input_path)
@@ -37,6 +37,12 @@ def prepare(model,*,include_tables=False):
         if blocked or unsafe:
             protected.append({'id':'p:'+n,'reason':'人工确认/调整、明确材料保护或保留模块对象' if blocked else '复杂或特殊结构，不使用AI放开保护'})
             continue
+        if include_tables and current.startswith('heading'):
+            number=title_number(row['text']);outline=row.get('outline_level')
+            levels={number} if number else set()
+            if type(outline) is int and 0<=outline<=2:levels.add(outline+1)
+            if len(levels)==1 and (number or row.get('style_id') in ('Heading1','Heading2','Heading3')):
+                local_roles[n]='heading'+str(next(iter(levels)));continue
         unresolved_zone=(model.mode=='academic' and current=='other' and row['reason']=='所在章节不属于本阶段正文范围' and any(r['ambiguous'] and title_number(r['text']) for r in rows[max(0,i-12):i]))
         if not row['text'].strip() or not (row['ambiguous'] or current=='pending' or unresolved_zone):continue
         if len(candidates)>=MAX_CANDIDATES:remaining+=1;continue
@@ -52,17 +58,29 @@ def prepare(model,*,include_tables=False):
     auto=None
     if include_tables:
         from .auto_ranges import prepare as auto_prepare
-        from ai.structure import TABLE_VERSION,TABLE_PROMPT
+        from ai.structure import CONTEXT_VERSION,TABLE_PROMPT,CONTEXT_PROMPT
         from core.table_text import TYPES as TABLE_TYPES
-        auto=auto_prepare(model);request.update(version=TABLE_VERSION,allowed_table_roles=list(TABLE_TYPES))
+        auto=auto_prepare(model);request.update(version=CONTEXT_VERSION,allowed_table_roles=list(TABLE_TYPES))
+        from .auto_ranges import paragraph_context
+        for c in candidates:
+            index=int(c['id'][2:]);p=pkg.paragraphs[index-1]
+            c['context']=[paragraph_context(model,pkg,resolver,pkg.paragraphs[int(x['id'][2:])-1],'before' if int(x['id'][2:])<index else 'after') for x in c['context']]
+            anchors=[]
+            for x in c['anchors']:
+                row=rows[int(x['id'][2:])-1];number=title_number(row['text']);outline=row.get('outline_level')
+                reliable=bool(number and (outline is None or outline==number-1) or row.get('style_id') in ('Heading1','Heading2','Heading3') and outline==int(row['style_id'][-1])-1)
+                anchors.append({**x,'position':'before','withheld':x['text'].startswith('[保护'),'basis':'explicit_number' if number else 'style_outline' if reliable else 'unconfirmed_local_suggestion','reliable':reliable})
+            c['anchors']=anchors
         for item in auto['candidates']:
             trial={**request,'candidates':candidates+[item]}
             if len(candidates)>=MAX_CANDIDATES or len(json.dumps(trial,ensure_ascii=False,sort_keys=True))>MAX_INPUT:remaining+=1;continue
             candidates.append(item)
     while candidates and len(json.dumps(request,ensure_ascii=False,sort_keys=True))>MAX_INPUT:
         candidates.pop();remaining+=1
-    out={'binding':start,'request':request,'protected':protected,'remaining':remaining,'prompt_sha256':fingerprint(PROMPT+(TABLE_PROMPT if include_tables else ''))}
-    if auto is not None:out['auto_ranges']=auto
+    from ai.structure import prompt_for
+    out={'binding':start,'request':request,'protected':protected,'remaining':remaining,'prompt_sha256':fingerprint(prompt_for(request['version']))}
+    if auto is not None:out['auto_ranges']=auto;out['reliable_local_roles']=local_roles
+    if preserve_paragraphs:out['preserve_paragraphs']=True
     out['seal']=fingerprint(out)
     if binding(model)!=start:raise DemoError('准备期间文件或范围变化')
     return out
@@ -70,7 +88,7 @@ def prepare(model,*,include_tables=False):
 
 def verify(model,prepared):
     if prepared.get('seal')!=fingerprint({k:v for k,v in prepared.items() if k!='seal'}) or prepared['binding']!=binding(model):raise DemoError('AI候选已失效；请核对当前文件与范围后重新准备')
-    if prepared!=prepare(model,include_tables=prepared['request']['version']!=VERSION):raise DemoError('AI候选或提示词版本已变化')
+    if prepared!=prepare(model,include_tables=prepared['request']['version']!=VERSION,preserve_paragraphs=prepared.get('preserve_paragraphs',False)):raise DemoError('AI候选或提示词版本已变化')
 
 
 def run(model,prepared,store,*,transport=None,config=None):
@@ -99,7 +117,8 @@ def merge(model,prepared,result):
     if result.get('prepared_seal')!=prepared['seal']:raise DemoError('此前AI结果不能绑定新候选或新文件')
     # Validate again from this exact transmitted request; don't trust cached accepted flags.
     from ai.structure import validate
-    raw={'suggestions':[{k:r[k] for k in ('id','role','evidence','reason')} for r in result['suggestions']]}
+    keys=('id','role','evidence','reason')+(('evidence_location',) if prepared['request']['version']=='structure-v3-context' else ())
+    raw={'suggestions':[{k:r[k] for k in keys} for r in result['suggestions']]}
     checked=validate(raw,prepared['request']);proposal=suggest(model);types=proposal['draft']['paragraph_types']
     for row in checked:
         if row['accepted']:

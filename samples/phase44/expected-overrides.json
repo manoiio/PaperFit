@@ -1,0 +1,124 @@
+{
+  "version": "smart-supplement-v2",
+  "fields": {
+    "font_cn": {
+      "value": "宋体",
+      "unit": "font",
+      "quote": "正文宋体",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "font_size": {
+      "value": 12,
+      "unit": "pt",
+      "quote": "正文宋体小四",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "first_line_indent": {
+      "value": 2,
+      "unit": "chars",
+      "quote": "正文宋体小四，首行缩进两字符",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "line_spacing": {
+      "value": 2,
+      "unit": "multiple",
+      "quote": "正文宋体小四，首行缩进两字符，2倍行距",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "body__before": {
+      "value": {
+        "value": 0.5,
+        "unit": "lines"
+      },
+      "unit": "spacing",
+      "quote": "正文段前0.5行",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "body__after": {
+      "value": {
+        "value": 6,
+        "unit": "pt"
+      },
+      "unit": "spacing",
+      "quote": "正文段前0.5行，段后6pt",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "body__alignment": {
+      "value": "left",
+      "unit": "alignment",
+      "quote": "正文段前0.5行，段后6pt，居左",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading1_font_cn": {
+      "value": "黑体",
+      "unit": "font",
+      "quote": "一级标题黑体",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading1_font_size": {
+      "value": 16,
+      "unit": "pt",
+      "quote": "一级标题黑体三号",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading1_alignment": {
+      "value": "center",
+      "unit": "alignment",
+      "quote": "一级标题黑体三号居中",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading2_font_cn": {
+      "value": "宋体",
+      "unit": "font",
+      "quote": "二级标题宋体",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading2_font_size": {
+      "value": 12,
+      "unit": "pt",
+      "quote": "二级标题宋体小四",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading2_alignment": {
+      "value": "left",
+      "unit": "alignment",
+      "quote": "二级标题宋体小四居左",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading3_font_cn": {
+      "value": "黑体",
+      "unit": "font",
+      "quote": "三级标题黑体",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading3_font_size": {
+      "value": 12,
+      "unit": "pt",
+      "quote": "三级标题黑体小四",
+      "location": "摘录:L1",
+      "support": "supported"
+    },
+    "heading3_alignment": {
+      "value": "left",
+      "unit": "alignment",
+      "quote": "三级标题黑体小四居左",
+      "location": "摘录:L1",
+      "support": "supported"
+    }
+  },
+  "issues": []
+}

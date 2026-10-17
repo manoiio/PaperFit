@@ -1,0 +1,14 @@
+{
+  "source": "real API rejected, explicit table decisions then original local engines",
+  "sha256": "5d1edf9008ac81e9fbeedc6760edce0b23c8484d1a22e9bbe964a1cbcd27cb98",
+  "original_legal_bytes_equal": true,
+  "independent": {
+    "text_and_order_equal": true,
+    "unselected_ZIP_parts_equal": true,
+    "cover_nested_ambiguous_code_tables_exact": true,
+    "content_table_selected_font_size_only": true,
+    "system_notes_and_markers_fields_links_exact": true,
+    "excluded_top_paragraphs_exact": true
+  },
+  "remaining_note": "Independent oracle covers named protections; existing original transaction validates the complete format whitelist."
+}

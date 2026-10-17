@@ -1,0 +1,70 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-3",
+  "authorization": "点击开始智能排版：按显示规则与明确补充要求，处理可安全识别对象、另存复查；不含动态/移动/宽度/分页辅助",
+  "command_id": "c5558b363bfe48fc89fabe68a0a2d8dc",
+  "source_sha256": "1f842cd97aa67b5fc4a2c2ad1096886c0815d45a30beb9181fe865d02ef35501",
+  "start_binding": "1eb2ae6e1f6443372d1057440f7ef2117d780f3a6e17d40eb01ef640ed43388f",
+  "API": {
+    "requirements": {
+      "status": "not_applied",
+      "error": "依据必须是来源位置内的连续原句",
+      "requests": "未知或未发送；不自动重试"
+    }
+  },
+  "phases": [
+    "理解排版要求",
+    "识别论文内容",
+    "调整格式",
+    "检查修改后的文件"
+  ],
+  "candidate_count": 0,
+  "candidate_kinds": {
+    "paragraphs": 0,
+    "tables": 0,
+    "remaining": 0
+  },
+  "structure_local_only": true,
+  "auto_ranges": {
+    "tables": {},
+    "protected": [],
+    "note_counts": {
+      "footnote": 0,
+      "endnote": 0
+    },
+    "limits": [],
+    "table_roles": {}
+  },
+  "user_decisions": {
+    "requirements": "template"
+  },
+  "plan_sha256": "9dd11bfdb6d86493585dd4713015dea15f45b82d10e6986ea4b18644b58f8fc2",
+  "selected_count": 32,
+  "confirmed_scope_sha256": "4d191a1d575fb356d7b99fb0ed34ea25d604b932ec57499cec4746b8ad0696ea",
+  "processed_scope": {
+    "tables": {},
+    "notes": []
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 1,
+    "selected": 32,
+    "changes": 32,
+    "output_sha256": "8ecef57e6a97494f444634dc29bf8216cd7e1ed686f95d1474f3ced7ab737e30",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 22,
+      "problem_count": 1,
+      "review_count": 8,
+      "review_findings": 8,
+      "review_notes": 0,
+      "pass_count": 38,
+      "not_applicable_count": 12,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 12
+    }
+  },
+  "automatic_input_switch": false
+}

@@ -97,6 +97,9 @@ def main(output,browser_zip=None):
         s=WebSession(out/name);s.set_mode('academic');assert s.load(SOURCE.read_bytes(),'合成.docx');return s
     def runner(s,p,store):
         rows=[{'id':c['id'],'role':labels['table_roles'][c['id'][2:]] if c.get('kind')=='table' else labels['paragraph_roles'][c['id'][2:]],'evidence':c['text'],'reason':'作者预先标注的模拟响应'} for c in p['request']['candidates']]
+        if p['request']['version']=='structure-v3-context':
+            for row,c in zip(rows,p['request']['candidates']):
+                row['evidence_location']=c['fragments'][0]['id'] if c.get('kind')=='table' else 'text';row['evidence']=c['fragments'][0]['text'] if c.get('kind')=='table' else c['text']
         return run(s,p,store,config=Settings('synthetic-placeholder'),transport=lambda *_:json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps({'suggestions':rows})}}]}))
     def legal(types,tables,notes):
         s=session('legal-'+str(time.time_ns()));s.set_types(types);s.set_table_enabled(True);s.set_table_types(tables);s.enable_notes(True);notes=deepcopy(notes);notes.update(input_sha256=s.inventory['input_sha256'],confirmed=False);s.edit_notes(notes);s.confirm_tables();s.confirm_notes();assert s.confirm_and_check(),s.error

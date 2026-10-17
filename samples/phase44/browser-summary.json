@@ -1,0 +1,62 @@
+{
+  "source": "native browser interactions; only supplement HTTP reply simulated in controlled path",
+  "windows": [
+    "1280x720",
+    "1440x900"
+  ],
+  "private_session_state_injection": false,
+  "default_SCUT": {
+    "main_actions": 3,
+    "advanced_workspace_visits": 0,
+    "API_POSTs": 0,
+    "byte_equal_explicit_template_fallback": true
+  },
+  "controlled_supplement": {
+    "main_actions": 4,
+    "manual_exception_decisions": 0,
+    "local_workspace_visits": 0,
+    "simulated_responses": 1,
+    "API_POSTs": 0,
+    "overridden_fields": 16,
+    "changes": 42,
+    "problem_count": 1,
+    "review_count": 8,
+    "output_sha256": "b978dfe640b08bdc7e37d17c6b37f556d3a04ffeb48ca900c4f3bae1e6bd57a7"
+  },
+  "live_structure": {
+    "main_actions": 6,
+    "manual_decisions": 2,
+    "API_POSTs": 1,
+    "accepted_AI_suggestions": 0,
+    "validation": "rejected"
+  },
+  "live_supplement": {
+    "main_actions": 6,
+    "manual_decisions": 1,
+    "API_POSTs": 1,
+    "supplement_applied": false,
+    "final_choice": "explicit original template"
+  },
+  "project_restored_after_service_restart": {
+    "native_confirmation": true,
+    "current_report_regenerated": true,
+    "API_POSTs": 0,
+    "onepass_authorization_not_restored": true
+  },
+  "extra_edit_invalidates": {
+    "warning_visible": true,
+    "current_onepass_download_buttons": 0,
+    "additional_API_POSTs": 0
+  },
+  "limits": [
+    "browser is not Word or page rendering acceptance",
+    "no measured same-task old-workbench total click count or speed percentage",
+    "mock success is not live model success"
+  ],
+  "final_local_suite": {
+    "tests": 1290,
+    "seconds": 228.792,
+    "paid_sent": 0,
+    "unmocked_attempts": 0
+  }
+}

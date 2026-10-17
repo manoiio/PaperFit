@@ -32,8 +32,8 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         is_default=model.custom_rules_path is None and model.active_template is None
         st.write('排版要求：'+('SCUT本科工理类 · 2015年项目材料演示规则' if is_default else rules['name']))
         st.caption('规则版本：'+str(rules['version'])+('。2015年材料，不宣称现行通用校规。' if is_default else '。沿用已生效配置和来源。')+'未规定的属性不自动补齐。')
-        extra=st.text_input('还有其他要求吗？（可选）',placeholder='例如：在SCUT要求基础上，正文改为四号、2倍行距',key='onepass-extra-'+task,max_chars=2000,
-                            help='快捷补充先支持明确的正文常用字号、倍数行距。其他格式要求可在高级工作区设置。')
+        extra=st.text_input('还有其他要求吗？（可选）',placeholder='例如：正文宋体小四，首行缩进两字符；一级标题黑体三号居中；表内文字五号',key='onepass-extra-'+task,max_chars=2000,
+                            help='支持明确的正文、各级标题、图表题、表内文字及页面常用格式；只覆盖提及字段，冲突或不支持要求会集中询问。')
         st.caption('开始后，需要时将向DeepSeek发送有限的脱敏文字摘录辅助识别段落及普通表格用途；脚注尾注本地识别。有补充要求时另解析一次补充文字。文件排版在本机完成，原稿保留。脱敏不保证彻底匿名。')
         valid=model.inventory is not None and current(model,state,extra)
         def progress(name):status.update(label=name);status.write(name)
