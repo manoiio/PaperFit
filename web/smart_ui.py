@@ -8,7 +8,7 @@ from .presentation import position
 def render_smart(model,root,load_builtin,upload_changed,render_results):
     st.header('智能处理')
     st.write('载入论文与要求 → 接受范围摘要 → 一键智能修正 → 下载与剩余事项')
-    st.caption('AI解析规范，程序执行排版。沿用当前已生效要求；本流程在本机执行，不发送论文、不自动调用AI或生成页面。')
+    st.caption('AI解析规范，程序执行排版。沿用当前已生效要求；检查修正在本机执行；可选AI结构识别仅在明确点击后发送有限脱敏摘录，不自动调用AI或生成页面。')
     if model.inventory is None:
         a,b=st.columns([1.5,1])
         with a:
@@ -53,8 +53,12 @@ def render_smart(model,root,load_builtin,upload_changed,render_results):
         elif model.result:
             st.info('已有正式输出。查看不会切换输入；如需继续，请明确使用副本。')
             render_results()
+        from .structure_ui import render_structure
+        render_structure(model,state)
         if st.button('分析范围建议（不修改论文）',key='smart-prepare',type='primary' if not model.report else 'secondary'):
-            state.clear();state['proposal']=suggest(model);st.rerun()
+            previous=state.get('structure');state.clear()
+            if previous:state['structure']=previous
+            state['proposal']=suggest(model);st.rerun()
         proposal=state.get('proposal')
         if proposal:
             if proposal['source_binding']!=now:
@@ -62,6 +66,9 @@ def render_smart(model,root,load_builtin,upload_changed,render_results):
             else:
                 st.subheader('本次要求与范围摘要')
                 st.write('使用当前生效要求：'+str(proposal['rules']['name']))
+                if proposal.get('structure_ai'):
+                    ai=proposal['structure_ai']
+                    st.write(f'范围来源：本地直接纳入 {ai["local_included"]} 个；AI补充 {ai["accepted"]} 个；冲突/拒绝 {ai["rejected"]} 个，未返回 {ai["omitted"]} 个仍沿用本地状态。')
                 p=proposal['preflight']
                 st.dataframe([{'区域':r['name'],'本次启用':r['enabled'],'草稿纳入':r['selected'],'未纳入/待核对':r['pending'],'已有要求':r['configured']} for r in p['areas']],hide_index=True,width='stretch',height=250)
                 with st.expander('全部对象、排除原因和范围限制'):

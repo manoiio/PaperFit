@@ -325,7 +325,7 @@ elif step==1:
                 st.markdown('**或使用内置合成样本**')
                 st.button('使用错误样本',on_click=load_builtin,args=('errors',),width='stretch')
                 st.button('使用正确对照',on_click=load_builtin,args=('correct',),width='stretch')
-            st.caption('检查和修正在本机完成；只有明确解析公开规范时才调用DeepSeek。')
+            st.caption('检查和修正在本机完成；公开规范解析或智能处理中的有限摘录结构识别，仅明确点击各自发送按钮才调用DeepSeek。')
     render_project(model)
     with st.expander('检查模式与更多内置样本'):
         def mode_changed():

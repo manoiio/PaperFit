@@ -1,0 +1,44 @@
+{
+  "baseline": "b599a97",
+  "full_local_tests": {
+    "count": 1257,
+    "seconds": 205.426,
+    "result": "OK",
+    "log_sha256": "2ccaaab92673d3f2c8ba06042a78642758d813d68ac99a2e842717991c6a6d55"
+  },
+  "remote_full_CI": "not_triggered_manual_only",
+  "real_API_requests": 1,
+  "blocked_extra_browser_attempt_POSTs": 0,
+  "browser": {
+    "actual_structure_to_scope_and_download": true,
+    "same_result_cache_new_POSTs": 0,
+    "project_service_restart_restore": true,
+    "two_isolated_contexts": true,
+    "private_session_state_injection": false,
+    "inflight_mutation": "controlled transport test, not real API browser acceptance",
+    "network_failure_fallback": "mocked native AppTest, not real network failure"
+  },
+  "DOCX_sha256": "edb00388cf17f98f593323d7fadc5a318d7da787ec10a560f8f496453a034c4b",
+  "P40_local_browser_same_SHA256": "82d0c27e5b3ceb2f5c2fa90d756c19e3f6578dc2b9535b28de0b82e33c02597a",
+  "new_Word_or_render_acceptance": false,
+  "source_sha256": {
+    "ai/__init__.py": "4a3e5df79a27a038db310627ff8d3e23aa650afc7551db72b305ff10df64d2f1",
+    "ai/structure.py": "8dbd0755cd951060b448a60e94663c991e67c2f8450f2486f919f156866d0252",
+    "app.py": "a3d2e29484984125263156481b71e286ca5420b8083518c3cf549176587ffb05",
+    "scripts/build_structure_fixture.py": "7cdf76df6b65bd4dadffd75de545b387aa438e34a2938a745c7c909907db8aba",
+    "scripts/reproduce_structure_workflow.py": "f459db68ee6f8db1f9c8ca256838893db8a56a58d137212a071fa9efdb0e6d0c",
+    "tests/test_structure_ai.py": "c024a6d2c642c9c5fd75fe045ee831c05d428bb65a4a10b0a162d0aeadfafe3a",
+    "tests/test_structure_ui.py": "5b27bbf508017bb35ca6095987d634fa6b64c6d17171fdaec78d563d8c6b08b7",
+    "web/rehearsal_session.py": "d3417f6bee910b58c304c9ad42bdff7bfb7aaaeeb2ad929887431e73cfd671d6",
+    "web/smart_session.py": "ffc59b2d45a1d5fa2021935dbb1b1e501a891b8d4eaf840fcb674f5f5ce7ff28",
+    "web/smart_ui.py": "13c0702d58f8b6a1df8530f3fff0357fc12367772fe47398290bd120ac4f2a70",
+    "web/structure_session.py": "d43a735bc2693e60aefdafb174d603c2cba3f45c0961fdfa10b199fb83fa3459",
+    "web/structure_ui.py": "f39cfc6f5376070a25bfe8e9719ffcad395782605c9fcbd9179d74931f75fc0e",
+    "web/workbench_ui.py": "aa10cb45ac4cecc8b21832272d5456dd5219da688934c98abbb0d9498e5f049a"
+  },
+  "screens_sha256": {
+    "ai-result-cache-1280.png": "c846b5b684d5f1a3fbba56abaacaad04b2e22ce59c2880a970e77a945624059e",
+    "before-send-1280.png": "1c956ff0038cebafe4a4242af33ef5c1a26778d04474fd1f39074208373af69c",
+    "result-1440.png": "173b1b501c6608d650d0b35d49e2fbaa52e4d4341908f3dad387193ae4aca22c"
+  }
+}

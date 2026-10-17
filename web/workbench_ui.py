@@ -23,7 +23,7 @@ def render_workbench(model,root):
   try:fn();model.template_error=None
   except Exception as e:model.template_error=public_error(e)
  with st.expander('统一规范工作台 · 一次解析、整体确认、规则包',expanded=True):
-  st.caption('单文档主要规则入口。论文处理在本机；仅点击解析时发送已核对的公开规范摘录。规则包跨文档复用要求，不含论文；项目包用于继续工作，包含论文。')
+  st.caption('单文档主要规则入口。论文处理在本机；本规范入口仅点击解析时发送已核对的公开规范摘录；智能处理中的可选结构识别另行明确发送有限论文摘录。规则包跨文档复用要求，不含论文；项目包用于继续工作，包含论文。')
   try:current=model.current_rule_bundle()
   except Exception as e:st.error(public_error(e));return
   summary=[]
