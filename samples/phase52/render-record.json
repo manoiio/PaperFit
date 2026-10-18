@@ -1,0 +1,11 @@
+{
+  "renderer": "Codex bundled LibreOffice / Poppler",
+  "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+  "actual_script_bundle": "26.1015.12040",
+  "legacy_metadata_bundle_label": "26.1013.11914",
+  "page_count": 8,
+  "all_pages_viewed": true,
+  "input_bytes_unchanged": true,
+  "Word_page_count": 10,
+  "differences": "LibreOffice8pages vs Word10. Cached TOC is Word1/2/4/7; LO real positions differ. Existing themed heading glyph ghosting is visible; no unselected font/style changed."
+}

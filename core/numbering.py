@@ -65,3 +65,65 @@ def numbering_info(pkg,res,p):
 
 def public_numbering(info):
     return {k:v for k,v in info.items() if k not in ('paragraph_properties','symbol_properties')}
+
+
+def heading_numbering(pkg,p):
+    """Definition proof for Word heading measurement, NOT a sequence calculator.
+    Existing numbering_info and its format execution guards remain unchanged.
+    """
+    from .formats import Resolver
+    import re
+    out={'present':False,'status':'not_applicable','numbering_xml_modified':False,'continuity_checked':False}
+    try:
+        props={};origin='none';res=Resolver(pkg)
+        for layer in res.layers(p,kind='pPr'):
+            es=layer.findall(q('numPr'))
+            if len(es)>1:raise Unresolved('重复numPr')
+            if es:
+                out['present']=True;origin='direct' if layer.getparent() is p else 'style'
+                if any(e.tag not in (q('numId'),q('ilvl')) for e in es[0]):raise Unresolved('复杂编号属性')
+                for tag in ('numId','ilvl'):
+                    vs=es[0].findall(q(tag))
+                    if len(vs)>1:raise Unresolved('重复编号值')
+                    if vs:props[tag]=vs[0].get(q('val'))
+        if props.get('numId')=='0':return {**out,'present':False}
+        if not out['present']:return out
+        root=parse(pkg.parts.get('word/numbering.xml',b'<numbering/>'))
+        ns=[n for n in root.findall(q('num')) if n.get(q('numId'))==props.get('numId')]
+        if len(ns)!=1:raise Unresolved('编号实例缺失或重复')
+        refs=ns[0].findall(q('abstractNumId'))
+        if len(refs)!=1:raise Unresolved('抽象编号关联不唯一')
+        absns=[n for n in root.findall(q('abstractNum')) if n.get(q('abstractNumId'))==refs[0].get(q('val'))]
+        if len(absns)!=1:raise Unresolved('抽象编号缺失或重复')
+        abstract=absns[0]
+        if abstract.find(q('numStyleLink')) is not None or abstract.find(q('styleLink')) is not None:raise Unresolved('未知编号样式链接')
+        index=props.get('ilvl')
+        if index is None:
+            sid=p.find('w:pPr/w:pStyle',NS);sid=sid.get(q('val')) if sid is not None else None
+            matched=[l.get(q('ilvl')) for l in abstract.findall(q('lvl')) if l.find(q('pStyle')) is not None and l.find(q('pStyle')).get(q('val'))==sid]
+            if len(matched)!=1:raise Unresolved('样式编号层级不能唯一确定')
+            index=matched[0]
+        if index not in ('0','1','2'):raise Unresolved('仅支持一至三级标题编号')
+        levels=[e for e in abstract.findall(q('lvl')) if e.get(q('ilvl'))==index]
+        if len(levels)!=1:raise Unresolved('编号层级缺失或重复')
+        level=levels[0];overrides=ns[0].findall(q('lvlOverride'));seen=set()
+        for ov in overrides:
+            idx=ov.get(q('ilvl'))
+            if idx in seen or idx not in ('0','1','2') or any(e.tag not in (q('startOverride'),q('lvl')) for e in ov):raise Unresolved('复杂/重复编号覆盖')
+            seen.add(idx)
+            if len(ov.findall(q('startOverride')))>1 or len(ov.findall(q('lvl')))>1:raise Unresolved('重复编号起点覆盖')
+            start=ov.find(q('startOverride'))
+            if start is not None and (not start.get(q('val'),'').isdigit() or not 1<=int(start.get(q('val'))) <=32767):raise Unresolved('编号起始值非法')
+            replacement=ov.find(q('lvl'))
+            if replacement is not None:
+                if replacement.get(q('ilvl'))!=idx:raise Unresolved('编号覆盖层级不符')
+                if idx==index:level=replacement
+        for tag in ('numFmt','lvlText','start','lvlRestart','pStyle'):
+            if len(level.findall(q(tag)))>1:raise Unresolved('重复编号层级属性')
+        fmt=level.find(q('numFmt'));pattern=level.find(q('lvlText'))
+        if fmt is None or fmt.get(q('val'))!='decimal' or pattern is None or not re.fullmatch(r'%1(?:[.、)]?%2)?(?:[.、)]?%3)?[.、)]?',pattern.get(q('val'),'')):raise Unresolved('仅支持常见十进制多级编号')
+        tokens=[int(t) for t in re.findall(r'%([1-3])',pattern.get(q('val'),''))]
+        if tokens!=list(range(1,int(index)+2)):raise Unresolved('编号模板层级不符')
+        if level.find(q('lvlPicBulletId')) is not None:raise Unresolved('图片编号保持')
+        return {**out,'status':'resolved','origin':origin,'level':int(index)+1,'num_id':props['numId'],'abstract_id':refs[0].get(q('val')),'template':pattern.get(q('val')),'reason':'定义已解析；显示编号须由Word读取，未检查连续性'}
+    except (Unresolved,DemoError,ET.XMLSyntaxError,ValueError) as exc:return {**out,'status':'review','reason':str(exc)}

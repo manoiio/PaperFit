@@ -46,7 +46,7 @@ def prepare(model,*,include_tables=False,preserve_paragraphs=False):
             number=title_number(row['text']);outline=row.get('outline_level')
             levels={number} if number else set()
             if type(outline) is int and 0<=outline<=2:levels.add(outline+1)
-            if len(levels)==1 and (number or row.get('style_id') in ('Heading1','Heading2','Heading3')):
+            if len(levels)==1 and (number or row.get('style_id') in ('Heading1','Heading2','Heading3') or type(outline) is int and row.get('automatic_level')==outline+1 and row.get('heading_style_level')==outline+1):
                 local_roles[n]='heading'+str(next(iter(levels)));continue
         unresolved_zone=(model.mode=='academic' and current=='other' and row['reason']=='所在章节不属于本阶段正文范围' and any(r['ambiguous'] and title_number(r['text']) for r in rows[max(0,i-12):i]))
         if not row['text'].strip() or not (row['ambiguous'] or current=='pending' or unresolved_zone):continue
@@ -78,7 +78,7 @@ def prepare(model,*,include_tables=False,preserve_paragraphs=False):
             anchors=[]
             for x in c['anchors']:
                 row=rows[int(x['id'][2:])-1];number=title_number(row['text']);outline=row.get('outline_level')
-                reliable=bool(number and (outline is None or outline==number-1) or row.get('style_id') in ('Heading1','Heading2','Heading3') and outline==int(row['style_id'][-1])-1)
+                reliable=bool(number and (outline is None or outline==number-1) or type(outline) is int and row.get('heading_style_level')==outline+1 and row.get('automatic_level')==outline+1 or row.get('style_id') in ('Heading1','Heading2','Heading3') and outline==int(row['style_id'][-1])-1)
                 anchors.append({**x,'position':'before','withheld':x['text'].startswith('[保护'),'basis':'explicit_number' if number else 'style_outline' if reliable else 'unconfirmed_local_suggestion','reliable':reliable})
             c['anchors']=anchors
         for item in auto['candidates']:

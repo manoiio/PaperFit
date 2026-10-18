@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "final_sha256": "746fc69681fad046c7ee0f95c2dea381517075d1195209b236717736cda42f61",
+  "numbering_xml_byte_equal": true,
+  "all_other_field_stage_parts_byte_equal": true,
+  "sdt_shell_and_outside_title_preserved": true,
+  "top_level_identity_preserved": true,
+  "heading_numPr_styles_and_text_preserved": true,
+  "exact_reverse_mask_document_equal": true,
+  "entries": [
+    {
+      "paragraph": 5,
+      "number": "1",
+      "title": "研究方法",
+      "page": "1",
+      "anchor": "PFToc_1ad31f3aabf5_5"
+    },
+    {
+      "paragraph": 15,
+      "number": "1.1",
+      "title": "实现步骤",
+      "page": "2",
+      "anchor": "PFToc_1ad31f3aabf5_15"
+    },
+    {
+      "paragraph": 25,
+      "number": "1.1.1",
+      "title": "参数设置",
+      "page": "4",
+      "anchor": "PFToc_1ad31f3aabf5_25"
+    },
+    {
+      "paragraph": 35,
+      "number": "5",
+      "title": "研究方法",
+      "page": "7",
+      "anchor": "PFToc_1ad31f3aabf5_35"
+    }
+  ]
+}

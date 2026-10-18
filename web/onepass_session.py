@@ -456,7 +456,7 @@ def poll_fields(model,state):
         adopt(stage,job);proof=stage.result['field_update']['validation'];state['audit']['field_update']={'status':'updated','validation':proof,'counts':{k:sum(r['kind']==k for r in job['plan']['selected']) for k in ('TOC','REF','PAGEREF')},'kept_count':len(job['plan']['kept'])}
         if previous:
             r=stage.result;previous['steps'].append({'kind':'field_update','round':r['round']['number'],'input_sha256':r['round']['input_sha256'],'output_sha256':r['after']['input_sha256'],'changes':len(r['changes'])});previous['fields_evaluated']=True;previous['total_changes']+=len(r['changes']);r['assembly']=previous;stage.history[-1]['saved_record']={'assembly':deepcopy(previous),'field_update':deepcopy(r['field_update'])}
-            state['audit']['assembly_steps']=deepcopy(previous['steps']);state['pending_outcome'].update(changes=previous['total_changes'],rounds=len(previous['steps']))
+            state['audit']['assembly_steps']=deepcopy(previous['steps']);state['pending_outcome'].update(changes=previous['total_changes'],rounds=len(previous['steps']),output_sha256=r['after']['input_sha256'],summary=deepcopy(r['after']['summary']))
     except Exception as exc:
         state['audit']['field_update']={'status':'failed','reason':str(exc),'fallback':'已经验证的普通排版/页码副本'}
     return publish(model,state,state['pending_outcome'],lambda _:None,state['id'])

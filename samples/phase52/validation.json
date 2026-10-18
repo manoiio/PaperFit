@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "browser_major_actions": 4,
+  "browser_exceptions": 0,
+  "API_requests": 0,
+  "browser_start_to_download_seconds": 15.892,
+  "first_browser_extra_help_action": 1,
+  "smart_and_original_local_bytes_equal": true,
+  "current_input_unchanged": true,
+  "Word_separate_integration": true,
+  "automatic_Word_and_paid_HTTP_blocked": true,
+  "remote_CI": "manual; not triggered",
+  "baseline_tests": 1368,
+  "final_summary_sha256_matches_download": true,
+  "new_test_count": 11,
+  "existing_tests_preserved": 1368,
+  "Word_observation_download_hash_equal": true,
+  "remaining_findings": {
+    "problems": 6,
+    "reviews_and_notes": 85
+  },
+  "second_browser_session": {
+    "has_upload": true,
+    "download_buttons": 0,
+    "start_disabled": true
+  },
+  "final_full_tests": 1379,
+  "real_paid_requests_sent": 0,
+  "blocked_unmocked_paid": 0,
+  "real_Word_in_unit_suite": 0,
+  "blocked_unmocked_Word": 0,
+  "prior_full_tests": 1379,
+  "prior_full_seconds": 496.756,
+  "author_role_map_independently_rechecked": true,
+  "browser_after_summary_fix_seconds": 15.88,
+  "last_lock_on_guard_reuses_same_unlocked_fixture_evidence": true,
+  "final_full_seconds": 495.44,
+  "execution_sha256": "78c5aaf6a29d15e853d8dc07e6215fc5b4463abc2b9aee3c60bcf0c6a9407290"
+}

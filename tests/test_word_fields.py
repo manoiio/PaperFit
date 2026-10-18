@@ -119,5 +119,5 @@ class WordFieldsTests(unittest.TestCase):
     poll_fields(s,state)
     if state['status']!='updating':break
     time.sleep(.02)
-  self.assertEqual(state['status'],'done',state.get('error'));self.assertEqual(state['audit']['field_update']['status'],'updated');self.assertEqual(state['outcome']['rounds'],3);self.assertEqual(s.generation_count,3);steps=state['audit']['assembly_steps'];self.assertEqual(steps[-1]['kind'],'field_update');self.assertEqual(steps[-2]['output_sha256'],steps[-1]['input_sha256']);self.assertEqual(state['outcome']['changes'],sum(x['changes'] for x in steps))
+  self.assertEqual(state['status'],'done',state.get('error'));self.assertEqual(state['audit']['field_update']['status'],'updated');self.assertEqual(state['outcome']['rounds'],3);self.assertEqual(s.generation_count,3);steps=state['audit']['assembly_steps'];self.assertEqual(steps[-1]['kind'],'field_update');self.assertEqual(steps[-2]['output_sha256'],steps[-1]['input_sha256']);self.assertEqual(state['outcome']['changes'],sum(x['changes'] for x in steps));self.assertEqual(state['outcome']['output_sha256'],s.result['after']['input_sha256']);self.assertEqual(state['outcome']['summary'],s.result['after']['summary'])
 if __name__=='__main__':unittest.main()

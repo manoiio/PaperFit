@@ -2,10 +2,10 @@
 import re
 VERSION='structure-evidence-1'
 def heading(row):
- text=row['text'].strip();level=row.get('number_level');outline=row.get('outline_level');style=row.get('style_id')
+ text=row['text'].strip();level=row.get('number_level') or row.get('automatic_level');outline=row.get('outline_level');style=row.get('style_id')
  if row.get('special') or row.get('toc_like') or not text or len(text)>60 or re.search('[。！？!?；;]',text):return None
  if not level or re.match(r'^\d+\s*(?:年|月|日|个|项|倍|磅|pt|mm|cm|%)',text,re.I):return None
- if outline==level-1 and style=='Heading'+str(level):return level
+ if outline==level-1 and (style=='Heading'+str(level) or row.get('heading_style_level')==level):return level
  if level==1 and re.match(r'^第[一二三四五六七八九十百零〇\d]+章\s*\S',text) and row.get('narrative_after'):return level
  return None
 

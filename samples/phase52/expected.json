@@ -1,0 +1,41 @@
+{
+  "top_level_paragraphs": 44,
+  "headings": [
+    {
+      "paragraph": 5,
+      "level": 1,
+      "display": "1",
+      "text": "研究方法",
+      "origin": "style"
+    },
+    {
+      "paragraph": 15,
+      "level": 2,
+      "display": "1.1",
+      "text": "实现步骤",
+      "origin": "direct"
+    },
+    {
+      "paragraph": 25,
+      "level": 3,
+      "display": "1.1.1",
+      "text": "参数设置",
+      "origin": "direct"
+    },
+    {
+      "paragraph": 35,
+      "level": 1,
+      "display": "5",
+      "text": "研究方法",
+      "origin": "direct"
+    }
+  ],
+  "Word_authoring": "Created public seed, applied native Word list template linked to built-in heading1, updated native TOC, saved; public metadata scrubbed; source caches deliberately changed to99. No model involved.",
+  "continuity_claim": false,
+  "source_adjustments": [
+    "公开元数据",
+    "封面标记",
+    "目录缓存99",
+    "目录后显式空段作为原分节事务的安全边界"
+  ]
+}

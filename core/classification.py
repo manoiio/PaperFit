@@ -115,8 +115,8 @@ def suggest_paragraph_types(input_path, *, include_sections=False, body_start=No
         try:
             raw=res.value(res.layers(p,kind='pPr'),'outlineLvl')
             outline=int(raw) if raw is not None else None
-            if sid in ('Heading1','Heading2','Heading3') and style_name.lower() in (f'heading {sid[-1]}',f'标题 {sid[-1]}',f'标题{sid[-1]}'):
-                style_level=int(sid[-1])
+            match=re.fullmatch(r'(?:heading|标题)\s*([1-3])',style_name,re.I)
+            if match:style_level=int(match[1])
         except (Unresolved,ValueError):pass
         level=title_number(text)
         numbered=numbering_heading_level(pkg,res,p)
@@ -133,7 +133,7 @@ def suggest_paragraph_types(input_path, *, include_sections=False, body_start=No
         main_start=(level==1 and len(next_text)>20 and bool(re.search(r'[。！？!?]',next_text)))
         references=re.match(r'^[\[［]\d+[\]］]',text)
         from .structure_evidence import heading
-        boundary=heading({'text':text,'number_level':level,'style_id':sid,'outline_level':outline,'special':special,'toc_like':bool(toc),'narrative_after':main_start})
+        boundary=heading({'text':text,'number_level':level,'automatic_level':(__import__('core.numbering',fromlist=['heading_numbering']).heading_numbering(pkg,p).get('level') if numbered or style_level else None),'style_id':sid,'heading_style_level':style_level,'outline_level':outline,'special':special,'toc_like':bool(toc),'narrative_after':main_start})
         if boundary==1:zone='main';main=True;heading_seen=True
         drawing=bool(p.xpath('.//w:drawing|.//w:pict',namespaces=NS))
         if marker:
@@ -181,7 +181,7 @@ def suggest_paragraph_types(input_path, *, include_sections=False, body_start=No
         else:
             kind='pending';ambiguous=True;reason='短文本或尚未找到正文起点，需人工确认'
         rows.append({'index':n,'text':text,'style_id':sid,'style_name':style_name,'outline_level':outline,
-                     'suggested_type':kind,'reason':reason,'ambiguous':ambiguous,'special':special,'number_level':level,'toc_like':bool(toc),'narrative_after':main_start,'structure_boundary':boundary==1 or n==body_start,'section_marker':marker,'marker_name':marker_text if marker else None})
+                     'heading_style_level':style_level,'suggested_type':kind,'reason':reason,'ambiguous':ambiguous,'special':special,'number_level':level,'automatic_level':(__import__('core.numbering',fromlist=['heading_numbering']).heading_numbering(pkg,p).get('level') if numbered or style_level else None),'toc_like':bool(toc),'narrative_after':main_start,'structure_boundary':boundary==1 or n==body_start,'section_marker':marker,'marker_name':marker_text if marker else None})
     if include_sections:
         from .section_classification import refine
         refine(rows)

@@ -1,0 +1,444 @@
+{
+  "status": "done",
+  "current": true,
+  "kind": "onepass_command",
+  "version": "onepass-8",
+  "authorization": "本次开始命令：所列格式、数字、页码及Word安全缓存更新；safe-layout-v1另授权安全题注位置、固定内容表/关联图片缩小、L01–L04；不含自动列宽转固定",
+  "command_id": "0b85e562ff9f49acb43f36ccce97e389",
+  "source_sha256": "65bfb8b5b3deda256327fdfa08c3d3b073da41a115d71caa9c4d0a115781834e",
+  "start_binding": "b6f32ab4673065ad105df4a276aca131e4a7ab8271597c3090dc8663bbfe787c",
+  "API": {},
+  "phases": [
+    "识别论文内容",
+    "调整格式",
+    "本机Word更新目录和引用",
+    "检查修改后的文件"
+  ],
+  "assembly_authorization": {
+    "policy": {
+      "version": 3,
+      "dynamic": true,
+      "pages": "front-body",
+      "roman": "lowerRoman",
+      "body_start": 1,
+      "front_start": 1,
+      "chapter_restart": false,
+      "footer": "chapter",
+      "text": "",
+      "alignment": "center",
+      "auxiliaries": "safe-layout-v1",
+      "targets": [
+        "cover",
+        "front",
+        "body"
+      ]
+    },
+    "evidence": [],
+    "source_locations": [],
+    "grant": "本次开始命令授权所列安全事务，不冒充旧勾选"
+  },
+  "candidate_count": 0,
+  "candidate_kinds": {
+    "paragraphs": 0,
+    "tables": 0,
+    "remaining": 0
+  },
+  "structure_local_only": true,
+  "auto_ranges": {
+    "tables": {},
+    "protected": [],
+    "note_counts": {
+      "footnote": 0,
+      "endnote": 0
+    },
+    "limits": [],
+    "table_roles": {}
+  },
+  "structure": {
+    "version": "structure-evidence-1",
+    "body_start": 5,
+    "chapters": [
+      {
+        "paragraph": 5,
+        "role": "heading1",
+        "level": 1,
+        "source": "style_outline_number"
+      },
+      {
+        "paragraph": 15,
+        "role": "heading2",
+        "level": 2,
+        "source": "style_outline_number"
+      },
+      {
+        "paragraph": 25,
+        "role": "heading3",
+        "level": 3,
+        "source": "style_outline_number"
+      },
+      {
+        "paragraph": 35,
+        "role": "heading1",
+        "level": 1,
+        "source": "style_outline_number"
+      }
+    ],
+    "markers": [
+      {
+        "paragraph": 2,
+        "role": "abstract_cn_title",
+        "source": "independent_marker"
+      }
+    ],
+    "regions": [
+      {
+        "start": 1,
+        "end": 1,
+        "purpose": "other",
+        "role": "pending"
+      },
+      {
+        "start": 2,
+        "end": 4,
+        "purpose": "front",
+        "role": "abstract_cn_title"
+      },
+      {
+        "start": 5,
+        "end": 34,
+        "purpose": "body",
+        "role": "heading1"
+      },
+      {
+        "start": 35,
+        "end": 44,
+        "purpose": "body",
+        "role": "heading1"
+      }
+    ],
+    "conflicts": [],
+    "physical_pages_computed": false,
+    "body_start_source": "shared_structure_evidence"
+  },
+  "plan_sha256": "25ad620bf551a9d1385d53b233bed35befa71c907ff3fda0d32c19fa495655bc",
+  "selected_count": 111,
+  "confirmed_scope_sha256": "0239eee1a350f827e3f5c88b93019e7a288b940d0be03fc35a7055d9eba1d8b7",
+  "auxiliaries": [
+    {
+      "stage": "position",
+      "input_sha256": "fb33a5b253fde317abcff74d7b49f29494b93c5d4ba2c22430a89ccf5a2a4f96",
+      "objects": [],
+      "selected_count": 0,
+      "status": "not_applicable",
+      "seconds": 0.0078
+    },
+    {
+      "stage": "width",
+      "input_sha256": "8d241ee2dfa60ce8720c4fcb772cddc4d0fb6ff1c8460acbd095113ca5a269f0",
+      "objects": [],
+      "selected_count": 0,
+      "status": "not_applicable",
+      "seconds": 0.01
+    },
+    {
+      "stage": "pagination",
+      "input_sha256": "8d241ee2dfa60ce8720c4fcb772cddc4d0fb6ff1c8460acbd095113ca5a269f0",
+      "objects": [
+        {
+          "key": "L03:2:3",
+          "status": "selected",
+          "reason": "实际XML顺序紧接，建议尚未应用；须确认所选对象"
+        },
+        {
+          "key": "L03:5:6",
+          "status": "protected",
+          "reason": "非普通段落，待复核"
+        },
+        {
+          "key": "L03:15:16",
+          "status": "protected",
+          "reason": "非普通段落，待复核"
+        },
+        {
+          "key": "L03:25:26",
+          "status": "protected",
+          "reason": "非普通段落，待复核"
+        },
+        {
+          "key": "L03:35:36",
+          "status": "protected",
+          "reason": "非普通段落，待复核"
+        }
+      ],
+      "selected_count": 1,
+      "status": "verified",
+      "seconds": 0.3976,
+      "changes": 2,
+      "output_sha256": "1ad31f3aabf59de7d53838d46a77b79466ee4eadb366675dfcf52da92c9434b4"
+    }
+  ],
+  "dynamic_scope_proof": {
+    "method": "full_supported_inventory",
+    "unresolved": [
+      "文档含REF/PAGEREF/SEQ，关联无法完整同步"
+    ],
+    "not_manual_complete_confirmation": true
+  },
+  "dynamic_blocked_groups": [
+    {
+      "group": [
+        "automatic_inventory"
+      ],
+      "paragraphs": [],
+      "reasons": [
+        "文档含REF/PAGEREF/SEQ，关联无法完整同步"
+      ]
+    }
+  ],
+  "assembly_steps": [
+    {
+      "kind": "format",
+      "round": 1,
+      "input_sha256": "65bfb8b5b3deda256327fdfa08c3d3b073da41a115d71caa9c4d0a115781834e",
+      "output_sha256": "fb33a5b253fde317abcff74d7b49f29494b93c5d4ba2c22430a89ccf5a2a4f96",
+      "changes": 111
+    },
+    {
+      "kind": "section_pages",
+      "round": 2,
+      "input_sha256": "fb33a5b253fde317abcff74d7b49f29494b93c5d4ba2c22430a89ccf5a2a4f96",
+      "output_sha256": "8d241ee2dfa60ce8720c4fcb772cddc4d0fb6ff1c8460acbd095113ca5a269f0",
+      "changes": 7
+    },
+    {
+      "kind": "pagination_layout",
+      "round": 3,
+      "input_sha256": "8d241ee2dfa60ce8720c4fcb772cddc4d0fb6ff1c8460acbd095113ca5a269f0",
+      "output_sha256": "1ad31f3aabf59de7d53838d46a77b79466ee4eadb366675dfcf52da92c9434b4",
+      "changes": 2
+    },
+    {
+      "kind": "field_update",
+      "round": 4,
+      "input_sha256": "1ad31f3aabf59de7d53838d46a77b79466ee4eadb366675dfcf52da92c9434b4",
+      "output_sha256": "746fc69681fad046c7ee0f95c2dea381517075d1195209b236717736cda42f61",
+      "changes": 1
+    }
+  ],
+  "field_update": {
+    "status": "updated",
+    "validation": {
+      "input_sha256": "1ad31f3aabf59de7d53838d46a77b79466ee4eadb366675dfcf52da92c9434b4",
+      "output_sha256": "746fc69681fad046c7ee0f95c2dea381517075d1195209b236717736cda42f61",
+      "unselected_parts_byte_equal": true,
+      "original_object_relative_order": true,
+      "paragraph_map": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+        "10": "10",
+        "11": "11",
+        "12": "12",
+        "13": "13",
+        "14": "14",
+        "15": "15",
+        "16": "16",
+        "17": "17",
+        "18": "18",
+        "19": "19",
+        "20": "20",
+        "21": "21",
+        "22": "22",
+        "23": "23",
+        "24": "24",
+        "25": "25",
+        "26": "26",
+        "27": "27",
+        "28": "28",
+        "29": "29",
+        "30": "30",
+        "31": "31",
+        "32": "32",
+        "33": "33",
+        "34": "34",
+        "35": "35",
+        "36": "36",
+        "37": "37",
+        "38": "38",
+        "39": "39",
+        "40": "40",
+        "41": "41",
+        "42": "42",
+        "43": "43",
+        "44": "44"
+      },
+      "retired_TOC_paragraphs": [],
+      "new_TOC_paragraphs": [],
+      "added_bookmarks": [
+        {
+          "name": "PFToc_1ad31f3aabf5_5",
+          "id": "4",
+          "paragraph": 5
+        },
+        {
+          "name": "PFToc_1ad31f3aabf5_15",
+          "id": "5",
+          "paragraph": 15
+        },
+        {
+          "name": "PFToc_1ad31f3aabf5_25",
+          "id": "6",
+          "paragraph": 25
+        },
+        {
+          "name": "PFToc_1ad31f3aabf5_35",
+          "id": "7",
+          "paragraph": 35
+        }
+      ],
+      "selected_fields": [
+        "field:1"
+      ],
+      "passes": [
+        {
+          "pass": 1,
+          "seconds": 0.688,
+          "readback_seconds": 0.629,
+          "final_target_pages_equal": true
+        },
+        {
+          "pass": 2,
+          "seconds": 0.77,
+          "readback_seconds": 0.622,
+          "final_target_pages_equal": true
+        }
+      ],
+      "target_pages": {
+        "PFToc_1ad31f3aabf5_5": {
+          "adjusted": 1,
+          "physical": 3,
+          "display": "1"
+        },
+        "PFToc_1ad31f3aabf5_15": {
+          "adjusted": 2,
+          "physical": 4,
+          "display": "2"
+        },
+        "PFToc_1ad31f3aabf5_25": {
+          "adjusted": 4,
+          "physical": 6,
+          "display": "4"
+        },
+        "PFToc_1ad31f3aabf5_35": {
+          "adjusted": 7,
+          "physical": 9,
+          "display": "7"
+        }
+      },
+      "cache_values": {},
+      "kept": [],
+      "calculator_package_published": false,
+      "heading_numbering": [
+        {
+          "present": true,
+          "status": "resolved",
+          "numbering_xml_modified": false,
+          "continuity_checked": false,
+          "origin": "style",
+          "level": 1,
+          "num_id": "1",
+          "abstract_id": "9",
+          "template": "%1",
+          "reason": "定义已解析；显示编号须由Word读取，未检查连续性",
+          "paragraph": 5,
+          "display": "1\t研究方法",
+          "source": "Word measured; definition read-only; continuity not checked"
+        },
+        {
+          "present": true,
+          "status": "resolved",
+          "numbering_xml_modified": false,
+          "continuity_checked": false,
+          "origin": "direct",
+          "level": 2,
+          "num_id": "1",
+          "abstract_id": "9",
+          "template": "%1.%2",
+          "reason": "定义已解析；显示编号须由Word读取，未检查连续性",
+          "paragraph": 15,
+          "display": "1.1\t实现步骤",
+          "source": "Word measured; definition read-only; continuity not checked"
+        },
+        {
+          "present": true,
+          "status": "resolved",
+          "numbering_xml_modified": false,
+          "continuity_checked": false,
+          "origin": "direct",
+          "level": 3,
+          "num_id": "1",
+          "abstract_id": "9",
+          "template": "%1.%2.%3",
+          "reason": "定义已解析；显示编号须由Word读取，未检查连续性",
+          "paragraph": 25,
+          "display": "1.1.1\t参数设置",
+          "source": "Word measured; definition read-only; continuity not checked"
+        },
+        {
+          "present": true,
+          "status": "resolved",
+          "numbering_xml_modified": false,
+          "continuity_checked": false,
+          "origin": "direct",
+          "level": 1,
+          "num_id": "2",
+          "abstract_id": "9",
+          "template": "%1",
+          "reason": "定义已解析；显示编号须由Word读取，未检查连续性",
+          "paragraph": 35,
+          "display": "5\t研究方法",
+          "source": "Word measured; definition read-only; continuity not checked"
+        }
+      ],
+      "original_sha256_unchanged": true,
+      "only_authorized_field_caches": true,
+      "unselected_zip_member_bytes_equal": true
+    },
+    "counts": {
+      "TOC": 1,
+      "REF": 0,
+      "PAGEREF": 0
+    },
+    "kept_count": 0
+  },
+  "processed_scope": {
+    "tables": {},
+    "notes": []
+  },
+  "outcome": {
+    "status": "adopted",
+    "rounds": 4,
+    "selected": 111,
+    "changes": 121,
+    "output_sha256": "746fc69681fad046c7ee0f95c2dea381517075d1195209b236717736cda42f61",
+    "fix_calls_at_adoption": 0,
+    "summary": {
+      "rule_count": 28,
+      "problem_count": 6,
+      "review_count": 85,
+      "review_findings": 75,
+      "review_notes": 10,
+      "pass_count": 121,
+      "not_applicable_count": 48,
+      "conclusion": "已覆盖检查发现问题",
+      "applicable_rule_count": 14
+    }
+  },
+  "automatic_input_switch": false
+}

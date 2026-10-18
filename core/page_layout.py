@@ -10,7 +10,7 @@ from .front import section_inventory,fields,R,REL
 from .classification import validate_classification
 from .table_text import rebind
 from .page_policy import validate as policy_validate
-VERSION='section-pages-1'
+VERSION='section-pages-2'
 CT='http://schemas.openxmlformats.org/package/2006/content-types'
 SOURCE={'label':'用户明确选择的页码/章节页脚方案','quote':'可选产品结构处理，不是学校默认要求；PAGE域存在不代表目录或引用页码已刷新。'}
 def digest(d):return sha256(json.dumps(d,ensure_ascii=False,sort_keys=True).encode())
@@ -24,8 +24,17 @@ def safe_boundary(pkg,start):
  for node in (prev,p):
   from .formats import paragraph_unsafe
   if paragraph_unsafe(node):raise DemoError('分节边界含格式修订、浮动框架、字段或未支持结构')
-  if node.xpath('.//w:sectPrChange|.//w:rPrChange|.//w:ins|.//w:del|.//w:sdt|.//w:bookmarkStart|.//w:bookmarkEnd|.//w:fldChar|.//w:fldSimple|.//w:hyperlink|.//w:drawing|.//w:pict|.//w:object',namespaces=NS):raise DemoError('分节边界包含复杂对象、书签或字段')
-  if any(c.tag not in (q('pPr'),q('r')) for c in node):raise DemoError('分节边界结构不明确')
+  bookmarks=node.xpath('.//w:bookmarkStart|.//w:bookmarkEnd',namespaces=NS)
+  if bookmarks:
+   from .word_fields import paragraph_level
+   from .numbering import heading_numbering
+   ni=heading_numbering(pkg,node)
+   if not paragraph_level(pkg,node,True) or ni.get('present') and ni.get('status')!='resolved':raise DemoError('分节边界书签不属于可证明标题')
+   for bm in bookmarks:
+    ident=bm.get(q('id'));starts=pkg.root.xpath('.//w:bookmarkStart[@w:id=$i]',namespaces=NS,i=ident);ends=pkg.root.xpath('.//w:bookmarkEnd[@w:id=$i]',namespaces=NS,i=ident)
+    if len(starts)!=1 or len(ends)!=1 or starts[0].getparent() is not node or ends[0].getparent() is not node or node.index(starts[0])>=node.index(ends[0]) or not re.fullmatch(r'_Toc[0-9]{1,20}|PFToc_[a-f0-9]{12}_[0-9]{1,6}',starts[0].get(q('name'),'')):raise DemoError('分节边界书签不唯一、跨段或不是普通目录目标')
+  if node.xpath('.//w:sectPrChange|.//w:rPrChange|.//w:ins|.//w:del|.//w:sdt|.//w:fldChar|.//w:fldSimple|.//w:hyperlink|.//w:drawing|.//w:pict|.//w:object',namespaces=NS):raise DemoError('分节边界包含复杂对象、书签或字段')
+  if any(c.tag not in (q('pPr'),q('r'),q('bookmarkStart'),q('bookmarkEnd')) for c in node):raise DemoError('分节边界结构不明确')
   if len(node.findall(q('pPr')))>1:raise DemoError('重复段落属性')
  # A page break isolated in an otherwise empty preceding paragraph can leave an extra page.
  if not text(prev).strip() and prev.xpath('.//w:br[@w:type="page"]',namespaces=NS):raise DemoError('边界前有独立分页空段，请先核对，不能悄悄删段')

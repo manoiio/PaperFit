@@ -1,0 +1,39 @@
+{
+  "real_Word": true,
+  "updated": false,
+  "paragraphs": {
+    "5": {
+      "adjusted": 1,
+      "physical": 1,
+      "numbering": {
+        "level": 1,
+        "display": "1"
+      }
+    },
+    "15": {
+      "adjusted": 2,
+      "physical": 2,
+      "numbering": {
+        "level": 2,
+        "display": "1.1"
+      }
+    },
+    "25": {
+      "adjusted": 4,
+      "physical": 4,
+      "numbering": {
+        "level": 3,
+        "display": "1.1.1"
+      }
+    },
+    "35": {
+      "adjusted": 5,
+      "physical": 5,
+      "numbering": {
+        "level": 1,
+        "display": "5"
+      }
+    }
+  },
+  "source_hash_unchanged": true
+}

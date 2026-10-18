@@ -16,7 +16,14 @@ def render_local(model):
      clear_timeout_guard();st.success('已核对Word进程退出，隔离标记已清除；不会自动重试。')
     except Exception as exc:st.warning(public_error(exc))
   try:
-   ctx,_=context(model);inv=inventory(ctx['input']);rows=inv['objects'];labels={r['id']:r['kind']+' · 第'+str(r['start'])+'段 · '+r['instruction'].strip() for r in rows if r['safe']}
+   ctx,_=context(model);inv=inventory(ctx['input']);rows=inv['objects'];labels={r['id']:r['kind']+(' · 目录容器'+str(r['container'])+' / 内段'+str(r['start'])+' · ' if r.get('container') else ' · 第'+str(r['start'])+'段 · ')+r['instruction'].strip() for r in rows if r['safe']}
+   with st.expander('标题层级与只读编号证据'):
+    from core.package import Package
+    from core.word_fields import paragraph_level
+    from core.numbering import heading_numbering
+    pkg=Package(ctx['input'])
+    st.dataframe([{'位置':n,'层级':paragraph_level(pkg,p,True),'文字':''.join(p.xpath('.//w:t/text()',namespaces=__import__('core.package',fromlist=['NS']).NS)),**heading_numbering(pkg,p)} for n,p in enumerate(pkg.paragraphs,1) if paragraph_level(pkg,p,True)],hide_index=True)
+    st.caption('编号定义已解析不等于显示编号或连续性已检查。Word预演成功后可在验证记录中查看实测显示值。')
    selected=st.multiselect('本次更新对象',list(labels),default=list(labels),format_func=labels.get,key='word-fields-'+ctx['sha256'])
    for r in rows:
     if not r['safe']:st.caption(r['kind']+' 保持：'+str(r['reason']))

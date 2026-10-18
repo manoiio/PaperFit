@@ -1,0 +1,42 @@
+{
+  "actual_download_sha256": "746fc69681fad046c7ee0f95c2dea381517075d1195209b236717736cda42f61",
+  "Word_actual_open": true,
+  "repair_prompt": false,
+  "toc_display": [
+    "1\t研究方法\t1",
+    "1.1\t实现步骤\t2",
+    "1.1.1\t参数设置\t4",
+    "5\t研究方法\t7"
+  ],
+  "levels": [
+    1,
+    2,
+    3,
+    1
+  ],
+  "target_physical_pages": [
+    3,
+    4,
+    6,
+    9
+  ],
+  "target_display_pages": [
+    1,
+    2,
+    4,
+    7
+  ],
+  "original_physical_pages": [
+    1,
+    2,
+    4,
+    5
+  ],
+  "internal_follow_target": "last identical-title heading, automatic number5; physical9",
+  "page_count": 10,
+  "numbering_definitions_modified": false,
+  "continuity_checked": false,
+  "closed_without_save_hash_unchanged": true,
+  "visual_limit": "Word及LibreOffice的原有主题标题字形存在重影/叠印；编号、目录目标和页码可核对，但不是全文视觉通过。",
+  "Word_level2_level3_glyph_ghosting_visible": true
+}
