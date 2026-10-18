@@ -8,7 +8,7 @@ import re,json
 from lxml import etree as E
 from .package import Package,DemoError,NS,q,sha256,write_new
 from .toc import ordered_text,nodes
-VERSION='word-fields-2'
+VERSION='word-fields-3'
 MAX_PASSES=4
 SOURCE={'label':'本机Word显式目录/引用更新（非学校新规则）','quote':'仅更新已授权的安全目录和目标唯一的REF/PAGEREF保存结果'}
 def canon(e):return E.tostring(e,method='c14n')
@@ -158,7 +158,9 @@ def inventory(path):
   if kind in ('TOC','REF','PAGEREF'):rows.append({'id':'container:'+str(j),'kind':kind,'instruction':f['instruction'],'start':None,'end':None,'safe':False,'reason':'内容控件/表格/文本框中的域首版保持；需在Word中核对','target':None,'levels':None})
  return {'input_sha256':pkg.hash,'objects':rows,'limits':['更新主文档顶层安全TOC/REF/PAGEREF及普通块级目录内容控件；其他故事、锁定/绑定/复杂容器保持','目标存在不证明引用语义或目录正确；最终另行Word分页核对'],'story_issues':ri['issues'],'additional_target_free_orphan_proof':extra}
 
-def plan(path,classification,selected=None,creation=None):
+def plan(path,classification,selected=None,creation=None,appearance='preserve'):
+ from .toc_appearance import validate
+ appearance=validate(appearance)
  from .classification import validate_classification
  pkg=Package(path);m=validate_classification(pkg,classification);inv=inventory(pkg);rows=inv['objects'];ids={r['id'] for r in rows if r['safe']};chosen=ids if selected is None else set(selected)
  if chosen-ids:raise DemoError('包含未通过安全校验或旧定位的域')
@@ -176,7 +178,7 @@ def plan(path,classification,selected=None,creation=None):
    p=pkg.paragraphs[n-1];oid='d:'+str(ps.index(p)+1)
    if not s.get('confirmed') or objects.get(oid) not in ('level1','level2','level3','unknown') or any(e.tag not in {q(t) for t in ('p','pPr','pStyle','jc','spacing','ind','tabs','tab','r','rPr','rFonts','sz','szCs','b','i','t','color','u')} for e in p.iter()) or p.find('w:pPr/w:sectPr',NS) is not None:raise DemoError('只可替换已确认目录区域内的普通手工条目/空条目，标题保持')
   if any(not r.get('container') and r['start'] is not None and r['start']<=creation['end'] and r['end']>=creation['start'] for r in rows):raise DemoError('创建范围与已有域冲突')
- return {'version':VERSION,'input_sha256':pkg.hash,'classification_sha256':sha256(json.dumps(m,sort_keys=True).encode()),'selected':selected_rows,'kept':kept,'creation':deepcopy(creation)}
+ return {'version':VERSION,'input_sha256':pkg.hash,'classification_sha256':sha256(json.dumps(m,sort_keys=True).encode()),'selected':selected_rows,'kept':kept,'creation':deepcopy(creation),'appearance':appearance}
 
 def run_text(value,rpr=None):
  r=E.Element(q('r'))
@@ -250,7 +252,7 @@ def update(source,output,classification,transaction,*,calculator=None,artifact_d
  from .word_native import calculate
  calculator=calculator or calculate
  a=Package(source)
- if transaction!=plan(source,classification,[r['id'] for r in transaction['selected']],transaction['creation']):raise DemoError('目录/引用方案与当前输入不匹配')
+ if transaction!=plan(source,classification,[r['id'] for r in transaction['selected']],transaction['creation'],transaction.get('appearance','preserve')):raise DemoError('目录/引用方案与当前输入不匹配')
  if a.signed or a.ambiguous_sections:raise DemoError('签名或分节归属异常，禁止更新')
  # Do not send potentially active external instructions to Word at all.
  for name,raw in a.parts.items():
@@ -281,7 +283,7 @@ def update(source,output,classification,transaction,*,calculator=None,artifact_d
  for t in tocs:
   equal=[r for r in allrows if r['kind']=='TOC' and r.get('container')==t.get('container') and clean_instruction(r['instruction'])==clean_instruction(t['instruction'])]
   t['occurrence']=next((i for i,r in enumerate(equal) if r['start']==t['start']),0);t['occurrence_count']=len(equal) or 1
-  heads=[];templates={}
+  heads=[];templates={};typed_levels=set()
   for n,p in enumerate(original,1):
    level=paragraph_level(a,p,'\\u' in t['instruction'])
    if level not in t['levels']:continue
@@ -298,10 +300,29 @@ def update(source,output,classification,transaction,*,calculator=None,artifact_d
   # Keep the original cache paragraph formatting where available; no new school defaults.
   for n in range(t['start'],t['end']+1):
    p=field_paragraphs(a,t)[n-1];pr=p.find(q('pPr'));sid=pr.find(q('pStyle')) if pr is not None else None
-   mm=re.fullmatch(r'(?:TOC|目录)\s*([1-3])',sid.get(q('val'),''),re.I) if sid is not None else None
-   if pr is not None and pr.find(q('sectPr')) is None:templates.setdefault(int(mm[1]) if mm else 1,deepcopy(pr))
+   style=None
+   if sid is not None and a.styles is not None:style=next((x for x in a.styles if x.get(q('styleId'))==sid.get(q('val'))),None)
+   name=style.find(q('name')) if style is not None else None
+   mm=re.fullmatch(r'(?:TOC|目录)\s*([1-3])',name.get(q('val'),'') if name is not None else sid.get(q('val'),'') if sid is not None else '',re.I)
+   # Our published cache need not carry a style ID. Reuse its precise bookmark
+   # target identity to recover the level on later refreshes, never row text/order.
+   linked_levels=set()
+   for link in p.findall(q('hyperlink')):
+    target=link.get(q('anchor'))
+    matches=a.root.xpath('.//w:bookmarkStart[@w:name=$n]',namespaces=NS,n=target) if target else []
+    if len(matches)==1 and matches[0].getparent() in original:
+     pn=original.index(matches[0].getparent())+1
+     linked_levels.update(h['level'] for h in heads if h['paragraph']==pn)
+   linked=next(iter(linked_levels)) if len(linked_levels)==1 else None
+   if pr is not None and pr.find(q('sectPr')) is None:
+    level=linked or (int(mm[1]) if mm else 1);reliable=linked is not None or mm is not None
+    if level not in templates or reliable and level not in typed_levels:templates[level]=deepcopy(pr)
+    if reliable:typed_levels.add(level)
   for h in heads:
    if not any(e.get(q('name'))==h['anchor'] for e in a.root.iter(q('bookmarkStart'))) and h['anchor'] not in {s['name'] for s in anchor_specs}:anchor_specs.append({'name':h['anchor'],'id':str(nextid),'paragraph':h['paragraph']});nextid+=1
+  if transaction.get('appearance')=='standard':
+   from .toc_appearance import prepare
+   templates,appearance_record=prepare(a,t,templates,[h['level'] for h in heads]);t['appearance']=appearance_record
   t.update(heads=heads,templates=templates)
  # Original immutable skeleton is used on EVERY pass. Word package changes cannot leak in.
  from copy import deepcopy as cp
@@ -414,7 +435,7 @@ def update(source,output,classification,transaction,*,calculator=None,artifact_d
  write_new(output,raw,source)
  from .classification import validate_classification
  validate_classification(Package(output),out)
- proof={'input_sha256':a.hash,'output_sha256':h,'unselected_parts_byte_equal':True,'original_object_relative_order':True,'paragraph_map':pmap,'retired_TOC_paragraphs':sorted(retired),'new_TOC_paragraphs':[newps.index(p)+1 for p in created],'added_bookmarks':anchor_specs,'selected_fields':[r['id'] for r in selected],'passes':passes,'target_pages':pages,'cache_values':values,'kept':transaction['kept'],'calculator_package_published':False,'heading_numbering':[{**h['numbering'],'paragraph':h['paragraph'],'display':h.get('display_text'),'source':'Word measured; definition read-only; continuity not checked'} for t in tocs for h in t['heads'] if h.get('numbering')]}
+ proof={'input_sha256':a.hash,'output_sha256':h,'unselected_parts_byte_equal':True,'original_object_relative_order':True,'paragraph_map':pmap,'retired_TOC_paragraphs':sorted(retired),'new_TOC_paragraphs':[newps.index(p)+1 for p in created],'added_bookmarks':anchor_specs,'selected_fields':[r['id'] for r in selected],'passes':passes,'target_pages':pages,'cache_values':values,'kept':transaction['kept'],'calculator_package_published':False,'toc_appearance':[{'container':t.get('container'),'start':t['start'],**t['appearance']} for t in tocs if t.get('appearance')],'heading_numbering':[{**h['numbering'],'paragraph':h['paragraph'],'display':h.get('display_text'),'source':'Word measured; definition read-only; continuity not checked'} for t in tocs for h in t['heads'] if h.get('numbering')]}
  # Independent reverse-mask: remove only exact new bookmark pairs and restore precisely authorised cache blocks/results.
  check=deepcopy(pkg.root);cps=check.find(q('body')).findall(q('p'));cb=check.find(q('body'))
  for s in anchor_specs:
@@ -443,4 +464,4 @@ def update(source,output,classification,transaction,*,calculator=None,artifact_d
  if dict(check.attrib)!=dict(root_original.attrib):raise DemoError('主文档根属性发生非授权变化')
  if len(actual)!=len(surviving) or any(canon(x)!=canon(y) for x,y in zip(actual,surviving)):raise DemoError('回填改变未授权段落/格式')
  if any(a.parts[n]!=Package(output).parts[n] for n in a.parts if n!='word/document.xml'):raise DemoError('回填改变其他ZIP部件')
- return {'output':str(output),'classification':out,'proof':proof,'changes':[{'rule_id':'R44' if r['kind']!='TOC' else 'R30','locator':({'toc_container':r['container'],'toc_local_paragraph':r['start']} if r.get('container') else {'paragraph':r['start']}),'property':'field_cache','before':'旧保存结果','after':r['kind']+'已更新','verification':'pass','source':SOURCE} for r in selected]+([{'rule_id':'R30','locator':{'paragraph':transaction['creation']['start']},'property':'toc_creation','before':'已确认普通手工条目','after':'自动目录','verification':'pass','source':SOURCE}] if transaction['creation'] else [])}
+ return {'output':str(output),'classification':out,'proof':proof,'changes':[{'rule_id':'R44' if r['kind']!='TOC' else 'R30','locator':({'toc_container':r['container'],'toc_local_paragraph':r['start']} if r.get('container') else {'paragraph':r['start']}),'property':'field_cache','before':'旧保存结果','after':r['kind']+'已更新','verification':'pass','source':SOURCE} for r in selected]+[{'rule_id':'R30','locator':{'toc_container':t.get('container'),'paragraph':t['start']},'property':'toc_appearance','before':'原目录外观','after':'右对齐页码、原生点线及缺失层级缩进','verification':'pass','source':{'label':'项目默认目录外观（非学校强制要求）','quote':'本次授权目录结果段落：原生右对齐点线制表位、缺失的层级缩进与居左；字体字号保持'},'details':t['appearance']} for t in tocs if t.get('appearance',{}).get('state')=='applied']+([{'rule_id':'R30','locator':{'paragraph':transaction['creation']['start']},'property':'toc_creation','before':'已确认普通手工条目','after':'自动目录','verification':'pass','source':SOURCE}] if transaction['creation'] else [])}

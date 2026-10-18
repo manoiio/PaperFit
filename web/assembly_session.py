@@ -45,7 +45,11 @@ def prepare(stage,state,proposal):
    questions.append({'id':'page_front','text':'未能确定摘要/目录等前置部分的起点；可选正文起点表示没有单独前置区。','question':'前置部分从哪一段开始？','options':choices|{'skip':'本次保持原有页码'}})
   earliest=min(relevant_front,default=body)
   if 'cover' in targets and not cover_known(stage,pkg) and (earliest is None or earliest>1):questions.append({'id':'page_cover','text':'前置部分之前的内容尚未确定用途，不能凭顺序当作封面。','question':'前置部分之前是否全部属于不显示页码的封面？','options':{'cover':'是，整个封面区域不显示页码','keep':'不确定，保持这部分原有页码'}})
- if not questions:state['page_regions']=regions_from(stage,types,p,body_start=body,front_start=min((n for n in front if body and n<body),default=body),cover=cover_known(stage,pkg))
+ if not questions:
+  try:state['page_regions']=regions_from(stage,types,p,body_start=body,front_start=min((n for n in front if body and n<body),default=body),cover=cover_known(stage,pkg))
+  except DemoError as exc:
+   state['audit']['page_structure_blocker']=str(exc)
+   return [{'id':'page_conflict','text':str(exc),'question':'这份文件的现有边界不能安全设置新页码。是否保留原页码，继续其他安全整理？','options':{'keep':'保持原页码，继续整理','edit':'返回调整文件或页码设置'}}]
  for question in questions:
   if question['id'] in ('page_body','page_front'):
    plausible=[n for n,t in types.items() if t.startswith('heading') or t.endswith('_title') or (len(options.get(n,''))<=45 and options.get(n,'').strip())]

@@ -1,0 +1,76 @@
+{
+  "baseline": {
+    "commit": "9a4d5c7",
+    "tests": 1411
+  },
+  "API_requests": 0,
+  "browser": {
+    "default_major_operations": 3,
+    "format_only_major_operations": 5,
+    "default_user_decisions": 0,
+    "advanced_workspace_visits_required": 0,
+    "viewports": [
+      [
+        1280,
+        720
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "page_horizontal_overflow": false,
+    "default_rounds": 4,
+    "remaining": {
+      "problems": 3,
+      "review": 9
+    },
+    "repeat_download_same_bytes": true,
+    "project_history_download_same_bytes": true,
+    "current_input_not_auto_switched": true
+  },
+  "public_output_sha256": "a50a249eb8f779268b317e3f35520525d3f3dcf36b10c5fde3b1cd7f52e883ce",
+  "word": {
+    "native_pdf_pages": 4,
+    "pdf_sha256": "03d729de4a85fe57f050865f4b777b33f94a1635a84510986691049c05c01d05",
+    "PDF_seconds": 1.181,
+    "all_four_public_page_images_viewed": true,
+    "actual_window_directory_viewed": true,
+    "actual_internal_jump": {
+      "printed": 1,
+      "physical": 3
+    },
+    "observation_copy_closed_without_saving": true
+  },
+  "local_demonstration_only": {
+    "committed_content": false,
+    "directory_entries": 32,
+    "Word_PDF_pages": 19,
+    "actual_internal_jump": {
+      "printed": 15,
+      "physical": 19
+    },
+    "other_zip_parts_and_unselected_document_trees_equal": true,
+    "original_unchanged": true
+  },
+  "remote_CI_triggered": false,
+  "offline_tests": {
+    "passed": 1422,
+    "seconds": 752.728,
+    "paid_HTTP_sent": 0,
+    "unmocked_paid_HTTP_attempts": 0,
+    "real_Word_calls": 0,
+    "unmocked_Word_attempts": 0
+  },
+  "runtime_source_sha256": {
+    "app.py": "b2dc1bb61c89da8d5a91799c795f947582ede024727bfd60f6e664d70a5c1517",
+    "core/toc_appearance.py": "16eb71f129b4eda8d32dbd8ba2df4f311186a36ff744f43ee99ba8e8054f0b74",
+    "core/word_fields.py": "2b198a23140cb25f9b071ca76835643b1086ba49c6818f288ceb916ab3a3a8af",
+    "core/project_editor.py": "075fbf20b4dcaed377fe2bf8456c3ec087b0bc2ede40918212a857d7ce75ddd3",
+    "web/page_ui.py": "3c6251544357927c09854e19aaee730f14a7329861d10da8ed59d290e2264388",
+    "web/onepass_ui.py": "bb7ae94a656cf459d11cbaacf00210a2a04a78311cbbfa86246dc5267e1c4fe0",
+    "web/assembly_session.py": "553fc8d93bb92e875645308ff0815fe749411824c9b218a36d85be904441e83d",
+    "web/field_session.py": "9247d403cb43dd4a3fa5b2d4e82b27afd208d2e31c26a168d89e33ec45ffbd32",
+    "web/onepass_session.py": "24f9ea28ca05bb4b121cf0105bf5ff074ba9bff7abe347faa1fde287fc5c9a31"
+  }
+}

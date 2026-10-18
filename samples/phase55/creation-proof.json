@@ -1,0 +1,62 @@
+{
+  "native_Word_created_and_verified": true,
+  "toc_rows": 4,
+  "creation_range": [
+    6,
+    6
+  ],
+  "appearance": [
+    {
+      "container": null,
+      "start": 6,
+      "mode": "standard",
+      "source": "项目默认目录外观（非学校强制要求）",
+      "properties": [
+        "tabs:右对齐/dot",
+        "ind:缺失层级缩进",
+        "jc:居左"
+      ],
+      "levels": [
+        {
+          "level": 1,
+          "left_twips": 0,
+          "right_tab_twips": 9009,
+          "body_width_twips": 9009,
+          "state": "applied"
+        },
+        {
+          "level": 2,
+          "left_twips": 360,
+          "right_tab_twips": 9009,
+          "body_width_twips": 9009,
+          "state": "applied"
+        },
+        {
+          "level": 3,
+          "left_twips": 720,
+          "right_tab_twips": 9009,
+          "body_width_twips": 9009,
+          "state": "applied"
+        }
+      ],
+      "state": "applied",
+      "section": 1
+    }
+  ],
+  "other_zip_parts_byte_equal": true,
+  "passes": [
+    {
+      "pass": 1,
+      "seconds": 0.701,
+      "readback_seconds": 0.679,
+      "final_target_pages_equal": true
+    },
+    {
+      "pass": 2,
+      "seconds": 0.735,
+      "readback_seconds": 0.659,
+      "final_target_pages_equal": true
+    }
+  ],
+  "independent_unselected_document_subtrees_equal": true
+}

@@ -1,0 +1,42 @@
+{
+  "before_sha256": "65bfb8b5b3deda256327fdfa08c3d3b073da41a115d71caa9c4d0a115781834e",
+  "after_sha256": "9b1f50932732727b812b5b1152e375ce346ef0c98f898ddd9b02cb46f1ac41c5",
+  "other_zip_parts_byte_equal": true,
+  "unselected_document_subtrees_equal": true,
+  "native_tabs_and_links_valid": true,
+  "entries": [
+    {
+      "text": "1\t研究方法",
+      "page": "1",
+      "right_twips": 8630,
+      "left_twips": null
+    },
+    {
+      "text": "1.1\t实现步骤",
+      "page": "2",
+      "right_twips": 8630,
+      "left_twips": 440
+    },
+    {
+      "text": "1.1.1\t参数设置",
+      "page": "4",
+      "right_twips": 8630,
+      "left_twips": 880
+    },
+    {
+      "text": "5\t研究方法",
+      "page": "5",
+      "right_twips": 8630,
+      "left_twips": null
+    }
+  ],
+  "native_Word_updated": true,
+  "visual_checked": "Word PDF directory page only; not new all-page Word-window acceptance",
+  "numbering_xml_byte_equal": true,
+  "expected_number_prefixes": [
+    "1",
+    "1.1",
+    "1.1.1",
+    "5"
+  ]
+}

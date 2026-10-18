@@ -1,0 +1,33 @@
+{
+  "before_sha256": "df4f8435a0d9add0a821f4883f4e516233fa3a0fe1b74892bc995d75b2aa6611",
+  "after_sha256": "a50a249eb8f779268b317e3f35520525d3f3dcf36b10c5fde3b1cd7f52e883ce",
+  "other_zip_parts_byte_equal": true,
+  "unselected_document_subtrees_equal": true,
+  "native_tabs_and_links_valid": true,
+  "entries": [
+    {
+      "text": "第1章 目录外观验证",
+      "page": "1",
+      "right_twips": 9072,
+      "left_twips": 0
+    },
+    {
+      "text": "1.1 长标题验证普通标题换行后页码仍然位于同一个右侧边界并且不依靠连续句点或空格模拟引导线以及保持内部链接可用",
+      "page": "1",
+      "right_twips": 9072,
+      "left_twips": 360
+    },
+    {
+      "text": "1.1.1 参数与条件",
+      "page": "1",
+      "right_twips": 9072,
+      "left_twips": 720
+    },
+    {
+      "text": "第2章 核对结果",
+      "page": "2",
+      "right_twips": 9072,
+      "left_twips": 0
+    }
+  ]
+}

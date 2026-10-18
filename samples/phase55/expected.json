@@ -1,0 +1,29 @@
+{
+  "headings": [
+    {
+      "text": "第1章 目录外观验证",
+      "level": 1
+    },
+    {
+      "text": "1.1 长标题验证普通标题换行后页码仍然位于同一个右侧边界并且不依靠连续句点或空格模拟引导线以及保持内部链接可用",
+      "level": 2
+    },
+    {
+      "text": "1.1.1 参数与条件",
+      "level": 3
+    },
+    {
+      "text": "第2章 核对结果",
+      "level": 1
+    }
+  ],
+  "level_left_twips": [
+    0,
+    360,
+    720
+  ],
+  "right_stop": "section page width minus left/right margins and gutter; subtract paragraph right indent",
+  "leader": "dot",
+  "contents_must_not_change": true,
+  "school_default": false
+}

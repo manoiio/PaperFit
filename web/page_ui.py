@@ -6,7 +6,7 @@ from core.package import Package,DemoError
 from core import page_layout
 from .session import public_error
 
-def options(model,task,*,local=False):
+def legacy_options(model,task,*,local=False):
  saved=getattr(model,'page_layout_draft',None) or {};portable=model.current_rule_bundle().get('assembly') if model.inventory else None
  seed=(saved.get('policy') if saved.get('enabled') or saved.get('explicit') else None) or portable or DEFAULT;key='assembly-'+task+('-local' if local else '-smart')
  def chosen():
@@ -41,11 +41,73 @@ def options(model,task,*,local=False):
    st.caption('这是可选产品方案，不是学校官方唯一解释。新增分节可能改变分页；可选本机Word仅更新已验证的目录/REF/PAGEREF，不批量刷新其他域。')
   st.caption(('页脚居中。' if p['alignment']=='center' else '页脚居右。')+'点击开始授权：先整理格式，再同步可证明完整的安全编号组，最后生成PAGE及章节页脚，并在本机Word更新安全目录/引用；复杂组保留，不自动切换输入。')
  if enabled and choice.startswith('complete_safe'):st.caption('新版明确授权：安全题注位置纠正；仅缩小超宽固定内容表格及关联内嵌图片；唯一相邻属性和有据连续表头。未知、受保护和需改为固定列宽的对象保持。所有辅助完成后才由Word更新目录/引用。')
- model.field_updates_enabled=bool(enabled)
+ model.field_updates_enabled=bool(enabled and saved.get('word_updates',True))
  if enabled:st.caption('本次完整整理还将使用本机Word更新安全自动目录和REF/PAGEREF，并复查回填文件；失败时保留已验证排版副本。')
  if model.inventory:
-  new={'explicit':bool((getattr(model,'page_layout_draft',None) or {}).get('explicit',False)),'enabled':enabled,'policy':validate(p),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(saved.get('regions',[])) if saved.get('input_sha256')==model.inventory['input_sha256'] else []}
+  new={'explicit':bool((getattr(model,'page_layout_draft',None) or {}).get('explicit',False)),'enabled':enabled,'policy':validate(p),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(saved.get('regions',[])) if saved.get('input_sha256')==model.inventory['input_sha256'] else [],**{k:saved[k] for k in ('toc_appearance','word_updates') if k in saved}}
   if new!=saved and (enabled or new['explicit'] or saved):model.page_layout_draft=new
+ return validate(p) if enabled else None
+
+def smart_seed(model):
+ """Old saved policies are intent, never an invitation to upgrade them."""
+ saved=getattr(model,'page_layout_draft',None) or {}
+ portable=model.current_rule_bundle().get('assembly') if model.inventory else None
+ if saved:return deepcopy(saved)
+ restored=bool(model.history) or (getattr(model,'workbench',None) or {}).get('origin')=='restored'
+ if portable:return {'enabled':True,'explicit':False,'policy':deepcopy(portable),'toc_appearance':'preserve'}
+ if restored:return {'enabled':False,'explicit':True,'policy':deepcopy(DEFAULT),'toc_appearance':'preserve'}
+ return {'enabled':True,'explicit':False,'policy':{**DEFAULT,'version':3,'targets':['cover','front','body'],'auxiliaries':'safe-layout-v1','dynamic':True,'pages':'front-body'},'toc_appearance':'standard'}
+
+def word_seed(model,saved):
+ # Old v1/v2 carriers cannot prove a grant for the later Word updater.
+ if 'word_updates' in saved:return saved['word_updates']
+ return saved['policy'].get('version')==3 or any(h.get('result',{}).get('kind')=='field_update' for h in model.history)
+
+def options(model,task,*,local=False):
+ if local:return legacy_options(model,task,local=True)
+ saved=smart_seed(model);seed=saved['policy'];key='assembly-'+task+'-smart-v55'
+ def changed():st.session_state[key+'-changed']=True
+ with st.expander('调整处理内容'):
+  only=st.checkbox('仅整理文字格式',value=not saved['enabled'],key=key+'-only',on_change=changed)
+  p=deepcopy(seed)
+  enabled=not only
+  if enabled:
+   aids=st.checkbox('安全图表、分页相邻与编号同步',value=bool(seed.get('dynamic') or seed.get('version')==3),key=key+'-aids',on_change=changed)
+   # Merely displaying an old strategy preserves its original operation set.
+   if st.session_state.get(key+'-aids')!=bool(seed.get('dynamic') or seed.get('version')==3):
+    if aids:p.update(version=3,auxiliaries='safe-layout-v1',targets=deepcopy(seed.get('targets',['cover','front','body'])),dynamic=True)
+    else:
+     p.pop('auxiliaries',None);p.update(version=2,targets=deepcopy(seed.get('targets',['cover','front','body'])),dynamic=False)
+   pages=st.checkbox('设置分区页码与页脚',value=seed['pages']!='keep',key=key+'-page-enabled',on_change=changed)
+   if pages:
+    p['pages']=st.selectbox('页码安排',['front-body','chapter-footers'],index=0 if seed['pages']!='chapter-footers' else 1,format_func={'front-body':'封面无页码，前置罗马，正文重新编号','chapter-footers':'保留编号，只设置章节页脚'}.get,key=key+'-pages',on_change=changed)
+    a,b=st.columns(2)
+    p['body_start']=int(a.number_input('正文起始页码',min_value=1,max_value=9999,value=seed['body_start'],key=key+'-start',on_change=changed))
+    p['footer']=b.selectbox('正文页脚',['page','chapter','text'],index=['page','chapter','text'].index(seed['footer']),format_func={'page':'页码','chapter':'章节名称＋页码','text':'普通文字＋页码'}.get,key=key+'-footer',on_change=changed)
+    with st.expander('更多页码细节'):
+     p['roman']=st.selectbox('前置页码',['lowerRoman','upperRoman'],index=0 if seed['roman']=='lowerRoman' else 1,format_func={'lowerRoman':'小写罗马 i、ii','upperRoman':'大写罗马 I、II'}.get,key=key+'-roman',on_change=changed)
+     p['front_start']=int(st.number_input('前置起始数值',min_value=1,max_value=9999,value=seed['front_start'],key=key+'-front-start',on_change=changed))
+     p['chapter_restart']=st.checkbox('每章重新编号',value=seed['chapter_restart'],key=key+'-restart',on_change=changed)
+     p['alignment']=st.selectbox('页脚对齐',['center','right'],index=0 if seed['alignment']=='center' else 1,format_func={'center':'居中','right':'居右'}.get,key=key+'-align',on_change=changed)
+     if p['footer']=='text':p['text']=st.text_input('页脚文字',value=seed['text'],max_chars=80,key=key+'-text',on_change=changed)
+   else:p['pages']='keep'
+   word=st.checkbox('本机Word更新目录和引用',value=word_seed(model,saved),key=key+'-word',on_change=changed)
+   appearance=st.selectbox('目录外观',['standard','preserve'],index=0 if saved.get('toc_appearance','preserve')=='standard' else 1,format_func={'standard':'项目默认：点线、页码右对齐、分级缩进','preserve':'保留原目录段落格式'}.get,key=key+'-toc',on_change=changed) if word else saved.get('toc_appearance','preserve')
+   st.caption('项目默认外观不是学校强制要求。复杂对象保持；目录实际页码仅在Word成功更新和复查后确认。')
+  else:word=False;appearance=saved.get('toc_appearance','preserve')
+ explicit=saved.get('explicit',False) or st.session_state.pop(key+'-changed',False)
+ model.field_updates_enabled=bool(enabled and word)
+ if model.inventory:
+  old=getattr(model,'page_layout_draft',None) or {}
+  model.page_layout_draft={'explicit':explicit,'enabled':enabled,'policy':validate(p),'toc_appearance':appearance,'word_updates':bool(enabled and word),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(old.get('regions',[])) if old.get('input_sha256')==model.inventory['input_sha256'] else []}
+ if not enabled:st.caption('本次仅整理安全文字格式，保持原有编号、页码和目录。')
+ else:
+  parts=['文字格式']
+  if p.get('version')==3:parts.append('安全图表与分页相邻')
+  if p['dynamic']:parts.append('安全编号及引用同步')
+  if p['pages']!='keep':parts.append('分区页码与'+('章节页脚' if p['footer']=='chapter' else '页脚'))
+  if word:parts.append('本机Word目录与引用更新'+('及标准目录外观' if appearance=='standard' else ''))
+  st.caption('本次将处理：'+'、'.join(parts)+'。不确定事项同页集中询问，原稿保留。')
  return validate(p) if enabled else None
 
 def render_local(model):

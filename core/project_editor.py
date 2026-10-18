@@ -17,7 +17,11 @@ def validate_editor(data, rules_path):
     exact({k:v for k,v in data.items() if k not in ('workbench','page_layout_draft')},[k for k in KEYS if k not in ('workbench','page_layout_draft')],'编辑草稿')
     if data.get('page_layout_draft') is not None:
         from .page_policy import validate
-        d=data['page_layout_draft'];exact({k:v for k,v in d.items() if k!='explicit'},('enabled','policy','input_sha256','regions'),'页码方案草稿');require(type(d.get('explicit',False)) is bool,'页码方案选择无效');require(type(d['enabled']) is bool and type(d['regions']) is list and len(d['regions'])<=60,'页码草稿容量无效');validate(d['policy'])
+        d=data['page_layout_draft'];exact({k:v for k,v in d.items() if k not in ('explicit','toc_appearance','word_updates')},('enabled','policy','input_sha256','regions'),'页码方案草稿');require(type(d.get('explicit',False)) is bool,'页码方案选择无效');require(type(d['enabled']) is bool and type(d['regions']) is list and len(d['regions'])<=60,'页码草稿容量无效');validate(d['policy'])
+        if 'toc_appearance' in d:
+            from .toc_appearance import validate as appearance_validate
+            appearance_validate(d['toc_appearance'])
+        if 'word_updates' in d:require(type(d['word_updates']) is bool,'目录更新开关无效')
         from .project import hash_value
         hash_value(d['input_sha256'])
     if 'workbench' in data:

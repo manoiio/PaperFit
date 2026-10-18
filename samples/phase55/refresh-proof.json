@@ -1,0 +1,41 @@
+{
+  "same_bytes": true,
+  "appearance_choice": "preserve",
+  "native_Word_updated": true,
+  "passes": [
+    {
+      "pass": 1,
+      "seconds": 0.678,
+      "readback_seconds": 0.648,
+      "final_target_pages_equal": true
+    },
+    {
+      "pass": 2,
+      "seconds": 0.726,
+      "readback_seconds": 0.652,
+      "final_target_pages_equal": true
+    }
+  ],
+  "target_pages": {
+    "PFToc_df4f8435a0d9_8": {
+      "adjusted": 1,
+      "physical": 3,
+      "display": "1"
+    },
+    "PFToc_df4f8435a0d9_12": {
+      "adjusted": 1,
+      "physical": 3,
+      "display": "1"
+    },
+    "PFToc_df4f8435a0d9_16": {
+      "adjusted": 1,
+      "physical": 3,
+      "display": "1"
+    },
+    "PFToc_df4f8435a0d9_20": {
+      "adjusted": 2,
+      "physical": 4,
+      "display": "2"
+    }
+  }
+}

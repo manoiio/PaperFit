@@ -46,15 +46,21 @@ def upload_changed(key):
 
 
 def restart():
+    current_model = st.session_state.workflow
     try:
-        model.reset()
+        current_model.reset()
+        # Explicit new task: old per-file processing choices are not a new grant.
+        current_model.page_layout_draft = None
+        current_model.field_updates_enabled = False
+        for key in list(st.session_state):
+            if key.startswith('assembly-new-smart-v55'):st.session_state.pop(key,None)
         st.session_state.upload_generation += 1
         st.session_state['short-spec-text'] = ''
         # Reset is a new task, not an explicit choice of the advanced basic mode.
         st.session_state.pop('check-mode',None)
     except Exception as exc:
-        model.invalidate()
-        model.error = public_error(exc)
+        current_model.invalidate()
+        current_model.error = public_error(exc)
 
 
 def body_key(n):

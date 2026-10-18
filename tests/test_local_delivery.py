@@ -70,6 +70,7 @@ class LocalDelivery(TestCase):
   with TemporaryDirectory() as d:
    model=WebSession(d);model.set_mode('academic');model.load((local.ROOT/'samples/errors.docx').read_bytes(),'公开.docx')
    app=AppTest.from_file(str(local.ROOT/'app.py'));app.session_state.workflow=model;app.session_state['workspace-smart']=True;app.run()
+   app.checkbox(key='assembly-'+model.task_dir.name+'-smart-v55-only').check().run()
    with patch.object(model,'result_package',side_effect=AssertionError('Only explicit preparation')) as package:
     app.button(key='onepass-start').click().run();self.assertFalse(app.exception);self.assertIsNotNone(model.result);app.run();package.assert_not_called()
  def test_physical_space_path_is_owned_but_prefix_lookalike_is_not(self):

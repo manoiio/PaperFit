@@ -9,6 +9,7 @@ from .scope_session import fingerprint
 
 def render_onepass(model,root,load_builtin,upload_changed,render_results):
     st.header('智能排版')
+    st.write('整理文字格式、图表与分页，并在本机 Word 可用时更新目录。')
     task=model.task_dir.name if model.task_dir else 'new'
     state=st.session_state.setdefault('onepass-'+task,{})
     input_ui=st.session_state.get('requirements-ui-'+task,{})
@@ -16,9 +17,7 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
     prior_extra=st.session_state.get('onepass-extra-'+task,'') if input_ui.get('choice','current')=='current' else ''
     from .page_ui import options as assembly_options
     prior_done=model.inventory is not None and state.get('status')=='done' and current(model,state,prior_extra,selected)
-    if prior_done:
-        with st.expander('本次整理方案（查看或调整）'):assembly_options(model,task)
-    elif model.inventory is not None:assembly_options(model,task)
+    if model.inventory is not None:assembly_options(model,task)
     completed=model.inventory is not None and state.get('status')=='done' and current(model,state,prior_extra,selected)
     if completed:render_success(model,state,render_results)
     else:st.write('上传论文，按要求整理，下载修改好的副本。原稿保留。')
@@ -34,7 +33,7 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         with st.expander('没有文件？使用内置合成样本'):
             a,b=st.columns(2);a.button('使用错误样本',on_click=builtin,args=('errors',));b.button('使用正确对照',on_click=builtin,args=('correct',))
     if model.inventory is None:
-        with st.expander('选择整理方案（默认仅常规格式）'):assembly_options(model,task)
+        assembly_options(model,task)
     with st.expander('修改排版要求，再处理一次') if completed else nullcontext():
         if model.inventory:st.text('当前论文：'+model.display_name+' · 原稿及前轮副本保留')
         from core import effective_rules
@@ -139,6 +138,13 @@ def render_success(model,state,render_results):
         st.download_button('下载已检查文件',model.input_path.read_bytes(),file_name='论文有格_已检查.docx',on_click='ignore')
     field=state.get('audit',{}).get('field_update')
     if field and field.get('status')!='updated':st.warning('目录/引用未完成更新；下载的是此前已验证的排版副本。具体原因及手动办法见完整摘要。')
+    if field and field.get('status')=='updated':
+        appearances=field.get('validation',{}).get('toc_appearance',[])
+        if appearances:
+            applied=sum(x['state']=='applied' for x in appearances);kept=sum(x['state']=='already_satisfied' for x in appearances)
+            st.caption(f'目录页码已更新并复查；{applied}份目录设置标准外观，{kept}份已有合适外观保持。')
+            for item in appearances:
+                if item['state']=='kept':st.warning('目录外观保持：'+item.get('reason','无法可靠计算'))
     if state.get('audit',{}).get('page_skipped'):st.warning('页码方案未执行，原页码保持。原因见完整摘要。')
     from .native_output_ui import render_native_output
     render_native_output(model,state)

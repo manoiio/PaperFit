@@ -12,7 +12,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-9'
+VERSION='onepass-10'
 
 
 def command_binding(model,extra,requirements=None):
@@ -281,7 +281,7 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
             bundle=stage.current_rule_bundle();bundle.pop('assembly',None);stage._save_custom(rb.validate(bundle,load_rules(stage.rules_path)));stage.sync_rules()
         if state['assembly']:
             old_draft=getattr(stage,'page_layout_draft',None) or {}
-            if not old_draft.get('explicit'):stage.page_layout_draft={'explicit':False,'enabled':True,'policy':deepcopy(state['assembly']),'input_sha256':stage.inventory['input_sha256'],'regions':deepcopy(old_draft.get('regions',[]))}
+            if not old_draft.get('explicit'):stage.page_layout_draft={'explicit':False,'enabled':True,'policy':deepcopy(state['assembly']),'input_sha256':stage.inventory['input_sha256'],'regions':deepcopy(old_draft.get('regions',[])),**{k:old_draft[k] for k in ('toc_appearance','word_updates') if k in old_draft}}
             state['audit']['authorization']='本次开始命令：所列格式、数字、页码及Word安全缓存更新；'+('safe-layout-v1另授权安全题注位置、固定内容表/关联图片缩小、L01–L04；不含自动列宽转固定' if state['assembly'].get('version')==3 else '旧方案不含题注移动、宽度或相邻辅助')
             from core import rule_bundle as rb
             bundle=stage.current_rule_bundle();bundle['assembly']=deepcopy(state['assembly']);stage._save_custom(rb.validate(bundle,__import__('core',fromlist=['load_rules']).load_rules(stage.rules_path)));stage.sync_rules()
