@@ -1,0 +1,90 @@
+{
+  "mode": "UI and owned native Word observation; not engine acceptance by screenshots",
+  "API_requests": 0,
+  "basic": {
+    "fresh_upload": true,
+    "major_operations": 3,
+    "advanced_pages": 0,
+    "remaining_problems": 1,
+    "review": 9,
+    "engine_modify_records": 33,
+    "same_bytes_repeat_download": true
+  },
+  "complete": {
+    "fresh_upload": true,
+    "major_operations": 7,
+    "PDF_download_extra_operations": 1,
+    "human_decisions": 0,
+    "advanced_pages": 0,
+    "DOCX_ready_seconds_first": 31.955,
+    "rounds": 6,
+    "remaining_problems": 2,
+    "review": 14,
+    "latest_UI_DOCX_ready_seconds": 32.936,
+    "repeat_fresh_download_same_bytes": true,
+    "done_start_disabled": true
+  },
+  "central_questions": {
+    "fixture": "phase31/errors.docx",
+    "table_decisions": {
+      "1": "other",
+      "2": "content"
+    },
+    "continue_operations": 1,
+    "additional_API": 0,
+    "output_created": true,
+    "remaining_problems": 1,
+    "review": 21
+  },
+  "restore": {
+    "browser": true,
+    "service_restarted": true,
+    "history_rounds": 6,
+    "current_input": "original",
+    "new_rounds_on_restore": 0,
+    "automatic_API_or_Word": false
+  },
+  "session_isolation": {
+    "separate_browser_sessions": true,
+    "main_restored_complete_history": 6,
+    "other_fresh_errors_history": 1
+  },
+  "Word": {
+    "stage53_final_sha256": "8e2840016084d550617eeebb1a18b57d392579155f41d9c92a84fa950db92f22",
+    "stage53_pages": 12,
+    "observed": [
+      "TOC numbers and display pages",
+      "native internal link followed to H2 and H3",
+      "front roman i",
+      "chapter footer and continuous display pages",
+      "superscript citation",
+      "page after 10"
+    ],
+    "new_complete_pdf_pages": 6,
+    "complete_observed": [
+      "inline image after native redraw",
+      "moved caption",
+      "repeated table header on next page",
+      "last chapter footer 4",
+      "PAGEREF display 4"
+    ],
+    "owned_copy_closed_without_saving": true,
+    "formal_DOCX_hash_unchanged": true,
+    "ghosting": "bold stroke participation supported; internal synthesis root not fully proved; no default bold/color/number clearing"
+  },
+  "controlled_tests_only": [
+    "foreign-port refusal",
+    "Word unavailable/PDF failure retains DOCX",
+    "hash invalidation",
+    "cancel/timeout guard ownership"
+  ],
+  "desktop_overflow": {
+    "1280x720": false,
+    "1440x900": false
+  },
+  "final_audit": {
+    "physical_space_ownership": "real process and targeted regression passed",
+    "Word_timeout_path": "same tempfile.gettempdir as existing native adapter; controlled regression",
+    "core_changes": false
+  }
+}

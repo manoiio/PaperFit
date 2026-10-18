@@ -1,0 +1,20 @@
+{
+  "author_oracle": "raw XML only; no engine/planner imports",
+  "all_stages_exact_authorised_reverse_masks": true,
+  "original_cover_and_merged_tables_byte_subtrees_equal": true,
+  "width_final_twips": 9072,
+  "image_final_emu": [
+    5760720,
+    1440180
+  ],
+  "image_aspect_and_media_preserved": true,
+  "five_pagination_properties_only": true,
+  "existing_header_preserved": true,
+  "TOC_pages": [
+    "1",
+    "4"
+  ],
+  "PAGEREF": "4",
+  "physical_pages": "separately observed in native Word",
+  "final_sha256": "4ba0709d578b0c1013b9afb8dd8512479c811963dcc571cb747081340e74dd55"
+}

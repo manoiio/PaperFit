@@ -1,0 +1,17 @@
+{
+  "document_sha256": "4ba0709d578b0c1013b9afb8dd8512479c811963dcc571cb747081340e74dd55",
+  "page_count": 6,
+  "engine": "word",
+  "word_export": {
+    "backend": "Microsoft Word / macOS PDF",
+    "source_sha256": "4ba0709d578b0c1013b9afb8dd8512479c811963dcc571cb747081340e74dd55",
+    "export_snapshot_sha256": "054bb96efad03b38234a1effcd86cdca03c6aa143f9a09a903470b719533eaa4",
+    "pdf_sha256": "e2cd665fe59ac43a7896db6cc9dfb9f2616c3e3ae8bc99b799e1d7539ecd4948",
+    "seconds": 0.933,
+    "non_page_fields_frozen": 4,
+    "main_page_fields": 0,
+    "non_page_display_unchanged_during_export": true,
+    "docx_saved": false,
+    "limitation": "非PAGE域在导出副本中锁定，未刷新目录/引用。未锁定PAGE及自动编号由Word计算显示；PDF不证明原DOCX缓存新鲜或全文合格。"
+  }
+}

@@ -47,7 +47,7 @@ def render_requirements(model,task,state):
                     st.write('将使用：'+source['bundle']['name']);st.caption('已通过本地严格校验；点击开始才用于本次任务，不重发规范解析。结构识别仍可能需要AI。')
                 if st.button('移除此要求文件',key='requirements-remove-'+task):
                     changed();ui['buffers'].pop(choice,None);ui['selected']=None;ui['generation']=ui.get('generation',0)+1;st.rerun()
-            else:st.info('请先上传待排版论文，再上传'+('老师提供的TXT/DOCX要求。' if choice=='file' else '之前保存的排版要求。'))
+            else:st.info(('请上传' if model.inventory else '请先上传待排版论文，再上传')+('老师提供的TXT/DOCX要求。' if choice=='file' else '之前保存的排版要求。'))
         except Exception as exc:
             ready=False;source=None;st.error(public_error(exc));st.caption('未发送API、未改变当前规则。请缩小到格式要求章节或更换文件。')
     ui['selected']=deepcopy(source)

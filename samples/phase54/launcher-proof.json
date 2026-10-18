@@ -1,0 +1,13 @@
+{
+  "arbitrary_cwd": true,
+  "Chinese_and_space_alias": true,
+  "venv_copied_or_changed": false,
+  "exit_code": 0,
+  "message": "已复用本项目服务，打开网页。",
+  "existing_service_reused": true,
+  "foreign_port": "controlled regression verifies refusal, no process termination",
+  "Finder_open_command": true,
+  "physical_space_process_real_probe": true,
+  "exact_app_suffix_lookalike_rejected": true,
+  "temporary_probe_process_only_stopped": true
+}

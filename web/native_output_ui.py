@@ -16,6 +16,7 @@ def render_native_output(model,state):
     if state.get('native_output_requested') and not request:
         model.set_preview_engine('word');submitted=model.submit_preview(key)
         request=state['native_output']={'sha256':target['sha256'],'target':key,**submitted}
+    if not request:st.caption('PDF / Word页面尚未生成；可按需生成，不影响DOCX下载。')
     a,b=st.columns(2)
     if a.button('查看最终Word页面',key='smart-view-word',width='stretch'):
         model.set_preview_engine('word');state['native_reader_open']=True

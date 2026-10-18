@@ -1,0 +1,92 @@
+{
+  "bytes": 350733,
+  "files": 18,
+  "sha256": "015ef1d87986129bf7fa8638b854626c5a8cf6e49d6f8054fe4fdc83bb84cfa5",
+  "allowlist_manifest": [
+    {
+      "file": "basic/使用说明.md",
+      "bytes": 1046,
+      "sha256": "bc98b907ffd1975e285cbc46f351d5ca3203db2ffbd9def1b91149e0941bcbad"
+    },
+    {
+      "file": "basic/原稿.docx",
+      "bytes": 38734,
+      "sha256": "387eba6efdf4849459d5f4cd7c6096659f9b62be091eff21c7fe0dc575e6c25c"
+    },
+    {
+      "file": "basic/排版要求.json",
+      "bytes": 74178,
+      "sha256": "aa549aa6edb00cf809644b01e213917ff5be221b1a626a7b95359c930b243639"
+    },
+    {
+      "file": "basic/独立错误清单.json",
+      "bytes": 1161,
+      "sha256": "813234ec1efdc4219d27db16143a545be9464f49894cd8907bfb1fcbfbba2a2d"
+    },
+    {
+      "file": "basic/修正版.docx",
+      "bytes": 38843,
+      "sha256": "1ac877b1b5a20e883bd2f31eb7cce0b5ccde284fedc48808579ffc7057cc508d"
+    },
+    {
+      "file": "basic/修改摘要.md",
+      "bytes": 602,
+      "sha256": "d21b7d40cec931405023052fac41080266f17d1e4732dd52dc893e29b23e12ac"
+    },
+    {
+      "file": "basic/报告.html",
+      "bytes": 508799,
+      "sha256": "9cbfae7ba2e4d4cd2702652db8ad204ef41b48eedf0ae79a05ec0f5962eafec6"
+    },
+    {
+      "file": "basic/独立核对.json",
+      "bytes": 192,
+      "sha256": "c81f397cfcdf1e88768b5bd7b8dab4e7acf4b8b067d015b120062bfad328ce24"
+    },
+    {
+      "file": "complete/使用说明.md",
+      "bytes": 1252,
+      "sha256": "a4605954fa44267246e7d9ede6908e4b765f9cf9320a663bd3b5784cb73d47b1"
+    },
+    {
+      "file": "complete/原稿.docx",
+      "bytes": 38871,
+      "sha256": "b389d1d815ae994974b8f7cd22880620ed34e8fd39786c334e9400e2c6100e02"
+    },
+    {
+      "file": "complete/排版要求.json",
+      "bytes": 61082,
+      "sha256": "eae0f5a85de385184bd1060136ea667193afe6a271d0e9cc17f47abaf1a2fb93"
+    },
+    {
+      "file": "complete/独立预期.json",
+      "bytes": 501,
+      "sha256": "d61340860f6c51410e1b3e810badbce4796f6dc85d38e2d8a437d0a08b9910a9"
+    },
+    {
+      "file": "complete/修正版.docx",
+      "bytes": 40721,
+      "sha256": "4ba0709d578b0c1013b9afb8dd8512479c811963dcc571cb747081340e74dd55"
+    },
+    {
+      "file": "complete/Word页面.pdf",
+      "bytes": 118365,
+      "sha256": "e2cd665fe59ac43a7896db6cc9dfb9f2616c3e3ae8bc99b799e1d7539ecd4948"
+    },
+    {
+      "file": "complete/修改摘要.md",
+      "bytes": 1013,
+      "sha256": "81ebffa21d16c4d02a9d46290fbfad3b98fb5c1673c06359b7a1e0f658dbafa1"
+    },
+    {
+      "file": "complete/报告.html",
+      "bytes": 991210,
+      "sha256": "6133af9330a3f7e760523617a898c702979d4d882628974345a3b5ac696cddc2"
+    },
+    {
+      "file": "complete/独立核对.json",
+      "bytes": 588,
+      "sha256": "c88b5f7a57688b4ef897bf4f3cce203ff8ab8b0313095cc94196dde0bcd6dc23"
+    }
+  ]
+}

@@ -25,7 +25,7 @@ def mask_pair(a,b,path,attrs,expected):
    for k in attrs:e.attrib.pop(W+k,None)
    if not e.attrib and not len(e):e.getparent().remove(e)
 
-def verify(folder):
+def verify(folder,*,ordinary_fonts=False):
  folder=Path(folder);paths=[folder/'source.docx',*[folder/'stages'/n for n in ('01-format.docx','02-position.docx','03-pages.docx','04-width.docx','05-pagination.docx')],folder/'fixed.docx'];parts=list(map(read,paths))
  a,b=parts[:2];same_parts(a,b);x,y=root(a),root(b);ap,bp=ps(x),ps(y)
  for n,size in {3:'36',4:'24',8:'36',9:'24',10:'21',12:'24',13:'21',14:'24',15:'21',16:'24',17:'36',18:'24',20:'24'}.items():mask_pair(ap[n-1],bp[n-1],'w:r/w:rPr/w:sz',['val'],{'val':size})
@@ -40,6 +40,28 @@ def verify(folder):
  for aa,bb in zip(at.findall('.//'+W+'r'),bt.findall('.//'+W+'r')):mask_pair(aa,bb,'w:rPr/w:sz',['val'],{'val':'21'})
  for aa,bb in zip(x.iter(W+'sectPr'),y.iter(W+'sectPr')):
   mask_pair(aa,bb,'w:pgSz',['w','h'],{'w':'11906','h':'16838'});mask_pair(aa,bb,'w:pgMar',['top','right','bottom','left'],dict.fromkeys(['top','right','bottom','left'],'1417'))
+ if ordinary_fonts:
+  # Author-known phase54 rules, not generated from the planner or change list.
+  for n in (3,4,8,9,10,12,13,14,15,16,17,18,20):
+   font='黑体' if n in (3,8,17) else '宋体'
+   for aa,bb in zip(ap[n-1].findall('w:r',N),bp[n-1].findall('w:r',N)):
+    af=aa.find('w:rPr/w:rFonts',N);bf=bb.find('w:rPr/w:rFonts',N)
+    if bf is not None:
+     for attr,target in [('eastAsia',font),('ascii',font if n in (10,13,15) else 'Times New Roman'),('hAnsi',font if n in (10,13,15) else 'Times New Roman')]:
+      if (af.get(W+attr) if af is not None else None)!=bf.get(W+attr):
+       assert bf.get(W+attr)==target,(n,attr,bf.attrib)
+       for e in (af,bf):
+        if e is not None:e.attrib.pop(W+attr,None)
+     for e in (af,bf):
+      if e is not None and not e.attrib:e.getparent().remove(e)
+  for aa,bb in zip(at.findall('.//'+W+'r'),bt.findall('.//'+W+'r')):
+   af=aa.find('w:rPr/w:rFonts',N);bf=bb.find('w:rPr/w:rFonts',N)
+   if bf is not None and (af.get(W+'eastAsia') if af is not None else None)!=bf.get(W+'eastAsia'):
+    assert bf.get(W+'eastAsia')=='宋体'
+    for e in (af,bf):
+     if e is not None:
+      e.attrib.pop(W+'eastAsia',None)
+      if not e.attrib:e.getparent().remove(e)
  prune(x);prune(y);assert canon(x)==canon(y),'ordinary unselected changes'
  # Exact authored permutation; includes table ordering, subtree and all run properties.
  a,b=parts[1:3];same_parts(a,b);x,y=root(a),root(b);body=x.find(W+'body');c,img=ps(x)[9:11];i=list(body).index(c);body.remove(c);body.insert(i+1,c);assert canon(x)==canon(y),'position changed anything except the adjacent pair'

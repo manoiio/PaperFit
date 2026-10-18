@@ -1,0 +1,23 @@
+{
+  "binding": "ed813b2b203870566f71a5f6592dff65951b094f0caaa23f92e035ca0d32fd4d",
+  "first_page_sha256": "1a9b362b39b9dcd4b6502c943dc18a5b79165f4ea4b512f1aab9eb1a4300210e",
+  "pdf_pages": "Pages:           2",
+  "time": 1792300240,
+  "source": "samples/correct.docx",
+  "source_sha256": "3d3423737d8bf31bc952dce56b1cc596c605b935c10d1dd40a8764cc88cc80fa",
+  "pdf_sha256": "d158c78b097f082fc687018795fcad07a82491ae9d3db4a239f2248f904e05e5",
+  "seconds": 0.836,
+  "status": "Word PDF实际调用成功",
+  "receipt": {
+    "backend": "Microsoft Word / macOS PDF",
+    "source_sha256": "3d3423737d8bf31bc952dce56b1cc596c605b935c10d1dd40a8764cc88cc80fa",
+    "export_snapshot_sha256": "3d3423737d8bf31bc952dce56b1cc596c605b935c10d1dd40a8764cc88cc80fa",
+    "pdf_sha256": "d158c78b097f082fc687018795fcad07a82491ae9d3db4a239f2248f904e05e5",
+    "seconds": 0.711,
+    "non_page_fields_frozen": 0,
+    "main_page_fields": 0,
+    "non_page_display_unchanged_during_export": true,
+    "docx_saved": false,
+    "limitation": "非PAGE域在导出副本中锁定，未刷新目录/引用。未锁定PAGE及自动编号由Word计算显示；PDF不证明原DOCX缓存新鲜或全文合格。"
+  }
+}

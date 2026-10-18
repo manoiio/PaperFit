@@ -1,0 +1,40 @@
+{
+  "exit_code": 0,
+  "seconds": 793.602,
+  "command": ".venv/bin/python scripts/run_offline_tests.py",
+  "remote_CI": "not triggered",
+  "rerun_reason": "final startup audit: physical-space ownership and native timeout guard path; targeted 13 tests passed first",
+  "tests": 1411,
+  "test_seconds": 793.231,
+  "baseline_tests": 1398,
+  "paid_HTTP_calls": 0,
+  "Word_calls": 0,
+  "unmocked_attempts": 0,
+  "repository_audit": "passed",
+  "diff_check": "passed",
+  "actual_Word_acceptance": "separate real integration and native window observations",
+  "public_starter_ZIP_files": 18,
+  "API_requests_in_stage": 0,
+  "previous_full_suite": {
+    "tests": 1409,
+    "status": "passed before final startup audit"
+  },
+  "interrupted_runs": "37 seconds for canonical test-path correction; 304 seconds for native timeout-path audit, not counted as passed",
+  "code_sha256": {
+    "local_tools.py": "7d3b76cfba99d08c62d622d5b6fea172586b10907bc5ace4d701ca25efb8cad9",
+    "app.py": "01991deb09afb985e5a7db038a75974a4e8d6949585e4a0a6b73bb6091333973",
+    "web/onepass_ui.py": "7077bad4f978f466c20baac8f2d3e8ab01a116b98ab6fe9378179c0501eaa234",
+    "web/environment_ui.py": "fe6a56f4176306d89f0525bd7e13b7ff66a21b80a7bf17cbecc108e4b113ee6e",
+    "web/result_overview.py": "336f823061b0de52fbe12e2c0d819e5037d81a04c8990a72c67d78264ae9b789",
+    "web/native_output_ui.py": "717d25373c0e6c2c712cbccd4ef0bbd94d2634014aaac893d454042140aafcb4",
+    "web/requirements_ui.py": "c9b13c0fb1d704cf7781a9170cf401a5960c5dad97b47dbee97469ea856709fe",
+    "web/workflow_ui.py": "25591982fa669ee1958575d78b635e9573a5cca72f965f3024de791f85c99937",
+    "scripts/local_start.py": "fba2d62a7de7d8edcc76d4bbfb12c93f6fe6d1f2d619540a56444bb9358d0b9e",
+    "scripts/build_starter_pack.py": "4741c48560f11b6333e5882a42b3d6c6465e151624904031aa6074d64b3ae171",
+    "scripts/reproduce_delivery.py": "6f54f1a281888c39ef87a7adb4dbeffbee7b2f96304c9cb1480e87ebd85aff03",
+    "scripts/verify_delivery.py": "61478468eaa10a3fa52395f4c5a82435b69e132e30b491382f39d663d3ef88f3",
+    "scripts/verify_layout_assembly.py": "eff731f8547d71e7722aac61c17d8a877915fc51d60456a7e929fb85113fff36",
+    "tests/test_local_delivery.py": "a9fbd061f86c03716d640d8866b391763b0289f25e2941995e2c7e26a8ccf938",
+    "启动论文有格.command": "eaf77f77692863d57ddc407ba654832ef4b4e38d531a5a09d983628975875afd"
+  }
+}

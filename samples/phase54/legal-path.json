@@ -1,0 +1,48 @@
+{
+  "basic": {
+    "same_bytes": true,
+    "sha256": "1ac877b1b5a20e883bd2f31eb7cce0b5ccde284fedc48808579ffc7057cc508d",
+    "API_requests": 0,
+    "seconds": 0.14,
+    "stages": [
+      {
+        "name": "basic-01-format.docx",
+        "sha256": "1ac877b1b5a20e883bd2f31eb7cce0b5ccde284fedc48808579ffc7057cc508d"
+      }
+    ],
+    "original_unchanged": true
+  },
+  "complete": {
+    "same_bytes": true,
+    "sha256": "4ba0709d578b0c1013b9afb8dd8512479c811963dcc571cb747081340e74dd55",
+    "API_requests": 0,
+    "seconds": 5.246,
+    "stages": [
+      {
+        "name": "complete-01-format.docx",
+        "sha256": "d7ef935a9f0f9aaf02cddd0f7b16ce61c90bfafd757f86a2c0c5c4bcd0efbc32"
+      },
+      {
+        "name": "complete-02-position.docx",
+        "sha256": "7a095fa733bdfd5dfaba625afb4f6e63174a0ff96afaada90628b0c362c335d6"
+      },
+      {
+        "name": "complete-03-pages.docx",
+        "sha256": "26585ece72d3fb7b0defd39559ee5bc23ad0e69bdf83d6fbcea914df0474de39"
+      },
+      {
+        "name": "complete-04-width.docx",
+        "sha256": "0d842027044cfef65ed73b8686620dcd2df6ef0263a5b6c06b009ae21ceb023a"
+      },
+      {
+        "name": "complete-05-pagination.docx",
+        "sha256": "cc21086feba31f1274dd5031c6b8fed15ae6ef0fc714ec3b26c37df8013df94b"
+      },
+      {
+        "name": "complete-06-final.docx",
+        "sha256": "4ba0709d578b0c1013b9afb8dd8512479c811963dcc571cb747081340e74dd55"
+      }
+    ],
+    "original_unchanged": true
+  }
+}

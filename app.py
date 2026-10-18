@@ -50,7 +50,8 @@ def restart():
         model.reset()
         st.session_state.upload_generation += 1
         st.session_state['short-spec-text'] = ''
-        st.session_state['check-mode'] = '基础检查'
+        # Reset is a new task, not an explicit choice of the advanced basic mode.
+        st.session_state.pop('check-mode',None)
     except Exception as exc:
         model.invalidate()
         model.error = public_error(exc)
@@ -308,6 +309,8 @@ if model.report is not None:
     try:model._current()
     except Exception as exc:model.error=public_error(exc)
 step=shell(model,restart)
+from web.environment_ui import render_environment
+render_environment()
 if model.error:st.error('处理未完成：'+model.error)
 if st.session_state.get('workspace-smart',False):
     from web.smart_ui import render_smart

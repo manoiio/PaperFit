@@ -127,8 +127,10 @@ def shell(model,restart):
         tone='neutral'
         from .onepass_session import current
         entry=st.session_state.get('onepass-'+model.task_dir.name,{})
-        if entry and current(model,entry,st.session_state.get('onepass-extra-'+model.task_dir.name,entry.get('extra',''))):
-            state={'done':'修正版已生成 · 原稿保留' if model.result else '本次整理检查已完成','waiting':'有少量事项需要确认','running':'正在整理','failed':'本次未完成'}.get(entry.get('status'),state)
+        source_ui=st.session_state.get('requirements-ui-'+model.task_dir.name,{})
+        extra=st.session_state.get('onepass-extra-'+model.task_dir.name,entry.get('extra','')) if source_ui.get('choice','current')=='current' else ''
+        if entry and current(model,entry,extra,source_ui.get('selected')):
+            state={'done':'修正版已生成 · 原稿保留' if model.result else '本次整理检查已完成','waiting':'有少量事项需要确认','running':'正在整理','updating':'正在更新目录与引用','failed':'本次未完成'}.get(entry.get('status'),state)
     with st.container(key='workspace-header'):
         title,details,project,reset=st.columns([5,1,1.4,1.2])
         title.title('论文有格')
