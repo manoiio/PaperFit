@@ -9,6 +9,7 @@ REASONS={'unsupported':'超出已有支持范围','conflict':'要求相互冲突
 
 def group(module,name):
  if module=='main':
+  if name in __import__('core.text_effects',fromlist=['FIELDS']).FIELDS:return TYPES.get(name.split('__')[0],name.split('__')[0])
   if name in ('figure_caption__line_spacing','table_caption__line_spacing'):return TYPES[name.split('__')[0]]
   from core.academic_rules import FIELDS as academic
   from core.backmatter import FIELDS as back
@@ -24,6 +25,7 @@ def group(module,name):
 
 def label(module,name):
  raw=rb.FIELDS[module][name][1]
+ if module=='main' and name in __import__('core.text_effects',fromlist=['FIELDS']).FIELDS:return __import__('core.text_effects',fromlist=['PROPS']).PROPS[name.split('__')[1]][0]
  if module in ('main','notes') and name.endswith(('line_spacing','line_multiple')):return '行距'
  if '__' in name:
   prop=name.split('__',1)[1]
@@ -47,6 +49,9 @@ def spec(module,name):
  if module=='main' and name.endswith('first_line_indent'):return {'kind':'indent','unit':unit}
  if unit in candidates:return {'kind':'choice','unit':unit,'options':[v for v in candidates[unit] if accepts(module,name,v)]}
  if unit=='spacing':return {'kind':'spacing','unit':unit}
+ if unit in ('percent','character_pt','baseline_pt'):
+  lo,hi,step={'percent':(50,200,1),'character_pt':(-5,20,.05),'baseline_pt':(-20,20,.5)}[unit]
+  return {'kind':'number','unit':unit,'min':lo,'max':hi,'step':step}
  if unit in ('pt','mm'):
   # UI bounds are a projection of actual validators, not a new execution policy.
   values=[x/2 for x in range(0,101) if accepts(module,name,x/2)]
@@ -75,12 +80,13 @@ def value_control(module,name,seed,key,touch):
   options=s['options']
   def display(v):
    if unit=='alignment':return ALIGNMENTS[v]
+   if unit=='bool' and name in __import__('core.text_effects',fromlist=['FIELDS']).FIELDS:return '启用此效果' if v else '关闭此效果'
    if unit in ('bool','bold'):return '要求加粗' if v and 'bold' in name else '要求不加粗' if 'bold' in name else '启用只读提示' if v else '不启用只读提示'
    if unit=='paper':return 'A4竖向'
    return str(v)+(' 倍' if unit=='multiple' else ' 字符' if unit=='chars' else '')
   return st.selectbox(title,options,index=options.index(seed) if seed is not None else None,format_func=display,placeholder='尚未配置，请明确选择',key=key,on_change=touch)
  if s['kind']=='number':
-  return st.number_input(title+('（磅 / pt）' if unit=='pt' else '（毫米 / mm）'),min_value=float(s['min']),max_value=float(s['max']),value=float(seed) if seed is not None else None,step=s['step'],key=key,on_change=touch,placeholder='尚未配置')
+  return st.number_input(title+{'pt':'（磅 / pt）','mm':'（毫米 / mm）','percent':'（%）','character_pt':'（磅，0.05步长）','baseline_pt':'（磅，0.5步长）'}[unit],min_value=float(s['min']),max_value=float(s['max']),value=float(seed) if seed is not None else None,step=float(s['step']),key=key,on_change=touch,placeholder='尚未配置')
  if s['kind']=='spacing':
   a,b=st.columns([2,1]);u=b.selectbox('间距单位',['pt','lines'],index=['pt','lines'].index(seed['unit']) if seed else None,format_func=lambda x:'磅（pt）' if x=='pt' else '行',placeholder='请选择单位',key=key+'-unit',on_change=touch)
   # Keep the entered value on unit changes; final validation rejects conflicts.

@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "baseline_commit": "571cab7ee64d45e82881e597699d35c8cbbf8485",
+  "baseline_tests": 1379,
+  "final_tests": 1398,
+  "seconds": 740.287,
+  "python": "3.14.5",
+  "full_log_sha256": "d048d247d6959c68ac21d67545c81601b5edd5e6266326c18bea778145ccf687",
+  "frozen_application_and_test_files": 213,
+  "source_freeze_sha256": "9040bc56dcca2fef6cfc11de734f197f9d6a89c05aefb7579584ee4cf100920e",
+  "automatic_real_paid_HTTP_sent": 0,
+  "automatic_unmocked_paid_attempts": 0,
+  "automatic_real_Word_calls": 0,
+  "automatic_unmocked_Word_attempts": 0,
+  "real_integration_API_requests": 1,
+  "remote_full_CI_triggered": false,
+  "independent_ZIP_XML": "passed;13 handwritten fields;untouched values and sources;all allowed parts;browser DOCX equals independent local path",
+  "real_Word": "Word16.80 calculator and PDF export;12 final pages examined as PDF images",
+  "Word_window_observation": "deferred to next stage by explicit user instruction after Mac lock;not claimed completed",
+  "service": "127.0.0.1:8501,local only",
+  "limitations": [
+    "8 remaining problems and91 items needing attention in public positive case",
+    "Exact font synthesis root cause not fully proven;formal bold/color preserved",
+    "Protected-field diagnostic PDF has a Poppler xref reconstruction warning;main positive PDF does not",
+    "External relationships and unsafe active fields refuse native PDF;DOCX remains available"
+  ]
+}

@@ -26,6 +26,9 @@ def position(loc):
         result = f"段 {loc['paragraph']}"
         prop=loc.get('property','')
         label={'size':'字号','alignment':'对齐','line':'行距','font_eastAsia':'中文字体','font_ascii':'西文/数字字体','font_hAnsi':'扩展西文字体','numbering_symbol':'自动编号符号','before':'段前','after':'段后','line_spacing':'行距','first_line_indent':'首行缩进','bold':'加粗'}.get(prop,prop)
+        if prop.startswith('text_'):
+            from core.text_effects import PROPS
+            label=PROPS.get(prop[5:],(prop,''))[0]
         if 'start' in loc:result+=' · '+{'label':'标签','content':'内容'}.get(loc.get('part'),'文字')+f"字符{loc['start']+1}–{loc['end']}"
         return result + (f" · 片段 {loc['run']}" if 'run' in loc else '') + (' · '+label if label else '')
     return '主文档'

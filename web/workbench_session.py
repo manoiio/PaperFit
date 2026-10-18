@@ -206,7 +206,7 @@ class WorkbenchSession(DiagnosticSession):
    if obj.get('format')=='paper-grid-front-supplement':m='front';obj=rb.front.loads(content)
    elif obj.get('format')=='paper-grid-toc-supplement':m='toc';obj=rb.toc.loads(content)
    elif obj.get('kind')=='paper-grid-note-supplement':m='notes';obj=rb.notes.template(obj)
-   elif obj.get('structure_version') in (2,3,4,5,6,7):
+   elif obj.get('structure_version') in (2,3,4,5,6,7,8):
     m='main';obj={'template':rb.back.upgrade(validate_template(obj,base),base),'disabled_fields':[]}
    else:raise DemoError('不是受支持的规则包、旧模板或独立补充JSON')
    if m=='main':

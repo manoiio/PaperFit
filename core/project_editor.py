@@ -22,7 +22,7 @@ def validate_editor(data, rules_path):
         hash_value(d['input_sha256'])
     if 'workbench' in data:
         from .rule_bundle import validate_state
-        validate_state(data['workbench'],load_rules(rules_path))
+        data['workbench']=validate_state(data['workbench'],load_rules(rules_path))
     require(type(data['norm_text']) is str and len(data['norm_text'])<=12000,'规范摘录超限')
     validate_segments(data['norm_segments'])
     require('\n'.join(x for x in data['norm_text'].splitlines() if x.strip())=='\n'.join(x['text'] for x in data['norm_segments']) or not data['norm_segments'],'规范摘录与来源不一致')

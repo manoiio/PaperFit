@@ -1,0 +1,5178 @@
+[
+  {
+    "key": "R01:section=1",
+    "rule_id": "R01",
+    "locator": {
+      "section": 1
+    },
+    "before": {
+      "w_mm": 215.9,
+      "h_mm": 279.4
+    },
+    "after": {
+      "w_mm": 210.009,
+      "h_mm": 297.004
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "纸张=A4 portrait：用户选择沿用默认值（默认PDF物理页20：编排并打印在标准A4纸上）",
+      "parse_kind": "real_api",
+      "fields": {
+        "paper": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R02:section=1",
+    "rule_id": "R02",
+    "locator": {
+      "section": 1
+    },
+    "before": {
+      "top_mm": 25.4,
+      "bottom_mm": 25.4,
+      "left_mm": 31.75,
+      "right_mm": 31.75
+    },
+    "after": {
+      "top_mm": 24.994,
+      "bottom_mm": 24.994,
+      "left_mm": 24.994,
+      "right_mm": 24.994
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "上边距=25：用户选择沿用默认值（默认PDF物理页20：所有页面的上下左右页面边距为25mm）；下边距=25：用户选择沿用默认值（默认PDF物理页20：所有页面的上下左右页面边距为25mm）；左边距=25：用户选择沿用默认值（默认PDF物理页20：所有页面的上下左右页面边距为25mm）；右边距=25：用户选择沿用默认值（默认PDF物理页20：所有页面的上下左右页面边距为25mm）",
+      "parse_kind": "real_api",
+      "fields": {
+        "margin_top": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        },
+        "margin_bottom": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        },
+        "margin_left": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        },
+        "margin_right": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=6:run=2",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 6,
+      "run": 2
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=6:run=2",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 6,
+      "run": 2
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=7:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 7,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=7:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 7,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=7",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 7
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=7",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 7
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=8:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 8,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=8:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 8,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=8",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 8
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=8",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 8
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=10:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 10,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=10:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 10,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=10",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 10
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=10",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 10
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=11:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 11,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=11:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 11,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=11",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 11
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=11",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 11
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=12:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 12,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=12:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 12,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=12",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 12
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=12",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 12
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=13:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 13,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=13:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 13,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=13",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 13
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=13",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 13
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=14:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 14,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=14:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 14,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=14",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 14
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=14",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 14
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=16:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 16,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=16:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 16,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=17:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 17,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=17:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 17,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=17",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 17
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=17",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 17
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=18:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 18,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=18:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 18,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=18",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 18
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=18",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 18
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=19:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 19,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=19:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 19,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=19",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 19
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=19",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 19
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=20:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 20,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=20:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 20,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=20",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 20
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=20",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 20
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=21:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 21,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=21:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 21,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=21",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 21
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=21",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 21
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=22:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 22,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=22:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 22,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=22",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 22
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=22",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 22
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=23:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 23,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=23:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 23,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=23",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 23
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=23",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 23
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=26:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 26,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=26:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 26,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=26",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 26
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=26",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 26
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=27:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 27,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=27:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 27,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=27",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 27
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=27",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 27
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=28:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 28,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=28:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 28,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=28",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 28
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=28",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 28
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=29:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 29,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=29:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 29,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=29",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 29
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=29",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 29
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=30:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 30,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=30:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 30,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=30",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 30
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=30",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 30
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=31:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 31,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=31:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 31,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=32:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 32,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=32:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 32,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=32",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 32
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=32",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 32
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=33:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 33,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=33:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 33,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=33",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 33
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=33",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 33
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=34:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 34,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=34:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 34,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=34",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 34
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=34",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 34
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=36:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 36,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=36:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 36,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=36",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 36
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=36",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 36
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=37:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 37,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=37:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 37,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=37",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 37
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=37",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 37
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=38:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 38,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=38:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 38,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=39:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 39,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=39:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 39,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=39",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 39
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=39",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 39
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=40:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 40,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=40:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 40,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=40",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 40
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=40",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 40
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=41:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 41,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=41:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 41,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=41",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 41
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=41",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 41
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=42:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 42,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=42:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 42,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=42",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 42
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=42",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 42
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=43:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 43,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=43:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 43,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=43",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 43
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=43",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 43
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=44:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 44,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=44:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 44,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=44",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 44
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=44",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 44
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=45:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 45,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R04:paragraph=45:run=1",
+    "rule_id": "R04",
+    "locator": {
+      "paragraph": 45,
+      "run": 1
+    },
+    "before": {
+      "ascii": "Cambria"
+    },
+    "after": {
+      "ascii": "Times New Roman"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文西文字体=Times New Roman：用户选择沿用默认值（默认PDF物理页18：英文单词：字号、行距与正文相同，字体为Times New Roman）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_western": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=45:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 45,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=45",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 45
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=45",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 45
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=46:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 46,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R04:paragraph=46:run=1",
+    "rule_id": "R04",
+    "locator": {
+      "paragraph": 46,
+      "run": 1
+    },
+    "before": {
+      "ascii": "Cambria"
+    },
+    "after": {
+      "ascii": "Times New Roman"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文西文字体=Times New Roman：用户选择沿用默认值（默认PDF物理页18：英文单词：字号、行距与正文相同，字体为Times New Roman）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_western": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=46:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 46,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=46",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 46
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=46",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 46
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R03:paragraph=47:run=1",
+    "rule_id": "R03",
+    "locator": {
+      "paragraph": 47,
+      "run": 1
+    },
+    "before": {
+      "eastAsia": "ＭＳ 明朝"
+    },
+    "after": {
+      "eastAsia": "宋体"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文中文字体=宋体：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_cn": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R04:paragraph=47:run=1",
+    "rule_id": "R04",
+    "locator": {
+      "paragraph": 47,
+      "run": 1
+    },
+    "before": {
+      "ascii": "Cambria"
+    },
+    "after": {
+      "ascii": "Times New Roman"
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文西文字体=Times New Roman：用户选择沿用默认值（默认PDF物理页18：英文单词：字号、行距与正文相同，字体为Times New Roman）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_western": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R05:paragraph=47:run=1",
+    "rule_id": "R05",
+    "locator": {
+      "paragraph": 47,
+      "run": 1
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文普通文字字号=12：用户选择沿用默认值（默认PDF物理页18：正文：小四号）",
+      "parse_kind": "real_api",
+      "fields": {
+        "font_size": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R06:paragraph=47",
+    "rule_id": "R06",
+    "locator": {
+      "paragraph": 47
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.5,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文倍数行距=1.5：用户选择沿用默认值（默认PDF物理页18：正文：小四号，宋体，1.5倍行距）",
+      "parse_kind": "real_api",
+      "fields": {
+        "line_spacing": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R07:paragraph=47",
+    "rule_id": "R07",
+    "locator": {
+      "paragraph": 47
+    },
+    "before": {
+      "first_line_chars": null,
+      "first_line_pt": null,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 11.0
+    },
+    "after": {
+      "first_line_chars": 2.0,
+      "first_line_pt": 0.0,
+      "hanging": null,
+      "hanging_chars": null,
+      "uniform_size_pt": 12.0
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户确认的演示模板",
+      "quote": "正文首行缩进=2：用户选择沿用默认值（默认PDF物理页18：段首行缩进2个汉字）",
+      "parse_kind": "real_api",
+      "fields": {
+        "first_line_indent": {
+          "kind": "default_inherited",
+          "location": null,
+          "quote": ""
+        }
+      }
+    }
+  },
+  {
+    "key": "R08:paragraph=5:run=1:property=font_eastAsia",
+    "rule_id": "R08",
+    "locator": {
+      "paragraph": 5,
+      "run": 1,
+      "property": "font_eastAsia"
+    },
+    "before": {
+      "slot": "eastAsia",
+      "font": "ＭＳ ゴシック"
+    },
+    "after": {
+      "slot": "eastAsia",
+      "font": "黑体"
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "一级标题中文字体=黑体：用户选择沿用默认值",
+      "field": "heading1_font_cn",
+      "origin": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R08:paragraph=5:run=1:property=size",
+    "rule_id": "R08",
+    "locator": {
+      "paragraph": 5,
+      "run": 1,
+      "property": "size"
+    },
+    "before": {
+      "pt": 14.0
+    },
+    "after": {
+      "pt": 18.0
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "一级标题字号=18：用户选择沿用默认值",
+      "field": "heading1_font_size",
+      "origin": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R09:paragraph=15:run=1:property=font_eastAsia",
+    "rule_id": "R09",
+    "locator": {
+      "paragraph": 15,
+      "run": 1,
+      "property": "font_eastAsia"
+    },
+    "before": {
+      "slot": "eastAsia",
+      "font": "ＭＳ ゴシック"
+    },
+    "after": {
+      "slot": "eastAsia",
+      "font": "黑体"
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "二级标题中文字体=黑体：AI从原文提取后确认（SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1：二级标题黑体）",
+      "field": "heading2_font_cn",
+      "origin": {
+        "kind": "ai_extracted",
+        "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+        "quote": "二级标题黑体"
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R09:paragraph=15:run=1:property=size",
+    "rule_id": "R09",
+    "locator": {
+      "paragraph": 15,
+      "run": 1,
+      "property": "size"
+    },
+    "before": {
+      "pt": 13.0
+    },
+    "after": {
+      "pt": 15.0
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "二级标题字号=15：用户选择沿用默认值",
+      "field": "heading2_font_size",
+      "origin": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R09:paragraph=15:property=line",
+    "rule_id": "R09",
+    "locator": {
+      "paragraph": 15,
+      "property": "line"
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.0,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "二级标题倍数行距=1：用户选择沿用默认值",
+      "field": "heading2_line_spacing",
+      "origin": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R10:paragraph=25:run=1:property=font_eastAsia",
+    "rule_id": "R10",
+    "locator": {
+      "paragraph": 25,
+      "run": 1,
+      "property": "font_eastAsia"
+    },
+    "before": {
+      "slot": "eastAsia",
+      "font": "ＭＳ ゴシック"
+    },
+    "after": {
+      "slot": "eastAsia",
+      "font": "黑体"
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "三级标题中文字体=黑体：AI从原文提取后确认（SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1：三级标题黑体）",
+      "field": "heading3_font_cn",
+      "origin": {
+        "kind": "ai_extracted",
+        "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+        "quote": "三级标题黑体"
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R10:paragraph=25:run=1:property=size",
+    "rule_id": "R10",
+    "locator": {
+      "paragraph": 25,
+      "run": 1,
+      "property": "size"
+    },
+    "before": {
+      "pt": 11.0
+    },
+    "after": {
+      "pt": 14.0
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "三级标题字号=14：用户选择沿用默认值",
+      "field": "heading3_font_size",
+      "origin": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R10:paragraph=25:property=line",
+    "rule_id": "R10",
+    "locator": {
+      "paragraph": 25,
+      "property": "line"
+    },
+    "before": {
+      "line_rule": "auto",
+      "multiple": 1.15,
+      "pt": null
+    },
+    "after": {
+      "line_rule": "auto",
+      "multiple": 1.0,
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "三级标题倍数行距=1：用户选择沿用默认值",
+      "field": "heading3_line_spacing",
+      "origin": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R08:paragraph=35:run=1:property=font_eastAsia",
+    "rule_id": "R08",
+    "locator": {
+      "paragraph": 35,
+      "run": 1,
+      "property": "font_eastAsia"
+    },
+    "before": {
+      "slot": "eastAsia",
+      "font": "ＭＳ ゴシック"
+    },
+    "after": {
+      "slot": "eastAsia",
+      "font": "黑体"
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "一级标题中文字体=黑体：用户选择沿用默认值",
+      "field": "heading1_font_cn",
+      "origin": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R08:paragraph=35:run=1:property=size",
+    "rule_id": "R08",
+    "locator": {
+      "paragraph": 35,
+      "run": 1,
+      "property": "size"
+    },
+    "before": {
+      "pt": 14.0
+    },
+    "after": {
+      "pt": 18.0
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户确认的演示模板",
+      "file": null,
+      "physical_page": null,
+      "quote": "一级标题字号=18：用户选择沿用默认值",
+      "field": "heading1_font_size",
+      "origin": {
+        "kind": "default_inherited",
+        "location": null,
+        "quote": ""
+      },
+      "parse_kind": "real_api"
+    }
+  },
+  {
+    "key": "R14:paragraph=2:property=after",
+    "rule_id": "R14",
+    "locator": {
+      "paragraph": 2,
+      "property": "after"
+    },
+    "before": {
+      "value": 10.0,
+      "unit": "pt",
+      "origin": [
+        "docDefaults"
+      ],
+      "raw": {
+        "after": "200",
+        "line": "276",
+        "lineRule": "auto"
+      }
+    },
+    "after": {
+      "value": 0.5,
+      "unit": "lines",
+      "origin": [
+        "docDefaults",
+        "直接段落格式"
+      ],
+      "raw": {
+        "after": "0",
+        "line": "240",
+        "lineRule": "auto",
+        "afterAutospacing": "0",
+        "afterLines": "50"
+      }
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户选择沿用默认值（用户确认v4模板，不冒充学校原文）",
+      "quote": "",
+      "location": null,
+      "kind": "default_inherited"
+    },
+    "attribute_cleanup_note": "只更改after间距属性，清理/中和相同行单位、磅值、自动间距冲突；保留行距/另一侧间距/缩进/分页"
+  },
+  {
+    "key": "R14:paragraph=2:property=line_spacing",
+    "rule_id": "R14",
+    "locator": {
+      "paragraph": 2,
+      "property": "line_spacing"
+    },
+    "before": {
+      "multiple": 1.15,
+      "line_rule": "auto",
+      "pt": null
+    },
+    "after": {
+      "multiple": 1.0,
+      "line_rule": "auto",
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户选择沿用默认值（用户确认v4模板，不冒充学校原文）",
+      "quote": "",
+      "location": null,
+      "kind": "default_inherited"
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R14:paragraph=2:run=1:property=font_eastAsia",
+    "rule_id": "R14",
+    "locator": {
+      "paragraph": 2,
+      "run": 1,
+      "property": "font_eastAsia"
+    },
+    "before": "ＭＳ 明朝",
+    "after": "黑体",
+    "verification": "pass",
+    "source": {
+      "label": "未配置属性",
+      "quote": ""
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R14:paragraph=2:run=1:property=size",
+    "rule_id": "R14",
+    "locator": {
+      "paragraph": 2,
+      "run": 1,
+      "property": "size"
+    },
+    "before": 11.0,
+    "after": 18.0,
+    "verification": "pass",
+    "source": {
+      "label": "未配置属性",
+      "quote": ""
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R15:paragraph=3:property=line_spacing",
+    "rule_id": "R15",
+    "locator": {
+      "paragraph": 3,
+      "property": "line_spacing"
+    },
+    "before": {
+      "multiple": 1.15,
+      "line_rule": "auto",
+      "pt": null
+    },
+    "after": {
+      "multiple": 1.5,
+      "line_rule": "auto",
+      "pt": null
+    },
+    "verification": "pass",
+    "source": {
+      "file": null,
+      "physical_page": null,
+      "label": "用户选择沿用默认值（用户确认v4模板，不冒充学校原文）",
+      "quote": "",
+      "location": null,
+      "kind": "default_inherited"
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R15:paragraph=3:run=1:property=font_eastAsia",
+    "rule_id": "R15",
+    "locator": {
+      "paragraph": 3,
+      "run": 1,
+      "property": "font_eastAsia"
+    },
+    "before": "ＭＳ 明朝",
+    "after": "宋体",
+    "verification": "pass",
+    "source": {
+      "label": "未配置属性",
+      "quote": ""
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R15:paragraph=3:run=1:property=size",
+    "rule_id": "R15",
+    "locator": {
+      "paragraph": 3,
+      "run": 1,
+      "property": "size"
+    },
+    "before": 11.0,
+    "after": 12.0,
+    "verification": "pass",
+    "source": {
+      "label": "未配置属性",
+      "quote": ""
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R13:paragraph=6:run=1:property=text_shadow",
+    "rule_id": "R13",
+    "locator": {
+      "paragraph": 6,
+      "run": 1,
+      "property": "text_shadow"
+    },
+    "before": true,
+    "after": false,
+    "verification": "pass",
+    "source": {
+      "kind": "ai_extracted",
+      "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+      "quote": "正文不使用阴影",
+      "label": "明确普通文字要求（v8）",
+      "file": null,
+      "physical_page": null
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R13:paragraph=6:run=1:property=text_outline",
+    "rule_id": "R13",
+    "locator": {
+      "paragraph": 6,
+      "run": 1,
+      "property": "text_outline"
+    },
+    "before": true,
+    "after": false,
+    "verification": "pass",
+    "source": {
+      "kind": "ai_extracted",
+      "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+      "quote": "正文不使用阴影和轮廓",
+      "label": "明确普通文字要求（v8）",
+      "file": null,
+      "physical_page": null
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R13:paragraph=6:run=1:property=text_scale",
+    "rule_id": "R13",
+    "locator": {
+      "paragraph": 6,
+      "run": 1,
+      "property": "text_scale"
+    },
+    "before": 85.0,
+    "after": 100.0,
+    "verification": "pass",
+    "source": {
+      "kind": "ai_extracted",
+      "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+      "quote": "正文不使用阴影和轮廓、浮雕和印入，字符缩放100%",
+      "label": "明确普通文字要求（v8）",
+      "file": null,
+      "physical_page": null
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R13:paragraph=6:run=1:property=text_character_spacing",
+    "rule_id": "R13",
+    "locator": {
+      "paragraph": 6,
+      "run": 1,
+      "property": "text_character_spacing"
+    },
+    "before": 1.0,
+    "after": 0.0,
+    "verification": "pass",
+    "source": {
+      "kind": "ai_extracted",
+      "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+      "quote": "正文不使用阴影和轮廓、浮雕和印入，字符缩放100%，标准字符间距",
+      "label": "明确普通文字要求（v8）",
+      "file": null,
+      "physical_page": null
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R13:paragraph=6:run=1:property=text_baseline",
+    "rule_id": "R13",
+    "locator": {
+      "paragraph": 6,
+      "run": 1,
+      "property": "text_baseline"
+    },
+    "before": 1.0,
+    "after": 0.0,
+    "verification": "pass",
+    "source": {
+      "kind": "ai_extracted",
+      "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+      "quote": "正文不使用阴影和轮廓、浮雕和印入，字符缩放100%，标准字符间距，基线偏移0磅",
+      "label": "明确普通文字要求（v8）",
+      "file": null,
+      "physical_page": null
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R13:paragraph=7:run=1:property=text_emboss",
+    "rule_id": "R13",
+    "locator": {
+      "paragraph": 7,
+      "run": 1,
+      "property": "text_emboss"
+    },
+    "before": true,
+    "after": false,
+    "verification": "pass",
+    "source": {
+      "kind": "ai_extracted",
+      "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+      "quote": "正文不使用阴影和轮廓、浮雕",
+      "label": "明确普通文字要求（v8）",
+      "file": null,
+      "physical_page": null
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  },
+  {
+    "key": "R13:paragraph=8:run=1:property=text_imprint",
+    "rule_id": "R13",
+    "locator": {
+      "paragraph": 8,
+      "run": 1,
+      "property": "text_imprint"
+    },
+    "before": true,
+    "after": false,
+    "verification": "pass",
+    "source": {
+      "kind": "ai_extracted",
+      "location": "SRC:1d3d2ff2817e99697eb79f54fec48c4426ceead81bde538b4063ff244abe7e7b:摘录:L1",
+      "quote": "正文不使用阴影和轮廓、浮雕和印入",
+      "label": "明确普通文字要求（v8）",
+      "file": null,
+      "physical_page": null
+    },
+    "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+  }
+]

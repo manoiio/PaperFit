@@ -170,11 +170,20 @@ class TocTests(TestCase):
  def test_theme_font_and_missing_font_remain_distinct(self):
   def theme(root):
    p=root.findall('w:body/w:p',NS)[3];r=p.findall(q('r'))[1];rf=r.find('w:rPr/w:rFonts',NS);rf.attrib.pop(q('eastAsia'),None);rf.set(q('eastAsiaTheme'),'minorEastAsia');lang=E.SubElement(r.find(q('rPr')),q('lang'));lang.set(q('eastAsia'),'zh-CN')
-  p=rewrite(SAMPLE/'manual-correct.docx',self.d/'theme.docx',theme);r=run(p,manifest(p));f=next(f for f in toc_findings(r) if f['locator'].get('toc_object')==4 and f['locator'].get('run')==2 and f['property']=='font_cn');self.assertEqual(f['status'],'review');self.assertIn('ja-JP',str(f['actual']))
+  p=rewrite(SAMPLE/'manual-correct.docx',self.d/'theme.docx',theme);r=run(p,manifest(p));f=next(f for f in toc_findings(r) if f['locator'].get('toc_object')==4 and f['locator'].get('run')==2 and f['property']=='font_cn');self.assertEqual(f['status'],'problem');self.assertEqual(f['font_evidence']['eastAsia']['theme_basis']['script'],'Jpan');self.assertEqual(f['font_evidence']['eastAsia']['theme_basis']['theme_font_lang'],'ja-JP')
   pkg=Package(p);settings=E.fromstring(pkg.parts['word/settings.xml']);settings.find(q('themeFontLang')).set(q('eastAsia'),'zh-CN');target=self.d/'supported-theme.docx'
   with zipfile.ZipFile(target,'w') as z:
    for n,b in pkg.parts.items():z.writestr(n,E.tostring(settings) if n=='word/settings.xml' else b)
   r=run(target,manifest(target));f=next(f for f in toc_findings(r) if f['locator'].get('toc_object')==4 and f['locator'].get('run')==2 and f['property']=='font_cn');self.assertEqual(f['actual'],'宋体');self.assertEqual(f['status'],'pass');self.assertIn('theme',str(f['font_evidence']).lower())
+  # Same original Japanese-theme input, now remove the actual script mapping:
+  # missing theme evidence still stays read-only, rather than inventing a font.
+  missing=self.d/'missing-jpan.docx';original=Package(p);member=next(n for n in original.parts if n.startswith('word/theme/') and n.endswith('.xml'));theme_root=E.fromstring(original.parts[member])
+  for node in list(theme_root.iter()):
+   if node.get('script')=='Jpan':node.getparent().remove(node)
+  with zipfile.ZipFile(missing,'w') as z:
+   for n,b in original.parts.items():z.writestr(n,E.tostring(theme_root) if n==member else b)
+  r=run(missing,manifest(missing));f=next(f for f in toc_findings(r) if f['locator'].get('toc_object')==4 and f['locator'].get('run')==2 and f['property']=='font_cn');self.assertEqual(f['status'],'review');self.assertFalse(f['fixable'])
+
 
  def test_combined_supplement_history_bindings_restore(self):
   s=self.session();s.enable_front(True);s.confirm_front();s.confirm_toc();self.assertTrue(s.confirm_and_check(),s.error);s.set_selection([f['key'] for f in toc_findings(s.report) if f['fixable']][:1]);self.assertTrue(s.generate(),s.error)

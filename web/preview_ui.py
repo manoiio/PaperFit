@@ -36,6 +36,8 @@ def target_label(model,targets,key,full=False):
 def page_absence(meta,page):
     if not meta:return '尚未生成此文件的有效预览，请明确点击生成。'
     if page>meta['page_count']:return f"此文件实际{meta['page_count']}页，没有第{page}页。"
+    if meta.get('engine')=='word':
+        return None if str(page) in meta.get('page_map',{}) else f'第{page}页尚未生成页图；PDF已完成，可按批次生成，不重新导出。'
     if page>meta['preview_range'][1]:return f"第{page}页超出本次预览范围（仅第1–{meta['preview_range'][1]}页，默认最多10页）；未查看全文。"
     return None
 
@@ -51,14 +53,22 @@ def task_status(model,identity,slot):
         st.caption('可继续查看已有页图、问题和下载；取消运行任务仅停止接收结果，不表示渲染进程已停止。')
         if st.button('取消此预览任务',key='cancel-preview-'+identity+'-'+slot):model.cancel_preview(identity);st.rerun()
     elif status=='succeeded' and record:
+        if not record.get('view_notified'):
+            record['view_notified']=True;st.rerun()
         if st.button('查看预览',key='view-preview-'+identity+'-'+slot):
             model.preview_view_request=record['key'];st.rerun()
 
 def render_target_state(model,key,meta,seed,side):
-    matches=[i for i,r in model.preview_jobs.items() if r['key']==key and r['epoch']==model.preview_epoch]
+    matches=[i for i,r in model.preview_jobs.items() if r['key']==key and r['epoch']==model.preview_epoch and r.get('engine','libreoffice')==model.preview_engine]
     active=model.active_preview_job(key)
     if meta and not active:
-        st.caption(f"有效页图 · 实际{meta['page_count']}页 / 可看第1–{meta['preview_range'][1]}页 · 生成时环境；重新核对见详情")
+        # A small batch can finish between the first cache read and this query.
+        # Publish it with one full rerun even when an older valid page map exists.
+        if matches:
+            record=model.preview_jobs[matches[-1]]
+            if record.get('accepted') and not record.get('view_notified'):
+                record['view_notified']=True;st.rerun()
+        st.caption((f"Word PDF · 实际{meta['page_count']}页 / 已生成{len(meta.get('page_map',{}))}页页图" if meta.get('engine')=='word' else f"有效页图 · 实际{meta['page_count']}页 / 可看第1–{meta['preview_range'][1]}页")+' · 生成时环境；重新核对见详情')
         return
     a,b=st.columns([2,1])
     with a:
@@ -91,6 +101,8 @@ def render_preview_panel(model):
         st.session_state['reader-file-'+seed]=target
         st.session_state['reader-left-'+seed]='original';st.session_state['reader-right-'+seed]=target
         st.session_state['reader-section-'+seed]='页面查看'
+    engine=st.radio('预览引擎',['libreoffice','word'],format_func=lambda x:'Word原生页面 / PDF' if x=='word' else 'LibreOffice页面',index=0 if model.preview_engine=='libreoffice' else 1,key='reader-engine-'+seed,horizontal=True)
+    if engine!=model.preview_engine:model.set_preview_engine(engine)
     section=st.radio('预览工作区',SECTIONS,key='reader-section-'+seed,horizontal=True,label_visibility='collapsed')
     if section=='排版辅助':
         if model.mode=='basic':st.info('基础模式未启用图表/标题相邻辅助；不会因查看页面而启用。')
@@ -113,7 +125,9 @@ def render_preview_panel(model):
                 selected.append(col.selectbox('左侧文件' if name=='left' else '右侧文件',keys,format_func=label,key=k,help=model.display_name))
     previews={}
     for key in dict.fromkeys(selected):
-        try:previews[key]=model.get_preview(key,verify_environment=False)
+        try:
+            model.active_preview_job(key)  # Accept a finished batch before reading its page map.
+            previews[key]=model.get_preview(key,verify_environment=False)
         except Exception as exc:st.warning(public_error(exc));previews[key]=None
     if section=='预览详情与人工观察记录':
         render_details(model,targets,selected,previews,seed,label);return
@@ -129,7 +143,7 @@ def render_preview_panel(model):
     a.button('上一页',on_click=flip,args=(-1,),disabled=st.session_state[pk]==1,width='stretch',key='reader-prev-'+seed)
     page=b.number_input('页码',min_value=1,max_value=maximum,key=pk,label_visibility='collapsed')
     c.button('下一页',on_click=flip,args=(1,),disabled=page==maximum,width='stretch',key='reader-next-'+seed)
-    d.caption(f'第{page}/{maximum}页 · 最多预览前10页。LibreOffice页图可能与Word不同，不回写DOCX。')
+    d.caption(f'第{page}/{maximum}页 · '+('Word PDF一次导出，页图每批10页，最多缓存50页；旧批可再生成。' if model.preview_engine=='word' else 'LibreOffice最多预览前10页，分页可能与Word不同。')+'不回写DOCX。')
     font_notes=sum(len(m.get('font_notes',[])) for m in previews.values() if m)
     if font_notes:st.caption(f'字体/渲染提示{font_notes}项：可能影响分页；完整替代记录见“预览详情与人工观察记录”。')
     if mode=='并排对比':
@@ -146,8 +160,14 @@ def render_preview_panel(model):
                 if absence and not previews[key]:
                     from .workflow_ui import empty_state
                     empty_state('尚未生成此文件的有效预览', '点击上方生成页面预览后再查看。切换文件不会自动渲染；LibreOffice页图不等于Word分页验收。')
-                elif absence:st.info(absence)
-                else:st.image(previews[key]['pages'][page-1],width='stretch')
+                elif absence:
+                    st.info(absence)
+                    if previews[key].get('engine')=='word' and page<=previews[key]['page_count'] and st.button('生成此批页图（不重新导出PDF）',key='word-batch-'+seed+'-'+side,disabled=bool(model.active_preview_job(key))):
+                        model.submit_preview_pages(key,page);st.rerun()
+                else:st.image(previews[key]['page_map'][str(page)] if previews[key].get('engine')=='word' else previews[key]['pages'][page-1],width='stretch')
+                if previews[key] and previews[key].get('engine')=='word':
+                    from pathlib import Path
+                    st.download_button('下载此文件的Word PDF',Path(previews[key]['pdf']).read_bytes(),file_name='论文有格_Word.pdf',mime='application/pdf',on_click='ignore',key='reader-pdf-'+seed+'-'+side)
     st.caption('正在查看的文件独立于当前处理输入；生成页图不代表已完成视觉验收。字体替代、环境和人工记录见“预览详情与人工观察记录”。')
     others=[i for i,r in model.preview_jobs.items() if r['epoch']==model.preview_epoch and r['key'] not in selected and not r['accepted'] and model.preview_job_status(i)['state'] in ('queued','running','succeeded')]
     if others:
@@ -157,13 +177,13 @@ def render_preview_panel(model):
                 task_status(model,i,'other')
 
 def render_details(model,targets,selected,previews,seed,label):
-    st.caption('预览来自生成时环境，不是Microsoft Word验收。普通查看不探测字体；明确刷新仅重新核对环境，不自动渲染。最多1个任务执行、2个等待；45秒超时。')
+    st.caption('预览引擎：'+('本机Microsoft Word PDF；不等于人工验收。' if model.preview_engine=='word' else 'LibreOffice；不是Microsoft Word验收。')+' 普通查看不探测字体；明确刷新仅重新核对环境，不自动渲染。最多1个任务执行、2个等待；'+('Word导出90秒边界，单批页图60秒。' if model.preview_engine=='word' else 'LibreOffice45秒超时。'))
     if st.button('刷新预览环境'):
         try:model.refresh_preview_environment();st.info('环境已核对，请返回页面查看；未自动渲染。')
         except Exception as exc:st.warning(public_error(exc))
     for key in dict.fromkeys(selected):
         st.html('<strong>'+escape(target_label(model,targets,key,True))+'</strong>');meta=previews[key]
-        matches=[i for i,r in model.preview_jobs.items() if r['key']==key and r['epoch']==model.preview_epoch]
+        matches=[i for i,r in model.preview_jobs.items() if r['key']==key and r['epoch']==model.preview_epoch and r.get('engine','libreoffice')==model.preview_engine]
         if matches and (not meta or model.active_preview_job(key)):task_status(model,matches[-1],'details')
         if not meta:st.info('没有当前绑定的有效页图；可返回页面查看并明确请求生成。');continue
         st.write(meta.get('renderer','')+' · '+meta.get('renderer_version',''))

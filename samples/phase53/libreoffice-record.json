@@ -1,0 +1,61 @@
+{
+  "document_sha256": "8e2840016084d550617eeebb1a18b57d392579155f41d9c92a84fa950db92f22",
+  "render_config_sha256": "b20549b049f653b89afadac71d51772bfedf1780cb27d0945691b966c442ef4f",
+  "generated_at": "2026-10-18T04:22:46.317268+00:00",
+  "renderer": "Codex bundled LibreOffice / Poppler",
+  "renderer_version": "LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+  "bundle": "26.1017.11052",
+  "page_count": 12,
+  "preview_range": [
+    1,
+    10
+  ],
+  "fonts": [
+    {
+      "target": "Calibri",
+      "installed_exact": true,
+      "resolved_family": "Calibri"
+    },
+    {
+      "target": "Cambria",
+      "installed_exact": true,
+      "resolved_family": "Cambria"
+    },
+    {
+      "target": "Times New Roman",
+      "installed_exact": true,
+      "resolved_family": "Times New Roman"
+    },
+    {
+      "target": "宋体",
+      "installed_exact": true,
+      "resolved_family": "SimSun,宋体"
+    },
+    {
+      "target": "微软雅黑",
+      "installed_exact": true,
+      "resolved_family": "Microsoft YaHei,微软雅黑"
+    },
+    {
+      "target": "黑体",
+      "installed_exact": true,
+      "resolved_family": "SimHei,黑体"
+    },
+    {
+      "target": "ＭＳ ゴシック",
+      "installed_exact": true,
+      "resolved_family": "MS Gothic,ＭＳ ゴシック"
+    },
+    {
+      "target": "ＭＳ 明朝",
+      "installed_exact": true,
+      "resolved_family": "MS Mincho,ＭＳ 明朝"
+    }
+  ],
+  "font_notes": [
+    "文档含主题或无法完全解析的字体；预览由LibreOffice解析，字体清单不是全字形审计。"
+  ],
+  "fallback_odt": false,
+  "input_bytes_unchanged": true,
+  "limitation": "不是Microsoft Word验收；分页可能不同。格式属性通过与可见排版复核分别记录。"
+}

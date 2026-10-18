@@ -1,0 +1,18 @@
+{
+  "backend": "Microsoft Word / macOS PDF",
+  "source_sha256": "90f463005fa50bbc003659c5122285ebfd4e1c1089ba37f13c7bc32447c8dce0",
+  "export_snapshot_sha256": "b4778f95feb1c5b5cbe9b372ebb30c7acf1f0a34ac35d83fdc5e0799d50c4e63",
+  "pdf_sha256": "a9dffb773bd760163d714eb03bf0bca9d8658b3e256204ed934140d714eb9a38",
+  "seconds": 0.544,
+  "non_page_fields_frozen": 8,
+  "main_page_fields": 0,
+  "non_page_display_unchanged_during_export": true,
+  "docx_saved": false,
+  "limitation": "非PAGE域在导出副本中锁定，未刷新目录/引用。未锁定PAGE及自动编号由Word计算显示；PDF不证明原DOCX缓存新鲜或全文合格。",
+  "independent_pdf_text_check": {
+    "preserved_missing_and_locked_cache": true,
+    "SEQ_cache_66_preserved": true,
+    "poppler_warning": "xref num 65 not found but needed; try to reconstruct",
+    "scope": "protected-field diagnostic PDF only; not the primary final PDF; not claimed warning-free PDF structure"
+  }
+}

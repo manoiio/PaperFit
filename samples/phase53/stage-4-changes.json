@@ -1,0 +1,17 @@
+[
+  {
+    "rule_id": "R30",
+    "locator": {
+      "toc_container": 1,
+      "toc_local_paragraph": 2
+    },
+    "property": "field_cache",
+    "before": "旧保存结果",
+    "after": "TOC已更新",
+    "verification": "pass",
+    "source": {
+      "label": "本机Word显式目录/引用更新（非学校新规则）",
+      "quote": "仅更新已授权的安全目录和目标唯一的REF/PAGEREF保存结果"
+    }
+  }
+]

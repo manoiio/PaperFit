@@ -9,6 +9,10 @@ def basis(source):
         return (source['label']+'：' if source.get('label') else '')+f"{source['file']} 物理页{source['physical_page']}：{source['quote']}"
     return f"{source['label']}：{source['quote']}" + ('（模拟API响应）' if source.get('parse_kind') == 'mock_api' else '')
 
+def _field(value,loc):
+    from .text_effects import describe
+    return describe(loc.get('property',''),value) or _fmt(value)
+
 def _fmt(value):
     from .paragraph_values import label
     readable=label(value)
@@ -32,7 +36,7 @@ def markdown(report):
         lines += ['', '封面/页眉页脚补充配置：'+_fmt(report['rules']['front_supplement']), '']
     for f in report['findings']:
         src = f['source']
-        lines.append('| ' + ' | '.join([f['rule_id']+(' '+f['rule_name'] if f['rule_id'] in ('R33','R34') else ''), _fmt(f['locator']), _fmt(f['actual']), _fmt(f['expected']),
+        lines.append('| ' + ' | '.join([f['rule_id']+(' '+f['rule_name'] if f['rule_id'] in ('R33','R34') else ''), _fmt(f['locator']), _field(f['actual'],f['locator']), _field(f['expected'],f['locator']),
                         LABELS[f['status']] + ('：' + f['detail'] if f['detail'] else ''),
                         '是' if f['fixable'] else '否', basis(src).replace('|', '\\|')]) + ' |')
     if report.get('internal_references'):
@@ -61,7 +65,7 @@ def modification_markdown(result):
              '| 规则 | 位置 | 修改前 | 修改后 | 落盘复查 | 依据 |', '| --- | --- | --- | --- | --- | --- |']
     if 'template_structure_version' in cfg:lines.insert(4,'模板结构版本：'+str(cfg['template_structure_version']))
     for c in result['changes']:
-        lines.append('| ' + ' | '.join([c['rule_id']+(' · '+c['property'] if c.get('property') else ''), _fmt(c['locator']), _fmt(c['before']), _fmt(c['after']), LABELS[c['verification']],basis(c['source']).replace('|','\\|')]) + ' |')
+        lines.append('| ' + ' | '.join([c['rule_id']+(' · '+c['property'] if c.get('property') else ''), _fmt(c['locator']), _field(c['before'],c['locator']), _field(c['after'],c['locator']), LABELS[c['verification']],basis(c['source']).replace('|','\\|')]) + ' |')
     cleanup=[c for c in result['changes'] if c.get('attribute_cleanup_note')]
     if cleanup:lines += ['', '## 所选属性清理说明', '']+[c['rule_id']+' '+_fmt(c['locator'])+'：'+c['attribute_cleanup_note'] for c in cleanup]
     if result.get('caption_move'):lines += ['',result['caption_move']['message'],result['caption_move']['limitation'],'授权的对象顺序变化及范围映射：'+_fmt(result['range_mapping'])]

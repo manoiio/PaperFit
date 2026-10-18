@@ -177,6 +177,23 @@ class Acceptance(unittest.TestCase):
         path = self.variant(mutate)
         report = check_document(path, [4])
         finding = item(report, 'R03', paragraph=4, run=1)
+        # The original Japanese theme now has a proven Jpan mapping. It wins
+        # over the same-layer literal, and only an explicit selection fixes it.
+        self.assertEqual(finding['status'], 'problem')
+        self.assertTrue(finding['fixable'])
+        self.assertNotEqual(finding['actual']['eastAsia'], '宋体')
+        result = fix_document(path, self.dir / 'resolved.docx', [4], ['R03'])
+        self.assertEqual(item(result['after'], 'R03', paragraph=4, run=1)['status'], 'pass')
+        before,after=Package(path),Package(self.dir/'resolved.docx')
+        for n in before.parts:
+            if n!='word/document.xml':self.assertEqual(before.parts[n],after.parts[n])
+        self.assertEqual(before.root.xpath('//w:t/text()',namespaces=NS),after.root.xpath('//w:t/text()',namespaces=NS))
+        # An actually unknown theme still follows the original refusal path.
+        def unknown(pkg):
+            mutate(pkg)
+            pkg.paragraphs[3].find('w:r/w:rPr/w:rFonts',NS).set(q('eastAsiaTheme'),'unknownTheme')
+        path=self.variant(unknown)
+        finding=item(check_document(path,[4]),'R03',paragraph=4,run=1)
         self.assertEqual(finding['status'], 'review')
         self.assertFalse(finding['fixable'])
         result = fix_document(path, self.dir / 'fixed.docx', [4], ['R03'])
@@ -198,7 +215,9 @@ class Acceptance(unittest.TestCase):
         path = self.variant(mutate, styles=True)
         report = check_document(path, [4])
         self.assertEqual(item(report, 'R03', paragraph=4, run=1)['status'], 'pass')
-        self.assertEqual(item(report, 'R03', paragraph=4, run=2)['status'], 'review')
+        inherited=item(report, 'R03', paragraph=4, run=2)
+        self.assertEqual(inherited['status'], 'problem')
+        self.assertNotEqual(inherited['actual']['eastAsia'], '宋体')
         self.assertEqual(item(report, 'R05', paragraph=4, run=1)['actual']['pt'], 10.5)
 
     def test_ascii_and_hansi_are_independent(self):

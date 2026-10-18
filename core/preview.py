@@ -27,7 +27,7 @@ def configuration():
                 try:
                     stat=p.stat();font_files.append((str(p),stat.st_size,stat.st_mtime_ns))
                 except OSError:pass
-    data={**CONFIG,'renderer_version':version,'font_environment_sha256':sha256(json.dumps(sorted(set(font_files))).encode()),'renderer':'Codex bundled LibreOffice / Poppler','bundle':'26.1013.11914',
+    data={**CONFIG,'renderer_version':version,'font_environment_sha256':sha256(json.dumps(sorted(set(font_files))).encode()),'renderer':'Codex bundled LibreOffice / Poppler','bundle':RENDERER.parents[2].name,
           'renderer_script_sha256':sha256(RENDERER.read_bytes()),'font_resolver_sha256':sha256(Path(__file__).with_name('formats.py').read_bytes()),'note_parser_sha256':sha256(Path(__file__).with_name('notes.py').read_bytes()),'worker_sha256':sha256(Path(__file__).with_name('preview_worker.py').read_bytes())}
     return data,sha256(json.dumps(data,ensure_ascii=False,sort_keys=True).encode())
 

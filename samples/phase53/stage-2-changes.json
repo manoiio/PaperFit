@@ -1,0 +1,160 @@
+[
+  {
+    "rule_id": "R29",
+    "key": "pages:1",
+    "locator": {
+      "section": 1
+    },
+    "property": "section_pages",
+    "before": null,
+    "after": {
+      "kind": "new_section",
+      "start": 2
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户明确选择的页码/章节页脚方案",
+      "quote": "可选产品结构处理，不是学校默认要求；PAGE域存在不代表目录或引用页码已刷新。"
+    }
+  },
+  {
+    "rule_id": "R29",
+    "key": "pages:2",
+    "locator": {
+      "section": 1
+    },
+    "property": "section_pages",
+    "before": null,
+    "after": {
+      "kind": "new_section",
+      "start": 5
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户明确选择的页码/章节页脚方案",
+      "quote": "可选产品结构处理，不是学校默认要求；PAGE域存在不代表目录或引用页码已刷新。"
+    }
+  },
+  {
+    "rule_id": "R29",
+    "key": "pages:3",
+    "locator": {
+      "section": 1
+    },
+    "property": "section_pages",
+    "before": null,
+    "after": {
+      "kind": "new_section",
+      "start": 35
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户明确选择的页码/章节页脚方案",
+      "quote": "可选产品结构处理，不是学校默认要求；PAGE域存在不代表目录或引用页码已刷新。"
+    }
+  },
+  {
+    "rule_id": "R29",
+    "key": "pages:4",
+    "locator": {
+      "section": 1
+    },
+    "property": "section_pages",
+    "before": null,
+    "after": {
+      "kind": "footer",
+      "section": 1,
+      "variant": "default",
+      "old_part": null,
+      "new_part": "word/footerPF1.xml",
+      "role": "cover",
+      "format": "decimal",
+      "restart": null,
+      "text": "",
+      "alignment": "center"
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户明确选择的页码/章节页脚方案",
+      "quote": "可选产品结构处理，不是学校默认要求；PAGE域存在不代表目录或引用页码已刷新。"
+    }
+  },
+  {
+    "rule_id": "R29",
+    "key": "pages:5",
+    "locator": {
+      "section": 2
+    },
+    "property": "section_pages",
+    "before": null,
+    "after": {
+      "kind": "footer",
+      "section": 2,
+      "variant": "default",
+      "old_part": null,
+      "new_part": "word/footerPF2.xml",
+      "role": "front",
+      "format": "lowerRoman",
+      "restart": 1,
+      "text": "",
+      "alignment": "center"
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户明确选择的页码/章节页脚方案",
+      "quote": "可选产品结构处理，不是学校默认要求；PAGE域存在不代表目录或引用页码已刷新。"
+    }
+  },
+  {
+    "rule_id": "R29",
+    "key": "pages:6",
+    "locator": {
+      "section": 3
+    },
+    "property": "section_pages",
+    "before": null,
+    "after": {
+      "kind": "footer",
+      "section": 3,
+      "variant": "default",
+      "old_part": null,
+      "new_part": "word/footerPF3.xml",
+      "role": "body",
+      "format": "decimal",
+      "restart": 1,
+      "text": "研究方法",
+      "alignment": "center"
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户明确选择的页码/章节页脚方案",
+      "quote": "可选产品结构处理，不是学校默认要求；PAGE域存在不代表目录或引用页码已刷新。"
+    }
+  },
+  {
+    "rule_id": "R29",
+    "key": "pages:7",
+    "locator": {
+      "section": 4
+    },
+    "property": "section_pages",
+    "before": null,
+    "after": {
+      "kind": "footer",
+      "section": 4,
+      "variant": "default",
+      "old_part": null,
+      "new_part": "word/footerPF4.xml",
+      "role": "body",
+      "format": "decimal",
+      "restart": null,
+      "text": "研究方法",
+      "alignment": "center"
+    },
+    "verification": "pass",
+    "source": {
+      "label": "用户明确选择的页码/章节页脚方案",
+      "quote": "可选产品结构处理，不是学校默认要求；PAGE域存在不代表目录或引用页码已刷新。"
+    }
+  }
+]

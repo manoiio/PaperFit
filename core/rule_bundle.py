@@ -6,9 +6,10 @@ from .rule_config import strict_json
 from . import templates as main,back_templates as back,front_template as front,toc_template as toc,notes
 from .norms import marked_text
 from . import paragraph_templates as paragraphs
+from . import text_templates as text_templates
 MODULES=('main','front','toc','notes')
 LABELS={'main':'正文与章节 v6','front':'封面与页眉页脚','toc':'目录','notes':'脚注与尾注'}
-FIELDS={'main':paragraphs.FIELDS,'front':{n:('',n,'pt' if p=='font_size' else 'mm' if p=='mm' else p) for n,p in front.FIELDS.items()},'toc':{n:('',n,{'font_cn':'font','font_size':'pt','alignment':'alignment','line_multiple':'multiple'}[p]) for n,p in toc.FIELDS.items()},'notes':{k+'__'+p:('',notes.KINDS[k]+' '+p,{'font_cn':'font','font_size':'pt','line_multiple':'multiple','before':'spacing','after':'spacing','alignment':'alignment'}[p]) for k in notes.KINDS for p in notes.ALL_FIELDS}}
+FIELDS={'main':text_templates.FIELDS,'front':{n:('',n,'pt' if p=='font_size' else 'mm' if p=='mm' else p) for n,p in front.FIELDS.items()},'toc':{n:('',n,{'font_cn':'font','font_size':'pt','alignment':'alignment','line_multiple':'multiple'}[p]) for n,p in toc.FIELDS.items()},'notes':{k+'__'+p:('',notes.KINDS[k]+' '+p,{'font_cn':'font','font_size':'pt','line_multiple':'multiple','before':'spacing','after':'spacing','alignment':'alignment'}[p]) for k in notes.KINDS for p in notes.ALL_FIELDS}}
 for _m in ('front','toc'):
  for _n,(_rid,_label,_unit) in list(FIELDS[_m].items()):
   if _n.endswith('_distance_mm'):_label='页眉距离' if _n.startswith('header') else '页脚距离'
@@ -129,7 +130,8 @@ def validate_candidate(m,n,f,segments):
  validate_value(m,n,f['value'])
  if m=='main':
   d={x:None for x in back.V6_FIELDS};d['unsupported']=[]
-  if n in paragraphs.EXTRA:paragraphs.candidate(n,f,segments)
+  if n in __import__('core.text_effects',fromlist=['FIELDS']).FIELDS:__import__('core.text_effects',fromlist=['candidate']).candidate(n,f,segments)
+  elif n in paragraphs.EXTRA:paragraphs.candidate(n,f,segments)
   else:d[n]=f;back.validate_draft(d,segments)
  elif m=='front':
   d={x:None for x in FIELDS[m]};d.update({n:f,'unsupported':[]});front.validate_draft(d,'\n'.join(s['text'] for s in segments),segments=segments)
@@ -199,6 +201,8 @@ def validate_draft(d,segments):
   for n,f in part['fields'].items():
    if f is not None:
     require(n not in blocked,'冲突/未支持字段必须为空，不自动采用');validate_candidate(m,n,f,segments)
+ from .text_effects import validate_requested
+ validate_requested({n:f['value'] for n,f in d['main']['fields'].items() if f is not None})
  return deepcopy(d)
 
 def make_main(name,values,sources,segments,extraction,base):
@@ -210,7 +214,8 @@ def make_main(name,values,sources,segments,extraction,base):
  b=a.make(b,{n:values[n] for n in a.EXTRA},{n:sources[n] for n in a.EXTRA},segments,base,name=name)
  b=t.make(b,{n:values[n] for n in t.EXTRA},{n:sources[n] for n in t.EXTRA},base)
  b=back.upgrade(b,base);b['final_values'].update({n:values[n] for n in back.EXTRA});b['field_sources'].update({n:sources[n] for n in back.EXTRA})
- return {'template':paragraphs.wrap(back.validate(b,base),values,sources,base),'disabled_fields':disabled}
+ b=paragraphs.wrap(back.validate(b,base),values,sources,base)
+ return {'template':text_templates.wrap(b,values,sources,base),'disabled_fields':disabled}
 
 def compile_bundle(d,base):
  d=validate(d,base);cfg=d['modules']['main'];require(cfg is not None,'执行规则包必须有明确的正文模块；补充模块请与当前正文规则核对后应用')
@@ -252,6 +257,7 @@ def project_checks(report,rules,classification):
  s['conclusion']='已覆盖检查发现问题' if s['problem_count'] else '已覆盖检查未发现问题'
 
 def validate_state(w,base):
+ w=deepcopy(w)
  exact({k:v for k,v in w.items() if k not in ('historical','diagnostics')},('active','draft','text','segments','confirmed_excerpt','receipt','parse_attempted','generation','origin'),'规范工作台状态无效')
  if 'diagnostics' in w:
   from .spec_diagnostics import validate_store
@@ -278,6 +284,13 @@ def validate_state(w,base):
  exact(d,('name','baseline','fields','issues','strategies','imported'),'统一草稿状态结构无效');main.safe_text(d['name'],80);validate(d['baseline'],base);require(type(d['imported']) is bool,'导入标记无效');exact(d['fields'],MODULES,'草稿模块无效');exact(d['issues'],MODULES,'草稿提示模块无效')
  parsed={m:{'fields':{},'issues':d['issues'][m]} for m in MODULES}
  for m,fields in d['fields'].items():
+  # Historical editor drafts predate optional effects. Add only explicit
+  # no-op carry-forward entries; never invent values, sources or decisions.
+  if m=='main' and type(fields) is dict:
+   optional=set(__import__('core.text_effects',fromlist=['FIELDS']).FIELDS)
+   baseline=flat(m,d['baseline']['modules'][m])
+   for n in optional-set(fields):
+    if baseline[n] is None:fields[n]={'mode':'keep','value':None,'candidate':None}
   exact(fields,FIELDS[m],'草稿字段缺失或未知')
   for n,f in fields.items():
    exact(f,('mode','value','candidate'),'字段决策结构无效');require(f['mode'] in ('choose','keep','disabled','manual','ai','imported'),'字段决策无效')

@@ -1,0 +1,32 @@
+[
+  {
+    "key": "L03:2:3:keepNext",
+    "rule_id": "L03",
+    "locator": {
+      "paragraph": 2
+    },
+    "property": "keepNext",
+    "before": false,
+    "after": true,
+    "verification": "pass",
+    "source": {
+      "label": "产品辅助L03（用户确认）",
+      "quote": "仅所选段落分页属性；表达相邻意图，不保证实际同页。"
+    }
+  },
+  {
+    "key": "L03:2:3:keepLines",
+    "rule_id": "L03",
+    "locator": {
+      "paragraph": 2
+    },
+    "property": "keepLines",
+    "before": false,
+    "after": true,
+    "verification": "pass",
+    "source": {
+      "label": "产品辅助L03（用户确认）",
+      "quote": "仅所选段落分页属性；表达相邻意图，不保证实际同页。"
+    }
+  }
+]

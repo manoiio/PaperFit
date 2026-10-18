@@ -14,10 +14,12 @@ ALLOWED={n:FIELDS['main'][n] for n in (*BASE,*(f'heading{i}_{p}' for i in (1,2,3
 LEGACY_ALLOWED=dict(ALLOWED)
 ALLOWED.update({n:meta for n,meta in FIELDS['main'].items() if n in ('figure_caption__line_spacing','table_caption__line_spacing') or n.startswith(('heading','figure_caption__','table_caption__','abstract_','reference_','keywords_','appendix_','ack_')) and n.split('__')[-1] in ('line_spacing','first_line_indent','before','after','alignment')})
 ALLOWED.update({n:meta for n,meta in FIELDS['notes'].items() if n.endswith(('line_multiple','before','after','alignment'))})
+from core.text_effects import FIELDS as EFFECT_FIELDS
+ALLOWED.update(EFFECT_FIELDS)
 from core.classification import TYPES as ROLE_LABELS
 for _n,_meta in list(ALLOWED.items()):
  if '__' in _n:
-  _obj,_prop=_n.split('__',1);ALLOWED[_n]=(_meta[0],(ROLE_LABELS.get(_obj,{'footnote':'脚注','endnote':'尾注'}.get(_obj,_obj)))+' '+{'line_multiple':'行距','line_spacing':'行距','before':'段前间距','after':'段后间距','first_line_indent':'首行/悬挂缩进','alignment':'对齐'}.get(_prop,_prop),_meta[2])
+  _obj,_prop=_n.split('__',1);ALLOWED[_n]=(_meta[0],(ROLE_LABELS.get(_obj,{'footnote':'脚注','endnote':'尾注'}.get(_obj,_obj)))+' '+{'line_multiple':'行距','line_spacing':'行距','before':'段前间距','after':'段后间距','first_line_indent':'首行/悬挂缩进','alignment':'对齐',**{p:t for p,(t,u) in __import__('core.text_effects',fromlist=['PROPS']).PROPS.items()}}.get(_prop,_prop),_meta[2])
 def module(n):return 'notes' if n.startswith(('footnote__','endnote__')) else 'main'
 OBJECTS={'中文摘要正文':'abstract_cn_body','英文摘要正文':'abstract_en_body','参考文献条目':'reference_item','参考文献正文':'reference_item','参考文献':'reference_item','脚注':'footnote','尾注':'endnote','附录普通文字':'appendix_text','致谢正文':'ack_text','中文关键词':'keywords_cn','英文关键词':'keywords_en','正文':'body','一级标题':'heading1','二级标题':'heading2','三级标题':'heading3','图题':'figure_caption','表题':'table_caption','表内文字':'table_content','表格内文字':'table_content','普通内容表格':'table_content','页面':'page','纸张':'page'}
 SUBJECT=re.compile('|'.join(sorted(OBJECTS,key=len,reverse=True)))
@@ -48,7 +50,7 @@ def coverage(text):
             parts=[(OBJECTS[m.group()],sentence[m.end():matches[i+1].start() if i+1<len(matches) else len(sentence)]) for i,m in enumerate(matches)]
         for obj,part in parts:
             def field(prop):
-                n=prop if obj=='body' and prop not in ('alignment','before','after') or obj=='page' else 'body__'+prop if obj=='body' else obj+('__' if obj in ('table_content','abstract_cn_body','abstract_en_body','reference_item','footnote','endnote','appendix_text','ack_text','keywords_cn','keywords_en') or prop in ('before','after') or obj in ('figure_caption','table_caption') and prop in ('line_spacing','alignment') else '_')+('line_multiple' if obj in ('footnote','endnote') and prop=='line_spacing' else prop)
+                n=(obj+'__'+prop) if prop in __import__('core.text_effects',fromlist=['PROPS']).PROPS else prop if obj=='body' and prop not in ('alignment','before','after') or obj=='page' else 'body__'+prop if obj=='body' else obj+('__' if obj in ('table_content','abstract_cn_body','abstract_en_body','reference_item','footnote','endnote','appendix_text','ack_text','keywords_cn','keywords_en') or prop in ('before','after') or obj in ('figure_caption','table_caption') and prop in ('line_spacing','alignment') else '_')+('line_multiple' if obj in ('footnote','endnote') and prop=='line_spacing' else prop)
                 if n not in ALLOWED:raise DemoError('该对象的补充属性尚未接入，请在本地工作台核对。')
                 names.add(n)
             def consume(pattern,prop):
@@ -72,6 +74,16 @@ def coverage(text):
                 consume(r'(?:固定(?:值)?|最小(?:值)?|至少)\s*\d+(?:\.\d+)?\s*(?:pt|磅)(?:行距)?','line_spacing')
                 consume(r'(?:\d+(?:\.\d+)?|单|双)\s*倍(?:行距)?','line_spacing')
                 consume(r'两端对齐|居中对齐|左对齐|右对齐|居左|居中|居右','alignment')
+                for m in re.finditer(r'(?:不使用|不带|关闭|取消|无)\s*(?:阴影|轮廓|浮雕|印入)(?:[、和与及 ]+(?:阴影|轮廓|浮雕|印入))*',part):
+                    for effect,(label,_) in __import__('core.text_effects',fromlist=['PROPS']).PROPS.items():
+                        if effect in ('shadow','outline','emboss','imprint') and label in m[0]:field(effect)
+                part=re.sub(r'(?:不使用|不带|关闭|取消|无)\s*(?:阴影|轮廓|浮雕|印入)(?:[、和与及 ]+(?:阴影|轮廓|浮雕|印入))*',' ',part)
+                for effect in ('shadow','outline','emboss','imprint'):
+                    label=__import__('core.text_effects',fromlist=['PROPS']).PROPS[effect][0]
+                    consume(r'(?:使用|开启|启用|带有)\s*'+label,effect)
+                consume(r'字符(?:水平)?缩放\s*\d+(?:\.\d+)?\s*[%％]','scale')
+                consume(r'标准字符间距|字符间距\s*-?\d+(?:\.\d+)?\s*(?:pt|磅)','character_spacing')
+                consume(r'基线不偏移|基线偏移\s*-?\d+(?:\.\d+)?\s*(?:pt|磅)','baseline')
                 consume(SIZE,'font_size')
                 consume('|'.join(re.escape(x) for x in CN),'font_cn')
                 consume('|'.join(re.escape(x) for x in WEST),'font_western')

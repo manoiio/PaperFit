@@ -9,6 +9,7 @@ from core.layout import suggest_figure_pairs,suggest_pagination_aids,apply_pagin
 
 class PreviewSession:
     def init_preview(self):
+        self.preview_engine="libreoffice";self.preview_environments={}
         self.width_signature=None;self.width_error=None;self.preview_cache={};self.preview_environment=None;self.preview_error=None;self.layout_error=None;self.layout_signature=None;self.visual_reviews={}
 
     def preview_targets(self):
@@ -40,8 +41,31 @@ class PreviewSession:
         # After a permutation original is render-only; never rebind current p:N to original.
         return out
 
+    def preview_configuration(self):
+        if self.preview_engine=="word":
+            from core.word_preview import configuration as word_configuration
+            return word_configuration()
+        return configuration()
+
+    def set_preview_engine(self,engine):
+        if engine not in ("word","libreoffice"):raise DemoError("未知预览引擎")
+        self.preview_engine=engine;self.preview_environment=self.preview_environments.get(engine)
+
+    def preview_page_batch(self,key,page):
+        target=self.preview_targets().get(key);binding=self._preview_binding(target,probe=False) if target else None
+        meta=self.preview_cache.get(binding)
+        if not meta or meta.get("engine")!="word":raise DemoError("先生成此文件的Word PDF")
+        from core.word_preview import batch
+        updated=batch(meta,page)
+        if self.preview_targets().get(key)!=target:raise DemoError("目标发生变化，未接入页图")
+        self.preview_cache[binding]=updated
+        from core.word_preview import retire_pages
+        retire_pages(updated)
+        return updated
+
     def refresh_preview_environment(self):
-        self.preview_environment=configuration()
+        self.preview_environment=self.preview_configuration()
+        self.preview_environments[self.preview_engine]=self.preview_environment
         return deepcopy(self.preview_environment[0])
 
     def _preview_binding(self,t,probe=True):
@@ -66,7 +90,7 @@ class PreviewSession:
             old=self.preview_cache.get(binding)
             if old and valid_artifacts(old):return True
             self.preview_cache.pop(binding,None)
-            result=(renderer or render_preview)(t['path'],self.task_dir/'previews',context=t['context'])
+            result=(renderer or (__import__('core.word_preview',fromlist=['render_preview']).render_preview if self.preview_engine=='word' else render_preview))(t['path'],self.task_dir/'previews',context=t['context'])
             if result['document_sha256']!=t['sha256'] or result['render_config_sha256']!=binding[1] or not valid_artifacts(result):raise DemoError('渲染结果绑定不匹配，预览已拒绝')
             if self.preview_targets().get(key)!=t:raise DemoError('输入或规则变化，预览已失效')
             self.preview_cache[binding]=result

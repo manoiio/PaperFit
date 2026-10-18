@@ -11,7 +11,7 @@ class PreviewJobs:
     def __init__(self,max_queued=2):
         self.max_queued=max_queued;self.lock=Condition();self.queue=deque();self.jobs={};self.active=None;self.thread=None
 
-    def submit(self,owner,root,raw,binding,context,renderer):
+    def submit(self,owner,root,raw,binding,context,renderer,discard_cleanup=None):
         with self.lock:
             for job in self.jobs.values():
                 if job['owner']==owner and job['binding']==binding and job['state'] in ('queued','running'):return job['id']
@@ -22,7 +22,7 @@ class PreviewJobs:
             write_new(folder/'input.docx',raw)
             self.jobs[identity]={'id':identity,'owner':owner,'root':str(folder),'binding':deepcopy(binding),'context':deepcopy(context),
                                  'input_sha256':sha256(raw),'state':'queued','created':time.monotonic(),'started':None,'finished':None,
-                                 'discard':False,'result':None,'error':None,'renderer':renderer}
+                                 'discard':False,'result':None,'error':None,'renderer':renderer,'discard_cleanup':discard_cleanup}
             self.queue.append(identity)
             if self.thread is None or not self.thread.is_alive():
                 self.thread=Thread(target=self._work,name='paper-preview',daemon=True);self.thread.start()
@@ -38,7 +38,7 @@ class PreviewJobs:
         with self.lock:
             job=self._owned(owner,identity)
             if job is None:return {'state':'missing','error':'预览任务已丢失或应用重启，请重新生成'}
-            return {k:deepcopy(v) for k,v in job.items() if k not in ('owner','root','renderer','context','result','binding')}|{'elapsed':(job['finished'] or time.monotonic())-job['created']}
+            return {k:deepcopy(v) for k,v in job.items() if k not in ('owner','root','renderer','discard_cleanup','context','result','binding')}|{'elapsed':(job['finished'] or time.monotonic())-job['created']}
 
     def result(self,owner,identity):
         with self.lock:
@@ -52,8 +52,12 @@ class PreviewJobs:
             job['discard']=True
             if job['state']=='queued':
                 self.queue.remove(identity);job['state']='cancelled';job['error']='已取消排队，本任务不会启动';job['finished']=time.monotonic();shutil.rmtree(job['root'],ignore_errors=True)
-            elif job['state']=='running':job['state']='cancelled';job['error']='停止接收结果；不表示子进程已停止，等待本任务退出，渲染有45秒超时'
-            elif job['state']=='succeeded':job['state']='invalidated';job['result']=None;shutil.rmtree(job['root'],ignore_errors=True)
+            elif job['state']=='running':job['state']='cancelled';job['error']='停止接收结果；不表示子进程已停止，等待本任务退出；本地渲染器按各自超时边界处理'
+            elif job['state']=='succeeded':
+                if job.get('discard_cleanup') and job.get('result'):
+                    try:job['discard_cleanup'](job['result'])
+                    except Exception:job['cleanup_deferred']=True
+                job['state']='invalidated';job['result']=None;shutil.rmtree(job['root'],ignore_errors=True)
 
     def release(self,owner,identity,retain_files=False):
         with self.lock:
@@ -67,6 +71,7 @@ class PreviewJobs:
             with self.lock:
                 if not self.queue:self.thread=None;return
                 identity=self.queue.popleft();job=self.jobs[identity];self.active=identity;job['state']='running';job['started']=time.monotonic()
+            result=None
             try:
                 result=job['renderer'](Path(job['root'])/'input.docx',Path(job['root'])/'pages',context=deepcopy(job['context']))
                 if result.get('document_sha256')!=job['input_sha256'] or result.get('render_config_sha256')!=job['binding'][1]:raise DemoError('后台预览的文件或环境绑定不匹配')
@@ -80,7 +85,11 @@ class PreviewJobs:
             finally:
                 with self.lock:
                     job['finished']=time.monotonic();self.active=None
-                    if job['discard']:shutil.rmtree(job['root'],ignore_errors=True)
+                    if job['discard']:
+                        if result and job.get('discard_cleanup'):
+                            try:job['discard_cleanup'](result)
+                            except Exception:job['cleanup_deferred']=True
+                        shutil.rmtree(job['root'],ignore_errors=True)
                     # Keep only a bounded terminal registry; accepted page files have separate owners.
                     old=[j for j in self.jobs.values() if j['state'] not in ('queued','running') and j['id']!=identity]
                     for j in old[:-32]:

@@ -157,12 +157,16 @@ class ExtendedAcceptance(unittest.TestCase):
         path,m=self.modified(edit)
         before=Package(path)
         value=Resolver(before).font(Resolver(before).layers(before.paragraphs[12],before.paragraphs[12].find(q('r'))),'eastAsia')
-        self.assertIsInstance(value,dict)
+        self.assertEqual(value,'ＭＳ ゴシック')  # Now proven by the Japanese Jpan theme.
         result=self.fix(['R11'],path=path,manifest=m)
         after=Package(result['output'])
         actual=Resolver(after).font(Resolver(after).layers(after.paragraphs[12],after.paragraphs[12].find(q('r'))),'eastAsia')
         self.assertEqual(actual,value)
-        self.assertEqual(next(f for f in result['after']['findings'] if f['key']=='R09:paragraph=13:run=1:property=font_eastAsia')['status'],'review')
+        self.assertEqual(next(f for f in result['after']['findings'] if f['key']=='R09:paragraph=13:run=1:property=font_eastAsia')['status'],'problem')
+        fonts=after.paragraphs[12].find('w:r/w:rPr/w:rFonts',NS)
+        self.assertEqual(fonts.get(q('eastAsiaTheme')),'majorEastAsia')
+        self.assertIsNone(fonts.get(q('eastAsia')),'R11 must not promote a lower literal over the selected theme')
+        self.assertEqual(before.parts['word/numbering.xml'],after.parts['word/numbering.xml'])
 
     def test_unpreservable_heading_dependency_or_missing_builtin_review(self):
         def edit(pkg):

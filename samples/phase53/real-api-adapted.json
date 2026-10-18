@@ -1,0 +1,97 @@
+{
+  "version": "smart-supplement-v2",
+  "fields": {
+    "body__baseline": {
+      "value": 0,
+      "unit": "baseline_pt",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "正文不使用阴影和轮廓、浮雕和印入，字符缩放100%，标准字符间距，基线偏移0磅"
+    },
+    "body__character_spacing": {
+      "value": 0,
+      "unit": "character_pt",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "正文不使用阴影和轮廓、浮雕和印入，字符缩放100%，标准字符间距"
+    },
+    "body__emboss": {
+      "value": false,
+      "unit": "bool",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "正文不使用阴影和轮廓、浮雕"
+    },
+    "body__imprint": {
+      "value": false,
+      "unit": "bool",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "正文不使用阴影和轮廓、浮雕和印入"
+    },
+    "body__outline": {
+      "value": false,
+      "unit": "bool",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "正文不使用阴影和轮廓"
+    },
+    "body__scale": {
+      "value": 100,
+      "unit": "percent",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "正文不使用阴影和轮廓、浮雕和印入，字符缩放100%"
+    },
+    "body__shadow": {
+      "value": false,
+      "unit": "bool",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "正文不使用阴影"
+    },
+    "heading2__character_spacing": {
+      "value": 0,
+      "unit": "character_pt",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "二级标题黑体，不使用阴影和轮廓，字符缩放100%，标准字符间距"
+    },
+    "heading2__outline": {
+      "value": false,
+      "unit": "bool",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "二级标题黑体，不使用阴影和轮廓"
+    },
+    "heading2__scale": {
+      "value": 100,
+      "unit": "percent",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "二级标题黑体，不使用阴影和轮廓，字符缩放100%"
+    },
+    "heading2__shadow": {
+      "value": false,
+      "unit": "bool",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "二级标题黑体，不使用阴影"
+    },
+    "heading2_font_cn": {
+      "value": "黑体",
+      "unit": "font",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "二级标题黑体"
+    },
+    "heading3_font_cn": {
+      "value": "黑体",
+      "unit": "font",
+      "location": "摘录:L1",
+      "support": "supported",
+      "quote": "三级标题黑体"
+    }
+  },
+  "issues": []
+}

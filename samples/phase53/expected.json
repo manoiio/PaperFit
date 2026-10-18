@@ -1,0 +1,42 @@
+{
+  "fields": {
+    "body__shadow": false,
+    "body__outline": false,
+    "body__emboss": false,
+    "body__imprint": false,
+    "body__scale": 100,
+    "body__character_spacing": 0,
+    "body__baseline": 0,
+    "heading2_font_cn": "黑体",
+    "heading2__shadow": false,
+    "heading2__outline": false,
+    "heading2__scale": 100,
+    "heading2__character_spacing": 0,
+    "heading3_font_cn": "黑体"
+  },
+  "protected_superscript": "[1]",
+  "numbering_definition_unchanged": true,
+  "top_level_paragraphs": 47,
+  "headings": [
+    {
+      "paragraph": 5,
+      "display": "1",
+      "text": "研究方法"
+    },
+    {
+      "paragraph": 15,
+      "display": "1.1",
+      "text": "实现步骤"
+    },
+    {
+      "paragraph": 25,
+      "display": "1.1.1",
+      "text": "参数设置"
+    },
+    {
+      "paragraph": 35,
+      "display": "5",
+      "text": "研究方法"
+    }
+  ]
+}

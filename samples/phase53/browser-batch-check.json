@@ -1,0 +1,10 @@
+{
+  "pdf_export_snapshots_before": 2,
+  "after": 2,
+  "pdf_bytes_and_mtimes_unchanged": true,
+  "page_11_visible": true,
+  "final_docx_sha256": "8e2840016084d550617eeebb1a18b57d392579155f41d9c92a84fa950db92f22",
+  "matches_published_download": true,
+  "additional_API_requests": 0,
+  "explicit_reuse_did_not_export_again": true
+}

@@ -19,7 +19,7 @@ def main():
     from ai.short_spec import settings
     # Every imported settings alias shares this function. Defaults omit the real
     # .env; explicit temporary config arguments in configuration tests still work.
-    with patch.object(settings,'__defaults__',(None,None)),patch.dict(os.environ,{'DEEPSEEK_API_KEY':'YOUR_DEEPSEEK_API_KEY'}),patch('ai.attempts.TEST_MODE',True),patch('core.word_native.calculate',block_word),patch.object(OpenerDirector,'open',guarded):
+    with patch.object(settings,'__defaults__',(None,None)),patch.dict(os.environ,{'DEEPSEEK_API_KEY':'YOUR_DEEPSEEK_API_KEY'}),patch('ai.attempts.TEST_MODE',True),patch('core.word_native.calculate',block_word),patch('core.word_native.export_pdf',block_word),patch.object(OpenerDirector,'open',guarded):
         result=unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.discover(str(ROOT/'tests'),pattern=args.pattern))
     print('Real paid requests sent: 0; blocked unmocked attempts:',len(blocked))
     print('Real Word automation calls: 0; blocked unmocked attempts:',len(word_blocked))

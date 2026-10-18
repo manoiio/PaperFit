@@ -1,0 +1,59 @@
+{
+  "document_sha256": "8e2840016084d550617eeebb1a18b57d392579155f41d9c92a84fa950db92f22",
+  "render_config_sha256": "f470b07925494edb4d22773d8007e7e44b608f3395219ae118bffba1e8fa714a",
+  "generated_at": "2026-10-18T04:13:15.722515+00:00",
+  "renderer": "Microsoft Word / macOS PDF",
+  "engine": "word",
+  "renderer_version": "16.80",
+  "page_count": 12,
+  "preview_range": [
+    1,
+    10
+  ],
+  "fonts": [],
+  "font_notes": [
+    "Word按本机已安装字体显示；未将字体替代写回DOCX。非PAGE域在导出副本中锁定，未刷新目录/引用。未锁定PAGE及自动编号由Word计算显示；PDF不证明原DOCX缓存新鲜或全文合格。"
+  ],
+  "context": {
+    "rules_sha256": "c1ca1f7e27295c73d4ffa779d1e3c70761a58f47cd0b9a74d1678b1edfc020ec",
+    "rules_version": "rule-bundle-1+template-demo-8.0.0+extended-demo-1.0.0+sections-demo-1.0",
+    "rules_name": "本次补充排版要求（正文及标题题注）（段落及摘要关键词参考文献）",
+    "round": 4,
+    "file_name": "source.docx"
+  },
+  "fallback_odt": false,
+  "input_bytes_unchanged": true,
+  "limitation": "非PAGE域在导出副本中锁定，未刷新目录/引用。未锁定PAGE及自动编号由Word计算显示；PDF不证明原DOCX缓存新鲜或全文合格。",
+  "word_export": {
+    "backend": "Microsoft Word / macOS PDF",
+    "source_sha256": "8e2840016084d550617eeebb1a18b57d392579155f41d9c92a84fa950db92f22",
+    "export_snapshot_sha256": "2fb27a1a42529d308bba894ac0cfb60a6fdd2bd34d61335e999d9d018c8c7583",
+    "pdf_sha256": "6c82c7f9c28ae278bb7c11b6fb9bd88a19c62486648b7524d6013bfdfc084e3c",
+    "seconds": 0.631,
+    "non_page_fields_frozen": 5,
+    "main_page_fields": 0,
+    "non_page_display_unchanged_during_export": true,
+    "docx_saved": false,
+    "limitation": "非PAGE域在导出副本中锁定，未刷新目录/引用。未锁定PAGE及自动编号由Word计算显示；PDF不证明原DOCX缓存新鲜或全文合格。"
+  },
+  "batch_order": [
+    1
+  ],
+  "generated_page_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "seconds": 1.957,
+  "page_cleanup": {
+    "retired_files": 0,
+    "deferred_until_task_cleanup": 0
+  }
+}

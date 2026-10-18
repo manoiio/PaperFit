@@ -28,6 +28,9 @@ def value(v,rid='',expected=False):
     return fmt(v,rid,expected)
 
 def field_value(v,rid,loc,expected=False):
+    from core.text_effects import describe
+    effect=describe(loc.get('property',''),v)
+    if effect is not None:return effect
     if rid=='R43':
         if isinstance(v,list):return ' → '.join({'figure':'图片','caption':'题注','table':'表格'}.get(x,str(x)) for x in v)
         if v=='unconfirmed':return '对象关联未确认'

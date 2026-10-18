@@ -1,0 +1,43 @@
+{
+  "pages": {
+    "PFToc_2eb45c828073_5": {
+      "adjusted": 1,
+      "physical": 3
+    },
+    "PFToc_2eb45c828073_15": {
+      "adjusted": 2,
+      "physical": 4
+    },
+    "PFToc_2eb45c828073_25": {
+      "adjusted": 3,
+      "physical": 5
+    },
+    "PFToc_2eb45c828073_35": {
+      "adjusted": 6,
+      "physical": 8
+    }
+  },
+  "numbering": {
+    "PFToc_2eb45c828073_5": {
+      "level": 1,
+      "display": "1"
+    },
+    "PFToc_2eb45c828073_15": {
+      "level": 2,
+      "display": "1.1"
+    },
+    "PFToc_2eb45c828073_25": {
+      "level": 3,
+      "display": "1.1.1"
+    },
+    "PFToc_2eb45c828073_35": {
+      "level": 1,
+      "display": "5"
+    }
+  },
+  "seconds": 0.524,
+  "backend": "macOS Microsoft Word AppleScript",
+  "updated": false,
+  "source_sha256": "8e2840016084d550617eeebb1a18b57d392579155f41d9c92a84fa950db92f22",
+  "hash_unchanged": true
+}

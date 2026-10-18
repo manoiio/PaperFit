@@ -15,7 +15,10 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
     selected=input_ui.get('selected')
     prior_extra=st.session_state.get('onepass-extra-'+task,'') if input_ui.get('choice','current')=='current' else ''
     from .page_ui import options as assembly_options
-    assembly_options(model,task)
+    prior_done=model.inventory is not None and state.get('status')=='done' and current(model,state,prior_extra,selected)
+    if prior_done:
+        with st.expander('本次整理方案（查看或调整）'):assembly_options(model,task)
+    else:assembly_options(model,task)
     completed=model.inventory is not None and state.get('status')=='done' and current(model,state,prior_extra,selected)
     if completed:render_success(model,state,render_results)
     else:st.write('上传论文，按要求整理，下载修改好的副本。原稿保留。')
@@ -40,11 +43,14 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         from .requirements_ui import render_requirements
         extra,requirements,requirements_ready=render_requirements(model,task,state)
         st.caption('开始后，需要时将向DeepSeek发送有限的脱敏文字摘录辅助识别段落及普通表格用途；脚注尾注本地识别。使用要求文件/补充文字时另发送提取的要求解析一次。文件排版在本机完成，原稿保留。脱敏不保证彻底匿名。')
+        native_output=st.checkbox('同时生成Word原生预览和PDF',value=False,key='onepass-native-'+task,help='在最终DOCX完成后后台导出；不改DOCX，不更新额外域。Word不可用时DOCX仍可下载。')
         valid=model.inventory is not None and current(model,state,extra,requirements)
         def progress(name):status.update(label=name);status.write(name)
         if st.button('开始智能排版',key='onepass-start',type='primary',width='stretch',disabled=model.inventory is None or not requirements_ready or (valid and state.get('status') in ('done','waiting','running','updating'))):
             with st.status('识别论文内容',expanded=True) as status:
+                state['native_output_requested']=native_output
                 start(model,state,extra,requirements=requirements,requirements_cache=st.session_state.setdefault('requirements-cache-'+task,{}),emit=progress)
+                state['native_output_requested']=native_output
                 status.update(label='有少量事项需要您决定' if state.get('status')=='waiting' else '整理完成' if state.get('status')=='done' else '本次未完成',state='error' if state.get('status')=='failed' else 'complete')
             st.rerun()
     if state and not valid and model.inventory:
@@ -137,6 +143,8 @@ def render_success(model,state,render_results):
     else:
         st.info('本次没有需要安全修改的格式，未额外生成副本。')
         st.download_button('下载已检查文件',model.input_path.read_bytes(),file_name='论文有格_已检查.docx',on_click='ignore')
+    from .native_output_ui import render_native_output
+    render_native_output(model,state)
     n=state['outcome'].get('changes',0);summary=report['summary']
     field_status=state.get('audit',{}).get('field_update')
     if field_status:

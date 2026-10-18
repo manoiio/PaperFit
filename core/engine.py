@@ -332,6 +332,9 @@ def _check(pkg, body, rules, classification=None):
     if classification is not None and rules.get('mode')=='academic':
         from .internal_refs import append_checks as reference_checks
         reference_checks(report,pkg,classification)
+    if classification is not None and rules.get('mode')=='academic':
+        from .text_effects import append_checks as effect_checks
+        effect_checks(report,pkg,classification,rules)
     from .paragraph_conflicts import isolate
     isolate(report)
     from .dependencies import annotate_dependencies
@@ -399,6 +402,9 @@ def _ensure(parent, tag):
     return element
 
 def _apply(pkg, f):
+    if f["locator"].get("property", "").startswith("text_"):
+        from .text_effects import apply
+        return apply(pkg,f)
     if f['rule_id'] in ('R36','R37'):
         from .notes import apply
         return apply(pkg,f)
@@ -479,6 +485,9 @@ def _preservation(pkg, changes):
     for f in changes:
         loc, rid = f['locator'], f['rule_id']
         if rid in ('R36','R37'):continue
+        if loc.get('property','').startswith('text_'):
+            from .text_effects import mask
+            mask(ps[loc['paragraph']-1],f);continue
         if rid=='R35':
             from .table_edges import mask
             mask(root,f);continue

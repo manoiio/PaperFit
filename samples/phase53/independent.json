@@ -1,0 +1,67 @@
+{
+  "ordinary": {
+    "selected_changes": 169,
+    "all_other_parts_byte_equal": true,
+    "reverse_exact_attribute_mask_equal": true,
+    "handwritten_effect_values_pass": true,
+    "superscript_run_byte_equal": true
+  },
+  "pages": {
+    "new_footer_parts": 4,
+    "all_original_relationships_and_parts_preserved": true,
+    "section_geometry_headers_notes_preserved": true,
+    "run_subtrees_preserved": true,
+    "exact_authorised_structure_mask_equal": true
+  },
+  "pagination": {
+    "only_p2_keepNext_keepLines": true,
+    "all_other_parts_equal": true
+  },
+  "directory": {
+    "passed": true,
+    "final_sha256": "8e2840016084d550617eeebb1a18b57d392579155f41d9c92a84fa950db92f22",
+    "numbering_xml_byte_equal": true,
+    "all_other_field_stage_parts_byte_equal": true,
+    "sdt_shell_and_outside_title_preserved": true,
+    "top_level_identity_preserved": true,
+    "heading_numPr_styles_and_text_preserved": true,
+    "exact_reverse_mask_document_equal": true,
+    "entries": [
+      {
+        "paragraph": 5,
+        "number": "1",
+        "title": "研究方法",
+        "page": "1",
+        "anchor": "PFToc_2eb45c828073_5"
+      },
+      {
+        "paragraph": 15,
+        "number": "1.1",
+        "title": "实现步骤",
+        "page": "2",
+        "anchor": "PFToc_2eb45c828073_15"
+      },
+      {
+        "paragraph": 25,
+        "number": "1.1.1",
+        "title": "参数设置",
+        "page": "3",
+        "anchor": "PFToc_2eb45c828073_25"
+      },
+      {
+        "paragraph": 35,
+        "number": "5",
+        "title": "研究方法",
+        "page": "6",
+        "anchor": "PFToc_2eb45c828073_35"
+      }
+    ]
+  },
+  "rules": {
+    "handwritten_13_values_and_real_continuous_sources": true,
+    "untouched_values_and_sources_equal_baseline": true,
+    "other_modules_and_disabled_fields_equal": true
+  },
+  "browser_equals_local_bytes": true,
+  "pdf_bound_to_download_and_package": true
+}

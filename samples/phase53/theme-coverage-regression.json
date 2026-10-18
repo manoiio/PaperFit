@@ -1,0 +1,18 @@
+{
+  "kind": "controlled original resolver replay,0 API/Word",
+  "same_fixture": "samples/phase51/source.docx",
+  "old_total_changes": 129,
+  "current_total_changes": 223,
+  "additional_proven_font_attributes": 94,
+  "additional_table_font_cn": 74,
+  "additional_font_rule_counts": {
+    "R03": 6,
+    "R04": 2,
+    "R08": 4,
+    "R12": 6,
+    "R14": 1,
+    "R15": 1,
+    "R23": 74
+  },
+  "layout_dynamic_stage_types_unchanged": true
+}

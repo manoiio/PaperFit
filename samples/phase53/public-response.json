@@ -1,0 +1,71 @@
+{
+  "version": "supplement-ids-v4",
+  "items": [
+    {
+      "field": "F01",
+      "value": 0,
+      "source": "S1"
+    },
+    {
+      "field": "F02",
+      "value": 0,
+      "source": "S1"
+    },
+    {
+      "field": "F03",
+      "value": false,
+      "source": "S1"
+    },
+    {
+      "field": "F04",
+      "value": false,
+      "source": "S1"
+    },
+    {
+      "field": "F05",
+      "value": false,
+      "source": "S1"
+    },
+    {
+      "field": "F06",
+      "value": 100,
+      "source": "S1"
+    },
+    {
+      "field": "F07",
+      "value": false,
+      "source": "S1"
+    },
+    {
+      "field": "F08",
+      "value": 0,
+      "source": "S2"
+    },
+    {
+      "field": "F09",
+      "value": false,
+      "source": "S2"
+    },
+    {
+      "field": "F10",
+      "value": 100,
+      "source": "S2"
+    },
+    {
+      "field": "F11",
+      "value": false,
+      "source": "S2"
+    },
+    {
+      "field": "F12",
+      "value": "黑体",
+      "source": "S2"
+    },
+    {
+      "field": "F13",
+      "value": "黑体",
+      "source": "S3"
+    }
+  ],
+  "issues": []
+}

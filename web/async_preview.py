@@ -37,13 +37,26 @@ class AsyncPreviewSession:
             if cached and valid_artifacts(cached):return {'state':'cached','id':None}
             raw=Path(target['path']).read_bytes()
             if sha256(raw)!=target['sha256']:raise DemoError('预览输入发生变化，请重新选择')
-            identity=scheduler.submit(self.preview_owner,self.work_root/'_preview-jobs',raw,binding,target['context'],renderer or render_preview)
+            identity=scheduler.submit(self.preview_owner,self.work_root/'_preview-jobs',raw,binding,target['context'],(renderer or (__import__("core.word_preview",fromlist=["render_preview"]).render_preview if self.preview_engine=="word" else render_preview)))
             self.preview_jobs[identity]={'target':deepcopy(target),'key':key,'binding':binding,'epoch':self.preview_epoch,
-                                         'scheduler':scheduler,'accepted':False,'state':'queued'}
+                                         'scheduler':scheduler,'accepted':False,'state':'queued','engine':self.preview_engine}
             return {'state':scheduler.status(self.preview_owner,identity)['state'],'id':identity}
         except Exception as exc:
             from .session import public_error
             self.preview_error=public_error(exc);return {'state':'failed','id':None,'error':self.preview_error}
+
+    def submit_preview_pages(self,key,page,*,scheduler=None):
+        from core.word_preview import batch,discard_batch
+        scheduler=scheduler or SCHEDULER
+        target=self.preview_targets().get(key)
+        if not target or self.preview_engine!='word':raise DemoError('先选择有效Word预览目标')
+        binding=self._preview_binding(target,probe=False);meta=self.preview_cache.get(binding)
+        if not meta or not valid_artifacts(meta):raise DemoError('先生成有效Word PDF')
+        if str(page) in meta.get('page_map',{}):return {'state':'cached','id':None}
+        snapshot=deepcopy(meta)
+        identity=scheduler.submit(self.preview_owner,self.work_root/'_preview-jobs',Path(target['path']).read_bytes(),binding,target['context'],lambda *_a,**_kw:batch(snapshot,page),discard_cleanup=lambda result:discard_batch(snapshot,result))
+        self.preview_jobs[identity]={'target':deepcopy(target),'key':key,'binding':binding,'epoch':self.preview_epoch,'scheduler':scheduler,'accepted':False,'state':'queued','engine':'word','page_batch':True}
+        return {'state':scheduler.status(self.preview_owner,identity)['state'],'id':identity}
 
     def preview_job_status(self,identity):
         """Running/queued polling touches no DOCX/configuration; completion validates once."""
@@ -56,18 +69,26 @@ class AsyncPreviewSession:
         try:
             target=self.preview_targets().get(record['key'])
             if record['epoch']!=self.preview_epoch or target!=record['target']:raise DemoError('文件、规则、范围或轮次变化，后台结果已失效')
-            config=configuration();self.preview_environment=config
+            engine=record.get("engine","libreoffice")
+            config=__import__("core.word_preview",fromlist=["configuration"]).configuration() if engine=="word" else configuration()
+            self.preview_environments[engine]=config
+            if self.preview_engine==engine:self.preview_environment=config
             if config[1]!=record['binding'][1]:raise DemoError('渲染或字体环境已变化，请重新生成')
             result=scheduler.result(self.preview_owner,identity)
             if not result or result['document_sha256']!=target['sha256'] or result['render_config_sha256']!=config[1] or not valid_artifacts(result):raise DemoError('后台页图或哈希核对失败，拒绝接入')
             self.preview_cache[record['binding']]=deepcopy(result)
+            if result.get('engine')=='word':
+                from core.word_preview import retire_pages
+                retire_pages(self.preview_cache[record['binding']])
             # Snapshot root belongs only to this task and survives main input reset until worker exits.
             artifact=Path(result['pages'][0]).resolve()
             root=(self.work_root/'_preview-jobs').resolve()
             for parent in artifact.parents:
                 if parent.parent==root:self.async_artifact_roots.add(str(parent));break
             record.update(accepted=True,state='succeeded',elapsed=status['elapsed'])
-            scheduler.release(self.preview_owner,identity,retain_files=True)
+            # Batch PNGs live beside the already-owned PDF, outside this job's
+            # input snapshot directory. Retain only actual output roots.
+            scheduler.release(self.preview_owner,identity,retain_files=not record.get('page_batch',False))
             return {'id':identity,'state':'succeeded','accepted':True,'elapsed':status['elapsed']}
         except Exception as exc:
             from .session import public_error
@@ -83,7 +104,7 @@ class AsyncPreviewSession:
 
     def active_preview_job(self,key):
         for identity,record in reversed(list(self.preview_jobs.items())):
-            if record['key']==key and record['epoch']==self.preview_epoch:
+            if record['key']==key and record['epoch']==self.preview_epoch and record.get('engine','libreoffice')==self.preview_engine:
                 state=self.preview_job_status(identity)
                 if state['state'] in ('queued','running'):return identity
         return None

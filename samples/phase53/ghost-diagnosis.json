@@ -1,0 +1,118 @@
+{
+  "source_sha256": "746fc69681fad046c7ee0f95c2dea381517075d1195209b236717736cda42f61",
+  "effect_tags_found": {
+    "shadow": 0,
+    "outline": 0,
+    "emboss": 0,
+    "imprint": 0,
+    "w": 0,
+    "spacing": 6,
+    "position": 0
+  },
+  "controls_are_not_formal_output": true,
+  "window_observation": "deferred by explicit user request after Mac lock",
+  "conclusion": "No shadow/outline/duplicate heading evidence in stage52 output. Bold-stroke contribution is supported by controlled PDF appearance; exact internal font synthesis cause is not fully proven.",
+  "heading_text_occurrences": {
+    "实现步骤": 1,
+    "参数设置": 1
+  },
+  "pdf_controls": {
+    "original": {
+      "sha256": "ca77ad882fb67c225aff0bafe451805dfa77a3824bafb5aa5f8ac21ca357627a",
+      "fill_stroke_2Tr_operators": 5,
+      "font_list": [
+        "name                                 type              encoding         emb sub uni object ID",
+        "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+        "AAAAAC+Cambria                       TrueType          WinAnsi          yes yes yes      7  0",
+        "AAAAAE+MS-Gothic                     TrueType          WinAnsi          yes yes yes      9  0",
+        "AAAAAG+Calibri                       TrueType          WinAnsi          yes yes yes     11  0",
+        "AAAAAI+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     13  0",
+        "AAAAAK+MS-Mincho                     TrueType          WinAnsi          yes yes yes     20  0",
+        "AAAAAM+MS-Mincho                     TrueType          WinAnsi          yes yes yes     22  0",
+        "AAAAAO+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     24  0",
+        "AAAAAQ+MS-Mincho                     TrueType          WinAnsi          yes yes yes     26  0",
+        "AAAAAS+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     28  0",
+        "AAAAAU+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     38  0",
+        "AAAAAW+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     40  0",
+        "AAAAAY+MS-Gothic                     TrueType          WinAnsi          yes yes yes     42  0",
+        "AAAABA+SimSun                        TrueType          WinAnsi          yes yes yes     44  0",
+        "AAAABC+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     51  0",
+        "AAAABE+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     53  0",
+        "AAAABG+MicrosoftYaHei-Bold           TrueType          WinAnsi          yes yes yes     55  0",
+        "AAAABI+MS-Gothic                     TrueType          WinAnsi          yes yes yes     57  0",
+        "AAAABK+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     67  0",
+        "AAAABM+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     69  0",
+        "AAAABO+MS-Gothic                     TrueType          WinAnsi          yes yes yes     71  0",
+        "AAAABQ+MicrosoftYaHei-Bold           TrueType          WinAnsi          yes yes yes     73  0"
+      ]
+    },
+    "font_only": {
+      "sha256": "b213a337dba1a162f858e1d82eae70eef54e3c6ccce04da946e56bc94c9ee5be",
+      "fill_stroke_2Tr_operators": 4,
+      "font_list": [
+        "name                                 type              encoding         emb sub uni object ID",
+        "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+        "AAAAAC+Cambria                       TrueType          WinAnsi          yes yes yes      7  0",
+        "AAAAAE+MS-Gothic                     TrueType          WinAnsi          yes yes yes      9  0",
+        "AAAAAG+Calibri                       TrueType          WinAnsi          yes yes yes     11  0",
+        "AAAAAI+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     13  0",
+        "AAAAAK+MS-Mincho                     TrueType          WinAnsi          yes yes yes     20  0",
+        "AAAAAM+MS-Mincho                     TrueType          WinAnsi          yes yes yes     22  0",
+        "AAAAAO+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     24  0",
+        "AAAAAQ+MS-Mincho                     TrueType          WinAnsi          yes yes yes     26  0",
+        "AAAAAS+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     28  0",
+        "AAAAAU+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     38  0",
+        "AAAAAW+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     40  0",
+        "AAAAAY+MS-Gothic                     TrueType          WinAnsi          yes yes yes     42  0",
+        "AAAABA+SimSun                        TrueType          WinAnsi          yes yes yes     44  0",
+        "AAAABC+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     51  0",
+        "AAAABE+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     53  0",
+        "AAAABG+SimHei                        TrueType          WinAnsi          yes yes yes     55  0",
+        "AAAABI+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     65  0",
+        "AAAABK+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     67  0",
+        "AAAABM+SimHei                        TrueType          WinAnsi          yes yes yes     69  0"
+      ]
+    },
+    "bold_off": {
+      "sha256": "c74522883d8805bbe578d48e7b90e73f7aa96debfe682b789ddaf51b03253c76",
+      "fill_stroke_2Tr_operators": 2,
+      "font_list": [
+        "name                                 type              encoding         emb sub uni object ID",
+        "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+        "AAAAAC+Cambria                       TrueType          WinAnsi          yes yes yes      7  0",
+        "AAAAAE+MS-Gothic                     TrueType          WinAnsi          yes yes yes      9  0",
+        "AAAAAG+Calibri                       TrueType          WinAnsi          yes yes yes     11  0",
+        "AAAAAI+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     13  0",
+        "AAAAAK+MS-Mincho                     TrueType          WinAnsi          yes yes yes     20  0",
+        "AAAAAM+MS-Mincho                     TrueType          WinAnsi          yes yes yes     22  0",
+        "AAAAAO+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     24  0",
+        "AAAAAQ+MS-Mincho                     TrueType          WinAnsi          yes yes yes     26  0",
+        "AAAAAS+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     28  0",
+        "AAAAAU+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     38  0",
+        "AAAAAW+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     40  0",
+        "AAAAAY+MS-Gothic                     TrueType          WinAnsi          yes yes yes     42  0",
+        "AAAABA+SimSun                        TrueType          WinAnsi          yes yes yes     44  0",
+        "AAAABC+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     51  0",
+        "AAAABE+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     53  0",
+        "AAAABG+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     55  0",
+        "AAAABI+MS-Gothic                     TrueType          WinAnsi          yes yes yes     57  0",
+        "AAAABK+Calibri-Bold                  TrueType          WinAnsi          yes yes yes     67  0",
+        "AAAABM+Arial-BoldMT                  TrueType          WinAnsi          yes yes yes     69  0",
+        "AAAABO+MS-Gothic                     TrueType          WinAnsi          yes yes yes     71  0",
+        "AAAABQ+MicrosoftYaHei                TrueType          WinAnsi          yes yes yes     73  0"
+      ]
+    }
+  },
+  "effect_tags_found_scope": "whole document rPr plus all styles; six spacing declarations belong to other styles, not the tested heading chains",
+  "heading_chains": {
+    "15": [
+      "2",
+      "a"
+    ],
+    "25": [
+      "3",
+      "a"
+    ]
+  },
+  "heading_chains_have_spacing_declaration": false
+}

@@ -1,0 +1,114 @@
+{
+  "font": {
+    "backend": "Microsoft Word / macOS PDF",
+    "source_sha256": "9c51f8e9d9d96b026890d06048bac64e1f6d6bcff4d82718f2845f72ec1df3b9",
+    "export_snapshot_sha256": "c304dcc96e5602e6861baa5f153190c7d22640e2c46a279d9a0c515d2dfa6f55",
+    "pdf_sha256": "b213a337dba1a162f858e1d82eae70eef54e3c6ccce04da946e56bc94c9ee5be",
+    "seconds": 0.608,
+    "non_page_fields_frozen": 5,
+    "main_page_fields": 0,
+    "non_page_display_unchanged_during_export": true,
+    "docx_saved": false,
+    "limitation": "非PAGE域在导出副本中锁定，未刷新目录/引用。未锁定PAGE及自动编号由Word计算显示；PDF不证明原DOCX缓存新鲜或全文合格。",
+    "changes": [
+      {
+        "key": "R09:paragraph=15:run=1:property=font_eastAsia",
+        "rule_id": "R09",
+        "locator": {
+          "paragraph": 15,
+          "run": 1,
+          "property": "font_eastAsia"
+        },
+        "before": {
+          "slot": "eastAsia",
+          "font": "ＭＳ ゴシック"
+        },
+        "after": {
+          "slot": "eastAsia",
+          "font": "黑体"
+        },
+        "verification": "pass",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "小三号，黑体，居左，单倍行距",
+          "interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+        }
+      },
+      {
+        "key": "R10:paragraph=25:run=1:property=font_eastAsia",
+        "rule_id": "R10",
+        "locator": {
+          "paragraph": 25,
+          "run": 1,
+          "property": "font_eastAsia"
+        },
+        "before": {
+          "slot": "eastAsia",
+          "font": "ＭＳ ゴシック"
+        },
+        "after": {
+          "slot": "eastAsia",
+          "font": "黑体"
+        },
+        "verification": "pass",
+        "source": {
+          "file": "00-全员必看/本科毕业设计论文.pdf",
+          "physical_page": 18,
+          "quote": "四号，黑体，居左，单倍行距",
+          "interpretation": "中文字体按该标题原文；西文/数字槽位按同页“各章题序的阿拉伯数字用Times New Roman体”和英文单词字体要求映射；不增加加粗、段距或缩进要求。"
+        }
+      }
+    ],
+    "numbering_unchanged": true
+  },
+  "bold": {
+    "backend": "Microsoft Word / macOS PDF",
+    "source_sha256": "d3d1445f3ae8a7cf30c6fb4d87abb11fab0e1c44e52b96e84651d2133f0bb4f5",
+    "export_snapshot_sha256": "a024c83cf128fdfa56bff23a113e836b5008b41a142e49315d5c8d47e533f7d9",
+    "pdf_sha256": "c74522883d8805bbe578d48e7b90e73f7aa96debfe682b789ddaf51b03253c76",
+    "seconds": 0.613,
+    "non_page_fields_frozen": 5,
+    "main_page_fields": 0,
+    "non_page_display_unchanged_during_export": true,
+    "docx_saved": false,
+    "limitation": "非PAGE域在导出副本中锁定，未刷新目录/引用。未锁定PAGE及自动编号由Word计算显示；PDF不证明原DOCX缓存新鲜或全文合格。",
+    "changes": [
+      {
+        "key": "R13:paragraph=15:run=1:property=bold",
+        "rule_id": "R13",
+        "locator": {
+          "paragraph": 15,
+          "run": 1,
+          "property": "bold"
+        },
+        "before": true,
+        "after": false,
+        "verification": "pass",
+        "source": {
+          "label": "未配置属性",
+          "quote": ""
+        },
+        "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+      },
+      {
+        "key": "R13:paragraph=25:run=1:property=bold",
+        "rule_id": "R13",
+        "locator": {
+          "paragraph": 25,
+          "run": 1,
+          "property": "bold"
+        },
+        "before": true,
+        "after": false,
+        "verification": "pass",
+        "source": {
+          "label": "未配置属性",
+          "quote": ""
+        },
+        "attribute_cleanup_note": "关键词普通w:t片段安全拆分；按字符属性白名单验证，文字/其余属性保持"
+      }
+    ],
+    "numbering_unchanged": true
+  }
+}

@@ -12,7 +12,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-8'
+VERSION='onepass-9'
 
 
 def command_binding(model,extra,requirements=None):

@@ -29,6 +29,9 @@ ALIGNMENTS = {'left':'居左','center':'居中','right':'居右','both':'两端�
 
 
 def field_map(data):
+    if data.get('structure_version')==8:
+        from .text_templates import FIELDS as text_fields
+        return text_fields
     if data.get('structure_version')==7:
         from .paragraph_templates import FIELDS as paragraph_fields
         return paragraph_fields
@@ -62,10 +65,14 @@ def safe_text(value, limit=200, allow_empty=False):
 
 
 def validate_value(name, value):
+    from .text_effects import FIELDS as effect_fields,value as effect_value
+    if name in effect_fields:return effect_value(name,value)
     from .paragraph_values import line,indent
     if name in ALL_FIELDS and name.endswith('line_spacing'):line(value);return deepcopy(value)
     if name=='first_line_indent':indent(value);return deepcopy(value)
-    if name in ('figure_caption__line_spacing','table_caption__line_spacing'):line(value);return deepcopy(value)
+    if name in ('figure_caption__line_spacing','table_caption__line_spacing'):
+        if value is not None:line(value)
+        return deepcopy(value)
     from .backmatter import FIELDS as back_fields
     if name in back_fields:
         from .back_templates import value as back_value
@@ -287,6 +294,9 @@ def make_template(name, values, sources, segments, base, *, norm_sha256=None, im
 
 
 def validate_template(data, base):
+    if isinstance(data,dict) and data.get('structure_version')==8:
+        from .text_templates import validate
+        return validate(data,base)
     if isinstance(data,dict) and data.get('structure_version')==7:
         from .paragraph_templates import validate
         return validate(data,base)
@@ -349,6 +359,9 @@ def validate_template(data, base):
 
 
 def compile_template(data, base):
+    if isinstance(data,dict) and data.get('structure_version')==8:
+        from .text_templates import compile
+        return compile(data,base)
     if isinstance(data,dict) and data.get('structure_version')==7:
         from .paragraph_templates import compile
         return compile(data,base)

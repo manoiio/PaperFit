@@ -131,12 +131,14 @@ class Resolver:
                 low=lang.lower();prefix=low.split('-')[0]
                 if low in ('zh-cn','zh-sg','zh-hans'):script='Hans'
                 elif low in ('zh-tw','zh-hk','zh-mo','zh-hant'):script='Hant'
+                elif region=='EastAsia' and low=='ja-jp':script='Jpan'
+                elif region=='EastAsia' and low=='ko-kr':script='Hang'
                 elif prefix in ('en','fr','de','es','it','pt','nl','sv','no','da','fi','pl','cs','sk','hu','ro','tr','hr','sl','id','ms','ca') and region!='EastAsia' and re.fullmatch(r'[a-z]{2,3}(?:-latn)?(?:-[a-z]{2}|-[0-9]{3})?',low):script='Latn'
                 else:raise Unresolved('主题语言 '+lang+' 未纳入当前唯一映射范围')
                 selector='latin' if script=='Latn' else 'font'
             if script=='Latn' and any(e.tag=='{'+a+'}font' and e.get('script')=='Latn' for e in collection):raise Unresolved('补充Latn与latin主题同时出现，本阶段不猜测其覆盖关系')
             candidates=[e for e in collection if e.tag=='{'+a+'}'+selector and (selector!='font' or e.get('script')==script)]
-            if len(candidates)!=1 or not candidates[0].get('typeface','').strip():raise Unresolved('主题 '+group+'Font/'+selector+('['+script+']' if script else '')+' 字体缺失或不唯一')
+            if len(candidates)!=1 or not candidates[0].get('typeface','').strip():raise Unresolved('主题 '+group+'Font/'+selector+('['+script+']' if script else '')+' 字体缺失或不唯一（主题语言 '+str(lang)+'）')
             return candidates[0].get('typeface'),{'theme':token,'member':member,'theme_font_lang':lang,'script':script,'selector':group+'Font/'+selector}
         except Unresolved:raise
         except (DemoError,ET.XMLSyntaxError):raise Unresolved('主题或设置XML损坏/不安全，不能解析') from None
@@ -162,7 +164,7 @@ class Resolver:
                 result['theme']=token
                 # Unusual cross-region theme references are explicitly outside this prototype.
                 suffix={'ascii':'Ascii','hAnsi':'HAnsi','eastAsia':'EastAsia'}[slot]
-                if token not in ('major'+suffix,'minor'+suffix):raise Unresolved('主题枚举与字体槽位不对应，需人工确认')
+                if token not in (('majorAscii','minorAscii','majorHAnsi','minorHAnsi') if slot in ('ascii','hAnsi') else ('major'+suffix,'minor'+suffix)):raise Unresolved('主题枚举与字体槽位不对应，需人工确认')
                 out,proof=self._theme_font(token);result['theme_basis']=proof;result['source_type']='theme'
             else:result['source_type']=result['declared_at'] or 'missing'
             if not isinstance(out,str) or not out.strip():raise Unresolved(slot+'槽位在直接格式、样式及docDefaults中没有可解析字体；不补默认值')

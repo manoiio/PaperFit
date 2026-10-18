@@ -1,0 +1,34 @@
+[
+  {
+    "number": 1,
+    "parent": 0,
+    "input_sha256": "0a19d923a99a0b972001b1550a48a0f3fdabcff20169d74baf3481a7e5c4925e",
+    "output_sha256": "358b52db76d0ba170bcea140c3f03705ecbff2e2ac10289283111ff5c48fee2e",
+    "kind": "format",
+    "modifications": 169
+  },
+  {
+    "number": 2,
+    "parent": 1,
+    "input_sha256": "358b52db76d0ba170bcea140c3f03705ecbff2e2ac10289283111ff5c48fee2e",
+    "output_sha256": "fac78d3fd0dd18854778836d66478616860d1a459b3b6bff064c4ddc0d03eb22",
+    "kind": "section_pages",
+    "modifications": 7
+  },
+  {
+    "number": 3,
+    "parent": 2,
+    "input_sha256": "fac78d3fd0dd18854778836d66478616860d1a459b3b6bff064c4ddc0d03eb22",
+    "output_sha256": "2eb45c8280736dd1a66fc4d26d1762292b694e67926d1902b9fb3b7d96c90a00",
+    "kind": "pagination_layout",
+    "modifications": 2
+  },
+  {
+    "number": 4,
+    "parent": 3,
+    "input_sha256": "2eb45c8280736dd1a66fc4d26d1762292b694e67926d1902b9fb3b7d96c90a00",
+    "output_sha256": "8e2840016084d550617eeebb1a18b57d392579155f41d9c92a84fa950db92f22",
+    "kind": "field_update",
+    "modifications": 1
+  }
+]

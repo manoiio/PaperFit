@@ -96,5 +96,11 @@ class LayoutAssemblyTests(unittest.TestCase):
     poll_fields(s,state)
     if state['status']!='updating':break
     time.sleep(.02)
-  self.assertEqual(state['status'],'done');self.assertEqual(state['audit']['field_update']['status'],'updated',state['audit']['field_update']);self.assertEqual(state['audit']['assembly_steps'][-1]['kind'],'field_update');self.assertEqual(len(s.history),6);self.assertEqual(len(s.result['assembly']['steps']),6);self.assertEqual(s.result['assembly']['total_changes'],129)
+  self.assertEqual(state['status'],'done');self.assertEqual(state['audit']['field_update']['status'],'updated',state['audit']['field_update']);self.assertEqual(state['audit']['assembly_steps'][-1]['kind'],'field_update');self.assertEqual(len(s.history),6);self.assertEqual(len(s.result['assembly']['steps']),6);self.assertEqual(s.result['assembly']['total_changes'],223)
+  # The identical source now resolves Japanese and ASCII/HAnsi theme slots.
+  # Old resolver replay gives 129; all 94 additions are proven font slots,
+  # including 74 table runs. No new layout/dynamic authorisation was added.
+  fonts=[c for c in s.history[0]['result']['changes'] if c['rule_id'] in ('R03','R04') or c.get('locator',{}).get('property') in ('font_cn','font_ascii','font_hAnsi','font_eastAsia')]
+  self.assertEqual(len(fonts),94)
+  self.assertEqual(sum(c['rule_id']=='R23' and c['locator']['property']=='font_cn' for c in fonts),74)
   p=Package(s.history[4]['result']['output']);self.assertTrue(p.paragraphs[9].find('w:pPr/w:keepNext',NS) is not None);self.assertTrue(calls)
