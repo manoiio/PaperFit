@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[1]
 VERSION='format-rehearsal-v1'
 
 def execution_hash():
-    paths=sorted((ROOT/'core').glob('*.py'))+[ROOT/'web/session.py',Path(__file__),ROOT/'web/scope_session.py',ROOT/'web/plan_session.py',ROOT/'web/smart_session.py',ROOT/'web/dynamic_session.py',ROOT/'web/structure_session.py',ROOT/'ai/structure.py',ROOT/'web/onepass_session.py',ROOT/'ai/short_spec.py',ROOT/'web/auto_ranges.py',ROOT/'web/table_session.py',ROOT/'web/note_session.py',ROOT/'ai/smart_spec.py',ROOT/'ai/attempts.py',ROOT/'ai/semantic_spec.py',ROOT/'ai/diagnostics.py',ROOT/'ai/structure_ids.py',ROOT/'ai/file_spec.py',ROOT/'ai/page_intent.py',ROOT/'web/requirements_input.py',ROOT/'web/page_session.py',ROOT/'web/assembly_session.py',ROOT/'web/field_session.py',ROOT/'web/auxiliary_session.py']
+    paths=sorted((ROOT/'core').glob('*.py'))+[ROOT/'web/session.py',Path(__file__),ROOT/'web/scope_session.py',ROOT/'web/plan_session.py',ROOT/'web/smart_session.py',ROOT/'web/dynamic_session.py',ROOT/'web/structure_session.py',ROOT/'ai/structure.py',ROOT/'web/onepass_session.py',ROOT/'ai/short_spec.py',ROOT/'web/auto_ranges.py',ROOT/'web/smart_defaults.py',ROOT/'web/table_session.py',ROOT/'web/note_session.py',ROOT/'ai/smart_spec.py',ROOT/'ai/attempts.py',ROOT/'ai/semantic_spec.py',ROOT/'ai/diagnostics.py',ROOT/'ai/structure_ids.py',ROOT/'ai/file_spec.py',ROOT/'ai/page_intent.py',ROOT/'web/requirements_input.py',ROOT/'web/page_session.py',ROOT/'web/assembly_session.py',ROOT/'web/field_session.py',ROOT/'web/auxiliary_session.py']
     return fingerprint({str(p.relative_to(ROOT)):sha256(p.read_bytes()) for p in paths})
 
 class RehearsalSession:

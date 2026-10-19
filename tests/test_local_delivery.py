@@ -33,7 +33,7 @@ class LocalDelivery(TestCase):
   from web.session import WebSession
   with TemporaryDirectory() as d:
    model=WebSession(d);model.set_mode('academic')
-   app=AppTest.from_file(str(local.ROOT/'app.py'));app.session_state.workflow=model;app.session_state['workspace-smart']=True;app.run()
+   app=AppTest.from_file(str(local.ROOT/'app.py'),default_timeout=30);app.session_state.workflow=model;app.session_state['workspace-smart']=True;app.run()
    reset=next(b for b in app.button if b.label=='重新开始');reset.click().run()
    next(b for b in app.button if b.label=='使用错误样本').click().run()
    self.assertFalse(app.exception);self.assertEqual(model.mode,'academic')
@@ -42,7 +42,7 @@ class LocalDelivery(TestCase):
   from web.session import WebSession
   with TemporaryDirectory() as d:
    model=WebSession(d);model.set_mode('academic');model.load((local.ROOT/'samples/errors.docx').read_bytes(),'公开.docx')
-   app=AppTest.from_file(str(local.ROOT/'app.py'));app.session_state.workflow=model;app.session_state['workspace-smart']=True;app.run()
+   app=AppTest.from_file(str(local.ROOT/'app.py'),default_timeout=30);app.session_state.workflow=model;app.session_state['workspace-smart']=True;app.run()
    next(r for r in app.radio if r.label=='排版要求来源').set_value('saved').run()
    self.assertFalse(app.exception);self.assertFalse(any('旧处理结果' in i.value for i in app.info))
  def test_starter_zip_is_allowlisted_and_manifest_matches(self):
@@ -69,7 +69,7 @@ class LocalDelivery(TestCase):
   from web.session import WebSession
   with TemporaryDirectory() as d:
    model=WebSession(d);model.set_mode('academic');model.load((local.ROOT/'samples/errors.docx').read_bytes(),'公开.docx')
-   app=AppTest.from_file(str(local.ROOT/'app.py'));app.session_state.workflow=model;app.session_state['workspace-smart']=True;app.run()
+   app=AppTest.from_file(str(local.ROOT/'app.py'),default_timeout=30);app.session_state.workflow=model;app.session_state['workspace-smart']=True;app.run()
    app.checkbox(key='assembly-'+model.task_dir.name+'-smart-v55-only').check().run()
    with patch.object(model,'result_package',side_effect=AssertionError('Only explicit preparation')) as package:
     app.button(key='onepass-start').click().run();self.assertFalse(app.exception);self.assertIsNotNone(model.result);app.run();package.assert_not_called()

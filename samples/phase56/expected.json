@@ -1,0 +1,13 @@
+{
+  "captions": {
+    "3": "center",
+    "4": "center",
+    "5": "center",
+    "7": "center"
+  },
+  "protected_paragraph": 8,
+  "offset_paragraph": 5,
+  "missing_target": "MissingPublicTarget",
+  "originally_centered": 4,
+  "text_and_non_document_parts_must_equal": true
+}

@@ -12,7 +12,7 @@ from .scope_session import fingerprint
 from .smart_session import binding,isolated,suggest,accept_scope,execute
 from . import structure_session as structure
 
-VERSION='onepass-10'
+VERSION='onepass-11'
 
 
 def command_binding(model,extra,requirements=None):
@@ -183,6 +183,8 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
         if state.get('id')!=token:raise DemoError('本次处理已取消')
         state['audit']['phases'].append(name);emit(name)
     try:
+        from .smart_defaults import prepare_rules
+        state['audit']['smart_defaults']=prepare_rules(stage) if requirements is None or requirements['kind']!='saved' else {'version':1,'applied':[],'reason':'上传已保存要求优先，不补写空字段'}
         if requirements is not None and requirements['kind']=='saved':
             phase('载入已保存的排版要求')
             stage.import_rule_bundle(__import__('core.rule_bundle',fromlist=['raw']).raw(requirements['bundle']))
@@ -281,7 +283,7 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
             bundle=stage.current_rule_bundle();bundle.pop('assembly',None);stage._save_custom(rb.validate(bundle,load_rules(stage.rules_path)));stage.sync_rules()
         if state['assembly']:
             old_draft=getattr(stage,'page_layout_draft',None) or {}
-            if not old_draft.get('explicit'):stage.page_layout_draft={'explicit':False,'enabled':True,'policy':deepcopy(state['assembly']),'input_sha256':stage.inventory['input_sha256'],'regions':deepcopy(old_draft.get('regions',[])),**{k:old_draft[k] for k in ('toc_appearance','word_updates') if k in old_draft}}
+            if not old_draft.get('explicit'):stage.page_layout_draft={'explicit':False,'enabled':True,'policy':deepcopy(state['assembly']),'input_sha256':stage.inventory['input_sha256'],'regions':deepcopy(old_draft.get('regions',[])),**{k:old_draft[k] for k in ('toc_appearance','word_updates','smart_defaults') if k in old_draft}}
             state['audit']['authorization']='本次开始命令：所列格式、数字、页码及Word安全缓存更新；'+('safe-layout-v1另授权安全题注位置、固定内容表/关联图片缩小、L01–L04；不含自动列宽转固定' if state['assembly'].get('version')==3 else '旧方案不含题注移动、宽度或相邻辅助')
             from core import rule_bundle as rb
             bundle=stage.current_rule_bundle();bundle['assembly']=deepcopy(state['assembly']);stage._save_custom(rb.validate(bundle,__import__('core',fromlist=['load_rules']).load_rules(stage.rules_path)));stage.sync_rules()
@@ -325,6 +327,8 @@ def start(model,state,extra='',*,requirements=None,requirements_cache=None,file_
         from .structure_session import coordinate
         coordinate(stage,proposal,body_start=body_intent,confirmed=prior_types is not None)
         state['audit']['structure']=deepcopy(proposal['structure'])
+        from .smart_defaults import prepare_scopes
+        prepare_scopes(stage,proposal,defaults_applied=bool(state['audit']['smart_defaults'].get('applied')))
         from .assembly_session import prepare as prepare_assembly
         state['questions']+=prepare_assembly(stage,state,proposal)
         body_question=next((q for q in state['questions'] if q['id']=='page_body'),None)
@@ -360,6 +364,8 @@ def continue_command(model,state,extra,decisions,*,requirements=None,emit=None):
         # Same unmodified DOCX and exact accepted structural draft; only the
         # explicit rule decision changes. Revalidate/reseal with original APIs.
         if old.inventory['input_sha256']!=stage.inventory['input_sha256']:raise DemoError('输入变化，不能继承范围建议')
+        from .smart_defaults import prepare_rules
+        state['audit']['smart_defaults']=prepare_rules(stage)
         state['stage']=stage;state['proposal']['source_binding']=binding(stage)
         if state['audit'].get('explicit_region_purposes'):
             fresh=suggest(stage)
@@ -387,6 +393,8 @@ def continue_command(model,state,extra,decisions,*,requirements=None,emit=None):
         stage=state['stage'];bundle=stage.current_rule_bundle();bundle['assembly']=deepcopy(state['assembly']);stage._save_custom(rb.validate(bundle,load_rules(stage.rules_path)));stage.sync_rules()
         state['proposal']['source_binding']=binding(stage)
     state['audit']['user_decisions']=deepcopy(decisions)
+    from .smart_defaults import prepare_scopes
+    prepare_scopes(state['stage'],state['proposal'],defaults_applied=bool(state['audit']['smart_defaults'].get('applied')))
     seal_proposal(state['stage'],state['proposal']);state['status']='running'
     token=state['id'];own={'stage':state['stage'],'history_length':state['history_length'],'original_rule_path':state['original_rule_path']}
     try:return finish(model,state,emit=emit,command_id=token)
@@ -429,6 +437,9 @@ def publish(model,state,outcome,emit,command_id):
     stage=state['stage'];emit('检查修改后的文件');state['audit']['phases'].append('检查修改后的文件')
     if stage.result:stage.downloads()
     state['audit']['processed_scope']={'tables':deepcopy(stage.table_types) if stage.table_enabled else {},'notes':deepcopy(stage.note_draft['objects']) if stage.note_enabled else []}
+    from .smart_defaults import coverage
+    final_report=stage.result['after'] if stage.result else stage.report
+    state['audit']['coverage']=coverage(final_report,(stage.result or {}).get('output_classification_manifest') or stage.classification_confirmed)
     post=command_binding(stage,state['extra'],state.get('requirements'))
     if state.get('id')!=command_id or command_binding(model,state['extra'],state.get('requirements'))!=state['start']:raise DemoError('整理期间文档或要求发生变化，未发布本次副本。')
     # All storage, original transactions and final bindings passed. In-memory publish only.

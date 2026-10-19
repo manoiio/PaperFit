@@ -1,0 +1,114 @@
+{
+  "original_sha256": "11d2bdfa78c2ff3a8f675439422714d3a358eb78d7ad18cb25b3b6e0392fde3c",
+  "final_sha256": "4101bf6377f1804695a6f725764656b0a2df4dc060f767f91bb9faf576b66d5d",
+  "public_browser": {
+    "major_operations": [
+      "上传",
+      "开始智能排版",
+      "下载修正版"
+    ],
+    "decisions": 0,
+    "advanced_visits_before_download": 0,
+    "rounds": 3,
+    "remaining_problem_records": 2,
+    "remaining_review_records": 15,
+    "Word_field_update": "no safe targets; not reported as updated"
+  },
+  "private_local_demo": {
+    "major_operations": [
+      "上传",
+      "开始智能排版",
+      "选择一张表的用途",
+      "确认并继续",
+      "下载修正版"
+    ],
+    "decisions": 1,
+    "rounds": 7,
+    "safe_captions_centered": 7,
+    "nonzero_caption_indents": 0,
+    "remaining_problem_records": 0,
+    "remaining_review_records": 56,
+    "TOC_entries": 32,
+    "Word_PDF_pages": 20,
+    "native_Word_observed": [
+      "table caption",
+      "figure caption",
+      "chapter 3 image",
+      "chapter 4 image/table",
+      "chapter 5 subheading",
+      "TOC",
+      "internal TOC jump to printed 10 / physical 14"
+    ],
+    "source_not_overwritten": true,
+    "private_derivatives_committed": false
+  },
+  "API_requests": 0,
+  "Word_probe": {
+    "public_synthetic_pdf_success": true,
+    "seconds": 0.925
+  },
+  "PDF": {
+    "public_pages": 1,
+    "public_seconds": 0.955,
+    "private_seconds": 2.495,
+    "DOCX_hash_unchanged": true
+  },
+  "boundaries": [
+    "Caption offsets are retained and warned, not cleared",
+    "Unknown TOC level stays review",
+    "Unsafe objects and missing REF targets kept",
+    "No new internal-link text grants",
+    "Old imported empty fields not supplemented",
+    "Fonts/bold/effects not reset"
+  ],
+  "saved_requirement_browser_reuse": {
+    "download_same_bytes": true,
+    "requirements_parse_requests": 0
+  },
+  "project_browser_restore": {
+    "original_remains_current_input": true,
+    "historical_rounds": 3,
+    "does_not_execute_or_restore_rehearsal": true
+  },
+  "full_processing_elapsed": "本轮未单独打点；不以CLI等待间隔代替处理实耗。各辅助阶段秒数在本地实际摘要，Word PDF实耗另列。",
+  "tests": {
+    "baseline": 1422,
+    "first_full": {
+      "run": 1429,
+      "seconds": 904.093,
+      "passed": 1428,
+      "errors": 1,
+      "reason": "legacy UI default 3-second timeout"
+    },
+    "timeout_fix": {
+      "seconds": 30,
+      "affected_test_constructors": 3,
+      "business_assertions_unchanged": true
+    },
+    "local_delivery_targeted": {
+      "passed": 13,
+      "seconds": 21.264
+    },
+    "second_full": "interrupted at user request; not passed",
+    "final_targeted": {
+      "onepass": {
+        "passed": 12,
+        "seconds": 14.984
+      },
+      "new_defaults": {
+        "six_existing_cases_passed_in_seven_case_run": true,
+        "one_new_edge_override_case_setup_error": "test prepared paragraph-only request; corrected to original include_tables=True preparation",
+        "corrected_edge_case": {
+          "passed": 1,
+          "seconds": 20.398
+        }
+      },
+      "UI": 3,
+      "TOC_appearance": 10,
+      "local_delivery": 13,
+      "note": "Final source small fix checked by related tests only, per user instruction. No final all-green full-suite claim."
+    },
+    "paid_HTTP": 0,
+    "real_Word_in_automatic_tests": 0
+  }
+}

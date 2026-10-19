@@ -44,7 +44,7 @@ def legacy_options(model,task,*,local=False):
  model.field_updates_enabled=bool(enabled and saved.get('word_updates',True))
  if enabled:st.caption('本次完整整理还将使用本机Word更新安全自动目录和REF/PAGEREF，并复查回填文件；失败时保留已验证排版副本。')
  if model.inventory:
-  new={'explicit':bool((getattr(model,'page_layout_draft',None) or {}).get('explicit',False)),'enabled':enabled,'policy':validate(p),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(saved.get('regions',[])) if saved.get('input_sha256')==model.inventory['input_sha256'] else [],**{k:saved[k] for k in ('toc_appearance','word_updates') if k in saved}}
+  new={'explicit':bool((getattr(model,'page_layout_draft',None) or {}).get('explicit',False)),'enabled':enabled,'policy':validate(p),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(saved.get('regions',[])) if saved.get('input_sha256')==model.inventory['input_sha256'] else [],**{k:saved[k] for k in ('toc_appearance','word_updates','smart_defaults') if k in saved}}
   if new!=saved and (enabled or new['explicit'] or saved):model.page_layout_draft=new
  return validate(p) if enabled else None
 
@@ -56,7 +56,7 @@ def smart_seed(model):
  restored=bool(model.history) or (getattr(model,'workbench',None) or {}).get('origin')=='restored'
  if portable:return {'enabled':True,'explicit':False,'policy':deepcopy(portable),'toc_appearance':'preserve'}
  if restored:return {'enabled':False,'explicit':True,'policy':deepcopy(DEFAULT),'toc_appearance':'preserve'}
- return {'enabled':True,'explicit':False,'policy':{**DEFAULT,'version':3,'targets':['cover','front','body'],'auxiliaries':'safe-layout-v1','dynamic':True,'pages':'front-body'},'toc_appearance':'standard'}
+ return {'enabled':True,'explicit':False,'policy':{**DEFAULT,'version':3,'targets':['cover','front','body'],'auxiliaries':'safe-layout-v1','dynamic':True,'pages':'front-body'},'toc_appearance':'standard','smart_defaults':1}
 
 def word_seed(model,saved):
  # Old v1/v2 carriers cannot prove a grant for the later Word updater.
@@ -68,6 +68,9 @@ def options(model,task,*,local=False):
  saved=smart_seed(model);seed=saved['policy'];key='assembly-'+task+'-smart-v55'
  def changed():st.session_state[key+'-changed']=True
  with st.expander('调整处理内容'):
+  if not saved.get('smart_defaults'):
+   if st.checkbox('本任务采用新版智能缺省核对（保留已保存规则与关闭决定）',value=False,key=key+'-defaults',on_change=changed):saved['smart_defaults']=1
+  else:st.caption('普通图题、表题缺省居中；新增内部目标与题注结构核对。已保存要求及人工关闭优先。')
   only=st.checkbox('仅整理文字格式',value=not saved['enabled'],key=key+'-only',on_change=changed)
   p=deepcopy(seed)
   enabled=not only
@@ -99,8 +102,9 @@ def options(model,task,*,local=False):
  model.field_updates_enabled=bool(enabled and word)
  if model.inventory:
   old=getattr(model,'page_layout_draft',None) or {}
-  model.page_layout_draft={'explicit':explicit,'enabled':enabled,'policy':validate(p),'toc_appearance':appearance,'word_updates':bool(enabled and word),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(old.get('regions',[])) if old.get('input_sha256')==model.inventory['input_sha256'] else []}
- if not enabled:st.caption('本次仅整理安全文字格式，保持原有编号、页码和目录。')
+  model.page_layout_draft={'explicit':explicit,'enabled':enabled,'policy':validate(p),'toc_appearance':appearance,'word_updates':bool(enabled and word),'smart_defaults':saved.get('smart_defaults',0),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(old.get('regions',[])) if old.get('input_sha256')==model.inventory['input_sha256'] else []}
+ if saved.get('smart_defaults'):st.caption('新任务缺省普通图题、表题居中；完整整理另核对安全内容表格外侧边框与内部目标。已保存要求、材料保护和明确关闭优先。')
+ if not enabled:st.caption('本次仅整理安全文字格式，保持原有编号、页码和目录及表格边框。')
  else:
   parts=['文字格式']
   if p.get('version')==3:parts.append('安全图表与分页相邻')

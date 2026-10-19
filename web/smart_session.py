@@ -68,7 +68,9 @@ def accept_scope(model,proposal,*,confirmation_text=None):
 def shortcut_plan(model,*,allowed_keys=None):
     model._current()
     if not model.report:raise DemoError('请先接受范围摘要并检查')
-    included=[f for f in model.eligible() if f['rule_id'].startswith('R') and f['rule_id'] not in ('R35',)]
+    from .smart_defaults import requested
+    edges=bool(requested(model) and (model.page_layout_draft or {}).get('enabled') and (model.table_layout_options or {}).get('outer_edges'))
+    included=[f for f in model.eligible() if f['rule_id'].startswith('R') and (f['rule_id']!='R35' or edges)]
     if allowed_keys is not None:
         if set(allowed_keys)-{f['key'] for f in included}:raise DemoError('限定修正集合包含当前不可修正项')
         included=[f for f in included if f['key'] in set(allowed_keys)]

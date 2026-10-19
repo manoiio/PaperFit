@@ -40,7 +40,7 @@ def render_onepass(model,root,load_builtin,upload_changed,render_results):
         rules=effective_rules(**model._base_rules_arguments(),mode=model.mode)
         is_default=model.custom_rules_path is None and model.active_template is None
         st.write('排版要求：'+('SCUT本科工理类 · 2015年项目材料演示规则' if is_default else rules['name']))
-        st.caption('规则版本：'+str(rules['version'])+('。2015年材料，不宣称现行通用校规。' if is_default else '。沿用已生效配置和来源。')+'未规定的属性不自动补齐。')
+        st.caption('规则版本：'+str(rules['version'])+('。2015年材料，不宣称现行通用校规。' if is_default else '。沿用已生效配置和来源。')+'未规定的属性仅按已列明项目缺省补齐；已保存要求与明确关闭优先。')
         from .requirements_ui import render_requirements
         extra,requirements,requirements_ready=render_requirements(model,task,state)
         st.caption('开始即授权本方案的安全修改。需要AI时发送有限脱敏文字摘录或上传的要求，排版在本机完成；脱敏不保证彻底匿名。无API时保留可靠本地处理。')
@@ -151,7 +151,7 @@ def render_success(model,state,render_results):
     from .result_overview import attention,changes_summary
     st.write('主要调整：'+changes_summary(model))
     summary=report['summary']
-    st.write(f'剩余 {summary["problem_count"]} 个问题 · {summary["review_count"]} 项待复核。原稿已保留，部分整理不代表全文合格。')
+    st.write(f'已启用检查项剩余 {summary["problem_count"]} 个问题 · {summary["review_count"]} 项待复核。原稿已保留，部分整理不代表全文合格。')
     st.caption('当前处理输入：'+model.display_name+'；查看或下载成果不会自动切换输入。')
     groups=attention(report)
     nonempty=[f'{label} {len(rows)}条' for label,rows in groups.items() if rows]
@@ -162,6 +162,14 @@ def render_success(model,state,render_results):
                 st.write(label+' · '+str(len(rows))+'条')
                 # Native table is bounded in height, not hundreds of per-record widgets.
                 st.dataframe([{'位置':json.dumps(r.get('locator',{}),ensure_ascii=False),'状态':r.get('status','覆盖提示'),'原因':str(r.get('detail',r.get('reason',''))),'实际':json.dumps(r.get('actual'),ensure_ascii=False),'要求':json.dumps(r.get('expected'),ensure_ascii=False)} for r in rows],hide_index=True,height=min(350,80+len(rows)*35))
+    with st.expander('实际检查、未启用及未覆盖范围'):
+        from .smart_defaults import coverage
+        scope=(model.result or {}).get('output_classification_manifest') or model.classification_confirmed
+        info=state.get('audit',{}).get('coverage') or coverage(report,scope)
+        st.write(info['meaning']);st.dataframe(info['areas'],hide_index=True)
+        st.write('实际执行的检查编号（只读项也计入）：'+ '、'.join(info['executed_rules']))
+        st.write('未配置属性（不作为通过）：');st.json(info['unconfigured_properties'],expanded=False)
+        st.write('明确不检查字段：');st.json(info['explicitly_not_checked_fields'],expanded=False)
     with st.expander('完整处理摘要、范围与更多下载'):
         auxiliary=state.get('audit',{}).get('auxiliaries',[])
         if auxiliary:

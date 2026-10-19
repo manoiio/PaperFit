@@ -1,0 +1,16 @@
+{
+  "oracle": "author positions and raw ZIP/XML; no smart default classifier",
+  "captions_centered": 4,
+  "previously_correct_caption_kept": true,
+  "offset_kept": true,
+  "protected_SEQ_REF_kept": true,
+  "all_text_equal": true,
+  "media_styles_numbering_notes_and_old_parts_equal": true,
+  "old_relationships_and_content_types_kept": true,
+  "new_footer_dependency_explicitly_checked": true,
+  "new_defaults_exact_reverse_mask": true,
+  "final_sha256": "4101bf6377f1804695a6f725764656b0a2df4dc060f767f91bb9faf576b66d5d",
+  "same_bytes_as_actual_browser": true,
+  "API_requests": 0,
+  "Word_calls": 0
+}

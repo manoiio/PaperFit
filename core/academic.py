@@ -16,7 +16,10 @@ def source(rules,obj,prop):
   src=rules['back_policy']['source'];return {'file':rules['back_policy']['source_file'],'physical_page':src['physical_page'],'quote':src['quote'],'label':'2015明确附录条文；仅确认普通文献文字'}
  if obj=='document':
   return {'file':school()['source_file'],'physical_page':16,'quote':'摘要400–600字，关键词3–5个，主要参考文献10篇以上/外文2篇以上；本程序只统计确认条目，外文与主要文献身份未判断。','label':'2015范例只读口径'+('（用户明确启用，不由AI提取）' if rules['academic_sources'] else '')}
- if rules['academic_sources'] is not None:return deepcopy(rules['academic_sources'].get(obj,{}).get(prop,{'label':'未配置属性','quote':''}))
+ if rules['academic_sources'] is not None:
+  out=deepcopy(rules['academic_sources'].get(obj,{}).get(prop,{'label':'未配置属性','quote':''}))
+  if out.get('quote','').startswith('PaperFit项目默认'):out['label']='PaperFit项目默认（本次开始授权；非学校要求）'
+  return out
  s=school()['sources'].get(obj,{'page':None,'quote':'学校原文未明确，不默认启用'})
  return {'file':school()['source_file'],'physical_page':s['page'],'quote':s['quote'],'label':'2015演示规则原文/范例；不宣称现行标准'}
 
@@ -40,6 +43,11 @@ def append_checks(report,pkg,manifest,rules,*,generic_only=False):
   rid={**RULE_FOR,**BACK_RULES}.get(typ,'R13')
   if generic_only and rid!='R13':continue
   p=pkg.paragraphs[n-1];loc={'paragraph':n};why=paragraph_unsafe(p)
+  if typ in ('figure_caption','table_caption') and c.get('alignment')=='center':
+   try:
+    offsets=res.attrs(res.layers(p,kind='pPr'),'ind')
+    if any(str(v) not in ('0','0.0') for v in offsets.values()):notes.append({'locator':loc,'status':'review','detail':'题注已要求居中，但存在首行/悬挂/左右缩进；本次未授权清除缩进，视觉中心需核对。','declared_indentation':offsets})
+   except (Unresolved,ValueError):pass
   enabled={k:v for k,v in c.items() if v is not None}
   if not enabled:continue
   try:pl=res.layers(p,kind='pPr')
