@@ -1,0 +1,42 @@
+[
+  {
+    "file": "README.md",
+    "bytes": 865,
+    "sha256": "83ca588c458d532c6fc320f4fe236a15e6759258430f493e57b2ff8c9d3090a2"
+  },
+  {
+    "file": "expected.json",
+    "bytes": 381,
+    "sha256": "4953ef64347a8ae2fbfda00509eff2724b4df4b59437f2b770d9f0469fef1fa6"
+  },
+  {
+    "file": "fixed.docx",
+    "bytes": 37748,
+    "sha256": "029de308ef11e453582075fed26508d484776925f7eb2cc10697e072e3136d8f"
+  },
+  {
+    "file": "independent.json",
+    "bytes": 450,
+    "sha256": "9386668d7b86f7557e670791576a272634f8f4f60781831561cf5b75b1922c86"
+  },
+  {
+    "file": "roles.json",
+    "bytes": 320,
+    "sha256": "1b0639adcb29b33ca620ebd19112d98ca46d9797c41e83f697f715d84dff8c79"
+  },
+  {
+    "file": "source.docx",
+    "bytes": 37247,
+    "sha256": "21d740100f18f9566ef6173bd5c51f14854c96c9f957f50423551285fa647cf3"
+  },
+  {
+    "file": "word-toc.png",
+    "bytes": 310800,
+    "sha256": "be7e1732c8a816ad15bc139136562e932b638aab210cc5530511774cacc78daa"
+  },
+  {
+    "file": "word-verification.json",
+    "bytes": 683,
+    "sha256": "5867b7c938409a416e70042ec0c63dafbf78b0ec681a35786f8cc8a6e6494806"
+  }
+]

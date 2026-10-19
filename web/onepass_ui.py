@@ -142,7 +142,8 @@ def render_success(model,state,render_results):
         appearances=field.get('validation',{}).get('toc_appearance',[])
         if appearances:
             applied=sum(x['state']=='applied' for x in appearances);kept=sum(x['state']=='already_satisfied' for x in appearances)
-            st.caption(f'目录页码已更新并复查；{applied}份目录设置标准外观，{kept}份已有合适外观保持。')
+            label='项目参考外观' if any(x.get('mode')=='reference' for x in appearances) else '项目目录外观'
+            st.caption(f'目录页码已更新并复查；{applied}份目录设置{label}，{kept}份已有合适外观保持。')
             for item in appearances:
                 if item['state']=='kept':st.warning('目录外观保持：'+item.get('reason','无法可靠计算'))
     if state.get('audit',{}).get('page_skipped'):st.warning('页码方案未执行，原页码保持。原因见完整摘要。')

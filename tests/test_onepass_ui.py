@@ -27,7 +27,7 @@ class OnePassUIAcceptance(TestCase):
   from copy import deepcopy
   model=WebSession(self.tmp.name+'/default');model.set_mode('academic');model.load((ROOT/'samples/phase55/source.docx').read_bytes(),'公开目录.docx')
   app=AppTest.from_file(str(ROOT/'app.py'),default_timeout=30);app.session_state.workflow=model;app.session_state['workspace-smart']=True;app.run()
-  self.assertFalse(app.exception);self.assertFalse(any(x.label=='本次整理方案' for x in app.selectbox));self.assertTrue(model.page_layout_draft['enabled']);self.assertEqual(model.page_layout_draft['toc_appearance'],'standard')
+  self.assertFalse(app.exception);self.assertFalse(any(x.label=='本次整理方案' for x in app.selectbox));self.assertTrue(model.page_layout_draft['enabled']);self.assertEqual(model.page_layout_draft['toc_appearance'],'reference');self.assertEqual(model.page_layout_draft['toc_policy']['depth'],3)
   before=deepcopy(model.page_layout_draft);app.run();self.assertEqual(before,model.page_layout_draft);self.assertIsNone(model.result)
   app.checkbox(key='assembly-'+model.task_dir.name+'-smart-v55-only').check().run();self.assertFalse(model.page_layout_draft['enabled']);self.assertFalse(model.field_updates_enabled)
   app.button(key='onepass-start').click().run();self.assertFalse(app.exception);self.assertTrue(model.result);self.assertNotIn('assembly',model.result)

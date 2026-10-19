@@ -47,6 +47,11 @@ def calculate(raw,codes,targets,*,update=True):
         repeat with ti from 1 to count tables of contents of d
          if (start of content of text object of table of contents ti of d) < rs and (end of content of text object of table of contents ti of d) > rs then
           set foundToc to foundToc + 1
+          -- Our bounded TC identifier is explicitly authorised by this code.
+          if c contains "\\\\f C" then
+           set use fields of table of contents ti of d to true
+           set table id of table of contents ti of d to "C"
+          end if
           update table of contents ti of d
          end if
         end repeat
@@ -143,7 +148,12 @@ def export_pdf(raw,destination):
       if not simple_page_code(stack[-1][1]):stack[-1][0].set(q('fldLock'),'true');changed=True;locked+=1
       else:page+=1;page_codes.add(stack[-1][1])
      elif e.tag==q('fldChar') and e.get(q('fldCharType'))=='end':
-      if not stack or not stack[-1][2]:raise DemoError('域边界/缓存分隔不完整，未打开Word')
+      if not stack:raise DemoError('域边界/缓存分隔不完整，未打开Word')
+      if not stack[-1][2]:
+       # Native TC is intentionally a no-result field. Permit only our bounded
+       # title marker; malformed references still require a cache separator.
+       if not no_result_tc(stack[-1][1]):raise DemoError('域边界/缓存分隔不完整，未打开Word')
+       stack[-1][0].set(q('fldLock'),'true');changed=True;locked+=1
       stack.pop()
      elif e.tag==q('fldChar') and e.get(q('fldCharType'))=='separate':raise DemoError('游离域分隔符，未打开Word')
      if e.tag==q('instrText') and re_unsafe_field(e.text or ''):raise DemoError('Word输出含外部/动态取值域，未打开；DOCX保持')
@@ -245,3 +255,8 @@ def re_unsafe_field(code):
 def simple_page_code(code):
  import re
  return bool(re.fullmatch(r'\s*(?i:PAGE)(?:\s+\\\*\s+(?:MERGEFORMAT|Arabic|ROMAN|roman|ALPHABETIC|alphabetic))*\s*',code))
+
+
+def no_result_tc(code):
+ import re
+ return bool(re.fullmatch(r'\s*TC "[^"\\\r\n\t]{1,300}" \\f C \\l "1"\s*',code)) and not re_unsafe_field(code)

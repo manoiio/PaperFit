@@ -83,7 +83,7 @@ class AppearanceTests(unittest.TestCase):
  def test_smart_defaults_and_old_saved_intent(self):
   from web.page_ui import smart_seed
   model=SimpleNamespace(page_layout_draft=None,inventory=None,history=[],workbench={})
-  r=smart_seed(model);self.assertTrue(r['enabled']);self.assertEqual(r['policy']['version'],3);self.assertEqual(r['toc_appearance'],'standard')
+  r=smart_seed(model);self.assertTrue(r['enabled']);self.assertEqual(r['policy']['version'],3);self.assertEqual(r['toc_appearance'],'reference')
   model.inventory={'input_sha256':'test'};old={**__import__('core.page_policy',fromlist=['DEFAULT']).DEFAULT,'dynamic':True}
   model.current_rule_bundle=lambda:{'assembly':old};r=smart_seed(model);self.assertEqual(r['policy'],old);self.assertEqual(r['toc_appearance'],'preserve')
   from web.page_ui import word_seed

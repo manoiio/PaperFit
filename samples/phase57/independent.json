@@ -1,0 +1,20 @@
+{
+  "toc_entries_before": 1,
+  "toc_entries_after": 7,
+  "levels_present": [
+    1,
+    2,
+    3
+  ],
+  "native_right_tab_matches_section_width": true,
+  "exact_spacing_and_indent": true,
+  "abstract_pages": [
+    "i",
+    "ii"
+  ],
+  "self_page": "iii",
+  "new_TC_markers": 4,
+  "all_other_content_and_objects_equal": true,
+  "all_other_parts_byte_equal": true,
+  "final_sha256": "029de308ef11e453582075fed26508d484776925f7eb2cc10697e072e3136d8f"
+}

@@ -54,6 +54,12 @@ class WordFieldsTests(unittest.TestCase):
  def test_same_code_partial_selection_is_rejected(self):
   p=Package(self.source);f=p.root.xpath('.//w:fldSimple',namespaces=NS)[1];f.addnext(deepcopy(f));path=self.root/'dupe.docx';path.write_bytes(p.bytes(True));m=deepcopy(self.m);m['input_sha256']=Package(path).hash
   with self.assertRaises(DemoError):wf.plan(path,m,['field:2'])
+ def test_same_paragraph_same_instruction_ref_keeps_each_occurrence(self):
+  p=Package(self.source);f=next(f for f in wf.fields(p)[0] if f['simple'] and f['instruction'].strip().startswith('REF CaptionOne'))
+  f['node'].addnext(deepcopy(f['node']));path=self.root/'same-paragraph.docx';path.write_bytes(p.bytes(True));m=deepcopy(self.m);m['input_sha256']=Package(path).hash
+  r=wf.update(path,self.root/'both.docx',m,wf.plan(path,m),calculator=self.mock,artifact_dir=self.root/'both-art')
+  out=Package(r['output']);values=[wf.cache_text(out,x) for x in wf.fields(out)[0] if x['instruction'].strip().startswith('REF CaptionOne')]
+  self.assertEqual(values,['图1-2 合成曲线','图1-2 合成曲线'])
  def test_locked_nested_toc_and_unsupported_switches_remain_protected(self):
   p=Package(self.source);f=p.root.xpath('.//w:fldSimple',namespaces=NS)[0];f.set(q('instr'),' TOC \\t "Custom,1" ');path=self.root/'custom.docx';path.write_bytes(p.bytes(True));self.assertFalse(wf.inventory(path)['objects'][0]['safe'])
  def test_no_stable_page_signature_never_publishes(self):

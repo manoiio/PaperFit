@@ -44,7 +44,7 @@ def legacy_options(model,task,*,local=False):
  model.field_updates_enabled=bool(enabled and saved.get('word_updates',True))
  if enabled:st.caption('本次完整整理还将使用本机Word更新安全自动目录和REF/PAGEREF，并复查回填文件；失败时保留已验证排版副本。')
  if model.inventory:
-  new={'explicit':bool((getattr(model,'page_layout_draft',None) or {}).get('explicit',False)),'enabled':enabled,'policy':validate(p),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(saved.get('regions',[])) if saved.get('input_sha256')==model.inventory['input_sha256'] else [],**{k:saved[k] for k in ('toc_appearance','word_updates','smart_defaults') if k in saved}}
+  new={'explicit':bool((getattr(model,'page_layout_draft',None) or {}).get('explicit',False)),'enabled':enabled,'policy':validate(p),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(saved.get('regions',[])) if saved.get('input_sha256')==model.inventory['input_sha256'] else [],**{k:saved[k] for k in ('toc_appearance','word_updates','smart_defaults','toc_policy') if k in saved}}
   if new!=saved and (enabled or new['explicit'] or saved):model.page_layout_draft=new
  return validate(p) if enabled else None
 
@@ -56,7 +56,7 @@ def smart_seed(model):
  restored=bool(model.history) or (getattr(model,'workbench',None) or {}).get('origin')=='restored'
  if portable:return {'enabled':True,'explicit':False,'policy':deepcopy(portable),'toc_appearance':'preserve'}
  if restored:return {'enabled':False,'explicit':True,'policy':deepcopy(DEFAULT),'toc_appearance':'preserve'}
- return {'enabled':True,'explicit':False,'policy':{**DEFAULT,'version':3,'targets':['cover','front','body'],'auxiliaries':'safe-layout-v1','dynamic':True,'pages':'front-body'},'toc_appearance':'standard','smart_defaults':1}
+ return {'enabled':True,'explicit':False,'policy':{**DEFAULT,'version':3,'targets':['cover','front','body'],'auxiliaries':'safe-layout-v1','dynamic':True,'pages':'front-body'},'toc_appearance':'reference','smart_defaults':1,'toc_policy':deepcopy(__import__('core.toc_targets',fromlist=['DEFAULT']).DEFAULT)}
 
 def word_seed(model,saved):
  # Old v1/v2 carriers cannot prove a grant for the later Word updater.
@@ -95,14 +95,19 @@ def options(model,task,*,local=False):
      if p['footer']=='text':p['text']=st.text_input('页脚文字',value=seed['text'],max_chars=80,key=key+'-text',on_change=changed)
    else:p['pages']='keep'
    word=st.checkbox('本机Word更新目录和引用',value=word_seed(model,saved),key=key+'-word',on_change=changed)
-   appearance=st.selectbox('目录外观',['standard','preserve'],index=0 if saved.get('toc_appearance','preserve')=='standard' else 1,format_func={'standard':'项目默认：点线、页码右对齐、分级缩进','preserve':'保留原目录段落格式'}.get,key=key+'-toc',on_change=changed) if word else saved.get('toc_appearance','preserve')
-   st.caption('项目默认外观不是学校强制要求。复杂对象保持；目录实际页码仅在Word成功更新和复查后确认。')
+   appearance=st.selectbox('目录外观',['reference','standard','preserve'],index=['reference','standard','preserve'].index(saved.get('toc_appearance','preserve')),format_func={'reference':'项目参考：23.7磅行距、分级缩进、右对齐点线','standard':'原项目默认：保留行距与已有缩进、补点线','preserve':'保留原目录段落格式'}.get,key=key+'-toc',on_change=changed) if word else saved.get('toc_appearance','preserve')
+   targets=deepcopy(saved.get('toc_policy'))
+   if word and targets is not None:
+    targets['depth']=st.selectbox('正文目录层级',[1,2,3],index=targets['depth']-1,key=key+'-toc-depth',on_change=changed)
+    targets['self']=st.checkbox('目录自身列入目录',value=targets['self'],key=key+'-toc-self',on_change=changed)
+    st.caption('目录同时收录已确认的中英文摘要及后置独立标题；本地工作台可精细调整。')
+   st.caption('项目参考外观不是学校强制要求。复杂对象保持；目录实际页码仅在Word成功更新和复查后确认。')
   else:word=False;appearance=saved.get('toc_appearance','preserve')
  explicit=saved.get('explicit',False) or st.session_state.pop(key+'-changed',False)
  model.field_updates_enabled=bool(enabled and word)
  if model.inventory:
   old=getattr(model,'page_layout_draft',None) or {}
-  model.page_layout_draft={'explicit':explicit,'enabled':enabled,'policy':validate(p),'toc_appearance':appearance,'word_updates':bool(enabled and word),'smart_defaults':saved.get('smart_defaults',0),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(old.get('regions',[])) if old.get('input_sha256')==model.inventory['input_sha256'] else []}
+  model.page_layout_draft={'explicit':explicit,'enabled':enabled,'policy':validate(p),'toc_appearance':appearance,'word_updates':bool(enabled and word),'smart_defaults':saved.get('smart_defaults',0),**({'toc_policy':targets if enabled and word else saved['toc_policy']} if 'toc_policy' in saved else {}),'input_sha256':model.inventory['input_sha256'],'regions':deepcopy(old.get('regions',[])) if old.get('input_sha256')==model.inventory['input_sha256'] else []}
  if saved.get('smart_defaults'):st.caption('新任务缺省普通图题、表题居中；完整整理另核对安全内容表格外侧边框与内部目标。已保存要求、材料保护和明确关闭优先。')
  if not enabled:st.caption('本次仅整理安全文字格式，保持原有编号、页码和目录及表格边框。')
  else:
@@ -110,7 +115,7 @@ def options(model,task,*,local=False):
   if p.get('version')==3:parts.append('安全图表与分页相邻')
   if p['dynamic']:parts.append('安全编号及引用同步')
   if p['pages']!='keep':parts.append('分区页码与'+('章节页脚' if p['footer']=='chapter' else '页脚'))
-  if word:parts.append('本机Word目录与引用更新'+('及标准目录外观' if appearance=='standard' else ''))
+  if word:parts.append('本机Word目录与引用更新'+('及项目参考目录外观（23.7磅行距、分级缩进）' if appearance=='reference' else '及原项目目录外观' if appearance=='standard' else ''))
   st.caption('本次将处理：'+'、'.join(parts)+'。不确定事项同页集中询问，原稿保留。')
  return validate(p) if enabled else None
 

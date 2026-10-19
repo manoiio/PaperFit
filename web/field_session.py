@@ -33,8 +33,9 @@ def render_worker(source,out,*,context):
  result['preservation'].update(original_sha256_unchanged=sha256(source.read_bytes())==c['plan']['input_sha256'],only_authorized_field_caches=True,unselected_zip_member_bytes_equal=True)
  return {'document_sha256':sha256(source.read_bytes()),'render_config_sha256':c['seal'],'result':result}
 
-def submit(model,state,*,selected=None,creation=None,appearance=None,scheduler=None,worker=None):
- ctx,b=context(model);p=word_fields.plan(ctx['input'],ctx['classification'],selected,creation,appearance or (getattr(model,'page_layout_draft',None) or {}).get('toc_appearance','preserve'))
+def submit(model,state,*,selected=None,creation=None,appearance=None,toc_policy='from_model',scheduler=None,worker=None):
+ ctx,b=context(model);draft=getattr(model,'page_layout_draft',None) or {}
+ p=word_fields.plan(ctx['input'],ctx['classification'],selected,creation,appearance or draft.get('toc_appearance','preserve'),draft.get('toc_policy') if toc_policy=='from_model' else toc_policy)
  if not p['selected'] and not p['creation']:state.update(empty=True,kept=p['kept']);return False
  seal=fingerprint(p);owner=state.setdefault('owner',uuid4().hex);scheduler=scheduler or JOBS
  identity=scheduler.submit(owner,model.work_root/'_word-jobs',Path(ctx['input']).read_bytes(),(b,seal),{'plan':p,'classification':ctx['classification'],'rules':model._base_rules_arguments(),'seal':seal},worker or render_worker)

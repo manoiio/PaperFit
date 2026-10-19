@@ -1,0 +1,32 @@
+{
+  "source": "real macOS Word, public synthetic input",
+  "passes": [
+    {
+      "pass": 1,
+      "seconds": 1.184,
+      "readback_seconds": 0.983,
+      "final_target_pages_equal": true
+    },
+    {
+      "pass": 2,
+      "seconds": 1.18,
+      "readback_seconds": 1.086,
+      "final_target_pages_equal": true
+    }
+  ],
+  "roles_changed": false,
+  "field_appearance": "reference",
+  "targets": 7,
+  "numbering_unchanged": true,
+  "body_pages_start": "5",
+  "front_pages": [
+    "i",
+    "ii",
+    "iii"
+  ],
+  "calculator_package_published": false,
+  "Word_window_long_title_checked": true,
+  "Word_PDF_exported": true,
+  "PDF_DOCX_hash_unchanged": true,
+  "API_requests": 0
+}

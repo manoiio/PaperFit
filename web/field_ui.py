@@ -1,5 +1,6 @@
 """One local advanced tool: original queue, explicit scope, preview and adoption."""
 import streamlit as st
+from copy import deepcopy
 from .session import public_error
 from . import field_session
 from .dynamic_session import context
@@ -27,8 +28,18 @@ def render_local(model):
    selected=st.multiselect('本次更新对象',list(labels),default=list(labels),format_func=labels.get,key='word-fields-'+ctx['sha256'])
    for r in rows:
     if not r['safe']:st.caption(r['kind']+' 保持：'+str(r['reason']))
-   appearance=st.selectbox('目录外观',['preserve','standard'],format_func={'preserve':'保留原目录格式','standard':'项目默认：原生点线、页码右对齐、分级缩进'}.get,key='word-toc-appearance-'+ctx['sha256'])
+   appearance=st.selectbox('目录外观',['preserve','standard','reference'],index=['preserve','standard','reference'].index((model.page_layout_draft or {}).get('toc_appearance','preserve')),format_func={'preserve':'保留原目录格式','standard':'原项目默认：点线、页码右对齐、分级缩进','reference':'项目参考：固定23.7磅、段前后0、缩进0/24/48磅'}.get,key='word-toc-appearance-'+ctx['sha256'])
    st.caption('项目默认值不是学校强制要求；仅修改所选安全目录结果段落，复杂栏或缩进保持并说明。')
+   from core.toc_targets import DEFAULT
+   saved=(model.page_layout_draft or {}).get('toc_policy')
+   explicit=st.checkbox('明确目录收录范围（否则沿用原域）',value=saved is not None,key='word-toc-targets-'+ctx['sha256'])
+   policy=None
+   if explicit:
+    seed=saved or DEFAULT;policy=dict(seed)
+    policy['depth']=st.selectbox('正文收录到几级标题',[1,2,3],index=seed['depth']-1,key='word-toc-depth-'+ctx['sha256'])
+    policy['abstracts']=st.checkbox('纳入已确认的中文摘要、Abstract',value=seed['abstracts'],key='word-toc-abstracts-'+ctx['sha256'])
+    policy['back']=st.checkbox('纳入已确认参考文献、附录和致谢标题',value=seed['back'],key='word-toc-back-'+ctx['sha256'])
+    policy['self']=st.checkbox('目录自身也列入（仅紧邻目录域的明确标题）',value=seed['self'],key='word-toc-self-'+ctx['sha256'])
    creation=None
    with st.expander('受限创建/转换自动目录'):
     st.caption('仅可替换范围页已经确认的普通手工目录条目/空条目；目录标题不在替换范围。标题层级须已确认。')
@@ -36,12 +47,15 @@ def render_local(model):
     if enable:
      a,b=st.columns(2);start=int(a.number_input('目录首条段落',min_value=1,max_value=len(model.paragraph_types),value=1,key='word-create-start'));end=int(b.number_input('目录末条段落',min_value=1,max_value=len(model.paragraph_types),value=start,key='word-create-end'));level=st.selectbox('包含标题层级',[1,2,3],index=2,key='word-create-level');creation={'start':start,'end':end,'levels':list(range(1,level+1)),'confirmed':True}
    state=st.session_state.setdefault('word-local-'+model.task_dir.name,{})
-   intent=fingerprint({'selected':selected,'creation':creation,'appearance':appearance})
+   intent=fingerprint({'selected':selected,'creation':creation,'appearance':appearance,'toc_policy':policy})
    if state.get('identity') and state.get('intent')!=intent:
     field_session.cancel(state);state.clear();st.info('本次选择或创建范围变化，旧预演不可采用；请重新预演。')
    if st.button('预演所选目录与引用更新',disabled=not selected and not creation,key='word-local-preview'):
     if state.get('identity'):field_session.cancel(state)
-    state.clear();field_session.submit(model,state,selected=selected,creation=creation,appearance=appearance);state['intent']=intent;st.rerun()
+    from core.page_policy import DEFAULT as PAGE_DEFAULT
+    saved_draft=deepcopy(model.page_layout_draft) if model.page_layout_draft else {'enabled':False,'explicit':True,'policy':deepcopy(PAGE_DEFAULT),'input_sha256':model.inventory['input_sha256'],'regions':[]}
+    model.page_layout_draft={**saved_draft,'toc_appearance':appearance,'toc_policy':deepcopy(policy)}
+    state.clear();field_session.submit(model,state,selected=selected,creation=creation,appearance=appearance,toc_policy=policy);state['intent']=intent;st.rerun()
    if state.get('identity'):
     @st.fragment(run_every=2)
     def task():

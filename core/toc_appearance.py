@@ -4,19 +4,20 @@ from lxml import etree as E
 from .package import q,NS,DemoError
 from .formats import Resolver,Unresolved
 
-MODES=('preserve','standard')
+MODES=('preserve','standard','reference')
 def validate(mode):
- if type(mode) is not str or mode not in MODES:raise DemoError('目录外观须为保留原格式或项目默认格式')
+ if type(mode) is not str or mode not in MODES:raise DemoError('目录外观须为保留原格式、项目默认格式或项目参考样式')
  return mode
 
-def prepare(pkg,field,templates,levels):
+def prepare(pkg,field,templates,levels,mode='standard'):
+ validate(mode)
  from .word_fields import field_paragraphs
  from .widths import _sections,_page
  ps=field_paragraphs(pkg,field);p=ps[field['start']-1];owner=p
  while owner.getparent() is not pkg.root.find(q('body')):
   owner=owner.getparent()
   if owner is None:raise DemoError('目录所属主文档对象无法定位')
- record={'mode':'standard','source':'项目默认目录外观（非学校强制要求）','properties':['tabs:右对齐/dot','ind:缺失层级缩进','jc:居左'],'levels':[]}
+ record={'mode':mode,'source':'项目默认目录外观（非学校强制要求）','properties':['tabs:右对齐/dot','ind:缺失层级缩进','jc:居左'],'levels':[]}
  try:
   number,sp=_sections(pkg)[owner];width=_page(pkg,number,sp)['body_width_twips'];res=Resolver(pkg);out={}
   for level in sorted(set(levels)):
@@ -48,6 +49,19 @@ def prepare(pkg,field,templates,levels):
     for k,v in ind.attrib.items():
      if not v.lstrip('-').isdigit():raise Unresolved('目录缩进值无法解释')
      nums[E.QName(k).localname]=int(v)
+   if mode=='reference':
+    # Local explicit cache geometry overrides inherited/direct old declarations.
+    # Font, size, style ID and the original title remain untouched.
+    nums={'left':(level-1)*480,'right':360,'firstLine':0,'hanging':0}
+    for old in pr.findall(q('ind'))+pr.findall(q('spacing')):pr.remove(old)
+    direct=E.SubElement(pr,q('ind'))
+    for k,v in nums.items():direct.set(q(k),str(v))
+    spacing=E.SubElement(pr,q('spacing'))
+    for k,v in {'before':'0','after':'0','beforeLines':'0','afterLines':'0','beforeAutospacing':'0','afterAutospacing':'0','line':'474','lineRule':'exact'}.items():spacing.set(q(k),v)
+    contextual=pr.find(q('contextualSpacing'))
+    if contextual is None:contextual=E.SubElement(pr,q('contextualSpacing'))
+    contextual.set(q('val'),'0')
+    record.update(source='PaperFit项目参考样式（非SCUT强制规范）',properties=['tabs:右对齐/dot','ind:0/480/960twips，续行保留页码区','spacing:固定23.7磅/段前后0'])
    left=nums.get('left',(level-1)*360);right=nums.get('right',0)
    if min(left,right)<0 or width-right-left<720:raise Unresolved('目录缩进后可用宽度不足')
    if 'firstLine' in nums and 'hanging' in nums and (nums['firstLine'] or nums['hanging']):raise Unresolved('目录首行和悬挂缩进冲突')
@@ -56,7 +70,7 @@ def prepare(pkg,field,templates,levels):
    if 'left' not in nums:direct.set(q('left'),str(left))
    if implicit:
     direct.set(q('right'),str(right));direct.set(q('firstLine'),'0');direct.set(q('hanging'),'0')
-   target=width-right
+   target=width if mode=='reference' else width-right
    effective_tabs={}
    for layer in layers:
     for stop in layer.findall('w:tabs/w:tab',NS):
@@ -64,7 +78,7 @@ def prepare(pkg,field,templates,levels):
      if stop.get(q('val'))=='clear':effective_tabs.pop(pos,None)
      else:effective_tabs[pos]=stop
    current=effective_tabs.get(str(target))
-   if original is not None and current is not None and current.get(q('val'))=='right' and current.get(q('leader'))=='dot' and (level==1 or left>0) and res.value(layers,'jc','left')=='left':
+   if mode!='reference' and original is not None and current is not None and current.get(q('val'))=='right' and current.get(q('leader'))=='dot' and (level==1 or left>0) and res.value(layers,'jc','left')=='left':
     out[level]=deepcopy(original);record['levels'].append({'level':level,'left_twips':left,'right_tab_twips':target,'body_width_twips':width,'state':'already_satisfied'});continue
    jc=pr.find(q('jc'))
    if jc is None:jc=E.SubElement(pr,q('jc'))
